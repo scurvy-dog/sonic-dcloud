@@ -1,4 +1,4 @@
-### sonic dcloud
+### SONiC dcloud
 
 For info on launching SONiC VXR with containerlab please refer to https://github.com/brmcdoug/containerlab/tree/main/vxrSONiC
 
