@@ -1,0 +1,146 @@
+{
+  "name": "c8101-sonic-3-node",
+  "type": "clab",
+  "clab": {
+    "config": {
+      "prefix": "clab",
+      "mgmt": {
+        "network": "fixedips",
+        "bridge": "br-47d64fd7687a",
+        "ipv4-subnet": "172.10.10.0/24",
+        "ipv4-gw": "172.10.10.1",
+        "ipv6-subnet": "2001:172:10:10::/80",
+        "ipv6-gw": "2001:172:10:10::1",
+        "mtu": "1500",
+        "external-access": true
+      }
+    }
+  },
+  "nodes": {
+    "r1": {
+      "index": "0",
+      "shortname": "r1",
+      "longname": "clab-c8101-sonic-3-node-r1",
+      "fqdn": "r1.c8101-sonic-3-node.io",
+      "group": "",
+      "labdir": "/home/cisco/git/sonic-dcloud/topologies/clab-c8101-sonic-3-node/r1",
+      "kind": "linux",
+      "image": "c8000-clab-sonic:19",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.10.10.2",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:10:10::2",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-47d64fd7687a",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/cisco/git/sonic-dcloud/topologies/clab-c8101-sonic-3-node/r1",
+        "clab-node-name": "r1",
+        "clab-node-type": "",
+        "clab-topo-file": "/home/cisco/git/sonic-dcloud/topologies/3-node.yml",
+        "containerlab": "c8101-sonic-3-node"
+      }
+    },
+    "r2": {
+      "index": "1",
+      "shortname": "r2",
+      "longname": "clab-c8101-sonic-3-node-r2",
+      "fqdn": "r2.c8101-sonic-3-node.io",
+      "group": "",
+      "labdir": "/home/cisco/git/sonic-dcloud/topologies/clab-c8101-sonic-3-node/r2",
+      "kind": "linux",
+      "image": "c8000-clab-sonic:19",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.10.10.3",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:10:10::3",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-47d64fd7687a",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/cisco/git/sonic-dcloud/topologies/clab-c8101-sonic-3-node/r2",
+        "clab-node-name": "r2",
+        "clab-node-type": "",
+        "clab-topo-file": "/home/cisco/git/sonic-dcloud/topologies/3-node.yml",
+        "containerlab": "c8101-sonic-3-node"
+      }
+    },
+    "r3": {
+      "index": "2",
+      "shortname": "r3",
+      "longname": "clab-c8101-sonic-3-node-r3",
+      "fqdn": "r3.c8101-sonic-3-node.io",
+      "group": "",
+      "labdir": "/home/cisco/git/sonic-dcloud/topologies/clab-c8101-sonic-3-node/r3",
+      "kind": "linux",
+      "image": "c8000-clab-sonic:19",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.10.10.4",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:10:10::4",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-47d64fd7687a",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/cisco/git/sonic-dcloud/topologies/clab-c8101-sonic-3-node/r3",
+        "clab-node-name": "r3",
+        "clab-node-type": "",
+        "clab-topo-file": "/home/cisco/git/sonic-dcloud/topologies/3-node.yml",
+        "containerlab": "c8101-sonic-3-node"
+      }
+    }
+  },
+  "links": [
+    {
+      "a": {
+        "node": "r1",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:26:e6:41",
+        "peer": "z"
+      },
+      "z": {
+        "node": "r2",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:21:17:03",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "r1",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:14:ce:de",
+        "peer": "z"
+      },
+      "z": {
+        "node": "r3",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:55:65:e0",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "r2",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:bb:50:dc",
+        "peer": "z"
+      },
+      "z": {
+        "node": "r3",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:e5:8c:06",
+        "peer": "a"
+      }
+    }
+  ]
+}
