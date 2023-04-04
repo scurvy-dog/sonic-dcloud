@@ -96,7 +96,7 @@
         "STATE": {
             "tsa_enabled": "false"
         }
-    },
+    }, 
     "CONSOLE_SWITCH": {
         "console_mgmt": {
             "enabled": "no"
@@ -167,12 +167,12 @@
             "default_bgp_status": "up",
             "default_pfcwd_status": "disable",
             "hwsku": "32x100Gb",
-            "mac": "78:27:7F:CD:6E:00",
+            "mac": "78:97:F3:AE:78:00",
             "platform": "x86_64-8101_32h_o-r0",
             "synchronous_mode": "enable",
-            "hostname": "router-2",
+            "hostname": "router-3",
             "deployment_id": "1", 
-            "bgp_asn": "65002",
+            "bgp_asn": "65003",
             "type": "ToR",
             "docker_routing_config_mode": "split"
         }
@@ -319,30 +319,39 @@
             "POLL_INTERVAL": "10000"
         },
         "BUFFER_POOL_WATERMARK": {
+            "FLEX_COUNTER_DELAY_STATUS": "false",
             "FLEX_COUNTER_STATUS": "enable"
         },
         "PFCWD": {
+            "FLEX_COUNTER_DELAY_STATUS": "false",
             "FLEX_COUNTER_STATUS": "enable"
         },
         "PG_DROP": {
+            "FLEX_COUNTER_DELAY_STATUS": "false",
             "FLEX_COUNTER_STATUS": "enable"
         },
         "PG_WATERMARK": {
+            "FLEX_COUNTER_DELAY_STATUS": "false",
             "FLEX_COUNTER_STATUS": "enable"
         },
         "PORT": {
+            "FLEX_COUNTER_DELAY_STATUS": "false",
             "FLEX_COUNTER_STATUS": "enable"
         },
         "PORT_BUFFER_DROP": {
+            "FLEX_COUNTER_DELAY_STATUS": "false",
             "FLEX_COUNTER_STATUS": "enable"
         },
         "QUEUE": {
+            "FLEX_COUNTER_DELAY_STATUS": "false",
             "FLEX_COUNTER_STATUS": "enable"
         },
         "QUEUE_WATERMARK": {
+            "FLEX_COUNTER_DELAY_STATUS": "false",
             "FLEX_COUNTER_STATUS": "enable"
         },
         "RIF": {
+            "FLEX_COUNTER_DELAY_STATUS": "false",
             "FLEX_COUNTER_STATUS": "enable"
         }
     },
@@ -354,22 +363,22 @@
         }
     },
     "MGMT_INTERFACE": {
-        "eth0|172.100.100.3/24": {
+        "eth0|172.100.100.4/24": {
             "gwaddr": "172.100.100.1"
         }
     },
     "LOOPBACK_INTERFACE": {
         "Loopback0": {},
-        "Loopback0|10.0.0.2/32": {},
-        "Loopback0|FC00:0000:2::1/128": {}
+        "Loopback0|10.0.0.3/32": {},
+        "Loopback0|FC00:0000:3::1/128": {}
     },
     "INTERFACE": {
         "Ethernet0": {},
-        "Ethernet0|10.1.1.1/31": {},
-        "Ethernet0|fc00:0::1/127": {},
+        "Ethernet0|10.1.1.3/31": {},
+        "Ethernet0|fc00:0::3/127": {},
         "Ethernet4": {},
-        "Ethernet4|10.1.1.4/31": {},
-        "Ethernet4|fc00:0::4/127": {}
+        "Ethernet4|10.1.1.5/31": {},
+        "Ethernet4|fc00:0::5/127": {}
     },
     "PASSW_HARDENING": {
         "POLICIES": {
