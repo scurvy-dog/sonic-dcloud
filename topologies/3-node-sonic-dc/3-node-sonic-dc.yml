@@ -1,7 +1,7 @@
-name: c8101-sonic-3-node
+name: 3-node-sonic-dc
 
 mgmt:
-  network: fixedips
+  network: mgmt_net
   ipv4_subnet: 172.10.10.0/24
   ipv6_subnet: 2001:172:10:10::/80
 
