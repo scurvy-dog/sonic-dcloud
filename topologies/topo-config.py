@@ -71,7 +71,7 @@ for key,value in node_list.items():
         continue
     # Connect to Nodes and Restore Configs
     elif args.restore == True:
-        command = "sshpass -p cisco123 scp "./"+topology_name+"/configs/"+key+"_config.json cisco@"+value+":/etc/sonic/config_db.json"
+        command = "sshpass -p cisco123 scp ./"+topology_name+"/configs/"+key+"_config.json cisco@"+value+":/etc/sonic/config_db.json"
         result = subprocess.run([command], capture_output=True, shell = True)
         if result.returncode == 0:
             print ("SONiC Router " + key + " restore successfully")
