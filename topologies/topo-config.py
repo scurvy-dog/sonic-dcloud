@@ -3,6 +3,7 @@ import os.path
 import argparse
 import yaml
 import subprocess
+from subprocess import PIPE
 
 # Printing Nodes List Function
 def Node_Print (self): 
@@ -67,6 +68,13 @@ for key,value in node_list.items():
             print ("SONiC Router " + key + " backed up successfully")
         else:
             print ("SONiC Router " + key + "  backup failed")
+        continue
     # Connect to Nodes and Restore Configs
     elif args.restore == True:
-        print("Restore time")
+        command = "sshpass -p cisco123 scp "./"+topology_name+"/configs/"+key+"_config.json cisco@"+value+":/etc/sonic/config_db.json"
+        result = subprocess.run([command], capture_output=True, shell = True)
+        if result.returncode == 0:
+            print ("SONiC Router " + key + " restore successfully")
+        else:
+            print ("SONiC Router " + key + "  restore failed")
+        continue
