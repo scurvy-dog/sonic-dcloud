@@ -67,7 +67,10 @@ for key,value in node_list.items():
         if result.returncode == 0:
             print ("SONiC Router " + key + " backed up successfully")
         else:
-            print ("SONiC Router " + key + "  backup failed")
+            print ("SONiC Router " + key + " backup failed"+)
+            print (result)
+            print (key,value)
+            print (command)
         continue
     # Connect to Nodes and Restore Configs
     elif args.restore == True:
