@@ -2,6 +2,7 @@ import sys
 import os.path
 import argparse
 import yaml
+import subprocess
 
 # Printing Nodes List Function
 def Node_Print (self): 
@@ -21,6 +22,8 @@ config_file ='config_db.yaml'
 
 def is_valid_file(parser, arg):
     filename = arg+"/"+arg+".yml"
+    global topology_name
+    topology_name = arg
     if not os.path.exists(filename):
         parser.error("The file %s does not exist!" % filename)
     else:
@@ -39,11 +42,8 @@ parser.add_argument(dest='filename',type=lambda x: is_valid_file(parser, x))
 
 # Parse CLI input
 args = parser.parse_args()
-
-if args.backup == True:
-    print("Backup time")
-elif args.restore == True:
-    print("Restore time")
+print(args.filename.name)
+print(topology_name)
 
 # Open YAML topology file and parse to capture node names and IP
 with open (args.filename.name,'r') as topology:
@@ -56,3 +56,17 @@ for n in nl:
     node_list.update({n:nl[n]['mgmt_ipv4']})
 
 Node_Print(node_list)
+
+# Cycle through nodes
+for key,value in node_list.items():
+    # Connect to Nodes and Backup Configs
+    if args.backup == True:
+        command = "sshpass -p cisco123 scp cisco@"+value+":/etc/sonic/config_db.json "+"./"+topology_name+"/configs/"+key+"_config.json"
+        result = subprocess.run([command], capture_output=True, shell = True)
+        if result.returncode == 0:
+            print ("SONiC Router " + key + " backed up successfully")
+        else:
+            print ("SONiC Router " + key + "  backup failed")
+    # Connect to Nodes and Restore Configs
+    elif args.restore == True:
+        print("Restore time")
