@@ -1,4 +1,4 @@
-### SONiC 101 Lab
+### SONiC 101 Lab Exercise 1 - Launching the 4-node topology with Containerlab
 
 A 4-node topology using the Cisco 8000 hardware emulator VM and running SONiC network operating system
 
@@ -129,10 +129,10 @@ ansible-playbook -i hosts sonic101-4-node-day-0.yml -e "ansible_user=cisco ansib
   - The tail end of the output should look something like:
     ```
     PLAY RECAP ***************************************************************************************************
-    sonic01: ok=4   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-    sonic02: ok=4   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-    sonic03: ok=4   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-    sonic04: ok=4   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+    sonic01: ok=5   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+    sonic02: ok=5   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+    sonic03: ok=5   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+    sonic04: ok=5   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
     ```
 8. Next ssh into the routers (notice the hostname change) and invoke the FRR CLI
 ```
