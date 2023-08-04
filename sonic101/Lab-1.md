@@ -4,7 +4,7 @@ A 4-node topology using the Cisco 8000 hardware emulator VM and running SONiC ne
 
 To launch the sonic 101 topology on your dCloud VM:
 
-1. ssh to VM
+1. VPN into dCloud then ssh to the host VM
 ```
 ssh cisco@198.18.128.100
 pw = C1sco12345
