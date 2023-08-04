@@ -101,5 +101,51 @@ docker logs -f clab-c8201-sonic-4-node-clos-r3
     ^C
     cisco@vsonic:~$ 
     ```
-5. Once the routers are up cd into the Ansible directory and run the sonic101 day-0 playbook. This playbook will apply to each node its initial/global configurations in config_db.json and will reload the config. 
+5. Once the routers are up you can ssh to them and explore the Linux/Debian environment and SONiC CLI. Notice how they currently all have the same hostname. We'll change that and other parameters in step 7.
+```
+ssh cisco@172.20.5.11
+ssh cisco@172.20.5.12
+ssh cisco@172.20.5.13
+ssh cisco@172.20.5.14
+pw = cisco123
+```
+
+6. Run some SONiC CLI commands:
+```
+show ?
+show runningconfiguration all
+show interfaces status
+show ip interfaces
+show ipv6 interfaces
+```
+   
+7. We'll use an Ansible playbook to apply global configurations to our nodes. cd into the ansible directory and run the sonic101 day-0 playbook. This playbook will perform the following on each router:
+   * Backup the existing /etc/sonic/config_db.json file
+   * Copy the appropriate config_db.json file from this repo to the router
+   * Reload the SONiC config
+```
+ansible-playbook -i hosts sonic101-4-node-day-0.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+```
+  - The tail end of the output should look something like:
+    ```
+    PLAY RECAP ***************************************************************************************************
+    sonic01: ok=4   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+    sonic02: ok=4   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+    sonic03: ok=4   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+    sonic04: ok=4   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+    ```
+8. Next ssh into the routers (notice the hostname change) and invoke the FRR CLI
+```
+ssh cisco@172.20.5.11
+vtysh
+```
+
+9. Its a whole lot like IOS:
+```
+show run
+conf t
+show interface brief 
+```
+
+Proceed to Lab 2 - FRR BGP configuration
 
