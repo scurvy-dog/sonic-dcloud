@@ -37,7 +37,7 @@ topology:
         - r1
       mgmt_ipv4: 172.20.5.12
       mgmt_ipv6: 2001:172:20:5::12
-      startup-delay: 50
+      startup-delay: 60
 
     r3:
       kind: linux
@@ -46,7 +46,7 @@ topology:
         - r2
       mgmt_ipv4: 172.20.5.13
       mgmt_ipv6: 2001:172:20:5::13
-      startup-delay: 50
+      startup-delay: 60
 
     r4:
       kind: linux
@@ -56,7 +56,7 @@ topology:
         - r3
       mgmt_ipv4: 172.20.5.14
       mgmt_ipv6: 2001:172:20:5::14
-      startup-delay: 50
+      startup-delay: 60
 
     r1e0-r3e0:
       kind: bridge
