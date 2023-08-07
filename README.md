@@ -10,5 +10,5 @@ SONiC can be configured one of three ways:
    - not all features are supported from the Linux CLI
 3. FRR [CLI](/config_guide-CLI.md)
    - FRR configs are not persistent across reboots unless you modify /etc/sonic/config_db.json 
-[!NOTE]
-This is a note
+>[!NOTE]
+>This is a note
