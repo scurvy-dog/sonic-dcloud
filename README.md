@@ -12,13 +12,13 @@ The lab software stack is built off the SONiC master build with Cisco specific p
 * Repository Overview [LINK](#repository-overview)
 * Lab Topology [LINK](#lab-topology)
 * Remote Access [LINK](#remote-access)
-* Project Jalapeno [LINK](#jalapeno)
-* Lab 1 - XRd Topology Setup and Validation [LINK](/lab_1/lab_1-guide.md)
-* Lab 2 - Config Baseline SR-MPLS and SRv6 [LINK](/lab_2/lab_2-guide.md)
-* Lab 3 - Config SRv6 L3VPN with TE [LINK](/lab_3/lab_3-guide.md)
-* Lab 4 - Config BMP and install Jalapeno [LINK](/lab_4/lab_4-guide.md)
-* Lab 5 - A Tour of Jalapeno [LINK](/lab_5/lab_5-guide.md)
-* Lab 6 - Build Your Own Cloud-Native SDN [LINK](/lab_6/lab_6-guide.md)
+* Lab 1 - Launching Topology [LINK](/lab_1/lab_1-guide.md)
+* Lab 2 - Explore SONiC OS [LINK](/lab_2/lab_2-guide.md)
+* Lab 3 - Global & Interface Configuration [LINK](/lab_3/lab_3-guide.md)
+* Lab 4 - ISIS Configuration [LINK](/lab_4/lab_4-guide.md)
+* Lab 5 - BGP Configuration [LINK](/lab_5/lab_5-guide.md)
+* Lab 6 - QoS Configuration [LINK](/lab_6/lab_6-guide.md)
+* Lab 7 - End to End Testing [LINK](/lab_7/lab_7-guide.md)
 
 
 ## Github Repository Overview
