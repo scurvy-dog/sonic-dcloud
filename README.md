@@ -1,6 +1,6 @@
-# Welcome to the SONiC on Cisco 8000 Emulator Lab
+# Welcome to the SONiC Labs on Cisco dCloud
 
-### Description: This repository contains lab guide, router configs, setup scripts, and other code for running through the lab.
+### Description: This repository contains lab guide, router configs, setup scripts, and other code for running through the various SONiC labs.
 
 SONiC is an open source network operating system based on Linux that runs on switches/routers from multiple vendors and ASICs. SONiC offers a full-suite of network functionality, like BGP, that has been production-hardened in the data centers of some of the largest cloud-service providers.
 
