@@ -15,16 +15,28 @@ pw = C1sco12345
 cd sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1
 ```
 
+2a. May need to create host bridges:
+
+```
+cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1$ sudo ./create-host-bridges.sh 
+cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1$ brctl show
+bridge name	bridge id		STP enabled	interfaces
+docker0		8000.0242330c6e01	no		
+leaf01e32-host1		8000.000000000000	no		
+leaf02e32-host2		8000.000000000000	no		
+virbr0		8000.5254007c5aa2	yes		virbr0-nic
+```
+
 3. run the containerlab deploy command to deploy the topology:
 ```
 sudo containerlab deploy -t topology.yml
 ```
  - Expected output:
     ```
-    cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab$ sudo containerlab deploy -t topology.yml 
+    cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1$ sudo containerlab deploy -t topology.yml 
     INFO[0000] Containerlab v0.40.0 started                 
     INFO[0000] Parsing & checking topology file: topology.yml 
-    INFO[0000] Creating lab directory: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/clab-c8201-sonic-4-node-clos 
+    INFO[0000] Creating lab directory: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1/clab-c8201-sonic-4-node-clos 
     INFO[0000] Creating docker network: Name="mgt_net", IPv4Subnet="172.10.10.0/24", IPv6Subnet="2001:172:10:10::/80", MTU="1500" 
     INFO[0000] Creating container: "spine01"                
     INFO[0001] Creating container: "spine02"                
@@ -51,9 +63,9 @@ sudo containerlab deploy -t topology.yml
     | 3 | clab-c8201-sonic-4-node-clos-spine01 | 7d76479d7d84 | c8000-clab-sonic:29 | linux | running | 172.10.10.2/24 | 2001:172:10:10::2/80 |
     | 4 | clab-c8201-sonic-4-node-clos-spine02 | bc2bcb119c92 | c8000-clab-sonic:29 | linux | running | 172.10.10.3/24 | 2001:172:10:10::3/80 |
     +---+--------------------------------------+--------------+---------------------+-------+---------+----------------+----------------------+
-    cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab$ 
+    cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1$ 
     ```
-Note - containerlab command to take the topology down:
+#### Note - containerlab command to take the topology down:
 ```
 sudo containerlab destroy -t topology.yml 
 ```
