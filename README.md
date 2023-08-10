@@ -10,8 +10,8 @@ The lab software stack is built off the SONiC master build with Cisco specific p
 
 ## Contents
 * Overview of Cisco dCloud [LINK](#cisco-dcloud-overview)
-* Introduction to SONiC on Cisco 8000 [LINK](/1-Intro_to_SONiC_Lab/readme.md)
-* SRv6 SONiC on Cisco 8000 [LINK](/2-SRv6_Lab/readme.md)
+* LAB - Introduction to SONiC on Cisco 8000 [LINK](/1-Intro_to_SONiC_Lab/readme.md)
+* LAB - SRv6 SONiC on Cisco 8000 [LINK](/2-SRv6_Lab/readme.md)
 
 
 ## Cisco dCloud Overview
