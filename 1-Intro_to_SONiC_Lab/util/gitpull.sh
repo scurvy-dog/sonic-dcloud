@@ -1,5 +1,9 @@
-#/bin/sh
+#!/bin/bash
+
+export HOME=/home/cisco
 
 cd /home/cisco/sonic-dcloud
-git pull
 
+git config --global --add safe.directory /home/cisco/sonic-dcloud
+
+git pull
