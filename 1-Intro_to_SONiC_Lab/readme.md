@@ -51,3 +51,9 @@ Within each lab directory you should see several files of importance:
 
 General instructions for building and running XRd topologies on bare-metal, VMs, AWS, etc. can be found here:
 https://github.com/brmcdoug/XRd
+
+## Lab Topology
+
+This lab is based on a simulated DC fabric design of four SONiC routers running in a docker instance. In addition there are two client VMs named Endpoint-1 and Endpoint-2. Each client system is running the Ubuntu OS.
+
+![Lab Topology](/topo_drawings/sonic-4-node-topology.png)
