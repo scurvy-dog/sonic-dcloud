@@ -10,9 +10,10 @@
 name: c8201-sonic-4-node-clos
 
 mgmt:
-  network: fixedips
-  ipv4_subnet: 172.20.5.0/24
-  ipv6_subnet: 2001:172:20:5::/80
+  #network: fixedips
+  network: mgt_net
+  ipv4_subnet: 172.10.10.0/24
+  ipv6_subnet: 2001:172:10:10::/80
 
 topology:
   kinds:
@@ -25,85 +26,50 @@ topology:
           PID: '8201-32FH'
 
   nodes:
-    r1:
+    spine01:
       kind: linux
-      mgmt_ipv4: 172.20.5.11
-      mgmt_ipv6: 2001:172:20:5::11
+      mgmt_ipv4: 172.10.10.2
+      mgmt_ipv6: 2001:172:10:10::2
 
-    r2:
-      kind: linux
-      wait-for:
-        - r1
-      mgmt_ipv4: 172.20.5.12
-      mgmt_ipv6: 2001:172:20:5::12
-      #startup-delay: 60
-
-    r3:
+    spine02:
       kind: linux
       wait-for:
-        - r1
-        - r2
-      mgmt_ipv4: 172.20.5.13
-      mgmt_ipv6: 2001:172:20:5::13
-      #startup-delay: 60
+        - spine01
+      mgmt_ipv4: 172.10.10.3
+      mgmt_ipv6: 2001:172:10:10::3
 
-    r4:
+    leaf01:
       kind: linux
       wait-for:
-        - r1
-        - r2
-        - r3
-      mgmt_ipv4: 172.20.5.14
-      mgmt_ipv6: 2001:172:20:5::14
-      #startup-delay: 60
+        - spine01
+        - spine02
+      mgmt_ipv4: 172.10.10.4
+      mgmt_ipv6: 2001:172:10:10::4
 
+    leaf02:
+      kind: linux
+      wait-for:
+        - spine01
+        - spine02
+        - leaf01
+      mgmt_ipv4: 172.10.10.5
+      mgmt_ipv6: 2001:172:10:10::5
 
-    r1e64-host1:
+    leaf01e32-host1:
       kind: bridge
-    r1e72-host2:
-      kind: bridge
-    r2e64-host3:
-      kind: bridge
-    r2e72-host4:
+    leaf02e32-host2:
       kind: bridge
 
   links:
+    - endpoints: ["spine01:eth1", "leaf01:eth1"]
+    - endpoints: ["spine01:eth2", "leaf01:eth2"]
+    - endpoints: ["spine01:eth3", "leaf02:eth1"]
+    - endpoints: ["spine01:eth4", "leaf02:eth2"]
+    - endpoints: ["spine01:eth5", "spine01e32-host1:spine01eth5"]
 
-    - endpoints: ["r1:eth1", "r3:eth1"]
-      mtu: 9500
-    - endpoints: ["r1:eth2", "r3:eth2"]
-      mtu: 9500
-    - endpoints: ["r1:eth3", "r3:eth3"]
-      mtu: 9500
-    - endpoints: ["r1:eth4", "r3:eth4"]
-      mtu: 9500
-    - endpoints: ["r1:eth5", "r4:eth1"]
-      mtu: 9500
-    - endpoints: ["r1:eth6", "r4:eth2"]
-      mtu: 9500
-    - endpoints: ["r1:eth7", "r4:eth3"]
-      mtu: 9500
-    - endpoints: ["r1:eth8", "r4:eth4"]
-      mtu: 9500
-    - endpoints: ["r1:eth9", "r1e64-host1:r1eth9"]
-    - endpoints: ["r1:eth10", "r1e72-host2:r1eth10"]
-
-    - endpoints: ["r2:eth1", "r3:eth5"]
-      mtu: 9500
-    - endpoints: ["r2:eth2", "r3:eth6"]
-      mtu: 9500
-    - endpoints: ["r2:eth3", "r3:eth7"]
-      mtu: 9500
-    - endpoints: ["r2:eth4", "r3:eth8"]
-      mtu: 9500
-    - endpoints: ["r2:eth5", "r4:eth5"]
-      mtu: 9500
-    - endpoints: ["r2:eth6", "r4:eth6"]
-      mtu: 9500
-    - endpoints: ["r2:eth7", "r4:eth7"]
-      mtu: 9500
-    - endpoints: ["r2:eth8", "r4:eth8"]
-      mtu: 9500
-    - endpoints: ["r2:eth9", "r2e64-host3:r2eth9"]
-    - endpoints: ["r2:eth10", "r2e72-host4:r2eth10"]
+    - endpoints: ["spine02:eth1", "leaf01:eth3"]
+    - endpoints: ["spine02:eth2", "leaf01:eth4"]
+    - endpoints: ["spine02:eth3", "leaf02:eth3"]
+    - endpoints: ["spine02:eth4", "leaf02:eth4"]
+    - endpoints: ["spine02:eth5", "spine02e32-host2:spine02eth5"]
 

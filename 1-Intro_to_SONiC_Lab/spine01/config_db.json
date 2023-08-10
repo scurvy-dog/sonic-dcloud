@@ -1,36 +1,38 @@
 {
     "DEVICE_METADATA": {
         "localhost": {
+            "buffer_model": "traditional",
+            "default_bgp_status": "up",
+            "default_pfcwd_status": "disable",
             "hwsku": "32x400Gb",
-            "mac": "78:EB:5A:63:F0:02",
+            "mac": "78:EB:5A:63:F0:01",
             "platform": "x86_64-8201_32fh_o-r0",
             "synchronous_mode": "enable",
-            "hostname": "sonic02",
+            "hostname": "leaf01",
             "type": "LeafRouter",
-            "bgp_asn": "65002",
             "docker_routing_config_mode": "split"
         }
     },
     "MGMT_INTERFACE": {
-        "eth0|172.20.5.12/24": {
+        "eth0|172.20.5.11/24": {
             "gwaddr": "172.20.5.1"
         }
     },
     "LOOPBACK_INTERFACE": {
-        "Loopback0|10.0.0.2/32": {},
-        "Loopback0|fc00:0:2::1/128": {}
+        "Loopback0|10.0.0.1/32": {},
+        "Loopback0|fc00:0:1::1/128": {}
     },
     "INTERFACE": {
-        "Ethernet64": {
+        "Ethernet32": {
             "vrf_name": "Vrf1"
         },
-        "Ethernet64|10.101.2.1/24": {},
-        "Ethernet64|2001:0:101:2::1/64": {},
-        "Ethernet72": {
+        "Ethernet32|10.101.1.1/24": {},
+        "Ethernet32|2001:0:101:1::1/64": {},
+        "Ethernet40": {
             "vrf_name": "Vrf2"
         },
-        "Ethernet72|10.102.2.1/24": {},
-        "Ethernet72|2001:0:102:2::1/64": {}
+        "Ethernet40|10.102.1.1/24": {},
+        "Ethernet40|2001:0:102:1::1/64": {}
     },
 
     "PORTCHANNEL": {
@@ -45,49 +47,25 @@
             "lacp_key": "auto",
             "min_links": "1",
             "mtu": "9100"
-        },
-        "PortChannel3": {
-            "admin_status": "up",
-            "lacp_key": "auto",
-            "min_links": "1",
-            "mtu": "9100"
-        },
-        "PortChannel4": {
-            "admin_status": "up",
-            "lacp_key": "auto",
-            "min_links": "1",
-            "mtu": "9100"
         }
     },
     "PORTCHANNEL_INTERFACE": {
         "PortChannel1": {
                 "ipv6_use_link_local_only": "enable"
         },
-        "PortChannel1|10.1.1.8/31": {},
+        "PortChannel1|10.1.1.0/31": {},
         "PortChannel2": {
             "ipv6_use_link_local_only": "enable"
         },
-        "PortChannel2|10.1.1.10/31": {},
-        "PortChannel3": {
-            "ipv6_use_link_local_only": "enable"
-        },
-        "PortChannel3|10.1.1.12/31": {},
-        "PortChannel4": {
-        "ipv6_use_link_local_only": "enable"
-        },
-        "PortChannel4|10.1.1.14/31": {}
+        "PortChannel2|10.1.1.2/31": {}
     },
     "PORTCHANNEL_MEMBER": {
         "PortChannel1|Ethernet0": {},
         "PortChannel1|Ethernet8": {},
         "PortChannel2|Ethernet16": {},
-        "PortChannel2|Ethernet24": {},
-        "PortChannel3|Ethernet32": {},
-        "PortChannel3|Ethernet40": {},
-        "PortChannel4|Ethernet48": {},
-        "PortChannel4|Ethernet56": {}
+        "PortChannel2|Ethernet24": {}
     },
-
+    
     "VRF": {
         "Vrf1": {},
         "Vrf2": {}
