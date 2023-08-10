@@ -1,0 +1,76 @@
+# Topology - 2-stage CLOS where Leaf nodes r1 and r2 are have dual uplinks to Spine nodes r3 and r4
+#
+#     r3   r4
+#     / \ / \
+#    / /  \  \
+#   r1        r2
+#  / \        / \
+# h1 h2      h3 h4
+
+name: c8201-sonic-4-node-clos
+
+mgmt:
+  #network: fixedips
+  network: mgt_net
+  ipv4_subnet: 172.10.10.0/24
+  ipv6_subnet: 2001:172:10:10::/80
+
+topology:
+  kinds:
+    linux:
+      image: c8000-clab-sonic:29
+      binds: 
+          - /home/cisco/images:/images
+      env:
+          IMAGE: /images/sonic-cisco-8000-clab.bin
+          PID: '8201-32FH'
+
+  nodes:
+    spine01:
+      kind: linux
+      mgmt_ipv4: 172.10.10.2
+      mgmt_ipv6: 2001:172:10:10::2
+
+    spine02:
+      kind: linux
+      wait-for:
+        - spine01
+      mgmt_ipv4: 172.10.10.3
+      mgmt_ipv6: 2001:172:10:10::3
+
+    leaf01:
+      kind: linux
+      wait-for:
+        - spine01
+        - spine02
+      mgmt_ipv4: 172.10.10.4
+      mgmt_ipv6: 2001:172:10:10::4
+
+    leaf02:
+      kind: linux
+      wait-for:
+        - spine01
+        - spine02
+        - leaf01
+      mgmt_ipv4: 172.10.10.5
+      mgmt_ipv6: 2001:172:10:10::5
+
+    leaf01e32-host1:
+      kind: bridge
+    leaf02e32-host2:
+      kind: bridge
+
+  links:
+    - endpoints: ["spine01:eth1", "leaf01:eth1"]
+    - endpoints: ["spine01:eth2", "leaf01:eth2"]
+    - endpoints: ["spine01:eth3", "leaf02:eth3"]
+    - endpoints: ["spine01:eth4", "leaf02:eth4"]
+
+    - endpoints: ["spine02:eth1", "leaf02:eth1"]
+    - endpoints: ["spine02:eth2", "leaf02:eth2"]
+    - endpoints: ["spine02:eth3", "leaf01:eth3"]
+    - endpoints: ["spine02:eth4", "leaf01:eth4"]
+
+    - endpoints: ["leaf01:eth5", "leaf01e32-host1:leaf01eth5"]
+    - endpoints: ["leaf02:eth5", "leaf02e32-host2:leaf02eth5"]
+

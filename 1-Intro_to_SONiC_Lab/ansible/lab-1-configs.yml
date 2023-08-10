@@ -12,7 +12,7 @@
 
     - name: Copy config_db.json files
       copy:
-        src: "../{{ inventory_hostname }}/config_db.json"
+        src: "{{ inventory_hostname }}/config_db.json"
         dest: "/etc/sonic/config_db.json"
         mode: 0644
 
@@ -21,7 +21,7 @@
         command: sudo config reload
         responses:
           (.*)y/N(.*): "y"
-        timeout: 150
+        timeout: 90
       ignore_errors: yes
       when: backup_result is not failed
       register: reload_result

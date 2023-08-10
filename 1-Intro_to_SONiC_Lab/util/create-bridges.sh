@@ -6,6 +6,10 @@ sudo brctl addbr r1e16-r4e0
 sudo brctl addbr r1e24-r4e8
 sudo brctl addbr r1e32-host1
 sudo brctl addbr r1e40-host2
+
+sudo brctl addbr leaf01e32-host1
+sudo brctl addbr leaf02e32-host2
+
 sudo brctl addbr r2e0-r3e16
 sudo brctl addbr r2e8-r3e24
 sudo brctl addbr r2e16-r4e16
@@ -26,3 +30,6 @@ sudo ip link set r2e16-r4e16 up
 sudo ip link set r2e24-r4e24 up
 sudo ip link set r2e32-host3 up
 sudo ip link set r2e40-host4 up
+
+sudo ip link set leaf01e32-host1 up
+sudo ip link set leaf02e32-host2 up
