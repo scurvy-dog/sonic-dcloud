@@ -1,0 +1,9 @@
+[Unit]
+Description=Script to perform git pull on startup
+After=network-online.target
+
+[Service]
+ExecStart=/home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/util/gitpull.sh start
+
+[Install]
+WantedBy=multi-user.target
