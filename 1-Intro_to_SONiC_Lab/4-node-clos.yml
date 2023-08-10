@@ -65,11 +65,12 @@ topology:
     - endpoints: ["spine01:eth2", "leaf01:eth2"]
     - endpoints: ["spine01:eth3", "leaf02:eth1"]
     - endpoints: ["spine01:eth4", "leaf02:eth2"]
-    - endpoints: ["spine01:eth5", "spine01e32-host1:spine01eth5"]
 
     - endpoints: ["spine02:eth1", "leaf01:eth3"]
     - endpoints: ["spine02:eth2", "leaf01:eth4"]
     - endpoints: ["spine02:eth3", "leaf02:eth3"]
     - endpoints: ["spine02:eth4", "leaf02:eth4"]
-    - endpoints: ["spine02:eth5", "spine02e32-host2:spine02eth5"]
+
+    - endpoints: ["leaf01:eth5", "leaf01e32-host1:leaf01eth5"]
+    - endpoints: ["leaf02:eth5", "leaf02e32-host2:leaf02eth5"]
 
