@@ -10,9 +10,9 @@ ssh cisco@198.18.128.100
 pw = C1sco12345
 ```
 
-2. cd into sonic-dcloud/1-Intro_to_SONiC_Lab directory
+2. cd into sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1 directory
 ```
-cd sonic-dcloud/1-Intro_to_SONiC_Lab
+cd sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1
 ```
 
 3. run the containerlab deploy command to deploy the topology:
