@@ -1,11 +1,11 @@
-# Topology - 2-stage CLOS where Leaf nodes r1 and r2 are have dual uplinks to Spine nodes r3 and r4
+# Topology - 2-stage CLOS where Leaf nodes leaf01 and leaf02 are have dual uplinks to Spine nodes spine01 and spine02
 #
-#     r3   r4
+#     s1   s2
 #     / \ / \
 #    / /  \  \
-#   r1        r2
-#  / \        / \
-# h1 h2      h3 h4
+#   l1        l2
+#    |         |
+#   h1        h2
 
 name: c8201-sonic-4-node-clos
 
