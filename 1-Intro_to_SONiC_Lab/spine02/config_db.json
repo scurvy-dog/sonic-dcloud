@@ -5,31 +5,19 @@
             "mac": "78:EB:5A:63:F0:02",
             "platform": "x86_64-8201_32fh_o-r0",
             "synchronous_mode": "enable",
-            "hostname": "leaf02",
+            "hostname": "spine02",
             "type": "LeafRouter",
             "docker_routing_config_mode": "split"
         }
     },
     "MGMT_INTERFACE": {
-        "eth0|172.20.5.12/24": {
-            "gwaddr": "172.20.5.1"
+        "eth0|172.10.10.3/24": {
+            "gwaddr": "172.10.10.1"
         }
     },
     "LOOPBACK_INTERFACE": {
         "Loopback0|10.0.0.2/32": {},
         "Loopback0|fc00:0:2::1/128": {}
-    },
-    "INTERFACE": {
-        "Ethernet32": {
-            "vrf_name": "Vrf1"
-        },
-        "Ethernet32|10.101.2.1/24": {},
-        "Ethernet32|2001:0:101:2::1/64": {},
-        "Ethernet40": {
-            "vrf_name": "Vrf2"
-        },
-        "Ethernet40|10.102.2.1/24": {},
-        "Ethernet40|2001:0:102:2::1/64": {}
     },
 
     "PORTCHANNEL": {
@@ -50,11 +38,11 @@
         "PortChannel1": {
                 "ipv6_use_link_local_only": "enable"
         },
-        "PortChannel1|10.1.1.8/31": {},
+        "PortChannel1|10.1.1.7/31": {},
         "PortChannel2": {
             "ipv6_use_link_local_only": "enable"
         },
-        "PortChannel2|10.1.1.10/31": {}
+        "PortChannel2|10.1.1.3/31": {}
     },
     "PORTCHANNEL_MEMBER": {
         "PortChannel1|Ethernet0": {},

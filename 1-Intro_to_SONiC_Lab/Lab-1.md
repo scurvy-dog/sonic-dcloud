@@ -25,7 +25,7 @@ sudo containerlab deploy -t 4-node-clos.yml
     INFO[0000] Containerlab v0.40.0 started                 
     INFO[0000] Parsing & checking topology file: 4-node-clos.yml 
     INFO[0000] Creating lab directory: /home/cisco/sonic-dcloud/sonic101/clab-c8201-sonic-4-node-clos 
-    INFO[0000] Creating docker network: Name="fixedips", IPv4Subnet="172.20.5.0/24", IPv6Subnet="2001:172:20:5::/80", MTU="1500" 
+    INFO[0000] Creating docker network: Name="fixedips", IPv4Subnet="172.10.10.0/24", IPv6Subnet="2001:172:20:5::/80", MTU="1500" 
     INFO[0000] Creating container: "r1"                     
     INFO[0001] Creating container: "r2"                     
     INFO[0002] Creating container: "r3"                     
@@ -58,10 +58,10 @@ sudo containerlab deploy -t 4-node-clos.yml
     +---+---------------------------------+--------------+---------------------+-------+---------+----------------+----------------------+
     | # |              Name               | Container ID |        Image        | Kind  |  State  |  IPv4 Address  |     IPv6 Address     |
     +---+---------------------------------+--------------+---------------------+-------+---------+----------------+----------------------+
-    | 1 | clab-c8201-sonic-4-node-clos-r1 | c35360ed9332 | c8000-clab-sonic:27 | linux | running | 172.20.5.11/24 | 2001:172:20:5::11/80 |
-    | 2 | clab-c8201-sonic-4-node-clos-r2 | 4d45d6059ca7 | c8000-clab-sonic:27 | linux | running | 172.20.5.12/24 | 2001:172:20:5::12/80 |
-    | 3 | clab-c8201-sonic-4-node-clos-r3 | 84eb037ce35b | c8000-clab-sonic:27 | linux | running | 172.20.5.13/24 | 2001:172:20:5::13/80 |
-    | 4 | clab-c8201-sonic-4-node-clos-r4 | 620da68ec011 | c8000-clab-sonic:27 | linux | running | 172.20.5.14/24 | 2001:172:20:5::14/80 |
+    | 1 | clab-c8201-sonic-4-node-clos-r1 | c35360ed9332 | c8000-clab-sonic:27 | linux | running | 172.10.10.11/24 | 2001:172:20:5::11/80 |
+    | 2 | clab-c8201-sonic-4-node-clos-r2 | 4d45d6059ca7 | c8000-clab-sonic:27 | linux | running | 172.10.10.12/24 | 2001:172:20:5::12/80 |
+    | 3 | clab-c8201-sonic-4-node-clos-r3 | 84eb037ce35b | c8000-clab-sonic:27 | linux | running | 172.10.10.13/24 | 2001:172:20:5::13/80 |
+    | 4 | clab-c8201-sonic-4-node-clos-r4 | 620da68ec011 | c8000-clab-sonic:27 | linux | running | 172.10.10.14/24 | 2001:172:20:5::14/80 |
     +---+---------------------------------+--------------+---------------------+-------+---------+----------------+----------------------+
     cisco@vsonic:~/sonic-dcloud/sonic101$
     ```
@@ -103,10 +103,10 @@ docker logs -f clab-c8201-sonic-4-node-clos-r3
     ```
 5. Once the routers are up you can ssh to them and explore the Linux/Debian environment and SONiC CLI. Notice how they currently all have the same hostname. We'll change that and other parameters in step 7.
 ```
-ssh cisco@172.20.5.11
-ssh cisco@172.20.5.12
-ssh cisco@172.20.5.13
-ssh cisco@172.20.5.14
+ssh cisco@172.10.10.11
+ssh cisco@172.10.10.12
+ssh cisco@172.10.10.13
+ssh cisco@172.10.10.14
 pw = cisco123
 ```
 
@@ -136,7 +136,7 @@ ansible-playbook -i hosts sonic101-4-node-day-0.yml -e "ansible_user=cisco ansib
     ```
 8. Next ssh into the routers (notice the hostname change) and invoke the FRR CLI
 ```
-ssh cisco@172.20.5.11
+ssh cisco@172.10.10.11
 vtysh
 ```
 

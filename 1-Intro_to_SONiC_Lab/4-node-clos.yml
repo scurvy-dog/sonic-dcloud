@@ -63,11 +63,11 @@ topology:
   links:
     - endpoints: ["spine01:eth1", "leaf01:eth1"]
     - endpoints: ["spine01:eth2", "leaf01:eth2"]
-    - endpoints: ["spine01:eth3", "leaf02:eth1"]
-    - endpoints: ["spine01:eth4", "leaf02:eth2"]
+    - endpoints: ["spine01:eth3", "leaf02:eth3"]
+    - endpoints: ["spine01:eth4", "leaf02:eth4"]
 
-    - endpoints: ["spine02:eth1", "leaf01:eth3"]
-    - endpoints: ["spine02:eth2", "leaf01:eth4"]
+    - endpoints: ["spine02:eth1", "leaf02:eth1"]
+    - endpoints: ["spine02:eth2", "leaf02:eth2"]
     - endpoints: ["spine02:eth3", "leaf02:eth3"]
     - endpoints: ["spine02:eth4", "leaf02:eth4"]
 

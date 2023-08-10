@@ -11,7 +11,7 @@ name: c8201-sonic-4-node-clos
 
 mgmt:
   network: fixedips
-  ipv4_subnet: 172.20.5.0/24
+  ipv4_subnet: 172.10.10.0/24
   ipv6_subnet: 2001:172:20:5::/80
 
 topology:
@@ -27,14 +27,14 @@ topology:
   nodes:
     r1:
       kind: linux
-      mgmt_ipv4: 172.20.5.11
+      mgmt_ipv4: 172.10.10.11
       mgmt_ipv6: 2001:172:20:5::11
 
     r2:
       kind: linux
       wait-for:
         - r1
-      mgmt_ipv4: 172.20.5.12
+      mgmt_ipv4: 172.10.10.12
       mgmt_ipv6: 2001:172:20:5::12
       #startup-delay: 60
 
@@ -43,7 +43,7 @@ topology:
       wait-for:
         - r1
         - r2
-      mgmt_ipv4: 172.20.5.13
+      mgmt_ipv4: 172.10.10.13
       mgmt_ipv6: 2001:172:20:5::13
       #startup-delay: 60
 
@@ -53,7 +53,7 @@ topology:
         - r1
         - r2
         - r3
-      mgmt_ipv4: 172.20.5.14
+      mgmt_ipv4: 172.10.10.14
       mgmt_ipv6: 2001:172:20:5::14
       #startup-delay: 60
 
