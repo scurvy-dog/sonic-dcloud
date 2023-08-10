@@ -1,4 +1,4 @@
-### SONiC 101 Lab Exercise 1 - Launching the 4-node topology with Containerlab
+### Notes for SONiC 101 Lab Exercise 1 - Launching the 4-node topology with Containerlab
 
 A 4-node topology using the Cisco 8000 hardware emulator VM and running SONiC network operating system
 
@@ -101,16 +101,55 @@ docker logs -f clab-c8201-sonic-4-node-clos-r3
     ^C
     cisco@vsonic:~$ 
     ```
-5. Once the routers are up you can ssh to them and explore the Linux/Debian environment and SONiC CLI. Notice how they currently all have the same hostname. We'll change that and other parameters in step 7.
+
+### Occasionally a router won't fully boot due to docker timeout issues
+The docker log will show the following error message:
 ```
-ssh cisco@172.10.10.11
-ssh cisco@172.10.10.12
-ssh cisco@172.10.10.13
-ssh cisco@172.10.10.14
+Exception: R0:Timeout waiting for '--More-- OR @sonic:~\$' after 'show interfaces status' command. !!! FOR CLUES, CHECK vxr.out/logs/console.R0.log !!!
+Router failed to come up
+
+<snip>
+
+==================== SUMMARY =====================
+No problems found....
+=================== SUMMARY END ==================
+```
+### Workaround:
+
+1. exec into the container and manually run the startup.py script specifying the 8000.yaml file and interface count (Leaf nodes have 5 interfaces, Spine nodes have 4):
+```
+docker exec -it clab-c8201-sonic-4-node-clos-leaf01 bash
+cd nobackup
+./startup.py 8000.yaml 5
+```
+Example:
+```
+cisco@vsonic:~$ docker exec -it clab-c8201-sonic-4-node-clos-leaf01 bash
+root@leaf01:/# cd nobackup/
+root@leaf01:/nobackup# ls
+8000.yaml  eth0.config  hosts  ovs  pyvxr.log  root  startup.err  startup.log  startup.py  startup.sh  startup.wrap.sh  startup.yaml  vxr.out
+root@leaf01:/nobackup# ./startup.py 8000.yaml 5
+['./startup.py', '8000.yaml', '5']
+MGMT_IP: 172.10.10.4  MASK: 255.255.255.0  GATEWAY: 172.10.10.1
+Found 5 data interfaces (expected 5)
+
+<snip>
+
+15:42:00 INFO R0:waiting for SONIC login prompt after 'onie-nos-install sonic-cisco-8000-clab.bin' (console output captured in vxr.out/logs/console.R0.log)
+
+```
+### Accessing routers and get familiar with SONiC CLI
+
+1. Once the routers are up you can ssh to them and explore the Linux/Debian environment and SONiC CLI. Notice how they currently all have the same hostname. We'll change that and other parameters in step 7.
+```
+ssh cisco@172.10.10.2
+ssh cisco@172.10.10.3
+ssh cisco@172.10.10.4
+ssh cisco@172.10.10.5
 pw = cisco123
 ```
 
-6. Run some SONiC CLI commands:
+2. Run some SONiC CLI commands:
 ```
 show ?
 show runningconfiguration all
@@ -119,12 +158,12 @@ show ip interfaces
 show ipv6 interfaces
 ```
    
-7. We'll use an Ansible playbook to apply global configurations to our nodes. cd into the ansible directory and run the sonic101 day-0 playbook. This playbook will perform the following on each router:
+3. We'll use an Ansible playbook to apply global configurations to our nodes. cd into the ansible directory and run the lab-1-configs.yml playbook. This playbook will perform the following on each router:
    * Backup the existing /etc/sonic/config_db.json file
    * Copy the appropriate config_db.json file from this repo to the router
    * Reload the SONiC config
 ```
-ansible-playbook -i hosts sonic101-4-node-day-0.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+ansible-playbook -i hosts lab-1-configs.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
 ```
   - The tail end of the output should look something like:
     ```
@@ -134,18 +173,18 @@ ansible-playbook -i hosts sonic101-4-node-day-0.yml -e "ansible_user=cisco ansib
     sonic03: ok=5   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
     sonic04: ok=5   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
     ```
-8. Next ssh into the routers (notice the hostname change) and invoke the FRR CLI
+4. Next ssh into the routers (notice the hostname change) 
 ```
-ssh cisco@172.10.10.11
+ssh cisco@172.10.10.2
 vtysh
 ```
 
-9. Its a whole lot like IOS:
+5. Invoke the FRR CLI. Its a whole lot like IOS:
 ```
 show run
 conf t
 show interface brief 
 ```
 
-Proceed to Lab 2 - FRR BGP configuration
+Proceed to Lab 2 - FRR ISIS and BGP configuration
 
