@@ -1,4 +1,4 @@
-# Lab 1 Guide: SONiC Topology Setup and Validation [30 Min]
+# Lab 1 Guide: SONiC Topology Setup and Validation [40 Min]
 This dCloud lab makes heavy use of the relatively new Dockerized Cisco 8000 emulator router known. If you wish to explore Cisco 8000 emulator and its uses beyond the scope of this lab the document team has posted an installation guide here: https://www.cisco.com/c/en/us/support/routers/8000-series-virtual-router-emulator/series.html
 
 ### Description: 
@@ -6,17 +6,22 @@ In Lab 1 the student will launch the SONiC topology and validate it is up and ru
 topology all subsequent lab exercises. Second, they will validate that the pre-configured ISIS and BGP routing protocols are running and seeing the correct topology. 
 
 ## Contents
-- [Lab 1 Guide: XRd Topology Setup and Validation \[30 Min\]](#lab-1-guide-xrd-topology-setup-and-validation-30-min)
+- [Lab 1 Guide: XRd Topology Setup and Validation \[40 Min\]](#lab-1-guide-xrd-topology-setup-and-validation-30-min)
   - [Lab Objectives](#lab-objectives)
+  - [Virtualization Stack](#virtualizatin-stack)
   - [Validate Device Access](#validate-device-access)
     - [User Credentials](#user-credentials)
     - [Management Network Topology](#management-network-topology)
-    - [Launch and Validate XRD Topology](#launch-and-validate-xrd-topology)
-    - [Validate Jalapeno VM](#validate-jalapeno-vm)
     - [Validate Client VMs](#validate-client-vms)
+  - [Launch and Validate SONiC Topology](#launch-and-validate-sonic-topology)
+    - [Launch Container Lab Environment](#launch-container-lab-environment)
+    - [Ansible Automation](#ansible-automation)
     - [Connect to Routers](#connect-to-routers)
-  - [Validate ISIS Topology](#validate-isis-topology)
-  - [Validate BGP Topology](#validate-bgp-topology)
+  - [Tour of SONiC](#tour-of-sonic)
+     - [SONiC Software Architecture](#sonic-software-architecture)
+     - [Health Check of SONiC Components](#health-check-of-sonic-components)
+     - [Tour of SONiC CLI](#tour-of-sonic-cli)
+  - [Validate Lab Topology](#validate-lab-topology)
   - [End of Lab 1](#end-of-lab-1)
   
 ## Lab Objectives
