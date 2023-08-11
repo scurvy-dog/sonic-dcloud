@@ -56,8 +56,8 @@ This lab is based on a simulated DC fabric design of four SONiC routers running 
 
 | Device Name    | Device Type | Access Type |   IP Address    |                                           
 |:---------------|:------------|:------------|:---------------:|                          
-| leaf01         | router      | SSH         | 172.10.10.2     |
-| leaf02         | router      | SSH         | 172.10.10.3     |
-| spine01        | router      | SSH         | 172.10.10.4     |
-| spine02        | router      | SSH         | 172.10.10.5     |
+| spine01        | router      | SSH         | 172.10.10.2     |
+| spine02        | router      | SSH         | 172.10.10.3     |
+| leaf01         | router      | SSH         | 172.10.10.4     |
+| leaf02         | router      | SSH         | 172.10.10.5     |
 
