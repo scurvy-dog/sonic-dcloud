@@ -1,8 +1,8 @@
-# Lab 1 Guide: XRd Topology Setup and Validation [30 Min]
-The Cisco Live LTRSPG-2212 lab makes heavy use of the relatively new Dockerized IOS-XR router known as XRd. If you wish to explore XRd and its uses beyond the scope of this lab the xrdocs team has posted a number of XRd tutorials here: https://xrdocs.io/virtual-routing/tags/#xrd-tutorial-series
+# Lab 1 Guide: SONiC Topology Setup and Validation [30 Min]
+This dCloud lab makes heavy use of the relatively new Dockerized Cisco 8000 emulator router known. If you wish to explore Cisco 8000 emulator and its uses beyond the scope of this lab the document team has posted an installation guide here: https://www.cisco.com/c/en/us/support/routers/8000-series-virtual-router-emulator/series.html
 
 ### Description: 
-In Lab 1 the student will launch the XRd topology and validate it is up and running. This will be the baseline 
+In Lab 1 the student will launch the SONiC topology and validate it is up and running. This will be the baseline 
 topology all subsequent lab exercises. Second, they will validate that the pre-configured ISIS and BGP routing protocols are running and seeing the correct topology. 
 
 ## Contents
