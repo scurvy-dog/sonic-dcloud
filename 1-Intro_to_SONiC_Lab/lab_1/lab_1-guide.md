@@ -15,7 +15,6 @@ topology all subsequent lab exercises. Second, they will validate that the pre-c
     - [Validate Client VMs](#validate-client-vms)
   - [Launch and Validate SONiC Topology](#launch-and-validate-sonic-topology)
     - [Launch Container Lab Environment](#launch-container-lab-environment)
-    - [Ansible Automation](#ansible-automation)
     - [Connect to Routers](#connect-to-routers)
   - [End of Lab 1](#end-of-lab-1)
   
