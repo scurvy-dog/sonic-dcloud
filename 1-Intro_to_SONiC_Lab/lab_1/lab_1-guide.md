@@ -1,4 +1,4 @@
-# Lab 1 Guide: SONiC Topology Setup and Validation [40 Min]
+# Lab 1 Guide: SONiC Topology Setup and Validation [30 Min]
 This dCloud lab makes heavy use of the relatively new Dockerized Cisco 8000 emulator router known. If you wish to explore Cisco 8000 emulator and its uses beyond the scope of this lab the document team has posted an installation guide here: https://www.cisco.com/c/en/us/support/routers/8000-series-virtual-router-emulator/series.html
 
 ### Description: 
@@ -22,16 +22,21 @@ topology all subsequent lab exercises. Second, they will validate that the pre-c
 The student upon completion of Lab 1 should have achieved the following objectives:
 
 * Access to all devices in the lab
-* Deployed the XRd network topology
+* Understand the Cisco 8000 Emulator / SONiC stack
 * Understanding of the lab topology and components
-* Confirm IPv4 and IPv6 connectivity   
+* Launch the ContainerLab SONiC topology   
 
 
 ## Validate Device Access
 
-Device access for this lab is primarly through SSH. All of the VMs within this toplogy can be accessed once you connect through Cisco AnyConnect VPN to the dCloud environment. Please see the management topology network diagram below. In addition we will launch seven instances of XR routers running as containers on the VM host "XRD". The XRD VM acts as a jumpbox for these containerized routers, thus we will SSH into the XRD VM and then initiate a separate SSH session to each of the routers. The XRD VM is configured for DNS resolution for each router name to save time.
+Device access for this lab is primarly through SSH. All of the VMs within this toplogy can be accessed once you connect through Cisco AnyConnect VPN to the dCloud environment. Please see the management topology network diagram below. In addition we will launch four instances of SONiC routers running as containers on the VM host "vSONiC". The vSONiC VM acts as a jumpbox for these containerized routers, thus we will SSH into the vSONiC VM and then initiate a separate SSH session to each of the routers. The vSONiC VM is configured for DNS resolution for each router name to save time.
 
 ### User Credentials
+For the vSONiC VM use the following credentials:
+```
+User: cisco, Password: c1sco12345
+```
+
 For all instances you will use the same user credentials:
 ```
 User: cisco, Password: cisco123
