@@ -12,7 +12,7 @@ topology all subsequent lab exercises. Second, they will validate that the pre-c
   - [Validate Device Access](#validate-device-access)
     - [User Credentials](#user-credentials)
     - [Management Network Topology](#management-network-topology)
-    - [Validate Client VMs](#validate-client-vms)
+    - [Validate VM Endpoints](#validate-vm-endpoints)
   - [Launch and Validate SONiC Topology](#launch-and-validate-sonic-topology)
     - [Launch Container Lab Environment](#launch-container-lab-environment)
     - [Connect to Routers](#connect-to-routers)
@@ -53,8 +53,11 @@ User: cisco, Password: cisco123
 
 For full size image see [LINK](../topo-drawings/management-network.png)
 
-### Launch and Validate XRD Topology
-1. SSH to the Ubuntu VM **XRD** where we will launch the XRd routers
+### Validate Client VMs
+
+
+### Launch and Validate vSONiC Topology
+1. SSH to the Ubuntu VM **vSONiC** where we will launch the XRd routers
     ```
     ssh cisco@198.18.128.100
     ```
