@@ -17,11 +17,6 @@ topology all subsequent lab exercises. Second, they will validate that the pre-c
     - [Launch Container Lab Environment](#launch-container-lab-environment)
     - [Ansible Automation](#ansible-automation)
     - [Connect to Routers](#connect-to-routers)
-  - [Tour of SONiC](#tour-of-sonic)
-     - [SONiC Software Architecture](#sonic-software-architecture)
-     - [Health Check of SONiC Components](#health-check-of-sonic-components)
-     - [Tour of SONiC CLI](#tour-of-sonic-cli)
-  - [Validate Lab Topology](#validate-lab-topology)
   - [End of Lab 1](#end-of-lab-1)
   
 ## Lab Objectives
