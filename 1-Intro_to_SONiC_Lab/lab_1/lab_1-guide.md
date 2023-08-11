@@ -49,9 +49,9 @@ User: cisco, Password: cisco123
 
 ### Management Network Topology
 
-![Management Topology](/topo_drawings/management-network-medium.png)
+![Management Topology](../topo_drawings/management-network-medium.png)
 
-For full size image see [LINK](/topo_drawings/management-network.png)
+For full size image see [LINK](../topo_drawings/management-network.png)
 
 ### Launch and Validate XRD Topology
 1. SSH to the Ubuntu VM **XRD** where we will launch the XRd routers
