@@ -30,7 +30,7 @@ The student upon completion of Lab 1 should have achieved the following objectiv
 
 The software virtualization stack used in this lab consists of several layers. At the base Linux OS level it is possible to run this lab either on bare metal or in a virtualized environment. In our dCloud lab it is running within a hypervisor as a VM. Within the Ubuntu VM named *v-SONiC* we have installed Docker as our container platform. We will user the ContainerLab software to spin up a docker container that runs the Cisco 8000 hardware emulation software and point the emulator to boot the designated SONiC image. We will spin a single heavy container for each SONiC router needed. See the below diagram.
 
-![Software Stack](topo-drawings/software-stack.png)
+![Software Stack](../topo-drawings/software-stack.png)
 
 ## Validate Device Access
 
