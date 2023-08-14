@@ -62,38 +62,36 @@ For full size image see [LINK](../topo-drawings/management-network.png)
     ssh cisco@198.18.128.100
     ```
 
-2. The XRD VM should have a blank file in user *cisco's* home directory. The filename indicates the name of the pod you're connected to. Use the `ls` command to make sure you're connected to the correct dCloud instance: 
-
-   ```
-   ls
-   ```
-   Example output for pod01:
-   ```
-   cisco@xrd:~$ ls
-   Downloads  images  pod01  SRv6_dCloud_Lab
-   ```
-
-3. Change to the Git repository directory
-    - The lab repository folder is found in the home directory *`~/SRv6_dCloud_Lab/`*
+2. Change to the Git repository directory and check status
+    - The lab repository folder is found in the home directory *`~/sonic-dcloud/`*
     ```
-    cd ~/SRv6_dCloud_Lab/
+    cd ~/sonic-dcloud/
+    ```
+    - The repository should automatically update on the lab spin-up. Validate this.
+    ```
+    git fetch -v
+    ```
+    ```
+    cisco@vsonic:~/sonic-dcloud$ git fetch -v
+    From https://github.com/scurvy-dog/sonic-dcloud
+    = [up to date]      main       -> origin/main
     ```
 
-4. Validate there are no docker containers running or docker networks for the XRd topology
+3. Validate there are no docker containers running or docker networks for the XRd topology
     ```
     docker ps
     ```
     ```
-    cisco@xrd:~/SRv6_dCloud_Lab/lab_1$ docker ps
+    cisco@vsonic:~/sonic-dcloud/$ docker ps
     CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
     
-    cisco@xrd:~/SRv6_dCloud_Lab/lab_1$ docker network ls
+    cisco@vsonic:~/sonic-dcloud/$ docker network ls
     NETWORK ID     NAME      DRIVER    SCOPE
     cfd793a3a770   bridge    bridge    local
     b948b6ba5918   host      host      local
     bdf431ee7377   none      null      local
     ```
-5.  Run the setup script, which should clean up any existing XRd containers and docker networks, then launch the topology into the "beginning of lab 1" configuration state 
+4.  Run the setup script, which should clean up any existing XRd containers and docker networks, then launch the topology into the "beginning of lab 1" configuration state 
     - change to the lab_1 directory
     ```
     cd lab_1
