@@ -94,7 +94,7 @@ For full size image see [LINK](../topo-drawings/management-network.png)
     bdf431ee7377   none      null      local
     ```
 ### Launch Container Lab Environment
-    1. cd into the lab 1 directory and create the needed linux bridges
+1. cd into the lab 1 directory and create the needed linux bridges
     ```
     sudo ./create-host-bridges.sh
     ```
@@ -106,7 +106,7 @@ For full size image see [LINK](../topo-drawings/management-network.png)
     leaf01e32-host1		8000.000000000000	no		
     leaf02e32-host2		8000.000000000000	no
     ```
-    2. This lab uses a tool called Containerlab to launch the Cisco 8000 emulator and SONiC images for our topology
+  2. This lab uses a tool called Containerlab to launch the Cisco 8000 emulator and SONiC images for our topology
     ```
     sudo containerlab deploy -t topology.yml
     ```
@@ -149,7 +149,7 @@ For full size image see [LINK](../topo-drawings/management-network.png)
     ```
     sudo containerlab destroy -t topology.yml
     ```
-6. Check that the docker containers were created and running
+3. Check that the docker containers were created and running
     ```
     docker ps
     ```
