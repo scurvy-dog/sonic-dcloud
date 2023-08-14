@@ -106,22 +106,24 @@ For full size image see [LINK](../topo-drawings/management-network.png)
     leaf01e32-host1		8000.000000000000	no		
     leaf02e32-host2		8000.000000000000	no
     ```
-  2. This lab uses a tool called Containerlab to launch the Cisco 8000 emulator and SONiC images for our topology
+    
+2. This lab uses a tool called Containerlab to launch the Cisco 8000 emulator and SONiC images for our topology
     ```
     sudo containerlab deploy -t topology.yml
     ```
-    Expected Output
-    ```
-    cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1$ sudo containerlab deploy -t topology.yml 
-    INFO[0000] Containerlab v0.40.0 started                 
-    INFO[0000] Parsing & checking topology file: topology.yml 
-    INFO[0000] Creating lab directory: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1/clab-c8201-sonic-4-node-clos 
-    INFO[0000] Creating docker network: Name="mgt_net", IPv4Subnet="172.10.10.0/24", IPv6Subnet="2001:172:10:10::/80", MTU="1500" 
-    INFO[0000] Creating container: "spine01"                
-    INFO[0001] Creating container: "spine02"                
-    INFO[0002] Creating container: "leaf01"                 
-    INFO[0003] Creating container: "leaf02"                 
-    INFO[0004] Creating virtual wire: spine01:eth3 <--> leaf02:eth3 
+
+   Expected Output
+   ```
+   cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1$ sudo containerlab deploy -t topology.yml 
+   INFO[0000] Containerlab v0.40.0 started                 
+   INFO[0000] Parsing & checking topology file: topology.yml 
+   INFO[0000] Creating lab directory: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1/clab-c8201-sonic-4-node-clos 
+   INFO[0000] Creating docker network: Name="mgt_net", IPv4Subnet="172.10.10.0/24", IPv6Subnet="2001:172:10:10::/80", MTU="1500" 
+   INFO[0000] Creating container: "spine01"                
+   INFO[0001] Creating container: "spine02"                
+   INFO[0002] Creating container: "leaf01"                 
+   INFO[0003] Creating container: "leaf02"                 
+   INFO[0004] Creating virtual wire: spine01:eth3 <--> leaf02:eth3 
     INFO[0004] Creating virtual wire: leaf02:eth5 <--> leaf02e32-host2:leaf02eth5 
     INFO[0004] Creating virtual wire: spine01:eth1 <--> leaf01:eth1 
     INFO[0004] Creating virtual wire: spine02:eth3 <--> leaf01:eth3 
@@ -149,7 +151,7 @@ For full size image see [LINK](../topo-drawings/management-network.png)
     ```
     sudo containerlab destroy -t topology.yml
     ```
-3. Check that the docker containers were created and running
+4. Check that the docker containers were created and running
     ```
     docker ps
     ```
