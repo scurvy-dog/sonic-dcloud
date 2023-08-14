@@ -95,20 +95,23 @@ For full size image see [LINK](../topo-drawings/management-network.png)
     ```
 ### Launch Container Lab Environment
 1. Change into the lab-1 directory and create the needed linux bridges
-    ```
-    cd ~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1
-    sudo ./create-host-bridges.sh
-    ```
-    Confirm bridges were created succesfully
-    ```
-    cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1$ brctl show
-    bridge name	bridge id		STP enabled	interfaces
-    docker0		8000.0242abf3a8e0	no		
-    leaf01e32-host1		8000.000000000000	no		
-    leaf02e32-host2		8000.000000000000	no
-    ```
+   ```
+   cd ~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1
+   sudo ./create-host-bridges.sh
+   ```
+   Confirm bridges were created succesfully
+   ```
+   brctl show
+   ```
+   ```
+   cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1$ brctl show
+   bridge name	bridge id		STP enabled	interfaces
+   docker0		8000.0242abf3a8e0	no		
+   leaf01e32-host1		8000.000000000000	no		
+   leaf02e32-host2		8000.000000000000	no
+   ```
     
-2. This lab uses a tool called Containerlab to launch the Cisco 8000 emulator and SONiC images for our topology
+3. This lab uses a tool called Containerlab to launch the Cisco 8000 emulator and SONiC images for our topology
     ```
     sudo containerlab deploy -t clab-topology.yml
     ```
