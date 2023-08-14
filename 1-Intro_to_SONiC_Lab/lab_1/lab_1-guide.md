@@ -8,7 +8,7 @@ topology all subsequent lab exercises. Second, they will validate that the pre-c
 ## Contents
 - [Lab 1 Guide: XRd Topology Setup and Validation \[40 Min\]](#lab-1-guide-xrd-topology-setup-and-validation-30-min)
   - [Lab Objectives](#lab-objectives)
-  - [Virtualization Stack](#virtualizatin-stack)
+  - [Virtualization Stack](#virtualization-stack)
   - [Validate Device Access](#validate-device-access)
     - [User Credentials](#user-credentials)
     - [Management Network Topology](#management-network-topology)
@@ -53,7 +53,7 @@ User: cisco, Password: cisco123
 
 For full size image see [LINK](../topo-drawings/management-network.png)
 
-### Validate Client VMs
+### Validate VM Endpoints
 
 
 ### Launch and Validate vSONiC Topology
