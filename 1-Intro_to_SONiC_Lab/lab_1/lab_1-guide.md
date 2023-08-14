@@ -14,6 +14,7 @@ topology all subsequent lab exercises. Second, they will validate that the pre-c
     - [Management Network Topology](#management-network-topology)
     - [Validate VM Endpoints](#validate-vm-endpoints)
   - [Launch and Validate SONiC Topology](#launch-and-validate-sonic-topology)
+    - [Validate vSONiC State](#validate-vSONiC-state) 
     - [Launch Container Lab Environment](#launch-container-lab-environment)
     - [Connect to Routers](#connect-to-routers)
   - [End of Lab 1](#end-of-lab-1)
@@ -39,7 +40,7 @@ Device access for this lab is primarly through SSH. All of the VMs within this t
 ### User Credentials
 For the vSONiC VM use the following credentials:
 ```
-User: cisco, Password: c1sco12345
+User: cisco, Password: C1sco12345
 ```
 
 For all instances you will use the same user credentials:
@@ -56,7 +57,8 @@ For full size image see [LINK](../topo-drawings/management-network.png)
 ### Validate VM Endpoints
 
 
-### Launch and Validate vSONiC Topology
+## Launch and Validate SONiC Topology
+### Validate vSONiC State
 1. SSH to the Ubuntu VM **vSONiC** where we will launch the XRd routers
     ```
     ssh cisco@198.18.128.100
@@ -91,26 +93,24 @@ For full size image see [LINK](../topo-drawings/management-network.png)
     b948b6ba5918   host      host      local
     bdf431ee7377   none      null      local
     ```
-4.  Run the setup script, which should clean up any existing XRd containers and docker networks, then launch the topology into the "beginning of lab 1" configuration state 
-    - change to the lab_1 directory
-    ```
-    cd lab_1
-    ```
-    - run the XRd topology setup script
-    ``` 
-    ./setup-lab_1.sh
-    ```
-    - Look for the below output from the end of the script confirming XRD instances 1-7 were created
-    ```
-    Creating xrd03 ... done
-    Creating xrd04 ... done
-    Creating xrd06 ... done
-    Creating xrd02 ... done
-    Creating xrd05 ... done
-    Creating xrd07 ... done
-    Creating xrd01 ... done
-    ```
-    Look for status of `done` for each **xrd 01 -> 07**
+### Launch Container Lab Environment
+1. cd into the lab 1 directory and create the needed linux bridges
+```
+sudo ./create-host-bridges.sh
+```
+Confirm bridges were created succesfully
+```
+cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1$ brctl show
+bridge name	bridge id		STP enabled	interfaces
+docker0		8000.0242abf3a8e0	no		
+leaf01e32-host1		8000.000000000000	no		
+leaf02e32-host2		8000.000000000000	no
+```
+
+2. This lab uses a tool called Containerlab to launch the Cisco 8000 emulator and SONiC images for our topology
+```
+sudo containerlab deploy -t topology.yml
+```
 
 6. Check that the docker containers were created and running
     ```
