@@ -94,8 +94,9 @@ For full size image see [LINK](../topo-drawings/management-network.png)
     bdf431ee7377   none      null      local
     ```
 ### Launch Container Lab Environment
-1. cd into the lab 1 directory and create the needed linux bridges
+1. Change into the lab-1 directory and create the needed linux bridges
     ```
+    cd ~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1
     sudo ./create-host-bridges.sh
     ```
     Confirm bridges were created succesfully
