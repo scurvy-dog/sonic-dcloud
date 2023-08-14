@@ -109,12 +109,12 @@ For full size image see [LINK](../topo-drawings/management-network.png)
     
 2. This lab uses a tool called Containerlab to launch the Cisco 8000 emulator and SONiC images for our topology
     ```
-    sudo containerlab deploy -t topology.yml
+    sudo containerlab deploy -t clab-topology.yml
     ```
 
    Expected Output
    ```
-   cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1$ sudo containerlab deploy -t topology.yml 
+   cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1$ sudo containerlab deploy -t clab-topology.yml 
    INFO[0000] Containerlab v0.40.0 started                 
    INFO[0000] Parsing & checking topology file: topology.yml 
    INFO[0000] Creating lab directory: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1/clab-c8201-sonic-4-node-clos 
@@ -124,47 +124,42 @@ For full size image see [LINK](../topo-drawings/management-network.png)
    INFO[0002] Creating container: "leaf01"                 
    INFO[0003] Creating container: "leaf02"                 
    INFO[0004] Creating virtual wire: spine01:eth3 <--> leaf02:eth3 
-    INFO[0004] Creating virtual wire: leaf02:eth5 <--> leaf02e32-host2:leaf02eth5 
-    INFO[0004] Creating virtual wire: spine01:eth1 <--> leaf01:eth1 
-    INFO[0004] Creating virtual wire: spine02:eth3 <--> leaf01:eth3 
-    INFO[0004] Creating virtual wire: spine01:eth2 <--> leaf01:eth2 
-    INFO[0004] Creating virtual wire: spine01:eth4 <--> leaf02:eth4 
-    INFO[0004] Creating virtual wire: spine02:eth4 <--> leaf01:eth4 
-    INFO[0004] Creating virtual wire: spine02:eth1 <--> leaf02:eth1 
-    INFO[0004] Creating virtual wire: spine02:eth2 <--> leaf02:eth2 
-    INFO[0004] Creating virtual wire: leaf01:eth5 <--> leaf01e32-host1:leaf01eth5 
-    INFO[0006] Adding containerlab host entries to /etc/hosts file 
-    INFO[0006] 🎉 New containerlab version 0.43.0 is available! Release notes: https://containerlab.dev/rn/0.43/
-    Run 'containerlab version upgrade' to upgrade or go check other installation options at https://containerlab.dev/install/ 
-    +---+--------------------------------------+--------------+---------------------+-------+---------+----------------+----------------------+
+   INFO[0004] Creating virtual wire: leaf02:eth5 <--> leaf02e32-host2:leaf02eth5 
+   INFO[0004] Creating virtual wire: spine01:eth1 <--> leaf01:eth1 
+   INFO[0004] Creating virtual wire: spine02:eth3 <--> leaf01:eth3 
+   INFO[0004] Creating virtual wire: spine01:eth2 <--> leaf01:eth2 
+   INFO[0004] Creating virtual wire: spine01:eth4 <--> leaf02:eth4 
+   INFO[0004] Creating virtual wire: spine02:eth4 <--> leaf01:eth4 
+   INFO[0004] Creating virtual wire: spine02:eth1 <--> leaf02:eth1 
+   INFO[0004] Creating virtual wire: spine02:eth2 <--> leaf02:eth2 
+   INFO[0004] Creating virtual wire: leaf01:eth5 <--> leaf01e32-host1:leaf01eth5 
+   INFO[0006] Adding containerlab host entries to /etc/hosts file 
+   INFO[0006] 🎉 New containerlab version 0.43.0 is available! Release notes: https://containerlab.dev/rn/0.43/
+   Run 'containerlab version upgrade' to upgrade or go check other installation options at https://containerlab.dev/install/ 
+   +---+--------------------------------------+--------------+---------------------+-------+---------+----------------+----------------------+
     | # |                 Name                 | Container ID |        Image        | Kind  |  State  |  IPv4 Address  |     IPv6 Address     |
-    +---+--------------------------------------+--------------+---------------------+-------+---------+----------------+----------------------+
-    | 1 | clab-c8201-sonic-4-node-clos-leaf01  | f7a45e580658 | c8000-clab-sonic:29 | linux | running | 172.10.10.4/24 | 2001:172:10:10::4/80 |
-    | 2 | clab-c8201-sonic-4-node-clos-leaf02  | 5493543b19a6 | c8000-clab-sonic:29 | linux | running | 172.10.10.5/24 | 2001:172:10:10::5/80 |
-    | 3 | clab-c8201-sonic-4-node-clos-spine01 | 7d76479d7d84 | c8000-clab-sonic:29 | linux | running | 172.10.10.2/24 | 2001:172:10:10::2/80 |
-    | 4 | clab-c8201-sonic-4-node-clos-spine02 | bc2bcb119c92 | c8000-clab-sonic:29 | linux | running | 172.10.10.3/24 | 2001:172:10:10::3/80 |
-    +---+--------------------------------------+--------------+---------------------+-------+---------+----------------+----------------------+
-    cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1$ 
-    ```
+   +---+--------------------------------------+--------------+---------------------+-------+---------+----------------+----------------------+
+   | 1 | clab-c8201-sonic-4-node-clos-leaf01  | f7a45e580658 | c8000-clab-sonic:29 | linux | running | 172.10.10.4/24 | 2001:172:10:10::4/80 |
+   | 2 | clab-c8201-sonic-4-node-clos-leaf02  | 5493543b19a6 | c8000-clab-sonic:29 | linux | running | 172.10.10.5/24 | 2001:172:10:10::5/80 |
+   | 3 | clab-c8201-sonic-4-node-clos-spine01 | 7d76479d7d84 | c8000-clab-sonic:29 | linux | running | 172.10.10.2/24 | 2001:172:10:10::2/80 |
+   | 4 | clab-c8201-sonic-4-node-clos-spine02 | bc2bcb119c92 | c8000-clab-sonic:29 | linux | running | 172.10.10.3/24 | 2001:172:10:10::3/80 |
+   +---+--------------------------------------+--------------+---------------------+-------+---------+----------------+----------------------+
+   cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1$ 
+   ```
+   
     > **Note**
-    > Containerlab command to take the topology down:
+    > Containerlab command to shutdown the topology:
     ```
-    sudo containerlab destroy -t topology.yml
+    sudo containerlab destroy -t clab-topology.yml
     ```
+    
 4. Check that the docker containers were created and running
     ```
     docker ps
     ```
     ```
-    cisco@xrd:~/SRv6_dCloud_Lab/lab_1$ docker ps
-    CONTAINER ID   IMAGE                            COMMAND                  CREATED              STATUS              PORTS     NAMES
-    37960e0fea97   ios-xr/xrd-control-plane:7.8.1   "/bin/sh -c /sbin/xr…"   About a minute ago   Up About a minute             xrd07
-    1dd2e4ef748f   ios-xr/xrd-control-plane:7.8.1   "/bin/sh -c /sbin/xr…"   About a minute ago   Up About a minute             xrd05
-    970b0c888565   ios-xr/xrd-control-plane:7.8.1   "/bin/sh -c /sbin/xr…"   About a minute ago   Up About a minute             xrd01
-    4bd9ccd3e183   ios-xr/xrd-control-plane:7.8.1   "/bin/sh -c /sbin/xr…"   About a minute ago   Up About a minute             xrd02
-    9af05fddc01f   ios-xr/xrd-control-plane:7.8.1   "/bin/sh -c /sbin/xr…"   About a minute ago   Up About a minute             xrd03
-    c48dc39398ef   ios-xr/xrd-control-plane:7.8.1   "/bin/sh -c /sbin/xr…"   About a minute ago   Up About a minute             xrd04
-    7d0436c26cc8   ios-xr/xrd-control-plane:7.8.1   "/bin/sh -c /sbin/xr…"   About a minute ago   Up About a minute             xrd06
+    
+ 
     ```
 7. Confirm the docker networks were created. 
     ```
