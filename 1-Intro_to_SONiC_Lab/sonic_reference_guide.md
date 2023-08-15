@@ -15,6 +15,7 @@ This page is to help those new to SONiC have a quick reference guide for CLI com
 SONiC uses a docker container system to manage major functional services. As such common docker commands work.
 | CLI                              | Notes                                           |
 |:---------------------------------|:------------------------------------------------|
+| docker images                    | See image build versions for each container     |
 | docker logs <container>          | Review the specifics logs of a container        |
 | docker ps                        | Lists the subsystem containers running          |
 | docker restart <container>       | Restarts a specific container                   |
