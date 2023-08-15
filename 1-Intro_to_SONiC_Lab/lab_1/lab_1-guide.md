@@ -162,173 +162,48 @@ For full size image see [LINK](../topo-drawings/management-network.png)
     docker ps
     ```
     ```
-    
- 
+    cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1$ docker ps
+    CONTAINER ID   IMAGE                 COMMAND                  CREATED              STATUS              PORTS     NAMES
+    e482535a8fa3   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   About a minute ago   Up About a minute             clab-c8201-sonic-4-node-clos-leaf02
+    43646051366d   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   About a minute ago   Up About a minute             clab-c8201-sonic-4-node-clos-leaf01
+    10b9bda5a913   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   About a minute ago   Up About a minute             clab-c8201-sonic-4-node-clos-spine02
+    50399c8f057d   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   About a minute ago   Up About a minute             clab-c8201-sonic-4-node-clos-spine01
     ```
+    
 7. Confirm the docker networks were created. 
     ```
     docker network ls
     ```
     ```
-    cisco@xrd:~/SRv6_dCloud_Lab/lab_1$ docker network ls
-    NETWORK ID     NAME                  DRIVER    SCOPE
-    cfd793a3a770   bridge                bridge    local
-    b948b6ba5918   host                  host      local
-    8ff8a898b08c   lab_1_macvlan0        macvlan   local
-    62e49899e77a   lab_1_macvlan1        macvlan   local
-    f7f3312f9e29   lab_1_mgmt            bridge    local
-    2d455a6860aa   lab_1_xrd05-host      bridge    local
-    00bae5fdbe48   lab_1_xrd06-host      bridge    local
-    bdf431ee7377   none                  null      local
-    336a27055564   xrd01-gi1-xrd02-gi0   bridge    local
-    da281230d4b3   xrd01-gi2-xrd05-gi0   bridge    local
-    a9cdde56cefa   xrd01-gi3             bridge    local
-    c254a6c88536   xrd02-gi1-xrd03-gi0   bridge    local
-    2fec9b3e52a5   xrd02-gi2-xrd06-gi1   bridge    local
-    942edff76963   xrd02-gi3             bridge    local
-    7a6f21c0cb6a   xrd03-gi1-xrd04-gi0   bridge    local
-    3c6d5ff6828f   xrd03-gi2             bridge    local
-    e3eb44320373   xrd03-gi3             bridge    local
-    c03ebf10229b   xrd04-gi1-xrd07-gi1   bridge    local
-    331c62bb019a   xrd04-gi2-xrd05-gi1   bridge    local
-    8a2cb5e8083d   xrd04-gi3             bridge    local
-    b300884b2030   xrd05-gi2-xrd06-gi2   bridge    local
-    b48429454f4c   xrd06-gi0-xrd07-gi2   bridge    local
-    84b7ddd7e018   xrd07-gi3             bridge    local
+    cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1$ docker network ls
+    NETWORK ID     NAME      DRIVER    SCOPE
+    d2b6a7ceece7   bridge    bridge    local
+    a2cc09220b8d   host      host      local
+    8f3f39b4539f   mgt_net   bridge    local
+    31c3f069bdb9   none      null      local
     ```
-Note the docker Network IDs are unique on creation. Docker's network/bridge naming logic is such that the actual Linux bridge instance names are not predictable. Rather than go through some re-naming process the lab setup script calls another small script called 'nets.sh' that resolves the bridge name and writes it to a file that we'll use later for running tcpdump on the virtual links between routers in our topology.
+> **Note**
+> the docker Network IDs are unique on creation. Docker's network/bridge naming logic is such that the actual Linux bridge instance names are not predictable. Rather than go through some re-naming process the lab setup script calls another small script called 'nets.sh' that resolves the bridge name and writes it to a file that we'll use later for running tcpdump on the virtual links between routers in our topology.
 
- - The scripts and files reside in the lab 'util' directory:
+- The scripts and files reside in the lab 'util' directory:
 ```
-ls ~/SRv6_dCloud_Lab/util/
-```
-```
-cisco@xrd:~/SRv6_dCloud_Lab$ ls ~/SRv6_dCloud_Lab/util/
-nets.sh     xrd01-xrd02  xrd02-xrd03  xrd03-xrd04  xrd04-xrd07  xrd06-xrd07
-tcpdump.sh  xrd01-xrd05  xrd02-xrd06  xrd04-xrd05  xrd05-xrd06
+ls ~/sonic-dcloud/1-Intro_to_SONiC_Lab
+``` 
 
-```
-Later we'll use "tcpdump.sh **xrd0x-xrd0y**" to capture packets along the path through the network. 
-
-1. The XRD router instances should be available for SSH access 2 minutes after spin up.
-
-### Validate Client VMs
-
-__Endpoint-1__
-
-In our lab the Rome VM represents a standard linux host or endpoint, and is essentially a customer/user of our network.
-
-1. SSH to Endpoint-1 Client VM from your laptop.
-   ```
-   ssh cisco@198.18.128.103
-   ```
-
-2. Check that the interface to router leaf01 is `UP` and has the assigned IP `10.107.1.1/24`
-   ```
-   cisco@endpoint-1:~$ ip address show ens192
-    3: ens192: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
-        link/ether 00:50:56:aa:ab:cf brd ff:ff:ff:ff:ff:ff
-        inet <strong>10.107.1.1/24</strong> brd 10.107.1.255 scope global ens192  <------- Here
-        valid_lft forever preferred_lft forever
-        inet6 fc00:0:107:1:250:56ff:feaa:abcf/64 scope global dynamic mngtmpaddr noprefixroute 
-        valid_lft 2591929sec preferred_lft 604729sec
-        inet6 fc00:0:107:1::1/64 scope global 
-        valid_lft forever preferred_lft forever
-        inet6 fe80::250:56ff:feaa:abcf/64 scope link 
-        valid_lft forever preferred_lft forever
-   ```
-3. Check connectivity from Endpoint-1 to leaf01
-   ```
-   cisco@rome:~$ ping -c 3 10.107.1.2
-   PING 10.107.1.2 (10.107.1.2) 56(84) bytes of data.
-   64 bytes from 10.107.1.2: icmp_seq=1 ttl=255 time=2.70 ms
-   64 bytes from 10.107.1.2: icmp_seq=2 ttl=255 time=1.38 ms
-   64 bytes from 10.107.1.2: icmp_seq=3 ttl=255 time=1.30 ms
-   ```
-
-__Endpoint-2__
-
-The Endpiont-2 VM represents a VM belonging in another virtual network (different then Endpoint-1 VM). The Endpoint-1 VM comes with VPP pre-installed. VPP (also known as https://fd.io/) is a very flexible and high performance open source software dataplane. 
-
-1. SSH to Endpoint-2 Client VM from your laptop.
-   ```
-   ssh cisco@198.18.128.102
-   ```
-
-2. Check that the VPP interface facing Ubuntu (host-vpp-in) and the interface facing router xrd01 (GigabitEthernetb/0/0) are `UP` and have their assigned IP addresses. GigabitEthernetb/0/0: `10.101.1.1/24`, and host-vpp-in: `10.101.2.2/24` 
-    
-    ```
-    sudo vppctl show interface address
-    ```
-    ```
-    cisco@amsterdam:~$ sudo vppctl show interface address
-    GigabitEthernetb/0/0 (up):
-    L3 10.101.1.1/24        <-------HERE
-    L3 fc00:0:101:1::1/64
-    host-vpp-in (up):
-    L3 10.101.2.2/24        <-------HERE
-    ```
-    
-3. Check connectivity from Endpoint-2 to leaf02 - we'll issue a ping from VPP itself:
-    ```
-    sudo vppctl ping 10.101.1.2
-    ```
-
-    ```
-    cisco@amsterdam:~$ sudo vppctl ping 10.101.1.2
-    116 bytes from 10.101.1.2: icmp_seq=1 ttl=255 time=2.7229 ms
-    116 bytes from 10.101.1.2: icmp_seq=2 ttl=255 time=1.1550 ms
-    116 bytes from 10.101.1.2: icmp_seq=3 ttl=255 time=1.1341 ms
-    116 bytes from 10.101.1.2: icmp_seq=4 ttl=255 time=1.2277 ms
-    116 bytes from 10.101.1.2: icmp_seq=5 ttl=255 time=.8838 ms
-
-    Statistics: 5 sent, 5 received, 0% packet loss
-    cisco@amsterdam:~$ 
-    ```
+8. The SONiC router instances should be available for SSH access 10 minutes after spin up.
 
 ### Connect to Routers
-1. Starting from the XRD VM log into each router instance 1-7 per the management topology diagram above. Example:
-```
-ssh cisco@xrd01
-```
+1. Starting from the vSONiC VM log into each router instance 1-4 per the management topology diagram above. Example:
+    ```
+    ssh cisco@172.10.10.2
+    ```
 
-2. Confirm that the configured interfaces are in an `UP | UP` state
+2.You can view the default startup configuration for the container. The config_db.json file stores the saved configuration of the container. 
     ```
-    RP/0/RP0/CPU0:xrd01#show ip interface brief
-    
-    Interface                      IP-Address      Status          Protocol Vrf-Name
-    Loopback0                      10.0.0.1        Up              Up       default 
-    MgmtEth0/RP0/CPU0/0            10.254.254.101  Up              Up       default 
-    GigabitEthernet0/0/0/0         10.101.1.2      Up              Up       default 
-    GigabitEthernet0/0/0/1         10.1.1.0        Up              Up       default 
-    GigabitEthernet0/0/0/2         10.1.1.8        Up              Up       default 
-    GigabitEthernet0/0/0/3         unassigned      Shutdown        Down     default
+    cat /etc/sonic/config_db.json | more 
     ```
-3. Validate IPv6 connectivity from **xrd01** to **Amsterdam**VM: 
-```
-ping fc00:0:101:1::1
-```
-
-4. SSH to **xrd07** and validate IPv6 connectivity to the **Rome** VM: 
-```
-ping fc00:0:107:1::1
-```
-
-5. Validate adjacencies and traffic passing on each router. Use the topology diagram to determine neighbors. The client devices **Amsterdam** and **Rome** are not running CDP.
-    ```
-    show cdp neighbors
-    ```
-    ```
-    RP/0/RP0/CPU0:xrd05#show cdp neighbors 
-    Wed Dec 21 18:16:57.657 UTC
-    Capability Codes: R - Router, T - Trans Bridge, B - Source Route Bridge
-                    S - Switch, H - Host, I - IGMP, r - Repeater
-
-    Device ID       Local Intrfce    Holdtme Capability Platform  Port ID
-    xrd01           Gi0/0/0/0        121     R          XRd Contr Gi0/0/0/2       
-    xrd04           Gi0/0/0/1        179     R          XRd Contr Gi0/0/0/2       
-    xrd06           Gi0/0/0/2        124     R          XRd Contr Gi0/0/0/2  
-    ```
+>**Note**
+>Any running configuration changes must be written to the config_db.json to persist in reboots
 
 ## End of Lab 1
 Please proceed to [Lab 2](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_2/lab_guide-2.md)
