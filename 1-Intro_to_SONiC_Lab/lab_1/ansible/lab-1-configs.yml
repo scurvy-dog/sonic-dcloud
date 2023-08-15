@@ -21,7 +21,7 @@
         command: sudo config reload
         responses:
           (.*)y/N(.*): "y"
-        timeout: 90
+        timeout: 120
       ignore_errors: yes
       when: backup_result is not failed
       register: reload_result
