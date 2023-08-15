@@ -43,6 +43,24 @@ As of today, SONiC breaks its main functional components into the following dock
 | LLDP          | BGP            | TeamD        |
 | Database      | SWSS           | SyncD        |
 
+You can see the list of the running containers with SONiC by running the below command once logged into a SONiC device.
+```
+docker ps
+```
+```
+cisco@spine01:~$ docker ps
+CONTAINER ID   IMAGE                                COMMAND                  CREATED        STATUS       PORTS     NAMES
+868157a8bbf5   docker-snmp:latest                   "/usr/local/bin/supe…"   17 hours ago   Up 3 hours             snmp
+5644f3c91087   docker-sonic-mgmt-framework:latest   "/usr/local/bin/supe…"   17 hours ago   Up 3 hours             mgmt-framework
+099b9115a440   docker-router-advertiser:latest      "/usr/bin/docker-ini…"   17 hours ago   Up 3 hours             radv
+878549b44ead   docker-lldp:latest                   "/usr/bin/docker-lld…"   17 hours ago   Up 3 hours             lldp
+aa1c44498dee   docker-fpm-frr:latest                "/usr/bin/docker_ini…"   17 hours ago   Up 3 hours             bgp
+0a8f12abe9c6   docker-teamd:latest                  "/usr/local/bin/supe…"   17 hours ago   Up 3 hours             teamd
+f2996f06bc05   docker-syncd-cisco:latest            "/usr/local/bin/supe…"   17 hours ago   Up 3 hours             syncd
+20db7f99de4e   docker-orchagent:latest              "/usr/bin/docker-ini…"   17 hours ago   Up 3 hours             swss
+5b7c42be2fbc   docker-platform-monitor:latest       "/usr/bin/docker_ini…"   17 hours ago   Up 3 hours             pmon
+199dfb786c07   docker-database:latest               "/usr/local/bin/dock…"   17 hours ago   Up 3 hours             database
+```
 
 
 ## Validate Lab Topology
