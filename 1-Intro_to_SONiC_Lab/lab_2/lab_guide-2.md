@@ -37,7 +37,7 @@ SONiC places each module in independent docker containers to keep high cohesion 
 
 As of today, SONiC breaks its main functional components into the following docker containers:
 
-|               |                |              |
+| <img width=50/>  |  <img width=50/>               |
 |---------------|----------------|--------------|
 | DHCP-Relay    | PMON           | SNMP         |
 | LLDP          | BGP            | TeamD        |
