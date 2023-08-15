@@ -247,7 +247,18 @@ PING 10.1.1.4 (10.1.1.4) 56(84) bytes of data.
 64 bytes from 10.1.1.4: icmp_seq=2 ttl=64 time=494 ms
 ```
 
-8. Invoke the FRR CLI. Its a whole lot like IOS:
+8. Invoke the FRR CLI with the vtysh command, example:
+```
+cisco@leaf01:~$ vtysh
+
+Hello, this is FRRouting (version 8.2.2).
+Copyright 1996-2005 Kunihiro Ishiguro, et al.
+
+leaf01# 
+```
+
+9.  FRR is a whole lot like IOS:
+
 ```
 show run
 conf t

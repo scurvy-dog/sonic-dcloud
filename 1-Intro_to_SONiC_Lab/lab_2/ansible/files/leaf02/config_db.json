@@ -41,12 +41,14 @@
         }
     },
     "PORTCHANNEL_INTERFACE": {
-        "PortChannel1": {},
+        "PortChannel1": {
+                "ipv6_use_link_local_only": "enable"
+        },
         "PortChannel1|10.1.1.6/31": {},
-        "PortChannel1|fc00:0:ffff::6/127": {},
-        "PortChannel2": {},
-        "PortChannel2|10.1.1.4/31": {},
-        "PortChannel2|fc00:0:ffff::4/127": {}
+        "PortChannel2": {
+            "ipv6_use_link_local_only": "enable"
+        },
+        "PortChannel2|10.1.1.4/31": {}
     },
     "PORTCHANNEL_MEMBER": {
         "PortChannel1|Ethernet0": {},
