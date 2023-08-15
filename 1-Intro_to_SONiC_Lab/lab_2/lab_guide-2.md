@@ -37,11 +37,19 @@ SONiC places each module in independent docker containers to keep high cohesion 
 
 As of today, SONiC breaks its main functional components into the following docker containers:
 
-|               |                |              |
-|---------------|----------------|--------------|
-| DHCP-Relay    | PMON           | SNMP         |
-| LLDP          | BGP            | TeamD        |
-| Database      | SWSS           | SyncD        |
+| Service Container | Description                                                      |
+|:------------------|:-----------------------------------------------------------------|
+| BGP               | Runs Quagga or FRR. These stacks include other routing protocols |
+| Database          | Hosts the redis-database engine|
+| DHCP-Relay        | DHCP-Relay agent |
+| LLDP              | Hosts LLDP. Includes 3 process llpd, LLDP-syncd, LLDPmgr |
+| MGMT-Framework    |
+| PMON              | Runs **sensord** daemon used to log and alert sensor data |
+| RADV              |
+| SNMP              | Hosts SNMP feature. SNMPD and SNMP-Agent |
+| SWSS              | Collection of tools to allow communication among all SONiC modules |
+| SYNCD             | synchronization of the switch's network state with the switch's actual hardware/ASIC |
+| TeamD             | Runs open-source implementation of LAG protocol |
 
 You can see the list of the running containers with SONiC by running the below command once logged into a SONiC device.
 ```
@@ -49,17 +57,17 @@ docker ps
 ```
 ```
 cisco@spine01:~$ docker ps
-CONTAINER ID   IMAGE                                COMMAND                  CREATED        STATUS       PORTS     NAMES
-868157a8bbf5   docker-snmp:latest                   "/usr/local/bin/supe…"   17 hours ago   Up 3 hours             snmp
-5644f3c91087   docker-sonic-mgmt-framework:latest   "/usr/local/bin/supe…"   17 hours ago   Up 3 hours             mgmt-framework
-099b9115a440   docker-router-advertiser:latest      "/usr/bin/docker-ini…"   17 hours ago   Up 3 hours             radv
-878549b44ead   docker-lldp:latest                   "/usr/bin/docker-lld…"   17 hours ago   Up 3 hours             lldp
-aa1c44498dee   docker-fpm-frr:latest                "/usr/bin/docker_ini…"   17 hours ago   Up 3 hours             bgp
-0a8f12abe9c6   docker-teamd:latest                  "/usr/local/bin/supe…"   17 hours ago   Up 3 hours             teamd
-f2996f06bc05   docker-syncd-cisco:latest            "/usr/local/bin/supe…"   17 hours ago   Up 3 hours             syncd
-20db7f99de4e   docker-orchagent:latest              "/usr/bin/docker-ini…"   17 hours ago   Up 3 hours             swss
-5b7c42be2fbc   docker-platform-monitor:latest       "/usr/bin/docker_ini…"   17 hours ago   Up 3 hours             pmon
-199dfb786c07   docker-database:latest               "/usr/local/bin/dock…"   17 hours ago   Up 3 hours             database
+CONTAINER ID   IMAGE                                COMMAND                  CREATED        STATUS       NAMES
+868157a8bbf5   docker-snmp:latest                   "/usr/local/bin/supe…"   17 hours ago   Up 3 hours   snmp
+5644f3c91087   docker-sonic-mgmt-framework:latest   "/usr/local/bin/supe…"   17 hours ago   Up 3 hours   mgmt-framework
+099b9115a440   docker-router-advertiser:latest      "/usr/bin/docker-ini…"   17 hours ago   Up 3 hours   radv
+878549b44ead   docker-lldp:latest                   "/usr/bin/docker-lld…"   17 hours ago   Up 3 hours   lldp
+aa1c44498dee   docker-fpm-frr:latest                "/usr/bin/docker_ini…"   17 hours ago   Up 3 hours   bgp
+0a8f12abe9c6   docker-teamd:latest                  "/usr/local/bin/supe…"   17 hours ago   Up 3 hours   teamd
+f2996f06bc05   docker-syncd-cisco:latest            "/usr/local/bin/supe…"   17 hours ago   Up 3 hours   syncd
+20db7f99de4e   docker-orchagent:latest              "/usr/bin/docker-ini…"   17 hours ago   Up 3 hours   swss
+5b7c42be2fbc   docker-platform-monitor:latest       "/usr/bin/docker_ini…"   17 hours ago   Up 3 hours   pmon
+199dfb786c07   docker-database:latest               "/usr/local/bin/dock…"   17 hours ago   Up 3 hours   database
 ```
 
 
