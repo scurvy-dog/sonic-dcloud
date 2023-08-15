@@ -12,7 +12,6 @@ topology all subsequent lab exercises. Second, they will validate that the pre-c
   - [Validate Device Access](#validate-device-access)
     - [User Credentials](#user-credentials)
     - [Management Network Topology](#management-network-topology)
-    - [Validate VM Endpoints](#validate-vm-endpoints)
   - [Launch and Validate SONiC Topology](#launch-and-validate-sonic-topology)
     - [Validate vSONiC State](#validate-vSONiC-state) 
     - [Launch Container Lab Environment](#launch-container-lab-environment)
