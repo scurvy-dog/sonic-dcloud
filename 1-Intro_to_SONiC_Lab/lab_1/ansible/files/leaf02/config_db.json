@@ -21,7 +21,9 @@
     },
 
     "INTERFACE": {
-        "Ethernet32": {},
+        "Ethernet32": {
+            "vrf_name": "carrots"
+        },
         "Ethernet32|10.1.3.1/24": {},
         "Ethernet32|2001:1:3::1/64": {}
     },
@@ -53,6 +55,10 @@
         "PortChannel1|Ethernet8": {},
         "PortChannel2|Ethernet16": {},
         "PortChannel2|Ethernet24": {}
+    },
+
+    "VRF": {
+        "carrots": {}
     },
     
     "PORT": {

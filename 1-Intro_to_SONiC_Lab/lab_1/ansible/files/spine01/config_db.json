@@ -40,10 +40,10 @@
     "PORTCHANNEL_INTERFACE": {
         "PortChannel1": {},
         "PortChannel1|10.1.1.1/31": {},
-        "PortChannel1|fc00:0:ffff::1/31": {},
+        "PortChannel1|fc00:0:ffff::1/127": {},
         "PortChannel2": {},
         "PortChannel2|10.1.1.5/31": {},
-        "PortChannel2|fc00:0:ffff::5/31": {}
+        "PortChannel2|fc00:0:ffff::5/127": {}
     },
     "PORTCHANNEL_MEMBER": {
         "PortChannel1|Ethernet0": {},
