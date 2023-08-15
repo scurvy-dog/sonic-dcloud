@@ -45,10 +45,11 @@ As of today, SONiC breaks its main functional components into the following dock
 
 
 
-|   |   |
-|---|---|
-|__Bold Key__| Value1 |
-| Normal Key | Value2 |
+|   |   |   |
+|---|---|---|
+| DHCP-Relay    | PMON           | SNMP         |
+| LLDP          | BGP            | TeamD        |
+| Database      | SWSS           | SyncD        |
 
 
 
