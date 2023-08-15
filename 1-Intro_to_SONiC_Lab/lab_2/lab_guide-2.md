@@ -33,8 +33,14 @@ By relying on the publisher/subscriber messaging paradigm offered by the redis-e
 
 SONiC places each module in independent docker containers to keep high cohesion among semantically-affine components, while reducing coupling between disjointed ones. Each of these components are written to be entirely independent of the platform-specific details required to interact with lower-layer abstractions. See diagram below for high level architecture view.
 
-1-Intro_to_SONiC_Lab/topo-drawings/sonic-hld-architecture.png
+![Software Architecture](../topo-drawings/sonic-hld-architecture.png)
 
+As of today, SONiC breaks its main functional components into the following docker containers:
+
+|:--------------------:|:--------------------:||:--------------------:|
+|DHCP-Relay|PMON|SNMP|
+|LLDP|BGP|TeamD|
+|Database|SWSS|SyncD|
 
 ## Validate Lab Topology
 ### Validate Client VMs
