@@ -69,8 +69,8 @@ f2996f06bc05   docker-syncd-cisco:latest            "/usr/local/bin/supe…"   1
 5b7c42be2fbc   docker-platform-monitor:latest       "/usr/bin/docker_ini…"   17 hours ago   Up 3 hours   pmon
 199dfb786c07   docker-database:latest               "/usr/local/bin/dock…"   17 hours ago   Up 3 hours   database
 ```
-
-For greater detail on container services see this link [HERE](https://github.com/sonic-net/SONiC/wiki/Architecture)
+> **Note**
+>For greater detail on container services see this link [HERE](https://github.com/sonic-net/SONiC/wiki/Architecture)
 
 ## Validate Lab Topology
 ### Validate Client VMs
