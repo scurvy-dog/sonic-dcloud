@@ -36,11 +36,11 @@ SONiC places each module in independent docker containers to keep high cohesion 
 ![Software Architecture](../topo-drawings/sonic-hld-architecture.png)
 
 As of today, SONiC breaks its main functional components into the following docker containers:
-
+|                      |                      |                       |
 |:--------------------:|:--------------------:||:--------------------:|
-|DHCP-Relay|PMON|SNMP|
-|LLDP|BGP|TeamD|
-|Database|SWSS|SyncD|
+| DHCP-Relay| PMON | SNMP |
+| LLDP | BGP | TeamD |
+| Database | SWSS | SyncD |
 
 ## Validate Lab Topology
 ### Validate Client VMs
