@@ -26,3 +26,37 @@ System status summary
 	     PSU0.fan0 is missing
 	     Container 'telemetry' is not running
 	     routeCheck is not Status o
+
+
+### Enter FRR configuration mode
+cisco@spine01:/etc/sonic$ vtysh
+
+Hello, this is FRRouting (version 8.2.2).
+Copyright 1996-2005 Kunihiro Ishiguro, et al.
+spine01# 
+### FRR Edit configuration cli
+cisco@spine01:/etc/sonic$ vtysh
+
+Hello, this is FRRouting (version 8.2.2).
+Copyright 1996-2005 Kunihiro Ishiguro, et al.
+
+spine01# conf t
+spine01(config)# 
+
+### FRR write config
+spine01# write
+Note: this version of vtysh never writes vtysh.conf
+Building Configuration...
+Configuration saved to /etc/frr/zebra.conf
+Configuration saved to /etc/frr/bgpd.conf
+Configuration saved to /etc/frr/staticd.conf
+
+### FRR Saved config
+cisco@spine01:/etc/sonic$ sudo more /etc/sonic/frr/bgpd.conf
+!
+! Zebra configuration saved from vty
+!   2023/08/16 20:12:12
+!
+! loaded from 8.4-dev
+frr version 8.2.2
+frr defaults traditional
