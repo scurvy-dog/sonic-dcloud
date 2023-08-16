@@ -265,13 +265,29 @@ cisco@vsonic:~$
     ssh cisco@spine01
     pw = cisco123
     ```
+Example:
+```
+cisco@vsonic:~$ ssh cisco@172.10.10.2
+Warning: Permanently added '172.10.10.2' (RSA) to the list of known hosts.
+cisco@172.10.10.2's password: 
+Linux sonic 5.10.0-18-2-amd64 #1 SMP Debian 5.10.140-1 (2022-09-02) x86_64
+You are on
+  ____   ___  _   _ _  ____
+ / ___| / _ \| \ | (_)/ ___|
+ \___ \| | | |  \| | | |
+  ___) | |_| | |\  | | |___
+ |____/ \___/|_| \_|_|\____|
 
-2. You can view the default startup configuration for the container. The config_db.json file stores the saved configuration of the container. 
-    ```
-    cat /etc/sonic/config_db.json | more 
-    ```
->**Note**
->Any running configuration changes must be written to the config_db.json to persist in reboots
+-- Software for Open Networking in the Cloud --
+
+Unauthorized access and/or use are prohibited.
+All access and/or use are subject to monitoring.
+
+Help:    https://sonic-net.github.io/SONiC/
+
+Last login: Wed Aug 16 04:02:54 2023
+cisco@sonic:~$ 
+```
 
 ## End of Lab 1
 Please proceed to [Lab 2](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_2/lab_2-guide.md)

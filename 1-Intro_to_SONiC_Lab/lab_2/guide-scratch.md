@@ -1,5 +1,22 @@
 # Scratch Guide Lab 2
 
+### Run some basic SONiC CLI commands:
+```
+show ?
+show runningconfiguration all
+show interfaces status
+show ip interfaces
+show ipv6 interfaces
+```
+1. You can view the default startup configuration for the container. The config_db.json file stores the saved configuration of the container. 
+    ```
+    cat /etc/sonic/config_db.json | more 
+    ```
+>**Note**
+>Any running configuration changes must be written to the config_db.json to persist in reboots
+
+### system checks
+
 cisco@spine01:~$ sudo show system-health summary
 System status summary
 
