@@ -197,3 +197,24 @@ show interface brief
 
 Proceed to Lab 2 - FRR ISIS and BGP configuration
 
+cisco@vsonic:~$ docker ps
+CONTAINER ID   IMAGE                 COMMAND                  CREATED        STATUS        PORTS     NAMES
+1a3000d7b09d   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   16 hours ago   Up 16 hours             clab-c8201-sonic-4-node-clos-leaf02
+a83fca5cf9c6   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   16 hours ago   Up 16 hours             clab-c8201-sonic-4-node-clos-leaf01
+9ae30924831e   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   16 hours ago   Up 16 hours             clab-c8201-sonic-4-node-clos-spine02
+2cb043c24083   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   16 hours ago   Up 16 hours             clab-c8201-sonic-4-node-clos-spine01
+cisco@vsonic:~$ docker logs -f  clab-c8201-sonic-4-node-clos-leaf02 | grep Router
+Router failed to come up
+^C
+cisco@vsonic:~$ man docker log
+--Man-- next: log(3) [ view (return) | skip (Ctrl-D) | quit (Ctrl-C) ]
+^C
+cisco@vsonic:~$ docker logs | grep clab-c8201-sonic-4-node-clos-leaf02
+"docker logs" requires exactly 1 argument.
+See 'docker logs --help'.
+
+Usage:  docker logs [OPTIONS] CONTAINER
+
+Fetch the logs of a container
+cisco@vsonic:~$ docker logs clab-c8201-sonic-4-node-clos-leaf02 | grep Router
+Router failed to come up
