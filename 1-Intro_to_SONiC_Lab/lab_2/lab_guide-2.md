@@ -78,7 +78,9 @@ f2996f06bc05   docker-syncd-cisco:latest            "/usr/local/bin/supe…"   1
 ### Tour of SONiC CLI
 
 ### Managing Configurations
+Configuration state in SONiC is perserved into several places. For persistant configuratin between reloads configuration files are used. The main configuration is found at **/etc/sonic/config_db.json**. The second configuration file in this lab is for the FRR routing stack and it's configuratin is found at **/etc/sonic/frr/bgpd.conf**. When the router boots it loads the configuration into these two files into the redis database. The redis database is the running configuration of the router where the various services read or write state information into the redis database.
 
+![redis diagram](../topo-drawings/redis-diagram.png)
 
 ## Validate Lab Topology
 ### Validate Client VMs
