@@ -60,3 +60,9 @@ cisco@spine01:/etc/sonic$ sudo more /etc/sonic/frr/bgpd.conf
 ! loaded from 8.4-dev
 frr version 8.2.2
 frr defaults traditional
+
+
+## Ansible stuff
+ ansible-playbook -i hosts lab-1-configs.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+ 2035  cd ansible
+ 
