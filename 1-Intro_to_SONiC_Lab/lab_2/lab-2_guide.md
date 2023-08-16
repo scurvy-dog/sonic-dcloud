@@ -9,8 +9,7 @@ topology all subsequent lab exercises. Second, they will validate that the pre-c
   - [Tour of SONiC](#tour-of-sonic)
      - [SONiC Software Architecture](#sonic-software-architecture)
      - [Health Check of SONiC Components](#health-check-of-sonic-components)
-     - [Tour of SONiC CLI](#tour-of-sonic-cli)
-     - [Managing Configs](#managing-configs)
+     - [Managing Configs](#managing-configurations)
   - [Ansible Automation](#ansible-automation)
      - [Ansible Playbook Overview](#ansible-playbook-overview)
      - [Review Playboook Results](#review-playbook-results)
@@ -74,87 +73,145 @@ f2996f06bc05   docker-syncd-cisco:latest            "/usr/local/bin/supe…"   1
 >For greater detail on container services see this link [HERE](https://github.com/sonic-net/SONiC/wiki/Architecture)
 
 ### Health Check of SONiC Components
+**show system-health monitor-list**
 
-### Tour of SONiC CLI
+This command gives an overview of the software and hardware  status. Notice all the hardware outputs are listed as **Not OK** as this is in a simulated environment. 
+```
+cisco@spine01:~$ sudo show system-health monitor-list
+
+System services and devices monitor list
+
+Name                        Status    Type
+--------------------------  --------  ----------
+routeCheck                  Not OK    Program
+container_checker           Not OK    Program
+telemetry                   Not OK    Service
+spine01                     OK        System
+rsyslog                     OK        Process
+root-overlay                OK        Filesystem
+var-log                     OK        Filesystem
+diskCheck                   OK        Program
+vnetRouteCheck              OK        Program
+memory_check                OK        Program
+container_memory_telemetry  OK        Program
+container_memory_snmp       OK        Program
+database:redis              OK        Process
+lldp:lldpd                  OK        Process
+lldp:lldp-syncd             OK        Process
+lldp:lldpmgrd               OK        Process
+syncd:syncd                 OK        Process
+bgp:zebra                   OK        Process
+bgp:staticd                 OK        Process
+bgp:bgpd                    OK        Process
+bgp:fpmsyncd                OK        Process
+bgp:bgpcfgd                 OK        Process
+teamd:teammgrd              OK        Process
+teamd:teamsyncd             OK        Process
+teamd:tlm_teamd             OK        Process
+swss:orchagent              OK        Process
+swss:portsyncd              OK        Process
+swss:neighsyncd             OK        Process
+swss:fdbsyncd               OK        Process
+swss:vlanmgrd               OK        Process
+swss:intfmgrd               OK        Process
+swss:portmgrd               OK        Process
+swss:buffermgrd             OK        Process
+swss:vrfmgrd                OK        Process
+swss:nbrmgrd                OK        Process
+swss:vxlanmgrd              OK        Process
+swss:coppmgrd               OK        Process
+swss:tunnelmgrd             OK        Process
+snmp:snmpd                  OK        Process
+snmp:snmp-subagent          OK        Process
+PSU0.fan0                   Not OK    Fan
+PSU1.fan0                   Not OK    Fan
+fantray0.fan0               Not OK    Fan
+fantray0.fan1               Not OK    Fan
+fantray1.fan0               Not OK    Fan
+fantray1.fan1               Not OK    Fan
+fantray2.fan0               Not OK    Fan
+fantray2.fan1               Not OK    Fan
+fantray3.fan0               Not OK    Fan
+fantray3.fan1               Not OK    Fan
+fantray4.fan0               Not OK    Fan
+fantray4.fan1               Not OK    Fan
+fantray5.fan0               Not OK    Fan
+fantray5.fan1               Not OK    Fan
+PSU 1                       Not OK    PSU
+PSU 2                       Not OK    PSU
+```
+
+### Health Check of Hardware Components
+
+**show system-health summary**
 
 ### Managing Configurations
-Configuration state in SONiC is perserved into several places. For persistant configuratin between reloads configuration files are used. The main configuration is found at **/etc/sonic/config_db.json**. The second configuration file in this lab is for the FRR routing stack and it's configuratin is found at **/etc/sonic/frr/bgpd.conf**. When the router boots it loads the configuration into these two files into the redis database. The redis database is the running configuration of the router where the various services read or write state information into the redis database.
+Configuration state in SONiC is perserved into several places. For persistant configuratin between reloads configuration files are used. The main configuration is found at */etc/sonic/config_db.json*. The second configuration file in this lab is for the FRR routing stack and it's configuratin is found at */etc/sonic/frr/bgpd.conf*. When the router boots it loads the configuration into these two files into the redis database. The redis database is the running configuration of the router where the various services read or write state information into the redis database.
 
 ![redis diagram](../topo-drawings/redis-diagram.png)
 
-## Validate Lab Topology
-### Validate Client VMs
+#### Loading configuration from JSON file
 
-__Endpoint-1__
+The command *config load* is used to load the configuration from a JSON file like the file which SONiC saves its configuration to, */etc/sonic/config_db.json* This command loads the configuration from the input file (if user specifies this optional filename, it will use that input file. Otherwise, it will use the default */etc/sonic/config_db.json* file as the input file) into CONFIG_DB. The configuration present in the input file is applied on top of the already running configuration. This command does not flush the config DB before loading the new configuration (i.e., If the configuration present in the input file is same as the current running configuration, nothing happens) If the config present in the input file is not present in running configuration, it will be added. If the config present in the input file differs (when key matches) from that of the running configuration, it will be modified as per the new values for those keys.
 
-In our lab the Rome VM represents a standard linux host or endpoint, and is essentially a customer/user of our network.
+- Usage:
+```
+config load [-y|--yes] [<filename>]
+```
+- Example:
+```
+cisco@spine01:~$ sudo config load
+Load config from the file /etc/sonic/config_db.json? [y/N]: y
+Running command: /usr/local/bin/sonic-cfggen -j /etc/sonic/config_db.json --write-to-db
+```
 
-1. SSH to Endpoint-1 Client VM from your laptop.
-   ```
-   ssh cisco@198.18.128.103
-   ```
+#### Reloading configuration
 
-2. Check that the interface to router leaf01 is `UP` and has the assigned IP `10.107.1.1/24`
-   ```
-   cisco@endpoint-1:~$ ip address show ens192
-    3: ens192: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
-        link/ether 00:50:56:aa:ab:cf brd ff:ff:ff:ff:ff:ff
-        inet <strong>10.107.1.1/24</strong> brd 10.107.1.255 scope global ens192  <------- Here
-        valid_lft forever preferred_lft forever
-        inet6 fc00:0:107:1:250:56ff:feaa:abcf/64 scope global dynamic mngtmpaddr noprefixroute 
-        valid_lft 2591929sec preferred_lft 604729sec
-        inet6 fc00:0:107:1::1/64 scope global 
-        valid_lft forever preferred_lft forever
-        inet6 fe80::250:56ff:feaa:abcf/64 scope link 
-        valid_lft forever preferred_lft forever
-   ```
-3. Check connectivity from Endpoint-1 to leaf01
-   ```
-   cisco@rome:~$ ping -c 3 10.107.1.2
-   PING 10.107.1.2 (10.107.1.2) 56(84) bytes of data.
-   64 bytes from 10.107.1.2: icmp_seq=1 ttl=255 time=2.70 ms
-   64 bytes from 10.107.1.2: icmp_seq=2 ttl=255 time=1.38 ms
-   64 bytes from 10.107.1.2: icmp_seq=3 ttl=255 time=1.30 ms
-   ```
+This command is used to clear current configuration and import new configurationn from the input file or from */etc/sonic/config_db.json*. This command shall stop all services before clearing the configuration and it then restarts those services.
 
-__Endpoint-2__
+The command *config reload* restarts various services running in the device and it takes some time to complete the command.
+> **NOTE**
+> If the user had logged in using SSH, users might get disconnected depending upon the new management IP address. Users need to reconnect their SSH sessions.
 
-The Endpiont-2 VM represents a VM belonging in another virtual network (different then Endpoint-1 VM). The Endpoint-1 VM comes with VPP pre-installed. VPP (also known as https://fd.io/) is a very flexible and high performance open source software dataplane. 
+- Usage:
+```
+config reload [-y|--yes] [-l|--load-sysinfo] [<filename>] [-n|--no-service-restart] [-f|--force]
+```
+- Example:
+```
+cisco@spine01~$ sudo config reload
+Clear current config and reload config from the file /etc/sonic/config_db.json? [y/N]: y
+Running command: systemctl stop dhcp_relay
+Running command: systemctl stop swss
+Running command: systemctl stop snmp
+Warning: Stopping snmp.service, but it can still be activated by:
+  snmp.timer
+Running command: systemctl stop lldp
+Running command: systemctl stop pmon
+Running command: systemctl stop bgp
+Running command: systemctl stop teamd
+Running command: /usr/local/bin/sonic-cfggen -H -k Force10-Z9100-C32 --write-to-db
+Running command: /usr/local/bin/sonic-cfggen -j /etc/sonic/config_db.json --write-to-db
+Running command: systemctl restart hostname-config
+Running command: systemctl restart interfaces-config
+Timeout, server 10.11.162.42 not responding.
+```
 
-1. SSH to Endpoint-2 Client VM from your laptop.
-   ```
-   ssh cisco@198.18.128.102
-   ```
+#### Saving Configuration to a File for Persistence
 
-2. Check that the VPP interface facing Ubuntu (host-vpp-in) and the interface facing router xrd01 (GigabitEthernetb/0/0) are `UP` and have their assigned IP addresses. GigabitEthernetb/0/0: `10.101.1.1/24`, and host-vpp-in: `10.101.2.2/24` 
-    
-    ```
-    sudo vppctl show interface address
-    ```
-    ```
-    cisco@amsterdam:~$ sudo vppctl show interface address
-    GigabitEthernetb/0/0 (up):
-    L3 10.101.1.1/24        <-------HERE
-    L3 fc00:0:101:1::1/64
-    host-vpp-in (up):
-    L3 10.101.2.2/24        <-------HERE
-    ```
-    
-3. Check connectivity from Endpoint-2 to leaf02 - we'll issue a ping from VPP itself:
-    ```
-    sudo vppctl ping 10.101.1.2
-    ```
+The command *config save* is used to save the config DB configuration into the user-specified filename or into the default /etc/sonic/config_db.json. This saves the configuration into the disk which is available even after reboots. Saved file can be transferred to remote machines for debugging. If users wants to load the configuration from this new file at any point of time, they can use "config load" command and provide this newly generated file as input. If users wants this newly generated file to be used during reboot, they need to copy this file to /etc/sonic/config_db.json.
 
-    ```
-    cisco@amsterdam:~$ sudo vppctl ping 10.101.1.2
-    116 bytes from 10.101.1.2: icmp_seq=1 ttl=255 time=2.7229 ms
-    116 bytes from 10.101.1.2: icmp_seq=2 ttl=255 time=1.1550 ms
-    116 bytes from 10.101.1.2: icmp_seq=3 ttl=255 time=1.1341 ms
-    116 bytes from 10.101.1.2: icmp_seq=4 ttl=255 time=1.2277 ms
-    116 bytes from 10.101.1.2: icmp_seq=5 ttl=255 time=.8838 ms
+- Usage:
+```
+config save [-y|--yes] [<filename>]
+```
+- Example (Save configuration to /etc/sonic/config_db.json):
 
-    Statistics: 5 sent, 5 received, 0% packet loss
-    cisco@amsterdam:~$ 
-    ```
+```
+cisco@spine01:~$ sudo config save -y
+```
 
-Device access 
+- Example (Save configuration to a specified file):
+```
+cisco@spine01:~$ sudo config save -y /etc/sonic/config2.json
+```
