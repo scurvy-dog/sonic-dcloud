@@ -1,19 +1,27 @@
 # Lab 1 Guide: SONiC Topology Setup and Validation [30 Min]
-This dCloud lab makes heavy use of the relatively new Dockerized Cisco 8000 emulator router known. If you wish to explore Cisco 8000 emulator and its uses beyond the scope of this lab the document team has posted an installation guide here: https://www.cisco.com/c/en/us/support/routers/8000-series-virtual-router-emulator/series.html
+This dCloud lab makes heavy use of the relatively new Dockerized Cisco 8000 hardware emulator. If you wish to explore Cisco 8000 emulator and its uses beyond the scope of this lab the document team has posted an installation guide here: https://www.cisco.com/c/en/us/support/routers/8000-series-virtual-router-emulator/series.html
+
+The lab also uses the open-source Containerlab tool for deploying our virtual network topology. More info on Containerlab may be found here: https://containerlab.dev/
+
+And an example containerlab topology using Cisco 8000 HW Emulator running IOS-XR can be found here:
+https://github.com/brmcdoug/containerlab/tree/main/vxr8000
 
 ### Description: 
 In Lab 1 the student will launch the SONiC topology and validate it is up and running. This will be the baseline 
-topology all subsequent lab exercises. Second, they will validate that the pre-configured ISIS and BGP routing protocols are running and seeing the correct topology. 
+topology for all subsequent lab exercises. 
 
 ## Contents
-- [Lab 1 Guide: XRd Topology Setup and Validation \[40 Min\]](#lab-1-guide-xrd-topology-setup-and-validation-30-min)
+- [Lab 1 Guide: SONiC Topology Setup and Validation \[30 Min\]](#lab-1-guide-sonic-topology-setup-and-validation-30-min)
+    - [Description:](#description)
+  - [Contents](#contents)
   - [Lab Objectives](#lab-objectives)
   - [Virtualization Stack](#virtualization-stack)
   - [Validate Device Access](#validate-device-access)
     - [User Credentials](#user-credentials)
     - [Management Network Topology](#management-network-topology)
+    - [Validate VM Endpoints](#validate-vm-endpoints)
   - [Launch and Validate SONiC Topology](#launch-and-validate-sonic-topology)
-    - [Validate vSONiC State](#validate-vSONiC-state) 
+    - [Validate vSONiC State](#validate-vsonic-state)
     - [Launch Container Lab Environment](#launch-container-lab-environment)
     - [Connect to Routers](#connect-to-routers)
   - [End of Lab 1](#end-of-lab-1)
@@ -24,17 +32,17 @@ The student upon completion of Lab 1 should have achieved the following objectiv
 * Access to all devices in the lab
 * Understand the Cisco 8000 Emulator / SONiC stack
 * Understanding of the lab topology and components
-* Launch the ContainerLab SONiC topology   
+* Launch the ContainerLab SONiC topology and access the SONiC nodes   
 
 ## Virtualization Stack
 
-The software virtualization stack used in this lab consists of several layers. At the base Linux OS level it is possible to run this lab either on bare metal or in a virtualized environment. In our dCloud lab it is running within a hypervisor as a VM. Within the Ubuntu VM named *v-SONiC* we have installed Docker as our container platform. We will user the ContainerLab software to spin up a docker container that runs the Cisco 8000 hardware emulation software and point the emulator to boot the designated SONiC image. We will spin a single heavy container for each SONiC router needed. See the below diagram.
+The software virtualization stack used in this lab consists of several layers. At the base Linux OS level it is possible to run this lab either on bare metal or in a virtualized environment. In our dCloud lab it is running within a hypervisor as a VM. Within the Ubuntu VM named *v-SONiC* we have installed Docker as our container platform. We will user the ContainerLab software to spin up a docker containers that runs the Cisco 8000 hardware emulation software and point the emulator to boot the designated SONiC image. We will spin a single heavy container for each SONiC router needed. See the below diagram.
 
 ![Software Stack](../topo-drawings/software-stack.png)
 
 ## Validate Device Access
 
-Device access for this lab is primarly through SSH. All of the VMs within this toplogy can be accessed once you connect through Cisco AnyConnect VPN to the dCloud environment. Please see the management topology network diagram below. In addition we will launch four instances of SONiC routers running as containers on the VM host "vSONiC". The vSONiC VM acts as a jumpbox for these containerized routers, thus we will SSH into the vSONiC VM and then initiate a separate SSH session to each of the routers. The vSONiC VM is configured for DNS resolution for each router name to save time.
+Device access for this lab is primarly through SSH. All of the VMs within this toplogy can be accessed once you connect through Cisco AnyConnect VPN to the dCloud environment. Please see the management topology network diagram below. In addition we will launch four SONiC routers instances running as containers on the VM host "vSONiC". The vSONiC VM acts as a jumpbox for these containerized routers, thus we will SSH into the vSONiC VM and then initiate a separate SSH session to each of the routers. The vSONiC VM is configured for DNS resolution for each router name to save time.
 
 ### User Credentials
 For the vSONiC VM use the following credentials:
