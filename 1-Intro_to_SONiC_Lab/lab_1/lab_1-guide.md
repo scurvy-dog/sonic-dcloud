@@ -169,20 +169,25 @@ For full size image see [LINK](../topo-drawings/management-network.png)
     50399c8f057d   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   About a minute ago   Up About a minute             clab-c8201-sonic-4-node-clos-spine01
     ```
     
-7. Confirm the docker networks were created. 
-    ```
-    docker network ls
-    ```
-    ```
-    cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1$ docker network ls
-    NETWORK ID     NAME      DRIVER    SCOPE
-    d2b6a7ceece7   bridge    bridge    local
-    a2cc09220b8d   host      host      local
-    8f3f39b4539f   mgt_net   bridge    local
-    31c3f069bdb9   none      null      local
-    ```
-> **Note**
-> the docker Network IDs are unique on creation. Docker's network/bridge naming logic is such that the actual Linux bridge instance names are not predictable. Rather than go through some re-naming process the lab setup script calls another small script called 'nets.sh' that resolves the bridge name and writes it to a file that we'll use later for running tcpdump on the virtual links between routers in our topology.
+5. Validate the SONiC instance started in each container. 
+   Use the docker log command to search to see if the SONiC router started successfully. Repeat command for each container name.
+   ```
+   clab-c8201-sonic-4-node-clos-leaf01
+   clab-c8201-sonic-4-node-clos-leaf02
+   clab-c8201-sonic-4-node-clos-spine01
+   clab-c8201-sonic-4-node-clos-spine02
+   ```
+   ```
+   docker logs clab-c8201-sonic-4-node-clos-leaf01 | grep Router
+   ```
+   ```
+   cisco@vsonic:~$ docker logs clab-c8201-sonic-4-node-clos-leaf01 | grep Router
+   Router up
+   ```
+> **Warning**
+> It is possible that the Containerlab process failed to start the router SONiC image after the docker container was created. If you see a *Router failed to come up* message follow the below process.
+
+BRUCE TO INSERT PROCESS
 
 - The scripts and files reside in the lab 'util' directory:
 ```
@@ -192,12 +197,13 @@ ls ~/sonic-dcloud/1-Intro_to_SONiC_Lab
 8. The SONiC router instances should be available for SSH access 10 minutes after spin up.
 
 ### Connect to Routers
+
 1. Starting from the vSONiC VM log into each router instance 1-4 per the management topology diagram above. Example:
     ```
     ssh cisco@172.10.10.2
     ```
 
-2.You can view the default startup configuration for the container. The config_db.json file stores the saved configuration of the container. 
+2. You can view the default startup configuration for the container. The config_db.json file stores the saved configuration of the container. 
     ```
     cat /etc/sonic/config_db.json | more 
     ```
