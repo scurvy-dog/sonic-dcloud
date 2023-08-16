@@ -1,20 +1,23 @@
-# Lab 2 Guide: Explore SONiC OS [40 Min]
-This dCloud lab makes heavy use of the relatively new Dockerized Cisco 8000 emulator router known. If you wish to explore Cisco 8000 emulator and its uses beyond the scope of this lab the document team has posted an installation guide here: https://www.cisco.com/c/en/us/support/routers/8000-series-virtual-router-emulator/series.html
+# Lab 2 Guide: Explore SONiC NOS [40 Min]
 
 ### Description: 
-In Lab 1 the student will launch the SONiC topology and validate it is up and running. This will be the baseline 
-topology all subsequent lab exercises. Second, they will validate that the pre-configured ISIS and BGP routing protocols are running and seeing the correct topology. 
+In Lab 2 the student will explore the SONiC network operating system, its components, services, config management, and CLI. Second, they will run an Ansible script to apply global and interface configurations to the nodes in our topology. And finally we will validate connectivity between SONiC nodes and from SONiC nodes to our endpoint VMs.
 
 ## Contents
+- [Lab 2 Guide: Explore SONiC NOS \[40 Min\]](#lab-2-guide-explore-sonic-nos-40-min)
+    - [Description:](#description)
+  - [Contents](#contents)
+  - [Lab Objectives](#lab-objectives)
   - [Tour of SONiC](#tour-of-sonic)
-     - [SONiC Software Architecture](#sonic-software-architecture)
-     - [Health Check of SONiC Components](#health-check-of-sonic-components)
-     - [Managing Configs](#managing-configurations)
+    - [SONiC Software Architecture](#sonic-software-architecture)
+    - [Health Check of SONiC Components](#health-check-of-sonic-components)
+    - [Health Check of Hardware Components](#health-check-of-hardware-components)
+    - [Managing Configurations](#managing-configurations)
+      - [Loading configuration from JSON file](#loading-configuration-from-json-file)
+      - [Reloading configuration](#reloading-configuration)
+      - [Saving Configuration to a File for Persistence](#saving-configuration-to-a-file-for-persistence)
+      - [FRR Configuration Management](#frr-configuration-management)
   - [Ansible Automation](#ansible-automation)
-     - [Ansible Playbook Overview](#ansible-playbook-overview)
-     - [Review Playboook Results](#review-playbook-results)
-  - [Validate Lab Topology](#validate-lab-topology)
-     - [Validate end point connecitivity](#validate-end-point-connectivity)
   - [End of Lab 2](#end-of-lab-2)
   
 ## Lab Objectives
@@ -24,7 +27,7 @@ The student upon completion of Lab 2 should have achieved the following objectiv
 * Ability to see status of various services
 * Configuration Management structure
 * How to load configuration through Ansible
-* Valadiate end toend topology 
+* Valadiate end to end topology 
 
 ## Tour of SONiC
 ### SONiC Software Architecture

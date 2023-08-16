@@ -7,6 +7,9 @@ show runningconfiguration all
 show interfaces status
 show ip interfaces
 show ipv6 interfaces
+show environment 
+show platform summary
+show platform inventory
 ```
 1. You can view the default startup configuration for the container. The config_db.json file stores the saved configuration of the container. 
     ```
