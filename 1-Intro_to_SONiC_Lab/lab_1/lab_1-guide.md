@@ -96,7 +96,7 @@ For full size image see [LINK](../topo-drawings/management-network.png)
 1. Change into the lab-1 directory and create the needed linux bridges
    ```
    cd ~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1
-   sudo ./create-host-bridges.sh
+   sudo ./nets.sh
    ```
    Confirm bridges were created succesfully
    ```
