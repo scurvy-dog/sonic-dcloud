@@ -215,3 +215,7 @@ cisco@spine01:~$ sudo config save -y
 ```
 cisco@spine01:~$ sudo config save -y /etc/sonic/config2.json
 ```
+
+
+## End of Lab 2
+Please proceed to [Lab 3](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_3/lab_3-guide.md)
