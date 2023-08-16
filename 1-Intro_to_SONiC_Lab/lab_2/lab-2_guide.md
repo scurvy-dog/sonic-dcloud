@@ -1,4 +1,4 @@
-# Lab 2 Guide: SONiC Topology Setup and Validation [40 Min]
+# Lab 2 Guide: Explore SONiC OS [40 Min]
 This dCloud lab makes heavy use of the relatively new Dockerized Cisco 8000 emulator router known. If you wish to explore Cisco 8000 emulator and its uses beyond the scope of this lab the document team has posted an installation guide here: https://www.cisco.com/c/en/us/support/routers/8000-series-virtual-router-emulator/series.html
 
 ### Description: 
