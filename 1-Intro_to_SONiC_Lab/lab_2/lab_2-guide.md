@@ -14,6 +14,7 @@ topology all subsequent lab exercises. Second, they will validate that the pre-c
      - [Ansible Playbook Overview](#ansible-playbook-overview)
      - [Review Playboook Results](#review-playbook-results)
   - [Validate Lab Topology](#validate-lab-topology)
+     - [Validate end point connecitivity](#validate-end-point-connectivity)
   - [End of Lab 2](#end-of-lab-2)
   
 ## Lab Objectives
