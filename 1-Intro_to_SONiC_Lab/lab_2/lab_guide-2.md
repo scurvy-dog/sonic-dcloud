@@ -98,7 +98,7 @@ Running command: /usr/local/bin/sonic-cfggen -j /etc/sonic/config_db.json --writ
 
 This command is used to clear current configuration and import new configurationn from the input file or from */etc/sonic/config_db.json*. This command shall stop all services before clearing the configuration and it then restarts those services.
 
-This command restarts various services running in the device and it takes some time to complete the command.
+The command *config reload* restarts various services running in the device and it takes some time to complete the command.
 > **NOTE**
 > If the user had logged in using SSH, users might get disconnected depending upon the new management IP address. Users need to reconnect their SSH sessions.
 
