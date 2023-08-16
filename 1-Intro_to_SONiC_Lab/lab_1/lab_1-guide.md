@@ -206,4 +206,4 @@ BRUCE TO INSERT PROCESS
 >Any running configuration changes must be written to the config_db.json to persist in reboots
 
 ## End of Lab 1
-Please proceed to [Lab 2](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_2/lab_guide-2.md)
+Please proceed to [Lab 2](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_2/lab-2_guide.md)
