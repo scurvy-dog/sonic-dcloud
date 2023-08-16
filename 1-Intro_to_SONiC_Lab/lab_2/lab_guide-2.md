@@ -73,6 +73,77 @@ f2996f06bc05   docker-syncd-cisco:latest            "/usr/local/bin/supe…"   1
 >For greater detail on container services see this link [HERE](https://github.com/sonic-net/SONiC/wiki/Architecture)
 
 ### Health Check of SONiC Components
+**show system-health monitor-list**
+
+This command gives an overview of the software and hardware  status. Notice all the hardware outputs are listed as **Not OK** as this is in a simulated environment. 
+```
+cisco@spine01:~$ sudo show system-health monitor-list
+
+System services and devices monitor list
+
+Name                        Status    Type
+--------------------------  --------  ----------
+routeCheck                  Not OK    Program
+container_checker           Not OK    Program
+telemetry                   Not OK    Service
+spine01                     OK        System
+rsyslog                     OK        Process
+root-overlay                OK        Filesystem
+var-log                     OK        Filesystem
+diskCheck                   OK        Program
+vnetRouteCheck              OK        Program
+memory_check                OK        Program
+container_memory_telemetry  OK        Program
+container_memory_snmp       OK        Program
+database:redis              OK        Process
+lldp:lldpd                  OK        Process
+lldp:lldp-syncd             OK        Process
+lldp:lldpmgrd               OK        Process
+syncd:syncd                 OK        Process
+bgp:zebra                   OK        Process
+bgp:staticd                 OK        Process
+bgp:bgpd                    OK        Process
+bgp:fpmsyncd                OK        Process
+bgp:bgpcfgd                 OK        Process
+teamd:teammgrd              OK        Process
+teamd:teamsyncd             OK        Process
+teamd:tlm_teamd             OK        Process
+swss:orchagent              OK        Process
+swss:portsyncd              OK        Process
+swss:neighsyncd             OK        Process
+swss:fdbsyncd               OK        Process
+swss:vlanmgrd               OK        Process
+swss:intfmgrd               OK        Process
+swss:portmgrd               OK        Process
+swss:buffermgrd             OK        Process
+swss:vrfmgrd                OK        Process
+swss:nbrmgrd                OK        Process
+swss:vxlanmgrd              OK        Process
+swss:coppmgrd               OK        Process
+swss:tunnelmgrd             OK        Process
+snmp:snmpd                  OK        Process
+snmp:snmp-subagent          OK        Process
+PSU0.fan0                   Not OK    Fan
+PSU1.fan0                   Not OK    Fan
+fantray0.fan0               Not OK    Fan
+fantray0.fan1               Not OK    Fan
+fantray1.fan0               Not OK    Fan
+fantray1.fan1               Not OK    Fan
+fantray2.fan0               Not OK    Fan
+fantray2.fan1               Not OK    Fan
+fantray3.fan0               Not OK    Fan
+fantray3.fan1               Not OK    Fan
+fantray4.fan0               Not OK    Fan
+fantray4.fan1               Not OK    Fan
+fantray5.fan0               Not OK    Fan
+fantray5.fan1               Not OK    Fan
+PSU 1                       Not OK    PSU
+PSU 2                       Not OK    PSU
+```
+
+### Health Check of Hardware Components
+
+**show system-health summary**
 
 ### Managing Configurations
 Configuration state in SONiC is perserved into several places. For persistant configuratin between reloads configuration files are used. The main configuration is found at */etc/sonic/config_db.json*. The second configuration file in this lab is for the FRR routing stack and it's configuratin is found at */etc/sonic/frr/bgpd.conf*. When the router boots it loads the configuration into these two files into the redis database. The redis database is the running configuration of the router where the various services read or write state information into the redis database.
