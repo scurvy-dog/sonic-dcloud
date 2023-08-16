@@ -171,12 +171,12 @@ For full size image see [LINK](../topo-drawings/management-network.png)
     
 5. Validate the SONiC instance started in each container. 
    Use the docker log command to search to see if the SONiC router started successfully. Repeat command for each container name.
-   ```
-   clab-c8201-sonic-4-node-clos-leaf01
-   clab-c8201-sonic-4-node-clos-leaf02
-   clab-c8201-sonic-4-node-clos-spine01
-   clab-c8201-sonic-4-node-clos-spine02
-   ```
+   
+   - clab-c8201-sonic-4-node-clos-leaf01
+   - clab-c8201-sonic-4-node-clos-leaf02
+   - clab-c8201-sonic-4-node-clos-spine01
+   - clab-c8201-sonic-4-node-clos-spine02
+   
    ```
    docker logs clab-c8201-sonic-4-node-clos-leaf01 | grep Router
    ```
@@ -189,12 +189,7 @@ For full size image see [LINK](../topo-drawings/management-network.png)
 
 BRUCE TO INSERT PROCESS
 
-- The scripts and files reside in the lab 'util' directory:
-```
-ls ~/sonic-dcloud/1-Intro_to_SONiC_Lab
-``` 
-
-8. The SONiC router instances should be available for SSH access 10 minutes after spin up.
+6. The SONiC router instances should be available for SSH access 10 minutes after spin up.
 
 ### Connect to Routers
 
