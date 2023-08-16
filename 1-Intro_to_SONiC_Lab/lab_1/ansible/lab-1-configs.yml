@@ -16,18 +16,18 @@
         dest: "/etc/sonic/config_db.json"
         mode: 0644
 
-    - name: Create a backup of the existing FRR file
-      command: mv /etc/sonic/frr/bgpd.conf /etc/sonic/frr/bgpd.conf.bak
-      args:
-        creates: /etc/sonic/frr/bgpd.conf.bak
-      ignore_errors: yes
-      register: backup_result
+    # - name: Create a backup of the existing FRR file
+    #   command: mv /etc/sonic/frr/bgpd.conf /etc/sonic/frr/bgpd.conf.bak
+    #   args:
+    #     creates: /etc/sonic/frr/bgpd.conf.bak
+    #   ignore_errors: yes
+    #   register: backup_result
 
-    - name: Copy frr config files
-      copy:
-        src: "{{ inventory_hostname }}/frr.conf"
-        dest: "/etc/sonic/frr/bgpd.conf"
-        mode: 0644
+    # - name: Copy frr config files
+    #   copy:
+    #     src: "{{ inventory_hostname }}/frr.conf"
+    #     dest: "/etc/sonic/frr/bgpd.conf"
+    #     mode: 0644
 
     - name: Reload configuration
       expect:
