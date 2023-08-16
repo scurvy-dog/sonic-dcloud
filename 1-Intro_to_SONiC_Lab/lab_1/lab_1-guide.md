@@ -86,22 +86,16 @@ For full size image see [LINK](../topo-drawings/management-network.png)
     = [up to date]      main       -> origin/main
     ```
 
-3. Validate there are no docker containers running or docker networks for the XRd topology
+3. Validate there are no docker containers running in our SONiC/Containerlab topology
     ```
     docker ps
     ```
     ```
     cisco@vsonic:~/sonic-dcloud/$ docker ps
     CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
-    
-    cisco@vsonic:~/sonic-dcloud/$ docker network ls
-    NETWORK ID     NAME      DRIVER    SCOPE
-    cfd793a3a770   bridge    bridge    local
-    b948b6ba5918   host      host      local
-    bdf431ee7377   none      null      local
     ```
 ### Launch Container Lab Environment
-1. Change into the lab-1 directory and create the needed linux bridges
+1. Change into the lab-1 directory and run the *`nets.sh`* script. This script will built linux bridge instances to connect our SONiC nodes with the external endpoint VMs.
    ```
    cd ~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1
    sudo ./nets.sh
@@ -114,11 +108,11 @@ For full size image see [LINK](../topo-drawings/management-network.png)
    cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1$ brctl show
    bridge name	bridge id		STP enabled	interfaces
    docker0		8000.0242abf3a8e0	no		
-   leaf01e32-host1		8000.000000000000	no		
-   leaf02e32-host2		8000.000000000000	no
+   leaf01e32-host1		8000.005056a9ff8a	no		eth1
+   leaf02e32-host2		8000.005056a992aa	no		eth2
    ```
     
-3. This lab uses a tool called Containerlab to launch the Cisco 8000 emulator and SONiC images for our topology
+2. Use Containerlab to launch the topology
     ```
     sudo containerlab deploy -t clab-topology.yml
     ```
@@ -164,7 +158,7 @@ For full size image see [LINK](../topo-drawings/management-network.png)
     sudo containerlab destroy -t clab-topology.yml
     ```
     
-4. Check that the docker containers were created and running
+3. Check that the docker containers were created and running
     ```
     docker ps
     ```
@@ -177,7 +171,14 @@ For full size image see [LINK](../topo-drawings/management-network.png)
     50399c8f057d   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   About a minute ago   Up About a minute             clab-c8201-sonic-4-node-clos-spine01
     ```
     
-5. Validate the SONiC instance started in each container. 
+    > **Note**
+    > It takes 10-15 minutes for the C8000 HW Emulators to load the SONiC image, detect virtual hardware and boot up. You can monitor progress using the docker logs command
+
+    ```
+    docker logs clab-c8201-sonic-4-node-clos-leaf01
+    ```
+
+4. After 10-15 minutes validate the SONiC instance started in each container. 
    Use the docker log command to search to see if the SONiC router started successfully. Repeat command for each container name.
    
    - clab-c8201-sonic-4-node-clos-leaf01
@@ -195,15 +196,74 @@ For full size image see [LINK](../topo-drawings/management-network.png)
 > **Warning**
 > It is possible that the Containerlab process failed to start the router SONiC image after the docker container was created. If you see a *Router failed to come up* message follow the below process.
 
-BRUCE TO INSERT PROCESS
+1. Docker exec into container bash shell:
+   ```
+   docker exec -it clab-c8201-sonic-4-node-clos-leaf02 bash
+   ```
+   Example:
+   ```
+   cisco@vsonic:~$ docker exec -it clab-c8201-sonic-4-node-clos-leaf01 bash
+   root@leaf01:/#
+   ```
+2. cd into the *`nobackup`* directory and manually run the startup.py script. We're manually re-applying/booting the SONiC image, so expect the script to run for about 10-15 minutes
+   
+    > **Note** 
+    > The script wants an interface count. In the containerlab topology our spine nodes have 4 interfaces and leaf nodes have 5:
+   ```
+   cd nobackup
+   ./startup.py 8000.yaml 5
+   ```
+   Example:
+```
+cisco@vsonic:~$ docker exec -it clab-c8201-sonic-4-node-clos-leaf01 bash
+root@leaf01:/# cd nobackup/
+root@leaf01:/nobackup# ./startup.py 8000.yaml 5
+['./startup.py', '8000.yaml', '5']
+MGMT_IP: 172.10.10.4  MASK: 255.255.255.0  GATEWAY: 172.10.10.1
+Found 5 data interfaces (expected 5)
+[Wed Aug 16 03:59:50 2023] sudo ip address flush dev eth1
+[Wed Aug 16 03:59:50 2023] sudo ip link set up dev eth1
+<snip>
+04:01:37 INFO R0:waiting for SONIC login prompt after 'onie-nos-install sonic-cisco-8000-clab.bin' (console output captured in vxr.out/logs/console.R0.log)
+    < it takes 6-8 minutes for the onie-nos-install portion of the load process to complete >
 
-6. The SONiC router instances should be available for SSH access 10 minutes after spin up.
+04:08:04 INFO R0:got login prompt. Attempting to re-login.
+04:08:04 INFO R0:onie sonic login cisco/cisco123
+04:08:04 INFO R0:entering sonic username 'cisco'
+04:08:04 INFO R0:entering sonic password 'cisco123'
+04:08:04 INFO R0:reached sonic prompt
+04:08:04 INFO R0:reached sonic prompt
+04:08:04 INFO R0:login successful
+04:08:04 INFO R0:wait for swss to enter active state
+04:08:24 INFO R0:swss in active state
+04:08:24 INFO R0:wait for SONIC interfaces to get created
+04:08:24 INFO R0:onie sonic login cisco/cisco123
+04:08:25 INFO R0:reached sonic prompt
+04:08:25 INFO R0:checking interfaces
+04:08:28 INFO R0:found 0 interfaces (expected 32)
+04:08:59 INFO R0:found 0 interfaces (expected 32)
+04:09:32 INFO R0:found 0 interfaces (expected 32)
+04:10:04 INFO R0:found 0 interfaces (expected 32)
+04:10:36 INFO R0:found 0 interfaces (expected 32)
+04:11:08 INFO R0:found 0 interfaces (expected 32)
+04:11:40 INFO R0:found 32 interfaces (expected 32)
+04:11:40 INFO R0:applying XR config
+04:11:56 INFO Sim up
+root@leaf01:/nobackup# exit
+exit
+cisco@vsonic:~$ 
+```
+
+3. At the *`Sim up`* message you can exit the container and proceed to ssh to the routers
 
 ### Connect to Routers
 
 1. Starting from the vSONiC VM log into each router instance 1-4 per the management topology diagram above. Example:
     ```
     ssh cisco@172.10.10.2
+    or
+    ssh cisco@spine01
+    pw = cisco123
     ```
 
 2. You can view the default startup configuration for the container. The config_db.json file stores the saved configuration of the container. 
