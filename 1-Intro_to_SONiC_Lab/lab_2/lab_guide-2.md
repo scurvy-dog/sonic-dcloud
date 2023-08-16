@@ -9,7 +9,7 @@ topology all subsequent lab exercises. Second, they will validate that the pre-c
   - [Tour of SONiC](#tour-of-sonic)
      - [SONiC Software Architecture](#sonic-software-architecture)
      - [Health Check of SONiC Components](#health-check-of-sonic-components)
-     - [Managing Configs](#managing-configs)
+     - [Managing Configs](#managing-configurations)
   - [Ansible Automation](#ansible-automation)
      - [Ansible Playbook Overview](#ansible-playbook-overview)
      - [Review Playboook Results](#review-playbook-results)
@@ -80,11 +80,8 @@ Configuration state in SONiC is perserved into several places. For persistant co
 ![redis diagram](../topo-drawings/redis-diagram.png)
 
 #### Loading configuration from JSON file
-config load
 
 The command *config load* is used to load the configuration from a JSON file like the file which SONiC saves its configuration to, */etc/sonic/config_db.json* This command loads the configuration from the input file (if user specifies this optional filename, it will use that input file. Otherwise, it will use the default */etc/sonic/config_db.json* file as the input file) into CONFIG_DB. The configuration present in the input file is applied on top of the already running configuration. This command does not flush the config DB before loading the new configuration (i.e., If the configuration present in the input file is same as the current running configuration, nothing happens) If the config present in the input file is not present in running configuration, it will be added. If the config present in the input file differs (when key matches) from that of the running configuration, it will be modified as per the new values for those keys.
-
-When user specifies the optional argument "-y" or "--yes", this command forces the loading without prompting the user for confirmation. If the argument is not specified, it prompts the user to confirm whether user really wants to load this configuration file.
 
 - Usage:
 ```
@@ -96,6 +93,7 @@ cisco@spine01:~$ sudo config load
 Load config from the file /etc/sonic/config_db.json? [y/N]: y
 Running command: /usr/local/bin/sonic-cfggen -j /etc/sonic/config_db.json --write-to-db
 ```
+
 #### Reloading configuration
 
 This command is used to clear current configuration and import new configurationn from the input file or from */etc/sonic/config_db.json*. This command shall stop all services before clearing the configuration and it then restarts those services.
