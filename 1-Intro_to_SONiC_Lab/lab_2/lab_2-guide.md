@@ -237,7 +237,7 @@ show startupconfiguration bgp
 **Save Running FRR Configuration to File**
 ```
 vtsysh
-write
+copy run start
 ```
 
 ## Ansible Automation
