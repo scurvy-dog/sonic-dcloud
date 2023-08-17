@@ -18,6 +18,7 @@ In Lab 2 the student will explore the SONiC network operating system, its compon
       - [Saving Configuration to a File for Persistence](#saving-configuration-to-a-file-for-persistence)
       - [FRR Configuration Management](#frr-configuration-management)
   - [Ansible Automation](#ansible-automation)
+  - [Network Connectivity]
   - [End of Lab 2](#end-of-lab-2)
   
 ## Lab Objectives
