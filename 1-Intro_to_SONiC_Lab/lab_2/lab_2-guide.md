@@ -221,6 +221,25 @@ cisco@spine01:~$ sudo config save -y /etc/sonic/config2.json
 ```
 #### FRR Configuration Management
 
+FRR is an open-source routing stack that supports multiple protocols. In this lab we will focus on BGP routing protocol. 
+
+First FRR stores it's configuration in a separate file located at */etc/sonic/frr/bgpd.conf*. There are different methods to manage the configuration for FRR.
+
+**View Startup FRR Configuration**
+```
+show startupconfiguration bgp
+```
+
+**View Running FRR Configuration**
+```
+ show run bgp
+```
+**Save Running FRR Configuration to File**
+```
+vtsysh
+write
+```
+
 ## Ansible Automation
 
 ## End of Lab 2
