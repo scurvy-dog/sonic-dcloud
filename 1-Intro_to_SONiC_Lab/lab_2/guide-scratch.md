@@ -128,3 +128,5 @@ frr defaults traditional
  ansible-playbook -i hosts lab-1-configs.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
  2035  cd ansible
  
+## Ansible Issues
+["SwSS container is not ready. Retry later or use -f to avoid system checks"]}
