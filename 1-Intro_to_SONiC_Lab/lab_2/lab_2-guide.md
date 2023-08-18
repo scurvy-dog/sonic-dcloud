@@ -242,6 +242,33 @@ copy run start
 ```
 
 ## Ansible Automation
+In this lab we are going to use an Ansible playbook to create the baseline configuration in the topology. That means we are going to replace the */etc/sonic/config_db.json* which will contain global parameters an link setup with IP addresses.
+
+There are several relevant files for our ansible playbook
+
+| Name                  | Location             | Notes                         |
+|:----------------------|:---------------------|:------------------------------|
+| sonic-playbook.yml    | /lab_2/ansible       | Ansible playbook file         |
+| hosts                 | /lab_2/ansible       | Contains device list and IPs  |
+| config_db.json        | /files/{host}/       | Global configuration file     |
+
+1. Change to the ansible directory in lab 2
+```
+cd ansible
+```
+2. Run Ansible playbook to copy configurations to SONiC routers. Once copied then load configurations
+```
+ansible-playbook -i hosts sonic-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv 
+```
+
+You should expect a large amount of output from ansible but, at the end of logs look for the following output
+```
+PLAY RECAP ***************************************************************************************************************************************
+leaf01                     : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+leaf02                     : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+spine01                    : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+spine02                    : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
 
 ## End of Lab 2
 Please proceed to [Lab 3](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_3/lab_3-guide.md)
