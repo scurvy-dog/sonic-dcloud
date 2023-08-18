@@ -6,13 +6,14 @@ This page is to help those new to SONiC have a quick reference guide for CLI com
 - [Global Commands](#global-commands]
 - [Configuration Management](#configuration-management)
 - [Container Management](#container-management)
+- [Reload Commands](#reload-commands)
 - [Interface Commands](#interface-commands)
 - [Routing Procotols](#routing-protocols)
   - [BGP Commands](#bgp-commands)
   
 ## Global Commands
 
-**Show Version**
+###Show Version
 
 Displays the current installed SONiC version as well as Hardware information on the system
 ```
@@ -70,6 +71,9 @@ SONiC uses a docker container system to manage major functional services. As suc
 | docker ps                        | Lists the subsystem containers running          |
 | docker restart <container>       | Restarts a specific container                   |
 | docker stats                     | Shows resource consumption by each container    |
+
+
+## Reload Commands
 
 ## Interface Commands
 The student upon completion of Lab 1 should have achieved the following objectives:
