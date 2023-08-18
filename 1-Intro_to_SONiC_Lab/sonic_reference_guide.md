@@ -3,12 +3,42 @@
 This page is to help those new to SONiC have a quick reference guide for CLI commands. 
 
 ## Contents
+- [Global Commands](#global-commands]
 - [Configuration Management](#configuration-management)
 - [Container Management](#container-management)
 - [Interface Commands](#interface-commands)
 - [Routing Procotols](#routing-protocols)
   - [BGP Commands](#bgp-commands)
   
+## Global Commands
+
+**Show Version**
+Displays the current installed SONiC version as well as Hardware information on the system
+```
+show version
+```
+
+```
+SONiC Software Version: SONiC.azure_cisco_202205.5324-dirty-20230707.044127
+SONiC OS Version: 11
+Distribution: Debian 11.7
+Kernel: 5.10.0-18-2-amd64
+Build commit: a2dedc96c
+Build date: Fri Jul  7 14:22:57 UTC 2023
+Built by: sonicci@sonic-ci-7-lnx
+
+Platform: x86_64-8201_32fh_o-r0
+HwSKU: 32x400Gb
+ASIC: cisco-8000
+ASIC Count: 1
+Serial Number: FOC2217QGKY
+Model Number: 8201-32FH-O
+Hardware Revision: 0.33
+Uptime: 17:47:47 up 50 min,  1 user,  load average: 0.96, 1.01, 1.03
+Date: Fri 18 Aug 2023 17:47:47
+```
+
+
 ## Configuration Commands
 
 ## Container Commands
