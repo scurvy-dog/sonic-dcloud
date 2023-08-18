@@ -271,5 +271,10 @@ There are several relevant files for our ansible playbook
     spine02                    : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
     ```
 
+## Network Connectivity
+Now is the time to validate that all of the links between nodes in the topology have been successfully brought up and IP addresses were assigned correctly.
+
+It will take a minutes after ansible executes the config reload for the routers to be ready for testing.
+
 ## End of Lab 2
 Please proceed to [Lab 3](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_3/lab_3-guide.md)
