@@ -3,7 +3,7 @@
 This page is to help those new to SONiC have a quick reference guide for CLI commands. 
 
 ## Contents
-- [Global Commands](#global-commands]
+- [Global Commands](#global-commands)
 - [Configuration Management](#configuration-management)
 - [Container Management](#container-management)
 - [Reload Commands](#reload-commands)
@@ -43,19 +43,19 @@ Date: Fri 18 Aug 2023 17:47:47
 
 ## Configuration Commands
 
-**Load Configuration**
+###Load Configuration**
 Load the */etc/sonic/config_db.json* file into the Redis database
 ```
 config load [-y|--yes] [<filename>]
 ```
 
-**Save Configuration**
+###Save Configuration**
 Save the current system configuration from the Redis database to the */etc/sonic/config_db.json*
 ```
 config save [-y|--yes] [<filename>]
 ```
 
-**Reload Configuration**
+###Reload Configuration**
 Clear current configuration and import new configurationn from the input file or from */etc/sonic/config_db.json*
 ```
 config reload [-y|--yes] [-l|--load-sysinfo] [<filename>] [-n|--no-service-restart] [-f|--force]
@@ -63,6 +63,7 @@ config reload [-y|--yes] [-l|--load-sysinfo] [<filename>] [-n|--no-service-resta
 
 
 ## Container Commands
+
 SONiC uses a docker container system to manage major functional services. As such common docker commands work.
 | CLI                              | Notes                                           |
 |:---------------------------------|:------------------------------------------------|
@@ -74,6 +75,22 @@ SONiC uses a docker container system to manage major functional services. As suc
 
 
 ## Reload Commands
+### Warm Reboot
+The goal of SONiC warm reboot is to be able restart and upgrade SONiC software without impacting the data plane. Warm restart of each individual process/docker is also part of the goal. Except for syncd and database docker, it is desired for all other network applications and dockers to support un-planned warm restart.
+  - Warm-Reboot must not impact the data plane.
+
+```
+sudo warm-reboot
+```
+
+### Fast Reboot
+Fast-reboot feature enables a switch to reboot up quickly, with minimum disruption to the data plane.
+  - Fast-Reboot must disrupt data plane not more than 25 seconds
+  - Fast-Reboot must disrupt control plane not more than 90 seconds
+  - 
+```
+sudo fast-reboot
+```
 
 ## Interface Commands
 The student upon completion of Lab 1 should have achieved the following objectives:
