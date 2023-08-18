@@ -53,7 +53,7 @@ Save the current system configuration from the Redis database to the */etc/sonic
 config save [-y|--yes] [<filename>]
 ```
 
-** Reload Configuration**
+**Reload Configuration**
 Clear current configuration and import new configurationn from the input file or from */etc/sonic/config_db.json*
 ```
 config reload [-y|--yes] [-l|--load-sysinfo] [<filename>] [-n|--no-service-restart] [-f|--force]
