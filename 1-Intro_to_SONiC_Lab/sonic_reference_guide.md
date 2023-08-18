@@ -13,6 +13,7 @@ This page is to help those new to SONiC have a quick reference guide for CLI com
 ## Global Commands
 
 **Show Version**
+
 Displays the current installed SONiC version as well as Hardware information on the system
 ```
 show version
