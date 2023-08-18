@@ -87,7 +87,7 @@ sudo warm-reboot
 Fast-reboot feature enables a switch to reboot up quickly, with minimum disruption to the data plane.
   - Fast-Reboot must disrupt data plane not more than 25 seconds
   - Fast-Reboot must disrupt control plane not more than 90 seconds
-  - 
+    
 ```
 sudo fast-reboot
 ```
