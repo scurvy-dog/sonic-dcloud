@@ -322,13 +322,14 @@ To check on interface status and connectivity follow these steps on each router 
    ```
    show interface portchannel
    ```
+   ```
    cisco@sonic:~$ show interface portchannel
    Flags: A - active, I - inactive, Up - up, Dw - Down, N/A - not available,
        S - selected, D - deselected, * - not synced
-   No.  Team Dev      Protocol      Ports
-   -----  ------------  ------------  -------
-    1  PortChannel1  LACP(A)(N/A)
-    2  PortChannel2  LACP(A)(N/A)
+   No.  Team Dev      Protocol     Ports
+   -----  ------------  -----------  ---------------------------
+    1  PortChannel1  LACP(A)(Up)  Ethernet0(S) Ethernet8(S)
+    2  PortChannel2  LACP(A)(Up)  Ethernet24(S) Ethernet16(S)
    ```
 
 ## End of Lab 2
