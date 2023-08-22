@@ -339,22 +339,42 @@ To check on interface status and connectivity follow these steps on each router 
         "PortChannel2|Ethernet16": {},
         "PortChannel2|Ethernet24": {}
   ```
+
 - Check that the port-channels were created and look at the member links
    ```
    show interface portchannel
    ```
-   ```
+   ```json
    cisco@sonic:~$ show interface portchannel
    Flags: A - active, I - inactive, Up - up, Dw - Down, N/A - not available,
        S - selected, D - deselected, * - not synced
    No.  Team Dev      Protocol     Ports
    -----  ------------  -----------  ---------------------------
-    1  PortChannel1  LACP(A)(Up)  Ethernet0(S) Ethernet8(S)
-    2  PortChannel2  LACP(A)(Up)  Ethernet24(S) Ethernet16(S)
+    1  PortChannel1  LACP(A)(Up)  Ethernet0(S) Ethernet8(S)     <------ See LADP status Active
+    2  PortChannel2  LACP(A)(Up)  Ethernet24(S) Ethernet16(S)   <------ See LADP status Active
    ```
 
-** IP Adjaceny**
--    Now is the time to 
-     
+**IP Adjaceny**
+-    View the configured IP address as listed in the below diagram.
+
+![Lab Topology](topo-drawings/sonic-4-node-topology.png)
+
+- Verify that IPs are configured on the SONiC routers
+  ```
+  show ip interfaces
+  ```
+  ```
+  cisco@spine02:~$ show ip interfaces
+  Interface     Master    IPv4 address/mask    Admin/Oper    BGP Neighbor    Neighbor IP
+  ------------  --------  -------------------  ------------  --------------  -------------
+  Loopback0               10.0.0.2/32          up/up         N/A             N/A
+  PortChannel1            10.1.1.7/31          up/up         N/A             N/A
+  PortChannel2            10.1.1.3/31          up/up         N/A             N/A
+  docker0                 240.127.1.1/24       up/down       N/A             N/A
+  eth0                    172.10.10.3/24       up/up         N/A             N/A
+  eth4                    192.168.123.252/24   up/up         N/A             N/A
+  lo                      127.0.0.1/16         up/up         N/A             N/A
+  ```
+
 ## End of Lab 2
 Please proceed to [Lab 3](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_3/lab_3-guide.md)
