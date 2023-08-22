@@ -281,12 +281,15 @@ Now is the time to validate that all of the links between nodes in the topology 
 It will take a minutes after ansible executes the config reload for the routers to be ready for testing.
 
 To check on interface status and connectivity follow these steps on each router in the topology
-1. Log into each router referencing the IP and login credentials in lab_1
+
 **INTERFACES**
-3. Check the interface status. The abbreviated output command for this would be.
+- Log into each router referencing the IP and login credentials in lab_1
+- Check the interface status. The abbreviated output command for this would be. All interfaces should be in an UP/UP status
+  
    ```
-   show interface descriptions
+   show interface description
    ```
+   
 **PORT CHANNELS**
 - Port Channel configuration in the running configuration has three parts.
   ```json
@@ -332,5 +335,8 @@ To check on interface status and connectivity follow these steps on each router 
     2  PortChannel2  LACP(A)(Up)  Ethernet24(S) Ethernet16(S)
    ```
 
+** IP Adjaceny**
+-    Now is the time to 
+     
 ## End of Lab 2
 Please proceed to [Lab 3](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_3/lab_3-guide.md)
