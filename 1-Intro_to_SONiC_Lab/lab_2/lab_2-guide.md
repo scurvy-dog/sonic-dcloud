@@ -290,7 +290,7 @@ To check on interface status and connectivity follow these steps on each router 
 **PORT CHANNELS**
 - Port Channel configuration in the running configuration has three parts.
   ```json
-  "PORTCHANNEL": {
+  "PORTCHANNEL": {                 <------ Port Channel Definition
         "PortChannel1": {
             "admin_status": "up",
             "lacp_key": "auto",
@@ -304,7 +304,7 @@ To check on interface status and connectivity follow these steps on each router 
             "mtu": "9100"
         }
     },
-    "PORTCHANNEL_INTERFACE": {
+    "PORTCHANNEL_INTERFACE": {      <------ Port Channel IP Information 
         "PortChannel1": {},
         "PortChannel2": {},
         "PortChannel1|10.1.1.1/31": {},
@@ -312,7 +312,7 @@ To check on interface status and connectivity follow these steps on each router 
         "PortChannel2|10.1.1.5/31": {},
         "PortChannel2|fc00:0:ffff::5/127": {}
     },
-    "PORTCHANNEL_MEMBER": {
+    "PORTCHANNEL_MEMBER": {         <------ Port Channel Member Links
         "PortChannel1|Ethernet0": {},
         "PortChannel1|Ethernet8": {},
         "PortChannel2|Ethernet16": {},
