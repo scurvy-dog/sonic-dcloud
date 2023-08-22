@@ -18,7 +18,7 @@ In Lab 2 the student will explore the SONiC network operating system, its compon
       - [Saving Configuration to a File for Persistence](#saving-configuration-to-a-file-for-persistence)
       - [FRR Configuration Management](#frr-configuration-management)
   - [Ansible Automation](#ansible-automation)
-  - [Network Connectivity]
+  - [Network Connectivity](#network-connectivity)
   - [End of Lab 2](#end-of-lab-2)
   
 ## Lab Objectives
@@ -289,7 +289,8 @@ To check on interface status and connectivity follow these steps on each router 
    ```
 **PORT CHANNELS**
 - Port Channel configuration in the running configuration has three parts.
-  ```"PORTCHANNEL": {
+  ```
+  "PORTCHANNEL": {
         "PortChannel1": {
             "admin_status": "up",
             "lacp_key": "auto",
