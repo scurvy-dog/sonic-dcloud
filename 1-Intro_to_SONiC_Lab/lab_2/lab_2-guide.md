@@ -267,11 +267,11 @@ There are several relevant files for our ansible playbook
 | hosts                 | /lab_2/ansible       | Contains device list and IPs  |
 | config_db.json        | /files/{host}/       | Global configuration file     |
 
-1. Change to the ansible directory in lab 2
-    ```
-    cd ansible
-    ```
-2. Run Ansible playbook to copy configurations to SONiC routers. Once copied then load configurations
+- Change to the ansible directory in lab 2
+  ```
+  cd ansible
+  ```
+- Run Ansible playbook to copy configurations to SONiC routers. Once copied then load configurations
     ```
     ansible-playbook -i hosts sonic-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
     ```
