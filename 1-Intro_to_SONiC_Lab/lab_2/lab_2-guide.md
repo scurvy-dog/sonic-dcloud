@@ -376,5 +376,14 @@ To check on interface status and connectivity follow these steps on each router 
   lo                      127.0.0.1/16         up/up         N/A             N/A
   ```
 
+- Ping the adjacent IP for the routed linnks
+  ```
+  cisco@spine02:~$ ping 10.1.1.2
+  PING 10.1.1.2 (10.1.1.2) 56(84) bytes of data.
+  64 bytes from 10.1.1.2: icmp_seq=1 ttl=64 time=573 ms
+  64 bytes from 10.1.1.2: icmp_seq=2 ttl=64 time=387 ms
+  ```
+**Congratulations you have successfully completed Lab 2. You should now be ready to configure routing protocols.**
+
 ## End of Lab 2
 Please proceed to [Lab 3](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_3/lab_3-guide.md)
