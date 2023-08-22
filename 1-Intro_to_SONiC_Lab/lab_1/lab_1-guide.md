@@ -85,8 +85,12 @@ For full size image see [LINK](../topo-drawings/management-network.png)
     From https://github.com/scurvy-dog/sonic-dcloud
     = [up to date]      main       -> origin/main
     ```
+    If it is not up to date then you need to update the repository before launching. Run
+   ```
+   git pull
+   ```
 
-3. Validate there are no docker containers running in our SONiC/Containerlab topology
+4. Validate there are no docker containers running in our SONiC/Containerlab topology
     ```
     docker ps
     ```
