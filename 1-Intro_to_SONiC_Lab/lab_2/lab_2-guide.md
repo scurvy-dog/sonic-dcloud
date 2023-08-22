@@ -280,5 +280,55 @@ Now is the time to validate that all of the links between nodes in the topology 
 
 It will take a minutes after ansible executes the config reload for the routers to be ready for testing.
 
+To check on interface status and connectivity follow these steps on each router in the topology
+1. Log into each router referencing the IP and login credentials in lab_1
+**INTERFACES**
+3. Check the interface status. The abbreviated output command for this would be.
+   ```
+   show interface descriptions
+   ```
+**PORT CHANNELS**
+- Port Channel configuration in the running configuration has three parts.
+  ```"PORTCHANNEL": {
+        "PortChannel1": {
+            "admin_status": "up",
+            "lacp_key": "auto",
+            "min_links": "1",
+            "mtu": "9100"
+        },
+        "PortChannel2": {
+            "admin_status": "up",
+            "lacp_key": "auto",
+            "min_links": "1",
+            "mtu": "9100"
+        }
+    },
+    "PORTCHANNEL_INTERFACE": {
+        "PortChannel1": {},
+        "PortChannel2": {},
+        "PortChannel1|10.1.1.1/31": {},
+        "PortChannel1|fc00:0:ffff::1/127": {},
+        "PortChannel2|10.1.1.5/31": {},
+        "PortChannel2|fc00:0:ffff::5/127": {}
+    },
+    "PORTCHANNEL_MEMBER": {
+        "PortChannel1|Ethernet0": {},
+        "PortChannel1|Ethernet8": {},
+        "PortChannel2|Ethernet16": {},
+        "PortChannel2|Ethernet24": {}
+  ```
+- Check that the port-channels were created and look at the member links
+   ```
+   show interface portchannel
+   ```
+   cisco@sonic:~$ show interface portchannel
+   Flags: A - active, I - inactive, Up - up, Dw - Down, N/A - not available,
+       S - selected, D - deselected, * - not synced
+   No.  Team Dev      Protocol      Ports
+   -----  ------------  ------------  -------
+    1  PortChannel1  LACP(A)(N/A)
+    2  PortChannel2  LACP(A)(N/A)
+   ```
+
 ## End of Lab 2
 Please proceed to [Lab 3](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_3/lab_3-guide.md)
