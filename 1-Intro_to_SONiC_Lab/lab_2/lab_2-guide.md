@@ -289,7 +289,25 @@ To check on interface status and connectivity follow these steps on each router 
    ```
    show interface description
    ```
-   
+- Show LLDP adjacency information to see interface remote neighbors
+
+  ```
+  show lldp table
+  ```
+
+  ```
+  cisco@spine01:~$ show lldp table
+  Capability codes: (R) Router, (B) Bridge, (O) Other
+  LocalPort    RemoteDevice    RemotePortID    Capability    RemotePortDescr
+  -----------  --------------  --------------  ------------  -----------------
+  Ethernet0    leaf01          etp0            BR            Ethernet0
+  Ethernet8    leaf01          etp1            BR            Ethernet8
+  Ethernet16   leaf02          etp2            BR            Ethernet16
+  Ethernet24   leaf02          etp3            BR            Ethernet24
+  --------------------------------------------------
+  Total entries displayed:  4
+  ```
+
 **PORT CHANNELS**
 - Port Channel configuration in the running configuration has three parts.
   ```json
