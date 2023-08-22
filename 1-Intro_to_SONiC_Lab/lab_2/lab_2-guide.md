@@ -1,4 +1,4 @@
-# Lab 2 Guide: Explore SONiC NOS [40 Min]
+d# Lab 2 Guide: Explore SONiC NOS [40 Min]
 
 ### Description: 
 In Lab 2 the student will explore the SONiC network operating system, its components, services, config management, and CLI. Second, they will run an Ansible script to apply global and interface configurations to the nodes in our topology. And finally we will validate connectivity between SONiC nodes and from SONiC nodes to our endpoint VMs.
@@ -344,7 +344,7 @@ To check on interface status and connectivity follow these steps on each router 
    ```
    show interface portchannel
    ```
-   ```json
+   ```
    cisco@sonic:~$ show interface portchannel
    Flags: A - active, I - inactive, Up - up, Dw - Down, N/A - not available,
        S - selected, D - deselected, * - not synced
@@ -357,7 +357,7 @@ To check on interface status and connectivity follow these steps on each router 
 **IP Adjaceny**
 -    View the configured IP address as listed in the below diagram.
 
-![Lab Topology](topo-drawings/sonic-4-node-topology.png)
+![Lab Topology](../topo-drawings/sonic-4-node-topology.png)
 
 - Verify that IPs are configured on the SONiC routers
   ```
