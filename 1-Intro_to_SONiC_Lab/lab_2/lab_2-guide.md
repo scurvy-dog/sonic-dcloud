@@ -289,7 +289,7 @@ To check on interface status and connectivity follow these steps on each router 
    ```
 **PORT CHANNELS**
 - Port Channel configuration in the running configuration has three parts.
-  ```
+  ```json
   "PORTCHANNEL": {
         "PortChannel1": {
             "admin_status": "up",
