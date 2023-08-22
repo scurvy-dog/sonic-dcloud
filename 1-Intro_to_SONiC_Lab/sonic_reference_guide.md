@@ -13,7 +13,7 @@ This page is to help those new to SONiC have a quick reference guide for CLI com
   
 ## Global Commands
 
-###Show Version
+### Show Version
 
 Displays the current installed SONiC version as well as Hardware information on the system
 ```
@@ -93,7 +93,23 @@ sudo fast-reboot
 ```
 
 ## Interface Commands
-The student upon completion of Lab 1 should have achieved the following objectives:
+
+### Show Interface status
+Shows interface status in an abbreviated format
+```
+show interfaces description
+```
+Shoe interface status in more detail
+```
+show interfaces status
+```
+
+Show lldp neighbor adjacency 
+```
+show lldp table
+```
+
+### 
 
 * Access to all devices in
 
