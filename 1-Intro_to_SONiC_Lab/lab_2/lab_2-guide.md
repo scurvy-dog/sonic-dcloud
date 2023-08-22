@@ -231,11 +231,6 @@ Usage: config [OPTIONS] COMMAND [ARGS]...
   SONiC command line - 'config' command
 ```
 
-To save the manual configuration changes to a file use the command
-```
-sudo config save
-```
-
 #### FRR Configuration Management
 
 FRR is an open-source routing stack that supports multiple protocols. In this lab we will focus on BGP routing protocol. 
