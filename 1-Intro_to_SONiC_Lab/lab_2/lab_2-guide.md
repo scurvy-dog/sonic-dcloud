@@ -220,6 +220,22 @@ cisco@spine01:~$ sudo config save -y
 ```
 cisco@spine01:~$ sudo config save -y /etc/sonic/config2.json
 ```
+
+#### Edit Configuration Through CLI
+
+Configuration management is also possible through the CLI. From the SONiC command prompt enter *config* and the command syntax needed. 
+```
+cisco@leaf01:~$ config -?
+Usage: config [OPTIONS] COMMAND [ARGS]...
+
+  SONiC command line - 'config' command
+```
+
+To save the manual configuration changes to a file use the command
+```
+sudo config save
+```
+
 #### FRR Configuration Management
 
 FRR is an open-source routing stack that supports multiple protocols. In this lab we will focus on BGP routing protocol. 
