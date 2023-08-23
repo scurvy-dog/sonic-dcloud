@@ -6,6 +6,7 @@
             "mac": "52:54:00:74:c1:01",
             "hostname": "leaf01",
             "type": "LeafRouter",
+            "bgp_asn": "65004", 
             "docker_routing_config_mode": "split"
         }
     },
@@ -53,6 +54,19 @@
         "PortChannel2|Ethernet8": {},
         "PortChannel2|Ethernet12": {}
     },
+
+    "BGP_NEIGHBOR": {
+        "10.1.1.1": {
+            "asn": "65002", 
+            "holdtime": "10", 
+            "keepalive": "3", 
+            "local_addr": "10.1.1.0", 
+            "name": "spine01", 
+            "nhopself": "0", 
+            "rrclient": "0"
+        } 
+    }, 
+       
     "PORT": {
         "Ethernet0": {
             "lanes": "25,26,27,28",
