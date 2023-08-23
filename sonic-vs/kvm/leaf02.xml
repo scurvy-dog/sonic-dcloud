@@ -40,8 +40,8 @@
     </controller>
     <interface type='bridge'>
       <mac address='52:54:00:00:00:04'/>
-      <source bridge='virbr0'/>
-      <model type='mgt-net'/>
+      <source bridge='mgt-net'/>
+      <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
     </interface>
     <interface type='udp'>
