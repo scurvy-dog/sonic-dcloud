@@ -309,8 +309,8 @@ To check on interface status and connectivity follow these steps on each router 
    Ethernet4      up       up    fortyGigE0/4
    Ethernet8      up       up    fortyGigE0/8
    Ethernet12     up       up    fortyGigE0/12
-   Ethernet16    down      up   fortyGigE0/16
-   Ethernet20    down      up   fortyGigE0/24
+   Ethernet16    down      up    fortyGigE0/16
+   Ethernet20    down      up    fortyGigE0/24
    ```
 - Show LLDP adjacency information to see interface remote neighbors
 
