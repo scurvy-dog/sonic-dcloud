@@ -90,15 +90,11 @@ For full size image see [LINK](../topo-drawings/management-network.png)
    git pull
    ```
 
-4. Validate there are no docker containers running in our SONiC/Containerlab topology
+4. Validate there are no VM instances running in our virtual SONiC topology
     ```
-    docker ps
+    virsh list --all
     ```
-    ```
-    cisco@vsonic:~/sonic-dcloud/$ docker ps
-    CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
-    ```
-### Launch Container Lab Environment
+### Launch KVM vSONiC Environment
 1. Change into the lab-1 directory and run the *`nets.sh`* script. This script will built linux bridge instances to connect our SONiC nodes with the external endpoint VMs.
    ```
    cd ~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1
@@ -164,15 +160,16 @@ For full size image see [LINK](../topo-drawings/management-network.png)
     
 3. Check that the docker containers were created and running
     ```
-    docker ps
+    virsh list -all
     ```
     ```
-    cisco@vsonic:~/sonic-dcloud/1-Intro_to_SONiC_Lab/lab_1$ docker ps
-    CONTAINER ID   IMAGE                 COMMAND                  CREATED              STATUS              PORTS     NAMES
-    e482535a8fa3   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   About a minute ago   Up About a minute             clab-c8201-sonic-4-node-clos-leaf02
-    43646051366d   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   About a minute ago   Up About a minute             clab-c8201-sonic-4-node-clos-leaf01
-    10b9bda5a913   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   About a minute ago   Up About a minute             clab-c8201-sonic-4-node-clos-spine02
-    50399c8f057d   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   About a minute ago   Up About a minute             clab-c8201-sonic-4-node-clos-spine01
+    cisco@vsonic:~/sonic-dcloud$ virsh list --all
+    Id    Name                           State
+    ----------------------------------------------------
+    12    leaf02                         running
+    14    leaf01                         running
+    15    spine01                        running
+    16    spine02                        running
     ```
     
     > **Note**
