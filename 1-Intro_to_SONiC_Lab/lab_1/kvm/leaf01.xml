@@ -1,5 +1,5 @@
 <domain type='kvm'>
-  <name>spine01</name>
+  <name>leaf01</name>
   <memory unit='KiB'>4096000</memory>
   <currentMemory unit='KiB'>4096000</currentMemory>
   <vcpu placement='static'>1</vcpu>
@@ -25,7 +25,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' cache='writeback'/>
-      <source file='/home/cisco/images/sonic-vs-spine01.img'/>
+      <source file='/home/cisco/images/sonic-vs-leaf01.img'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x06' function='0x0'/>
     </disk>
@@ -39,62 +39,53 @@
       <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
     </controller>
     <interface type='bridge'>
-      <mac address='52:54:00:00:00:02'/>
+      <mac address='52:54:00:00:00:04'/>
       <source bridge='mgt-net'/>
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
     </interface>
     <interface type='udp'>
-      <source address='127.0.0.1' port='10301'>
-        <local address='127.0.0.1' port='10103'/>
+      <source address='127.0.0.1' port='10402'>
+        <local address='127.0.0.1' port='10204'/>
       </source>
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x05' function='0x0'/>
     </interface>
     <interface type='udp'>
-      <source address='127.0.0.1' port='10302'>
-        <local address='127.0.0.1' port='10203'/>
+      <source address='127.0.0.1' port='11402'>
+        <local address='127.0.0.1' port='11204'/>
       </source>
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x07' function='0x0'/>
     </interface>
     <interface type='udp'>
-      <source address='127.0.0.1' port='10307'>
-        <local address='127.0.0.1' port='10703'/>
+      <source address='127.0.0.1' port='10403'>
+        <local address='127.0.0.1' port='10304'/>
       </source>
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x09' function='0x0'/>
     </interface>
     <interface type='udp'>
-      <source address='127.0.0.1' port='10308'>
-        <local address='127.0.0.1' port='10803'/>
+      <source address='127.0.0.1' port='11403'>
+        <local address='127.0.0.1' port='11304'/>
       </source>
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x11' function='0x0'/>
     </interface>
-    <interface type='udp'>
-      <source address='127.0.0.1' port='10309'>
-        <local address='127.0.0.1' port='10903'/>
-      </source>
+    <interface type='bridge'>
+      <source bridge='leaf01-host1'/>
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x13' function='0x0'/>
     </interface>
-    <interface type='udp'>
-      <source address='127.0.0.1' port='10310'>
-        <local address='127.0.0.1' port='11003'/>
-      </source>
-      <model type='virtio'/>
-      <address type='pci' domain='0x0000' bus='0x00' slot='0x15' function='0x0'/>
-    </interface>
     <serial type='tcp'>
-      <source mode='bind' host='127.0.0.1' service='8002'/>
+      <source mode='bind' host='127.0.0.1' service='8004'/>
       <protocol type='telnet'/>
       <target type='isa-serial' port='0'>
         <model name='isa-serial'/>
       </target>
     </serial>
     <console type='tcp'>
-      <source mode='bind' host='127.0.0.1' service='8002'/>
+      <source mode='bind' host='127.0.0.1' service='8004'/>
       <protocol type='telnet'/>
       <target type='serial' port='0'/>
     </console>
