@@ -300,6 +300,18 @@ To check on interface status and connectivity follow these steps on each router 
    ```
    show interface description
    ```
+   For our vSONiC lab only configured interfaces that are mapped in KVM will show up/up status.
+   ```
+   cisco@spine01:~$ show int description
+   Interface    Oper    Admin           Alias    Description
+   -----------  ------  -------  --------------  -------------
+   Ethernet0      up       up    fortyGigE0/0
+   Ethernet4      up       up    fortyGigE0/4
+   Ethernet8      up       up    fortyGigE0/8
+   Ethernet12     up       up    fortyGigE0/12
+   Ethernet16    down      up   fortyGigE0/16
+   Ethernet20    down      up   fortyGigE0/24
+   ```
 - Show LLDP adjacency information to see interface remote neighbors
 
   ```
