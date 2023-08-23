@@ -2,9 +2,13 @@
   <name>mgt-net</name>
   <forward mode='nat'/>
   <bridge name='mgt-net' stp='on' delay='0' />
-  <ip address='172.10.10.0' netmask='255.255.255.0'>
+  <ip address='172.10.10.1' netmask='255.255.255.0'>
     <dhcp>
       <range start='172.10.10.101' end='172.10.10.104' />
+      <host mac='52:54:00:00:00:02' name='spine01' ip='172.10.10.2'/>
+      <host mac='52:54:00:00:00:03' name='spine02' ip='172.10.10.3'/>
+      <host mac='52:54:00:00:00:04' name='leaf01' ip='172.10.10.4'/>
+      <host mac='52:54:00:00:00:05' name='leaf02' ip='172.10.10.5'/>
     </dhcp>
   </ip>
 </network>

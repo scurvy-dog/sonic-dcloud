@@ -10,36 +10,49 @@
             "docker_routing_config_mode": "split"
         }
     },
-    "LOOPBACK_INTERFACE": {
-        "Loopback0|10.0.0.1/32": {},
-        "Loopback0|fc00:0:1::1/128": {}
+    "MGMT_INTERFACE": {
+        "eth0|172.10.10.4/24": {
+            "gwaddr": "172.10.10.1"
+        }
     },
-    "INTERFACE": {
-        "Ethernet0": {},
-        "Ethernet0|fc00:0:ffff::/127": {},
-        "Ethernet4": {},
-        "Ethernet4|fc00:0:ffff::2/127": {},
-        "Ethernet8": {},
-        "Ethernet8|fc00:0:ffff::4/127": {},
-        "Ethernet12": {},
-        "Ethernet12|fc00:0:ffff::6/127": {},
-        "Ethernet16": {
-            "vrf_name": "Vrf1"
-        },
-        "Ethernet16|10.101.1.1/24": {},
-        "Ethernet16|2001:0:101:1::1/64": {},
-        "Ethernet20": {
-            "vrf_name": "Vrf2"
-        },
-        "Ethernet20|10.102.1.1/24": {},
-        "Ethernet20|2001:0:102:1::1/64": {},
-        "Ethernet24": {},
-        "Ethernet28": {}
+    "LOOPBACK_INTERFACE": {
+        "Loopback0|10.0.0.3/32": {},
+        "Loopback0|fc00:0:3::1/128": {}
     },
 
-    "VRF": {
-        "Vrf1": {},
-        "Vrf2": {}
+    "INTERFACE": {
+        "Ethernet32": {},
+        "Ethernet32|10.1.2.1/24": {},
+        "Ethernet32|2001:1:2::1/64": {}
+    },
+
+    "PORTCHANNEL": {
+        "PortChannel1": {
+            "admin_status": "up",
+            "lacp_key": "auto",
+            "min_links": "1",
+            "mtu": "9100"
+        },
+        "PortChannel2": {
+            "admin_status": "up",
+            "lacp_key": "auto",
+            "min_links": "1",
+            "mtu": "9100"
+        }
+    },
+    "PORTCHANNEL_INTERFACE": {
+        "PortChannel1": {},
+        "PortChannel1|10.1.1.0/31": {},
+        "PortChannel1|fc00:0:ffff::/127": {},
+        "PortChannel2": {},
+        "PortChannel2|10.1.1.2/31": {},
+        "PortChannel2|fc00:0:ffff::2/127": {}
+    },
+    "PORTCHANNEL_MEMBER": {
+        "PortChannel1|Ethernet0": {},
+        "PortChannel1|Ethernet8": {},
+        "PortChannel2|Ethernet16": {},
+        "PortChannel2|Ethernet24": {}
     },
     "PORT": {
         "Ethernet0": {
