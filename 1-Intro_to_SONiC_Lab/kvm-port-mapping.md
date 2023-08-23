@@ -6,7 +6,7 @@ In the xml configuration file for each VM map
   - Map dest port to local port
 
 
-|sourc vm |dest vm | source port | dest port   | source vm intf | dest vm intf   | 
+|sourc vm |dest vm |source port |dest port   |source vm intf |dest vm intf   | 
 |*---------|*-------*|*-----------*|*-----------*|*--------------*|*--------------*|
 | spine01  | leaf01  | 10204       | 10402       | Ethernet 0     | Ethernet 0     |
 | spine01  | leaf01  | 11204       | 11402       | Ethernet 4     | Ethernet 4     |
