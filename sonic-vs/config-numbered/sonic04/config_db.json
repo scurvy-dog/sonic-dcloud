@@ -4,7 +4,7 @@
             "hwsku": "Force10-S6000",
             "platform": "x86_64-kvm_x86_64-r0",
             "mac": "52:54:00:74:c1:04",
-            "hostname": "sonic04",
+            "hostname": "spine02",
             "type": "LeafRouter",
             "bgp_asn": "65005",
             "docker_routing_config_mode": "split"

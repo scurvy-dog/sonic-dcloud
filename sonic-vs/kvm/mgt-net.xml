@@ -1,0 +1,10 @@
+<network>
+  <name>mgt-net</name>
+  <forward mode='nat'/>
+  <bridge name='mgt-net' stp='on' delay='0' />
+  <ip address='172.10.10.0' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='172.10.10.101' end='172.10.10.104' />
+    </dhcp>
+  </ip>
+</network>
