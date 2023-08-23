@@ -21,7 +21,7 @@
         command: sudo config reload
         responses:
           (.*)y/N(.*): "y"
-        timeout: 120
+        timeout: 60
         # ansible.builtin.pause:
         #   seconds: 60
       ignore_errors: yes
