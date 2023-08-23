@@ -39,7 +39,7 @@
       <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
     </controller>
     <interface type='bridge'>
-      <mac address='52:54:00:00:00:01'/>
+      <mac address='52:54:00:00:00:02'/>
       <source bridge='mgt-net'/>
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
@@ -87,14 +87,14 @@
       <address type='pci' domain='0x0000' bus='0x00' slot='0x15' function='0x0'/>
     </interface>
     <serial type='tcp'>
-      <source mode='bind' host='127.0.0.1' service='8003'/>
+      <source mode='bind' host='127.0.0.1' service='8002'/>
       <protocol type='telnet'/>
       <target type='isa-serial' port='0'>
         <model name='isa-serial'/>
       </target>
     </serial>
     <console type='tcp'>
-      <source mode='bind' host='127.0.0.1' service='8003'/>
+      <source mode='bind' host='127.0.0.1' service='8002'/>
       <protocol type='telnet'/>
       <target type='serial' port='0'/>
     </console>
