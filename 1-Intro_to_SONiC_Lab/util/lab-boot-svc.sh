@@ -27,6 +27,9 @@ sudo ip addr add 10.1.3.3/32 dev leaf02-host2
 sudo ip route add 10.1.2.0/24 dev leaf01-host1
 sudo ip route add 10.1.3.0/24 dev leaf02-host2
 
+brctl show >> /home/cisco/util/boot-service.log
+ip route >> /home/cisco/util/boot-service.log
+
 # Virsh
 echo "virsh start sonic VMs" >> /home/cisco/util/boot-service.log
 virsh start spine01 >> /home/cisco/util/boot-service.log
@@ -40,4 +43,3 @@ virsh start leaf02 >> /home/cisco/util/boot-service.log
 sleep 5
 
 virsh list --all >> /home/cisco/util/boot-service.log
-brctl show >> /home/cisco/util/boot-service.log
