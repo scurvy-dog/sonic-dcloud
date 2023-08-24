@@ -4,22 +4,21 @@ d# Lab 2 Guide: Explore SONiC NOS [40 Min]
 In Lab 2 the student will explore the SONiC network operating system, its components, services, config management, and CLI. Second, they will run an Ansible script to apply global and interface configurations to the nodes in our topology. And finally we will validate connectivity between SONiC nodes and from SONiC nodes to our endpoint VMs.
 
 ## Contents
-- [Lab 2 Guide: Explore SONiC NOS \[40 Min\]](#lab-2-guide-explore-sonic-nos-40-min)
-    - [Description:](#description)
-  - [Contents](#contents)
-  - [Lab Objectives](#lab-objectives)
-  - [Tour of SONiC](#tour-of-sonic)
-    - [SONiC Software Architecture](#sonic-software-architecture)
-    - [Health Check of SONiC Components](#health-check-of-sonic-components)
-    - [Health Check of Hardware Components](#health-check-of-hardware-components)
-    - [Managing Configurations](#managing-configurations)
-      - [Loading configuration from JSON file](#loading-configuration-from-json-file)
-      - [Reloading configuration](#reloading-configuration)
-      - [Saving Configuration to a File for Persistence](#saving-configuration-to-a-file-for-persistence)
-      - [FRR Configuration Management](#frr-configuration-management)
-  - [Ansible Automation](#ansible-automation)
-  - [Network Connectivity](#network-connectivity)
-  - [End of Lab 2](#end-of-lab-2)
+- [Contents](#contents)
+- [Lab Objectives](#lab-objectives)
+- [Tour of SONiC](#tour-of-sonic)
+  - [SONiC Software Architecture](#sonic-software-architecture)
+  - [Health Check of SONiC Components](#health-check-of-sonic-components)
+  - [Health Check of Hardware Components](#health-check-of-hardware-components)
+  - [Managing Configurations](#managing-configurations)
+    - [Loading configuration from JSON file](#loading-configuration-from-json-file)
+    - [Reloading configuration](#reloading-configuration)
+    - [Saving Configuration to a File for Persistence](#saving-configuration-to-a-file-for-persistence)
+    - [Edit Configuration Through CLI](#edit-configuration-through-cli)
+    - [FRR Configuration Management](#frr-configuration-management)
+- [Ansible Automation](#ansible-automation)
+- [Network Connectivity](#network-connectivity)
+- [End of Lab 2](#end-of-lab-2)
   
 ## Lab Objectives
 The student upon completion of Lab 2 should have achieved the following objectives:

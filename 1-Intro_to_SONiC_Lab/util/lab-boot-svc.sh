@@ -3,18 +3,23 @@
 date >> /home/cisco/util/boot-service.log
 
 # gitpull
-echo "git pull" >> /home/cisco/util/boot-service.log
+echo "git pull
+
+" >> /home/cisco/util/boot-service.log
+
 export HOME=/home/cisco
 cd /home/cisco/sonic-dcloud
 git config --global --add safe.directory /home/cisco/sonic-dcloud
 git pull >> /home/cisco/util/boot-service.log
 
 # nets
-echo "create endpoint bridges and routes" >> /home/cisco/util/boot-service.log
+echo "
+
+create endpoint bridges and routes" >> /home/cisco/util/boot-service.log
+
 sudo brctl addbr leaf01-host1
 sudo brctl addbr leaf02-host2
 
-#sudo ip link set mgt-net up
 sudo ip link set leaf01-host1 up
 sudo ip link set leaf02-host2 up
 
@@ -31,7 +36,10 @@ brctl show >> /home/cisco/util/boot-service.log
 ip route >> /home/cisco/util/boot-service.log
 
 # Virsh
-echo "virsh start sonic VMs" >> /home/cisco/util/boot-service.log
+echo "
+
+virsh start sonic VMs" >> /home/cisco/util/boot-service.log
+
 virsh start spine01 >> /home/cisco/util/boot-service.log
 virsh start spine02 >> /home/cisco/util/boot-service.log
 
