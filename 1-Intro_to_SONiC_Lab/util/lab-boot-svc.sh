@@ -1,6 +1,6 @@
 #!/bin/bash
 
-date >> /home/cisco/util/boot-service.log
+date > /home/cisco/util/boot-service.log
 
 # gitpull
 echo "git pull
