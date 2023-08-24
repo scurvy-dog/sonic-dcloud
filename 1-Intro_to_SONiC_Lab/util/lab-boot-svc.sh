@@ -10,7 +10,7 @@ git config --global --add safe.directory /home/cisco/sonic-dcloud
 git pull >> /home/cisco/util/boot-service.log
 
 # nets
-echo "create endpoint bridges and routes" > /home/cisco/util/boot-service.log
+echo "create endpoint bridges and routes" >> /home/cisco/util/boot-service.log
 sudo brctl addbr leaf01-host1
 sudo brctl addbr leaf02-host2
 
