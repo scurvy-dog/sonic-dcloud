@@ -3,11 +3,11 @@
 date >> /home/cisco/util/boot-service.log
 
 # gitpull
-echo "git pull" > /home/cisco/util/boot-service.log
+echo "git pull" >> /home/cisco/util/boot-service.log
 export HOME=/home/cisco
 cd /home/cisco/sonic-dcloud
 git config --global --add safe.directory /home/cisco/sonic-dcloud
-git pull > /home/cisco/util/boot-service.log
+git pull >> /home/cisco/util/boot-service.log
 
 # nets
 echo "create endpoint bridges and routes" > /home/cisco/util/boot-service.log
@@ -28,15 +28,16 @@ sudo ip route add 10.1.2.0/24 dev leaf01-host1
 sudo ip route add 10.1.3.0/24 dev leaf02-host2
 
 # Virsh
-echo "virsh start sonic VMs" > /home/cisco/util/boot-service.log
-virsh start spine01 > /home/cisco/util/boot-service.log
-virsh start spine02 > /home/cisco/util/boot-service.log
+echo "virsh start sonic VMs" >> /home/cisco/util/boot-service.log
+virsh start spine01 >> /home/cisco/util/boot-service.log
+virsh start spine02 >> /home/cisco/util/boot-service.log
 
 sleep 5
 
-virsh start leaf01 > /home/cisco/util/boot-service.log
-virsh start leaf02 > /home/cisco/util/boot-service.log
+virsh start leaf01 >> /home/cisco/util/boot-service.log
+virsh start leaf02 >> /home/cisco/util/boot-service.log
 
 sleep 5
 
-virsh list --all > /home/cisco/util/boot-service.log
+virsh list --all >> /home/cisco/util/boot-service.log
+brctl show >> /home/cisco/util/boot-service.log
