@@ -60,18 +60,21 @@ You can see the list of the running containers with SONiC by running the below c
 docker ps
 ```
 ```
-cisco@spine01:~$ docker ps
-CONTAINER ID   IMAGE                                COMMAND                  CREATED        STATUS       NAMES
-868157a8bbf5   docker-snmp:latest                   "/usr/local/bin/supe…"   17 hours ago   Up 3 hours   snmp
-5644f3c91087   docker-sonic-mgmt-framework:latest   "/usr/local/bin/supe…"   17 hours ago   Up 3 hours   mgmt-framework
-099b9115a440   docker-router-advertiser:latest      "/usr/bin/docker-ini…"   17 hours ago   Up 3 hours   radv
-878549b44ead   docker-lldp:latest                   "/usr/bin/docker-lld…"   17 hours ago   Up 3 hours   lldp
-aa1c44498dee   docker-fpm-frr:latest                "/usr/bin/docker_ini…"   17 hours ago   Up 3 hours   bgp
-0a8f12abe9c6   docker-teamd:latest                  "/usr/local/bin/supe…"   17 hours ago   Up 3 hours   teamd
-f2996f06bc05   docker-syncd-cisco:latest            "/usr/local/bin/supe…"   17 hours ago   Up 3 hours   syncd
-20db7f99de4e   docker-orchagent:latest              "/usr/bin/docker-ini…"   17 hours ago   Up 3 hours   swss
-5b7c42be2fbc   docker-platform-monitor:latest       "/usr/bin/docker_ini…"   17 hours ago   Up 3 hours   pmon
-199dfb786c07   docker-database:latest               "/usr/local/bin/dock…"   17 hours ago   Up 3 hours   database
+admin@leaf01:~$ docker ps
+CONTAINER ID   IMAGE                                COMMAND                  CREATED       STATUS       PORTS     NAMES
+d3dec180edf1   docker-sonic-telemetry:latest        "/usr/local/bin/supe…"   7 hours ago   Up 3 hours             telemetry
+73408f13ba26   docker-snmp:latest                   "/usr/local/bin/supe…"   7 hours ago   Up 3 hours             snmp
+dd0fcc119898   docker-platform-monitor:latest       "/usr/bin/docker_ini…"   7 hours ago   Up 3 hours             pmon
+b5bfcb99ed76   docker-sonic-mgmt-framework:latest   "/usr/local/bin/supe…"   7 hours ago   Up 3 hours             mgmt-framework
+a897bd933245   docker-lldp:latest                   "/usr/bin/docker-lld…"   7 hours ago   Up 3 hours             lldp
+48663b8df8f6   docker-router-advertiser:latest      "/usr/bin/docker-ini…"   7 hours ago   Up 3 hours             radv
+ce538630853c   docker-gbsyncd-vs:latest             "/usr/local/bin/supe…"   7 hours ago   Up 3 hours             gbsyncd
+1206abe29dc5   docker-fpm-frr:latest                "/usr/bin/docker_ini…"   7 hours ago   Up 3 hours             bgp
+b702fb2043ee   docker-syncd-vs:latest               "/usr/local/bin/supe…"   7 hours ago   Up 3 hours             syncd
+6132ac862c62   docker-teamd:latest                  "/usr/local/bin/supe…"   7 hours ago   Up 3 hours             teamd
+d3cb89acd257   docker-orchagent:latest              "/usr/bin/docker-ini…"   7 hours ago   Up 3 hours             swss
+a0355d7eb56b   docker-eventd:latest                 "/usr/local/bin/supe…"   7 hours ago   Up 3 hours             eventd
+c002ab9b311f   docker-database:latest               "/usr/local/bin/dock…"   7 hours ago   Up 3 hours             database
 ```
 > **Note**
 >For greater detail on container services see this link [HERE](https://github.com/sonic-net/SONiC/wiki/Architecture)
