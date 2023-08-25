@@ -147,7 +147,7 @@ There are several relevant files for our ansible playbook
 ## Validate BGP Peering
 
 ### Verify BGP Peering Sessions
-- Verify that BGP peering sessions are established with *spine01* and *spine02* from leaf01
+- Verify that BGP peering sessions are established with *spine01* and *spine02* from *leaf01*
   ```
   show ip bgp summary
   ```
