@@ -348,12 +348,12 @@ To check on interface status and connectivity follow these steps on each router 
    ```
    ssh cisco@172.10.10.4
    ```
-2. Configure *loopback0* and add IPv4 and IPv6
+2. Configure *Loopback0* and add IPv4 and IPv6
    ```
    sudo config interface ip add Loopback0 10.0.0.4/32
    sudo config interface ip add Loopback0 fc00:0:4::1/128
    ```
-3. Configure Ethernet interface from *leaf01* to *Endpoint01*
+3. Configure Ethernet interface from *leaf01* to *endpoint01*
    ```
    sudo config interface ip add Ethernet16 10.1.2.1/24
    sudo config interface ip add Ethernet16 2001:1:2::1/64
