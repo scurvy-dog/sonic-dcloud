@@ -85,23 +85,23 @@ There are several relevant files for our ansible playbook
    ```
 3. Start with the base BGP configuration. For *leaf01* we will be using AS65004 per the topology diagram.
    ```
-   router bgp 65005
+   router bgp 65004
    bgp router-id 10.0.0.4
    bgp log-neighbor-changes
    no bgp ebgp-requires-policy
    no bgp default ipv4-unicast
    bgp bestpath as-path multipath-relax
-   neighbor 10.1.1.5 remote-as 65000
-   neighbor 10.1.1.7 remote-as 65000
-   neighbor fc00:0:ffff::5 remote-as 65000
-   neighbor fc00:0:ffff::7 remote-as 65000
+   neighbor 10.1.1.1 remote-as 65000
+   neighbor 10.1.1.3 remote-as 65000
+   neighbor fc00:0:ffff::1 remote-as 65000
+   neighbor fc00:0:ffff::3 remote-as 65000
    ```
 4. Next we will add the IPv4 Unicast configuration
    ```
    address-family ipv4 unicast
    network 10.0.0.4/32
-   neighbor 10.1.1.5 activate
-   neighbor 10.1.1.7 activate
+   neighbor 10.1.1.1 activate
+   neighbor 10.1.1.3 activate
    exit-address-family
    ```
 5. Now add the IPv6 Unicast configuration
@@ -109,10 +109,8 @@ There are several relevant files for our ansible playbook
    address-family ipv6 unicast
    network fc00:0:4::/48
    network fc00:0:::1/128
-   neighbor fc00:0:ffff::5 activate
-   neighbor fc00:0:ffff::5 route-map BGP-IPV6 in
-   neighbor fc00:0:ffff::7 activate
-   neighbor fc00:0:ffff::7 route-map BGP-IPV6 in
+   neighbor fc00:0:ffff::1 activate
+   neighbor fc00:0:ffff::3 activate
    exit-address-family
    exit
    ```
@@ -146,10 +144,74 @@ There are several relevant files for our ansible playbook
    exit
    !
    ```
-
-
-
 ## Validate BGP Peering
+
+### Verify IPv4 Peering Sessions are up
+- Verify that BGP peering sessions are established with *spine01* and *spine02* from leaf01
+   ```
+   leaf01# show ip bgp summary
+   IPv4 Unicast Summary (VRF default)
+   BGP router identifier 10.0.0.4, local AS number 65004 vrf-id 0
+   BGP table version 4
+   RIB entries 7, using 1344 bytes of memory
+   Peers 2, using 1449 KiB of memory
+
+   Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+   10.1.1.1        4      65000        10        10        0    0    0 00:04:03            2        4 N/A
+   10.1.1.3        4      65000        10        10        0    0    0 00:04:03            2        4 N/A
+
+   Total number of neighbors 2
+   ```
+- Verify that BGP peering sessions are established with *spine01* and *spine02* from *leaf02*
+   ```
+   leaf02# show ip bgp summary
+   IPv4 Unicast Summary (VRF default)
+   BGP router identifier 10.0.0.4, local AS number 65004 vrf-id 0
+   BGP table version 4
+   RIB entries 7, using 1344 bytes of memory
+   Peers 2, using 1449 KiB of memory
+
+   Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+   10.1.1.5        4      65000       169       170        0    0    0 02:37:08            2        4 N/A
+   10.1.1.7        4      65000       169       170        0    0    0 02:37:08            2        4 N/A
+
+   Total number of neighbors 2
+   ```
+### Verify IPv4 Routes Received
+
+### Verify IPv6 Routes Received
+- Verify that *leaf01* has received the following
+  ```
+  show ipv6 route bgp
+  ```
+  ```
+  leaf01# show ipv6 route bgp
+  Codes: K - kernel route, C - connected, S - static, R - RIPng,
+       O - OSPFv3, I - IS-IS, B - BGP, N - NHRP, T - Table,
+       v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+       f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+  B>* fc00:0:2::1/128 [20/0] via fe80::5054:ff:fe74:c103, PortChannel1, weight 1, 00:06:02
+  B>* fc00:0:3::1/128 [20/0] via fe80::5054:ff:fe74:c104, PortChannel2, weight 1, 00:06:02
+  B>* fc00:0:5::1/128 [20/0] via fe80::5054:ff:fe74:c103, PortChannel1, weight 1, 00:06:02
+    *                        via fe80::5054:ff:fe74:c104, PortChannel2, weight 1, 00:06:02
+  ```
+- Verify that *leaf02* has received the following
+  ```
+  leaf02# show ipv6 route bgp
+  Codes: K - kernel route, C - connected, S - static, R - RIPng,
+       O - OSPFv3, I - IS-IS, B - BGP, N - NHRP, T - Table,
+       v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+       f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+  B>* fc00:0:2::1/128 [20/0] via fc00:0:ffff::7, PortChannel2, weight 1, 00:09:31
+  B>* fc00:0:3::1/128 [20/0] via fc00:0:ffff::5, PortChannel1, weight 1, 00:09:32
+  B>* fc00:0:4::1/128 [20/0] via fc00:0:ffff::5, PortChannel1, weight 1, 00:05:50
+  *                        via fc00:0:ffff::7, PortChannel2, weight 1, 00:05:50
+  ```
 
 ## End of Lab 3
 Please proceed to [Lab 4](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_4/lab_4-guide.md)
