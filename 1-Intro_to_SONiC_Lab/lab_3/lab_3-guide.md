@@ -270,7 +270,7 @@ There are several relevant files for our ansible playbook
   B>* fc00:0:2::1/128 [20/0] via fc00:0:ffff::7, PortChannel2, weight 1, 00:09:31
   B>* fc00:0:3::1/128 [20/0] via fc00:0:ffff::5, PortChannel1, weight 1, 00:09:32
   B>* fc00:0:4::1/128 [20/0] via fc00:0:ffff::5, PortChannel1, weight 1, 00:05:50
-  *                        via fc00:0:ffff::7, PortChannel2, weight 1, 00:05:50
+    *                        via fc00:0:ffff::7, PortChannel2, weight 1, 00:05:50
   ```
 
 ## End of Lab 3
