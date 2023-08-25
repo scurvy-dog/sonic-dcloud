@@ -28,7 +28,7 @@
     - name: Run 'docker ps' command
       become: true
       command: docker ps
-      timout: 15
+      timeout: 15
 
     - name: Run 'ip route' command
       become: true
