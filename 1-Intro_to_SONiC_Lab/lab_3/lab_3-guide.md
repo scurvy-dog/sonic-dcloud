@@ -13,7 +13,7 @@ In Lab 3 the student will explore the configuring the BGP routing protocol withi
     - [Configure BGP Leaf01 with FRR CLI](#configure-bgp-leaf01-with-frr-cli)
     - [Validate BGP Peering](#validate-bgp-peering)
        - [Check BGP Neighbors]
-       - [Check Routing Tables]
+       - [Check Routing Tables](#check-bgp-routing-table)
        - [Check Connectivity]     
    
   - [End of Lab 3](#end-of-lab-3)
@@ -146,7 +146,7 @@ There are several relevant files for our ansible playbook
    ```
 ## Validate BGP Peering
 
-### Verify IPv4 Peering Sessions are up
+### Check BGP Routing Table
 - Verify that BGP peering sessions are established with *spine01* and *spine02* from leaf01
    ```
    leaf01# show ip bgp summary
