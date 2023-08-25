@@ -10,70 +10,106 @@ In our lab the Rome VM represents a standard linux host or endpoint, and is esse
    ssh cisco@198.18.128.103
    ```
 
-2. Check that the interface to router leaf01 is `UP` and has the assigned IP `10.107.1.1/24`
-   ```
-   cisco@endpoint-1:~$ ip address show ens192
-    3: ens192: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
-        link/ether 00:50:56:aa:ab:cf brd ff:ff:ff:ff:ff:ff
-        inet <strong>10.107.1.1/24</strong> brd 10.107.1.255 scope global ens192  <------- Here
-        valid_lft forever preferred_lft forever
-        inet6 fc00:0:107:1:250:56ff:feaa:abcf/64 scope global dynamic mngtmpaddr noprefixroute 
-        valid_lft 2591929sec preferred_lft 604729sec
-        inet6 fc00:0:107:1::1/64 scope global 
-        valid_lft forever preferred_lft forever
-        inet6 fe80::250:56ff:feaa:abcf/64 scope link 
-        valid_lft forever preferred_lft forever
-   ```
-3. Check connectivity from Endpoint-1 to leaf01
-   ```
-   cisco@rome:~$ ping -c 3 10.107.1.2
-   PING 10.107.1.2 (10.107.1.2) 56(84) bytes of data.
-   64 bytes from 10.107.1.2: icmp_seq=1 ttl=255 time=2.70 ms
-   64 bytes from 10.107.1.2: icmp_seq=2 ttl=255 time=1.38 ms
-   64 bytes from 10.107.1.2: icmp_seq=3 ttl=255 time=1.30 ms
-   ```
-
 __Endpoint-2__
 
 The Endpiont-2 VM represents a VM belonging in another virtual network (different then Endpoint-1 VM). The Endpoint-1 VM comes with 
-VPP pre-installed. VPP (also known as https://fd.io/) is a very flexible and high performance open source software dataplane. 
 
 1. SSH to Endpoint-2 Client VM from your laptop.
    ```
    ssh cisco@198.18.128.102
    ```
 
-2. Check that the VPP interface facing Ubuntu (host-vpp-in) and the interface facing router xrd01 (GigabitEthernetb/0/0) are `UP` 
-and have their assigned IP addresses. GigabitEthernetb/0/0: `10.101.1.1/24`, and host-vpp-in: `10.101.2.2/24` 
-    
-    ```
-    sudo vppctl show interface address
-    ```
-    ```
-    cisco@amsterdam:~$ sudo vppctl show interface address
-    GigabitEthernetb/0/0 (up):
-    L3 10.101.1.1/24        <-------HERE
-    L3 fc00:0:101:1::1/64
-    host-vpp-in (up):
-    L3 10.101.2.2/24        <-------HERE
-    ```
-    
-3. Check connectivity from Endpoint-2 to leaf02 - we'll issue a ping from VPP itself:
-    ```
-    sudo vppctl ping 10.101.1.2
-    ```
+### lab 3 playbook
+configures FRR BGP on spin01, spine02, and leaf02
 
-    ```
-    cisco@amsterdam:~$ sudo vppctl ping 10.101.1.2
-    116 bytes from 10.101.1.2: icmp_seq=1 ttl=255 time=2.7229 ms
-    116 bytes from 10.101.1.2: icmp_seq=2 ttl=255 time=1.1550 ms
-    116 bytes from 10.101.1.2: icmp_seq=3 ttl=255 time=1.1341 ms
-    116 bytes from 10.101.1.2: icmp_seq=4 ttl=255 time=1.2277 ms
-    116 bytes from 10.101.1.2: icmp_seq=5 ttl=255 time=.8838 ms
+```
+ansible-playbook -i hosts lab_2-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+```
 
-    Statistics: 5 sent, 5 received, 0% packet loss
-    cisco@amsterdam:~$ 
-    ```
+### validate BGP
+```
+spine02# show bgp sum
 
-Device access 
+IPv4 Unicast Summary (VRF default):
+BGP router identifier 10.0.0.3, local AS number 65000 vrf-id 0
+BGP table version 3
+RIB entries 5, using 960 bytes of memory
+Peers 2, using 1449 KiB of memory
 
+Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+10.1.1.2        4      65004         9         8        0    0    0 00:02:12            1        3 N/A
+10.1.1.4        4      65005        25        34        0    0    0 00:08:25            1        3 N/A
+
+Total number of neighbors 2
+
+IPv6 Unicast Summary (VRF default):
+BGP router identifier 10.0.0.3, local AS number 65000 vrf-id 0
+BGP table version 3
+RIB entries 6, using 1152 bytes of memory
+Peers 2, using 1449 KiB of memory
+
+Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+fc00:0:ffff::2  4      65004         9         8        0    0    0 00:02:10            1        3 N/A
+fc00:0:ffff::4  4      65005        30        28        0    0    0 00:18:26            1        3 N/A
+
+Total number of neighbors 2
+spine02# show bgp ipv4 uni
+BGP table version is 3, local router ID is 10.0.0.3, vrf id 0
+Default local pref 100, local AS 65000
+Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
+               i internal, r RIB-failure, S Stale, R Removed
+Nexthop codes: @NNN nexthop's vrf id, < announce-nh-self
+Origin codes:  i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+    Network          Next Hop            Metric LocPrf Weight Path
+ *> 10.0.0.3/32      0.0.0.0                  0         32768 i
+ *> 10.0.0.4/32      10.1.1.2                 0             0 65004 i
+ *> 10.0.0.5/32      10.1.1.4                 0             0 65005 i
+
+Displayed  3 routes and 3 total paths
+spine02# show bgp ipv6 uni
+BGP table version is 3, local router ID is 10.0.0.3, vrf id 0
+Default local pref 100, local AS 65000
+Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
+               i internal, r RIB-failure, S Stale, R Removed
+Nexthop codes: @NNN nexthop's vrf id, < announce-nh-self
+Origin codes:  i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+    Network          Next Hop            Metric LocPrf Weight Path
+    fc00:0:3::/48    ::                       0         32768 i
+ *> fc00:0:3::1/128  ::                       0         32768 i
+ *> fc00:0:4::1/128  fc00:0:ffff::2           0             0 65004 i
+ *> fc00:0:5::1/128  fc00:0:ffff::4           0             0 65005 i
+
+Displayed  4 routes and 4 total paths
+spine02# 
+```
+
+### validate linux IP routes on spines
+```
+cisco@spine02:~$ ip route
+default via 172.10.10.1 dev eth0 metric 202 
+10.0.0.4 nhid 99 via 10.1.1.2 dev PortChannel2 proto bgp src 10.0.0.3 metric 20 
+10.0.0.5 nhid 93 via 10.1.1.4 dev PortChannel1 proto bgp src 10.0.0.3 metric 20 
+10.1.1.2/31 dev PortChannel2 proto kernel scope link src 10.1.1.3 
+10.1.1.4/31 dev PortChannel1 proto kernel scope link src 10.1.1.5 
+172.10.10.0/24 dev eth0 proto kernel scope link src 172.10.10.3 metric 202 
+240.127.1.0/24 dev docker0 proto kernel scope link src 240.127.1.1 linkdown 
+```
+
+### validate linux IP routes on leaf
+```
+cisco@leaf01:~$ ip route
+10.0.0.2 nhid 228 via 10.1.1.1 dev PortChannel1 proto bgp src 10.0.0.4 metric 20 
+10.0.0.3 nhid 232 via 10.1.1.3 dev PortChannel2 proto bgp src 10.0.0.4 metric 20 
+10.0.0.5 nhid 233 proto bgp src 10.0.0.4 metric 20 
+	nexthop via 10.1.1.1 dev PortChannel1 weight 1 
+	nexthop via 10.1.1.3 dev PortChannel2 weight 1 
+10.1.1.0/31 dev PortChannel1 proto kernel scope link src 10.1.1.0 
+10.1.1.2/31 dev PortChannel2 proto kernel scope link src 10.1.1.2 
+10.1.2.0/24 dev Ethernet16 proto kernel scope link src 10.1.2.1 
+172.10.10.0/24 dev eth0 proto kernel scope link src 172.10.10.4 
+240.127.1.0/24 dev docker0 proto kernel scope link src 240.127.1.1 linkdown 
+```
