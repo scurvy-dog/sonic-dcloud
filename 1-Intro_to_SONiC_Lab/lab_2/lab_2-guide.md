@@ -1,4 +1,4 @@
-d# Lab 2 Guide: Explore SONiC NOS [40 Min]
+# Lab 2 Guide: Explore SONiC NOS [40 Min]
 
 ### Description: 
 In Lab 2 the student will explore the SONiC network operating system, its components, services, config management, and CLI. Second, they will run an Ansible script to apply global and interface configurations to the nodes in our topology. And finally we will validate connectivity between SONiC nodes and from SONiC nodes to our endpoint VMs.
