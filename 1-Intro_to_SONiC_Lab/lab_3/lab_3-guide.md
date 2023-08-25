@@ -12,9 +12,9 @@ In Lab 3 the student will explore the configuring the BGP routing protocol withi
     - [Ansible BGP Playbook](#ansible-bgp-playbook)
     - [Configure BGP Leaf01 with FRR CLI](#configure-bgp-leaf01-with-frr-cli)
     - [Validate BGP Peering](#validate-bgp-peering)
-       - [Check BGP Peering Sessions](#verify-bgp-peering-sessions)
-       - [Check Routing Tables](#check-bgp-routing-table)
-       - [Check Connectivity]     
+       - [Verify BGP Peering Sessions](#verify-bgp-peering-sessions)
+       - [Verify BGP Routing Table](#verify-bgp-routing-table
+       - [Validate End to End Connectivity](#Validate-end-to-end-connectivity)    
    
   - [End of Lab 3](#end-of-lab-3)
   
