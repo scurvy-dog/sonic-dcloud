@@ -338,7 +338,7 @@ There are several relevant files for our ansible playbook
   *> 10.0.0.5/32      0.0.0.0                                0 65000 65005 i  <---- Route Received Peer spine01
   *> 10.1.2.0/24      0.0.0.0                  0         32768 i
   *> 10.1.3.0/24      0.0.0.0                                0 65000 65005 i
- ```
+  ```
 
 - Validate route was received from *spine01* and added to the BGP table
  ```
