@@ -3,13 +3,22 @@
 This page is to help those new to SONiC have a quick reference guide for CLI commands. 
 
 ## Contents
-- [Global Commands](#global-commands)
-- [Configuration Management](#configuration-management)
-- [Container Management](#container-management)
-- [Reload Commands](#reload-commands)
-- [Interface Commands](#interface-commands)
-- [Routing Procotols](#routing-protocols)
-  - [BGP Commands](#bgp-commands)
+- [SONiC Quick Reference Guide for CLI Commands](#sonic-quick-reference-guide-for-cli-commands)
+  - [Description:](#description)
+  - [Contents](#contents)
+  - [Global Commands](#global-commands)
+    - [Show Version](#show-version)
+    - [Other global commands](#other-global-commands)
+  - [Configuration Commands](#configuration-commands)
+  - [Container Commands](#container-commands)
+  - [Reload Commands](#reload-commands)
+    - [Warm Reboot](#warm-reboot)
+    - [Fast Reboot](#fast-reboot)
+  - [Interface Commands](#interface-commands)
+    - [Show Interface status](#show-interface-status)
+    - [](#)
+  - [Routing Protocols](#routing-protocols)
+    - [BGP Commands](#bgp-commands)
   
 ## Global Commands
 
@@ -39,7 +48,14 @@ Hardware Revision: 0.33
 Uptime: 17:47:47 up 50 min,  1 user,  load average: 0.96, 1.01, 1.03
 Date: Fri 18 Aug 2023 17:47:47
 ```
-
+### Other global commands
+```
+show processes [cpu | memory | summary]
+show system memory
+show services
+show platform summary
+show runningconfiguration
+```
 
 ## Configuration Commands
 
