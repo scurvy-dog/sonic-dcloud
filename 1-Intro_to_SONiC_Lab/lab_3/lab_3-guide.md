@@ -149,22 +149,35 @@ There are several relevant files for our ansible playbook
 ### Verify BGP Peering Sessions
 - Verify that BGP peering sessions are established with *spine01* and *spine02* from *leaf01*
   ```
-  show ip bgp summary
+  show bgp summary
   ```
   ```
-   leaf01# show ip bgp summary
-   IPv4 Unicast Summary (VRF default)
-   BGP router identifier 10.0.0.4, local AS number 65004 vrf-id 0
-   BGP table version 4
-   RIB entries 7, using 1344 bytes of memory
-   Peers 2, using 1449 KiB of memory
+  leaf01# show bgp summary
+  IPv4 Unicast Summary (VRF default)
+  BGP router identifier 10.0.0.4, local AS number 65004 vrf-id 0
+  BGP table version 4
+  RIB entries 7, using 1344 bytes of memory
+  Peers 2, using 1449 KiB of memory
 
-   Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
-   10.1.1.1        4      65000        10        10        0    0    0 00:04:03            2        4 N/A
-   10.1.1.3        4      65000        10        10        0    0    0 00:04:03            2        4 N/A
+  Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+  10.1.1.1        4      65000        10        10        0    0    0 00:04:03            2        4 N/A
+  10.1.1.3        4      65000        10        10        0    0    0 00:04:03            2        4 N/A
 
-   Total number of neighbors 2
-   ```
+  Total number of neighbors 2
+
+  IPv6 Unicast Summary (VRF default):
+  BGP router identifier 10.0.0.4, local AS number 65004 vrf-id 0
+  BGP table version 11
+  RIB entries 8, using 1536 bytes of memory
+  Peers 2, using 1449 KiB of memory
+
+  Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+  fc00:0:ffff::1  4      65000        47        52        0    0    0 00:22:32            2        4 N/A
+  fc00:0:ffff::3  4      65000        47        54        0    0    0 00:22:32            2        4 N/A
+
+  Total number of neighbors 2
+  ```
+  
 - Verify that BGP peering sessions are established with *spine01* and *spine02* from *leaf02*
    ```
    leaf02# show ip bgp summary
@@ -179,7 +192,20 @@ There are several relevant files for our ansible playbook
    10.1.1.7        4      65000       169       170        0    0    0 02:37:08            2        4 N/A
 
    Total number of neighbors 2
+
+   IPv6 Unicast Summary (VRF default):
+   BGP router identifier 10.0.0.5, local AS number 65005 vrf-id 0
+   BGP table version 12
+   RIB entries 8, using 1536 bytes of memory
+   Peers 2, using 1449 KiB of memory
+
+   Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+   fc00:0:ffff::5  4      65000       196       210        0    0    0 02:51:46            2        4 N/A
+   fc00:0:ffff::7  4      65000       195       210        0    0    0 02:51:46            2        4 N/A
+
+   Total number of neighbors 2
    ```
+   
 ### Verify BGP Routing Table
 - Verify that *leaf01* has received the following
   ```
