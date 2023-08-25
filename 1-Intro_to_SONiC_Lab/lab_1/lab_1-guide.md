@@ -65,7 +65,40 @@ For full size image see [LINK](../topo-drawings/management-network.png)
 
 
 ### Virsh and brctl Commands
+There should have been several Linux bridges created for connectivity 
+```
+brctl show
+```
+```
+cisco@vsonic:~$ brctl show
+bridge name	bridge id		STP enabled	interfaces	
+leaf01-host1		8000.0050568625d2	no		eth1  <----- Connection to Endpoint1
+							vnet3
+leaf02-host2		8000.00505686df6a	no		eth2  <----- Connection to Endpoint2
+							vnet5
+mgt-net		8000.52540005d85b	yes		mgt-net-nic   <----- Connection to mgmt port in vSONiC
+							vnet0
+							vnet1
+							vnet2
+							vnet4
+virbr0		8000.5254007c5aa2	yes		virbr0-nic
+```
 
+To see the status of the four SONiC VM run the following command
+```
+virsh list
+```
+
+You should see the below output if all is well in the world.
+```
+cisco@vsonic:~$ virsh list
+ Id    Name                           State
+----------------------------------------------------
+ 1     spine01                        running
+ 2     spine02                        running
+ 3     leaf01                         running
+ 4     leaf02                         running
+```
 
 ### Connect to SONiC Routers
 
