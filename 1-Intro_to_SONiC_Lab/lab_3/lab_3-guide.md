@@ -207,7 +207,40 @@ There are several relevant files for our ansible playbook
    ```
    
 ### Verify BGP Routing Table
-- Verify that *leaf01* has received the following
+- **Verify IPv4** routes *leaf01* has received the following
+  ```
+  show ip route bgp
+  ```
+  ```
+  leaf01# show ip route bgp
+  Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+       f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+  B>* 10.0.0.2/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24
+  B>* 10.0.0.3/32 [20/0] via 10.1.1.3, PortChannel2, weight 1, 00:25:24
+  B>* 10.0.0.5/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24
+    *                    via 10.1.1.3, PortChannel2, weight 1, 00:25:24
+  ```
+- **Verify IPv4** routes *leaf02* has received the following
+  ```
+  leaf01# show ip route bgp
+  Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+       f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+  B>* 10.0.0.2/32 [20/0] via 10.1.1.7, PortChannel2, weight 1, 02:59:13
+  B>* 10.0.0.3/32 [20/0] via 10.1.1.5, PortChannel1, weight 1, 02:59:13
+  B>* 10.0.0.4/32 [20/0] via 10.1.1.5, PortChannel1, weight 1, 00:26:19
+    *                    via 10.1.1.7, PortChannel2, weight 1, 00:26:19
+  ```
+  
+- **Verify IPv6** routes *leaf01* has received the following
   ```
   show ipv6 route bgp
   ```
@@ -225,7 +258,7 @@ There are several relevant files for our ansible playbook
   B>* fc00:0:5::1/128 [20/0] via fe80::5054:ff:fe74:c103, PortChannel1, weight 1, 00:06:02
     *                        via fe80::5054:ff:fe74:c104, PortChannel2, weight 1, 00:06:02
   ```
-- Verify that *leaf02* has received the following
+- **Verify IPv6** routes *leaf02* has received the following
   ```
   leaf02# show ipv6 route bgp
   Codes: K - kernel route, C - connected, S - static, R - RIPng,
