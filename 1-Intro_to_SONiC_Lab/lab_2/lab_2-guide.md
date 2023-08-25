@@ -378,5 +378,10 @@ To check on interface status and connectivity follow these steps on each router 
    sudo config interface ip add PortChannel2 fc00:0:ffff::2/127
    ```
 
+7. Save configuration
+   ```
+   sudo config save
+   ```   
+
 ## End of Lab 2
 Please proceed to [Lab 3](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_3/lab_3-guide.md)
