@@ -319,6 +319,61 @@ There are several relevant files for our ansible playbook
   *> fc00:0:5::1/128  fe80::5054:ff:fe74:c103       0               65000 65005
   *=                  fe80::5054:ff:fe74:c104       0               65000 65005 i
 
+### IPv4 BGP Route Validation Walk Through
+- Validate IPv4 BGP route received from peer. We will examine *10.0.0.5/32* originated from *leaf02*
+  ```
+  leaf01# show bgp ipv4 uni neighbors 10.1.1.1 advertised-routes
+  BGP table version is 12, local router ID is 10.0.0.4, vrf id 0
+  Default local pref 100, local AS 65004
+  Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
+               i internal, r RIB-failure, S Stale, R Removed
+  Nexthop codes: @NNN nexthop's vrf id, < announce-nh-self
+  Origin codes:  i - IGP, e - EGP, ? - incomplete
+  RPKI validation codes: V valid, I invalid, N Not found
+
+      Network          Next Hop            Metric LocPrf Weight Path
+  *> 10.0.0.2/32      0.0.0.0                                0 65000 i
+  *> 10.0.0.3/32      0.0.0.0                                0 65000 i
+  *> 10.0.0.4/32      0.0.0.0                  0         32768 i
+  *> 10.0.0.5/32      0.0.0.0                                0 65000 65005 i  <---- Route Received Peer spine01
+  *> 10.1.2.0/24      0.0.0.0                  0         32768 i
+  *> 10.1.3.0/24      0.0.0.0                                0 65000 65005 i
+ ```
+
+- Validate route was received from *spine01* and added to the BGP table
+ ```
+leaf01# show ip bgp 10.0.0.5/32
+BGP routing table entry for 10.0.0.5/32, version 9
+Paths: (2 available, best #1, table default)
+  Advertised to non peer-group peers:
+  10.1.1.1 10.1.1.3
+  65000 65005
+    10.1.1.1 from 10.1.1.1 (10.0.0.2)
+      Origin IGP, valid, external, multipath, best (Older Path)
+      Last update: Fri Aug 25 22:00:04 2023
+  65000 65005
+    10.1.1.3 from 10.1.1.3 (10.0.0.3)
+      Origin IGP, valid, external, multipath
+      Last update: Fri Aug 25 20:57:59 2023
+```
+- Validate that BGP route was installed into the routing information base (RIB)
+```
+leaf01# show ip route 10.0.0.5/32
+Routing entry for 10.0.0.5/32
+  Known via "bgp", distance 20, metric 0, best
+  Last update 01:12:57 ago
+  * 10.1.1.1, via PortChannel1, weight 1
+  * 10.1.1.3, via PortChannel2, weight 1
+```
+- Validate the route was installed in the Linux forwarding table
+```
+cisco@leaf01:~$ ip route 
+...
+10.0.0.5 nhid 111 proto bgp src 10.0.0.4 metric 20 
+	nexthop via 10.1.1.1 dev PortChannel1 weight 1 
+	nexthop via 10.1.1.3 dev PortChannel2 weight 1
+ ```
+
 ## Validate End to End Connectivity
 
 - From *leaf01* we will ping the *loopback0* interface on *leaf02*
@@ -331,6 +386,7 @@ There are several relevant files for our ansible playbook
   64 bytes from 10.0.0.5: icmp_seq=1 ttl=63 time=2.10 ms
   64 bytes from 10.0.0.5: icmp_seq=2 ttl=63 time=1.75 ms
   ```
+
 
 ## End of Lab 3
 Please proceed to [Lab 4](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_4/lab_4-guide.md)
