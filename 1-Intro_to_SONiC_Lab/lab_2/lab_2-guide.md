@@ -252,10 +252,10 @@ To check on interface status and connectivity follow these steps on each router 
   Capability codes: (R) Router, (B) Bridge, (O) Other
   LocalPort    RemoteDevice    RemotePortID    Capability    RemotePortDescr
   -----------  --------------  --------------  ------------  -----------------
-  Ethernet0    leaf01          etp0            BR            Ethernet0
-  Ethernet8    leaf01          etp1            BR            Ethernet8
-  Ethernet16   leaf02          etp2            BR            Ethernet16
-  Ethernet24   leaf02          etp3            BR            Ethernet24
+  Ethernet0    leaf01          fortyGigE0/0    BR            Ethernet0
+  Ethernet4    leaf01          fortyGigE0/4    BR            Ethernet4
+  Ethernet8    leaf02          fortyGigE0/8    BR            Ethernet8
+  Ethernet12   leaf02          fortyGigE0/12   BR            Ethernet12
   --------------------------------------------------
   Total entries displayed:  4
   ```
@@ -296,15 +296,18 @@ To check on interface status and connectivity follow these steps on each router 
    ```
    show interface portchannel
    ```
+   
    ```
-   cisco@sonic:~$ show interface portchannel
+   cisco@spine01:~$ show interface portchannel
    Flags: A - active, I - inactive, Up - up, Dw - Down, N/A - not available,
-       S - selected, D - deselected, * - not synced
+   S - selected, D - deselected, * - not synced
    No.  Team Dev      Protocol     Ports
-   -----  ------------  -----------  ---------------------------
-    1  PortChannel1  LACP(A)(Up)  Ethernet0(S) Ethernet8(S)     <------ See LADP status Active
-    2  PortChannel2  LACP(A)(Up)  Ethernet24(S) Ethernet16(S)   <------ See LADP status Active
+   -----  ------------  -----------  --------------------------
+   1  PortChannel1  LACP(A)(Dw)  Ethernet0(D) Ethernet4(D)     <------ See LADP status Down
+   2  PortChannel2  LACP(A)(Up)  Ethernet12(S) Ethernet8(S)    <------ See LADP status Active
    ```
+> [!IMPORTANT]
+> SONiC node *leaf01* is not configured yet so PortChanel1 will show a **Down** state
 
 **IP Adjaceny**
 -    View the configured IP address as listed in the below diagram.
@@ -316,24 +319,23 @@ To check on interface status and connectivity follow these steps on each router 
   show ip interfaces
   ```
   ```
-  cisco@spine02:~$ show ip interfaces
+  cisco@spine01:~$ show ip interfaces
   Interface     Master    IPv4 address/mask    Admin/Oper    BGP Neighbor    Neighbor IP
   ------------  --------  -------------------  ------------  --------------  -------------
   Loopback0               10.0.0.2/32          up/up         N/A             N/A
-  PortChannel1            10.1.1.7/31          up/up         N/A             N/A
-  PortChannel2            10.1.1.3/31          up/up         N/A             N/A
+  PortChannel1            10.1.1.1/31          up/down       leaf01          10.1.1.0
+  PortChannel2            10.1.1.7/31          up/up         N/A             N/A
   docker0                 240.127.1.1/24       up/down       N/A             N/A
-  eth0                    172.10.10.3/24       up/up         N/A             N/A
-  eth4                    192.168.123.252/24   up/up         N/A             N/A
+  eth0                    172.10.10.2/24       up/up         N/A             N/A
   lo                      127.0.0.1/16         up/up         N/A             N/A
   ```
 
 - Ping the adjacent IP for the routed linnks
   ```
-  cisco@spine02:~$ ping 10.1.1.2
-  PING 10.1.1.2 (10.1.1.2) 56(84) bytes of data.
-  64 bytes from 10.1.1.2: icmp_seq=1 ttl=64 time=573 ms
-  64 bytes from 10.1.1.2: icmp_seq=2 ttl=64 time=387 ms
+  cisco@spine01:~$ ping 10.1.1.6
+  PING 10.1.1.6 (10.1.1.6) 56(84) bytes of data.
+  64 bytes from 10.1.1.6: icmp_seq=1 ttl=64 time=12.9 ms
+  64 bytes from 10.1.1.6: icmp_seq=2 ttl=64 time=1.07 ms
   ```
 **Congratulations you have successfully completed Lab 2. You should now be ready to configure routing protocols.**
 
