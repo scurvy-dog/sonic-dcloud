@@ -18,6 +18,7 @@ In Lab 2 the student will explore the SONiC network operating system, its compon
     - [FRR Configuration Management](#frr-configuration-management)
 - [Ansible Automation](#ansible-automation)
 - [Network Connectivity](#network-connectivity)
+- [Configure Leaf01 with CLI](#configure-leaf01-with-cli)
 - [End of Lab 2](#end-of-lab-2)
   
 ## Lab Objectives
@@ -214,6 +215,8 @@ There are several relevant files for our ansible playbook
     spine01                    : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
     spine02                    : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
     ```
+> [!IMPORTANT]
+> Ansible playbook configured router *spine01*, *spine02*, and *leaf02*. You will configure router *leaf01* later in this lab.
 
 ## Network Connectivity
 Now is the time to validate that all of the links between nodes in the topology have been successfully brought up and IP addresses were assigned correctly.
@@ -339,6 +342,41 @@ To check on interface status and connectivity follow these steps on each router 
   64 bytes from 10.1.1.6: icmp_seq=2 ttl=64 time=1.07 ms
   ```
 **Congratulations you have successfully completed Lab 2. You should now be ready to configure routing protocols.**
+## Configure Leaf01 with CLI
+
+1. Log into *leaf01*
+   ```
+   ssh cisco@172.10.10.4
+   ```
+2. Configure *loopback0* and add IPv4 and IPv6
+   ```
+   sudo config interface ip add Loopback0 10.0.0.4/32
+   sudo config interface ip add Loopback0 fc00:0:4::1/128
+   ```
+3. Configure Ethernet interface from *leaf01* to *Endpoint01*
+   ```
+   sudo config interface ip add Ethernet16 10.1.2.1/24
+   sudo config interface ip add Ethernet16 2001:1:2::1/64
+   ```
+4. Create Port Channels to *spine01* and *spine02*
+   ```
+   sudo config portchannel add PortChannel1
+   sudo config portchannel add PortChannel2
+   ```
+5.  Configure Port Channel interface members
+    ```
+    sudo config portchannel member add PortChannel1 Ethernet0
+    sudo config portchannel member add PortChannel1 Ethernet4
+    sudo config portchannel member add PortChannel2 Ethernet8
+    sudo config portchannel member add PortChannel2 Ethernet12
+    ```
+6. Configure Port Channel IPs
+   ```
+   sudo config interface ip add PortChannel1 10.1.1.0/31
+   sudo config interface ip add PortChannel2 10.1.1.2/31
+   sudo config interface ip add PortChannel1 fc00:0:ffff::/127
+   sudo config interface ip add PortChannel2 fc00:0:ffff::2/127
+   ```
 
 ## End of Lab 2
 Please proceed to [Lab 3](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_3/lab_3-guide.md)
