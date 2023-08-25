@@ -272,6 +272,50 @@ There are several relevant files for our ansible playbook
   B>* fc00:0:4::1/128 [20/0] via fc00:0:ffff::5, PortChannel1, weight 1, 00:05:50
     *                        via fc00:0:ffff::7, PortChannel2, weight 1, 00:05:50
   ```
+- Examine IPv4 BGP AS Path information in the route table. This shows us what routes are installed in the BGP table vs which routes are installed into the routing table.
+  ```
+  show bgp ipv4 unicast
+  ```
+  ```
+  leaf01# show bgp ipv4 uni
+  BGP table version is 10, local router ID is 10.0.0.4, vrf id 0
+  Default local pref 100, local AS 65004
+  Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
+               i internal, r RIB-failure, S Stale, R Removed
+  Nexthop codes: @NNN nexthop's vrf id, < announce-nh-self
+  Origin codes:  i - IGP, e - EGP, ? - incomplete
+  RPKI validation codes: V valid, I invalid, N Not found
 
+     Network          Next Hop            Metric LocPrf Weight Path
+  *> 10.0.0.2/32      10.1.1.1                 0             0 65000 i
+  *> 10.0.0.3/32      10.1.1.3                 0             0 65000 i
+  *> 10.0.0.4/32      0.0.0.0                  0         32768 i
+  *> 10.0.0.5/32      10.1.1.1                               0 65000 65005 i
+  *=                  10.1.1.3                               0 65000 65005 i
+
+  Displayed  4 routes and 5 total paths
+  ```
+- Examine IPv6 BGP AS Path information in the route table
+  ```
+  leaf01# show bgp ipv6 uni
+  BGP table version is 11, local router ID is 10.0.0.4, vrf id 0
+  Default local pref 100, local AS 65004
+  Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
+               i internal, r RIB-failure, S Stale, R Removed
+  Nexthop codes: @NNN nexthop's vrf id, < announce-nh-self
+  Origin codes:  i - IGP, e - EGP, ? - incomplete
+  RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop                 Metric LocPrf Weight Path
+  *> fc00:0:2::1/128  fe80::5054:ff:fe74:c103       0             0 65000 i
+  *> fc00:0:3::1/128  fe80::5054:ff:fe74:c104
+                                                    0             0 65000 i
+     fc00:0:4::/48    ::                            0         32768       i
+  *> fc00:0:4::1/128  ::                            0         32768       i
+  *> fc00:0:5::1/128  fe80::5054:ff:fe74:c103       0               65000 65005
+  *=                  fe80::5054:ff:fe74:c104       0               65000 65005 i
+
+
+  
 ## End of Lab 3
 Please proceed to [Lab 4](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_4/lab_4-guide.md)
