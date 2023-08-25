@@ -48,7 +48,7 @@ There are several relevant files for our ansible playbook
 |:----------------------|:-----------------------------|:------------------------------|
 | lab_3-playbook.yml    | /lab_3/ansible               | Ansible playbook file         |
 | hosts                 | /lab_3/ansible               | Contains device list and IPs  |
-| config_db.json        | /lab_3/ansible/files/{host}/ | Global configuration file     |
+| frr.conf              | /lab_3/ansible/files/{host}/ | FRR BGP file -> bgpd.conf     |
 
 - Change to the ansible directory in Lab 3
   ```
@@ -69,7 +69,7 @@ There are several relevant files for our ansible playbook
     spine02              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
     ```
 > [!IMPORTANT]
-> Ansible playbook configured router *spine01*, *spine02*, and *leaf02*. You will manually configure router *leaf01* later in this lab.
+> Ansible playbook configured router *spine01*, *spine02*, and *leaf02*. You will manually configure BGP for router *leaf01* in this lab.
 
 ## Configure BGP Leaf01 with FRR CLI
 
