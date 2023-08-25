@@ -261,7 +261,8 @@ To check on interface status and connectivity follow these steps on each router 
   ```
 
 **PORT CHANNELS**
-- Port Channel configuration in the running configuration has three parts.
+- Port Channel configuration in the running configuration has three parts. Example below is for *leaf01*
+  
   ```json
   "PORTCHANNEL": {                 <------ Port Channel Definition
         "PortChannel1": {
@@ -277,19 +278,19 @@ To check on interface status and connectivity follow these steps on each router 
             "mtu": "9100"
         }
     },
-    "PORTCHANNEL_INTERFACE": {      <------ Port Channel IP Information 
+    "PORTCHANNEL_INTERFACE": {     <------ Port Channel IP Information
         "PortChannel1": {},
+        "PortChannel1|10.1.1.0/31": {},
+        "PortChannel1|fc00:0:ffff::/127": {},
         "PortChannel2": {},
-        "PortChannel1|10.1.1.1/31": {},
-        "PortChannel1|fc00:0:ffff::1/127": {},
-        "PortChannel2|10.1.1.5/31": {},
-        "PortChannel2|fc00:0:ffff::5/127": {}
+        "PortChannel2|10.1.1.2/31": {},
+        "PortChannel2|fc00:0:ffff::2/127": {}
     },
     "PORTCHANNEL_MEMBER": {         <------ Port Channel Member Links
         "PortChannel1|Ethernet0": {},
-        "PortChannel1|Ethernet8": {},
-        "PortChannel2|Ethernet16": {},
-        "PortChannel2|Ethernet24": {}
+        "PortChannel1|Ethernet4": {},
+        "PortChannel2|Ethernet8": {},
+        "PortChannel2|Ethernet12": {}
   ```
 
 - Check that the port-channels were created and look at the member links
