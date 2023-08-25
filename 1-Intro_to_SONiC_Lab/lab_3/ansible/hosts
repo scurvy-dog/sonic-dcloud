@@ -1,8 +1,8 @@
 [sonic_nodes]
-#spine01 ansible_host=172.10.10.2
-#spine02 ansible_host=172.10.10.3
-leaf01 ansible_host=172.10.10.4
-#leaf02 ansible_host=172.10.10.5
+spine01 ansible_host=172.10.10.2
+spine02 ansible_host=172.10.10.3
+#leaf01 ansible_host=172.10.10.4
+leaf02 ansible_host=172.10.10.5
 
 [sonic_nodes:vars]
 config_file_name=config_db.json

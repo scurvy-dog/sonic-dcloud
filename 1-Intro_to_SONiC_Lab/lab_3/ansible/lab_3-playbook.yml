@@ -34,5 +34,4 @@
       become: true
       command: ip route
 
-    - debug: var=reload_result.stdout_lines
 
