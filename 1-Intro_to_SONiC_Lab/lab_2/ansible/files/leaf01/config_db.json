@@ -15,14 +15,6 @@
             "gwaddr": "172.10.10.1"
         }
     },
-
-    "INTERFACE": {
-        "Ethernet0": {},
-        "Ethernet4": {},
-        "Ethernet8": {},
-        "Ethernet12": {},
-        "Ethernet16": {}
-    },
        
     "PORT": {
         "Ethernet0": {
