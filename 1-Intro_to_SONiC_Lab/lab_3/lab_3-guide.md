@@ -90,6 +90,7 @@ There are several relevant files for our ansible playbook
    bgp log-neighbor-changes
    no bgp ebgp-requires-policy
    no bgp default ipv4-unicast
+   timers 3 9
    bgp bestpath as-path multipath-relax
    neighbor 10.1.1.1 remote-as 65000
    neighbor 10.1.1.3 remote-as 65000
@@ -125,6 +126,7 @@ There are several relevant files for our ansible playbook
      no bgp ebgp-requires-policy
      no bgp default ipv4-unicast
      bgp bestpath as-path multipath-relax
+     timers 3 9
      neighbor 10.1.1.1 remote-as 65000        <---- Spine01 IPv4 Peer
      neighbor 10.1.1.3 remote-as 65000        <---- Spine02 IPv4 Peer
      neighbor fc00:0:ffff::1 remote-as 65000  <---- Spine01 IPv6 Peer
