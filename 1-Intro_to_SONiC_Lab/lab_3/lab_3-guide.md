@@ -14,7 +14,7 @@ In Lab 3 the student will explore the configuring the BGP routing protocol withi
     - [Validate BGP Peering](#validate-bgp-peering)
        - [Verify BGP Peering Sessions](#verify-bgp-peering-sessions)
        - [Verify BGP Routing Table](#verify-bgp-routing-table)
-       - [Validate End to End Connectivity](#Validate-end-to-end-connectivity)    
+    - [Validate End to End Connectivity](#Validate-end-to-end-connectivity)    
    
   - [End of Lab 3](#end-of-lab-3)
   
@@ -315,7 +315,18 @@ There are several relevant files for our ansible playbook
   *> fc00:0:5::1/128  fe80::5054:ff:fe74:c103       0               65000 65005
   *=                  fe80::5054:ff:fe74:c104       0               65000 65005 i
 
+## Validate End to End Connectivity
 
-  
+- From *leaf01* we will ping the *loopback0* interface on *leaf02*
+  ```
+  ping 10.0.0.5
+  ```
+  ```
+  leaf01# ping 10.0.0.5
+  PING 10.0.0.5 (10.0.0.5) 56(84) bytes of data.
+  64 bytes from 10.0.0.5: icmp_seq=1 ttl=63 time=2.10 ms
+  64 bytes from 10.0.0.5: icmp_seq=2 ttl=63 time=1.75 ms
+  ```
+
 ## End of Lab 3
 Please proceed to [Lab 4](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_4/lab_4-guide.md)
