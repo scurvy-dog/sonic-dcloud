@@ -62,11 +62,12 @@ There are several relevant files for our ansible playbook
     You should expect a large amount of output from ansible but, at the end of logs look for the following output
     ```
     PLAY RECAP
-    ***************************************************************************************************************************************
-    leaf01               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-    leaf02               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-    spine01              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-    spine02              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
+    PLAY RECAP
+    *************************************************************************************************************************
+    leaf02                     : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+    spine01                    : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+    spine02                    : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+    
     ```
 > [!IMPORTANT]
 > Ansible playbook configured router *spine01*, *spine02*, and *leaf02*. You will manually configure BGP for router *leaf01* in this lab.
