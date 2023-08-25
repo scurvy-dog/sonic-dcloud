@@ -75,6 +75,81 @@ There are several relevant files for our ansible playbook
  - Check
    
 ## Configure BGP Leaf01 with FRR CLI
+1. Enter into the FRR CLI shell
+   ```
+   vtysh
+   ```
+2. Enter into FRR configuration mode.
+   ```
+   config terminal
+   ```
+3. Start with the base BGP configuration. For *leaf01* we will be using AS65004 per the topology diagram.
+   ```
+   router bgp 65005
+   bgp router-id 10.0.0.4
+   bgp log-neighbor-changes
+   no bgp ebgp-requires-policy
+   no bgp default ipv4-unicast
+   bgp bestpath as-path multipath-relax
+   neighbor 10.1.1.5 remote-as 65000
+   neighbor 10.1.1.7 remote-as 65000
+   neighbor fc00:0:ffff::5 remote-as 65000
+   neighbor fc00:0:ffff::7 remote-as 65000
+   ```
+4. Next we will add the IPv4 Unicast configuration
+   ```
+   address-family ipv4 unicast
+   network 10.0.0.4/32
+   neighbor 10.1.1.5 activate
+   neighbor 10.1.1.7 activate
+   exit-address-family
+   ```
+5. Now add the IPv6 Unicast configuration
+   ```
+   address-family ipv6 unicast
+   network fc00:0:4::/48
+   network fc00:0:::1/128
+   neighbor fc00:0:ffff::5 activate
+   neighbor fc00:0:ffff::5 route-map BGP-IPV6 in
+   neighbor fc00:0:ffff::7 activate
+   neighbor fc00:0:ffff::7 route-map BGP-IPV6 in
+   exit-address-family
+   exit
+   ```
+6. Verify the new running configuration in FRR
+   ```
+   leaf01# show running-config
+   ...
+   router bgp 65004
+     bgp router-id 10.0.0.4
+     bgp log-neighbor-changes
+     no bgp ebgp-requires-policy
+     no bgp default ipv4-unicast
+     bgp bestpath as-path multipath-relax
+     neighbor 10.1.1.5 remote-as 65000        <---- Spine01 IPv4 Peer
+     neighbor 10.1.1.7 remote-as 65000        <---- Spine02 IPv4 Peer
+     neighbor fc00:0:ffff::5 remote-as 65000  <---- Spine01 IPv6 Peer
+     neighbor fc00:0:ffff::7 remote-as 65000  <---- Spine02 IPv6 Peer
+   !
+   address-family ipv4 unicast
+     network 10.0.0.4/32                      <---- Advertise local IPv4 network 
+     neighbor 10.1.1.5 activate
+     neighbor 10.1.1.7 activate
+   exit-address-family
+   !
+   address-family ipv6 unicast
+     network fc00:0:4::/48                     <---- Advertise local IPv6 network
+     network fc00:0:4::1/128                   <---- Advertise local IPv6 network
+     neighbor fc00:0:ffff::5 activate
+     neighbor fc00:0:ffff::5 route-map BGP-IPV6 in
+     neighbor fc00:0:ffff::7 activate
+     neighbor fc00:0:ffff::7 route-map BGP-IPV6 in
+   exit-address-family
+   exit
+   !
+   ```
+
+
 
 ## Validate BGP Peering
 
