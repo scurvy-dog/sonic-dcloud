@@ -100,6 +100,7 @@ There are several relevant files for our ansible playbook
    ```
    address-family ipv4 unicast
    network 10.0.0.4/32
+   network 10.1.2.0/24
    neighbor 10.1.1.1 activate
    neighbor 10.1.1.3 activate
    exit-address-family
@@ -130,7 +131,8 @@ There are several relevant files for our ansible playbook
      neighbor fc00:0:ffff::3 remote-as 65000  <---- Spine02 IPv6 Peer
    !
    address-family ipv4 unicast
-     network 10.0.0.4/32                      <---- Advertise local IPv4 network 
+     network 10.0.0.4/32                      <---- Advertise local IPv4 network
+     network 10.1.2.0/24                      <---- Advertise local IPv4 network
      neighbor 10.1.1.1 activate
      neighbor 10.1.1.3 activate
    exit-address-family
