@@ -23,7 +23,7 @@
       ignore_errors: yes
       register: backup_result
 
-    - name: Copy frr config files
+    - name: Reset frr config 
       copy:
         src: "{{ inventory_hostname }}/frr.conf"
         dest: "/etc/sonic/frr/bgpd.conf"
