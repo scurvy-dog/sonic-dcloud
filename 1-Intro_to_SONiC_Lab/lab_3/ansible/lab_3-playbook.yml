@@ -25,13 +25,4 @@
       command: docker start bgp
       timeout: 10
 
-    - name: Run 'docker ps' command
-      become: true
-      command: docker ps
-      timeout: 15
-
-    - name: Run 'ip route' command
-      become: true
-      command: ip route
-
 
