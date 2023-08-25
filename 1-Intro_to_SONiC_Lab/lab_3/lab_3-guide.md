@@ -341,38 +341,38 @@ There are several relevant files for our ansible playbook
   ```
 
 - Validate route was received from *spine01* and added to the BGP table
- ```
-leaf01# show ip bgp 10.0.0.5/32
-BGP routing table entry for 10.0.0.5/32, version 9
-Paths: (2 available, best #1, table default)
+  ```
+  leaf01# show ip bgp 10.0.0.5/32
+  BGP routing table entry for 10.0.0.5/32, version 9
+  Paths: (2 available, best #1, table default)
   Advertised to non peer-group peers:
-  10.1.1.1 10.1.1.3
-  65000 65005
+    10.1.1.1 10.1.1.3
+    65000 65005
     10.1.1.1 from 10.1.1.1 (10.0.0.2)
-      Origin IGP, valid, external, multipath, best (Older Path)
-      Last update: Fri Aug 25 22:00:04 2023
-  65000 65005
+        Origin IGP, valid, external, multipath, best (Older Path)
+        Last update: Fri Aug 25 22:00:04 2023
+    65000 65005
     10.1.1.3 from 10.1.1.3 (10.0.0.3)
       Origin IGP, valid, external, multipath
       Last update: Fri Aug 25 20:57:59 2023
-```
+  ```
 - Validate that BGP route was installed into the routing information base (RIB)
-```
-leaf01# show ip route 10.0.0.5/32
-Routing entry for 10.0.0.5/32
+  ```
+  leaf01# show ip route 10.0.0.5/32
+  Routing entry for 10.0.0.5/32
   Known via "bgp", distance 20, metric 0, best
-  Last update 01:12:57 ago
-  * 10.1.1.1, via PortChannel1, weight 1
-  * 10.1.1.3, via PortChannel2, weight 1
-```
+    Last update 01:12:57 ago
+    * 10.1.1.1, via PortChannel1, weight 1
+    * 10.1.1.3, via PortChannel2, weight
+  ```
 - Validate the route was installed in the Linux forwarding table
-```
-cisco@leaf01:~$ ip route 
-...
-10.0.0.5 nhid 111 proto bgp src 10.0.0.4 metric 20 
+  ```
+  cisco@leaf01:~$ ip route
+  ...
+  10.0.0.5 nhid 111 proto bgp src 10.0.0.4 metric 20 
 	nexthop via 10.1.1.1 dev PortChannel1 weight 1 
 	nexthop via 10.1.1.3 dev PortChannel2 weight 1
- ```
+  ```
 
 ## Validate End to End Connectivity
 
