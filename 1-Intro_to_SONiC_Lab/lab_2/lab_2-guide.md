@@ -4,22 +4,22 @@
 In Lab 2 the student will explore the SONiC network operating system, its components, services, config management, and CLI. Second, they will run an Ansible script to apply global and interface configurations to the nodes in our topology. And finally we will validate connectivity between SONiC nodes and from SONiC nodes to our endpoint VMs.
 
 ## Contents
-- [Contents](#contents)
-- [Lab Objectives](#lab-objectives)
-- [Tour of SONiC](#tour-of-sonic)
-  - [SONiC Software Architecture](#sonic-software-architecture)
-  - [Health Check of SONiC Components](#health-check-of-sonic-components)
-  - [Health Check of Hardware Components](#health-check-of-hardware-components)
-  - [Managing Configurations](#managing-configurations)
-    - [Loading configuration from JSON file](#loading-configuration-from-json-file)
-    - [Reloading configuration](#reloading-configuration)
-    - [Saving Configuration to a File for Persistence](#saving-configuration-to-a-file-for-persistence)
-    - [Edit Configuration Through CLI](#edit-configuration-through-cli)
-    - [FRR Configuration Management](#frr-configuration-management)
-- [Ansible Automation](#ansible-automation)
-- [Network Connectivity](#network-connectivity)
-- [Configure Leaf01 with CLI](#configure-leaf01-with-cli)
-- [End of Lab 2](#end-of-lab-2)
+- [Lab 2 Guide: Explore SONiC NOS \[40 Min\]](#lab-2-guide-explore-sonic-nos-40-min)
+    - [Description:](#description)
+  - [Contents](#contents)
+  - [Lab Objectives](#lab-objectives)
+  - [Tour of SONiC](#tour-of-sonic)
+    - [SONiC Software Architecture](#sonic-software-architecture)
+    - [Managing Configurations](#managing-configurations)
+      - [Loading configuration from JSON file](#loading-configuration-from-json-file)
+      - [Reloading configuration](#reloading-configuration)
+      - [Saving Configuration to a File for Persistence](#saving-configuration-to-a-file-for-persistence)
+      - [Edit Configuration Through CLI](#edit-configuration-through-cli)
+      - [FRR Configuration Management](#frr-configuration-management)
+  - [Ansible Automation](#ansible-automation)
+  - [Network Connectivity](#network-connectivity)
+  - [Configure Leaf01 with CLI](#configure-leaf01-with-cli)
+  - [End of Lab 2](#end-of-lab-2)
   
 ## Lab Objectives
 The student upon completion of Lab 2 should have achieved the following objectives:
@@ -193,7 +193,7 @@ There are several relevant files for our ansible playbook
 
 | Name                  | Location             | Notes                         |
 |:----------------------|:---------------------|:------------------------------|
-| sonic-playbook.yml    | /lab_2/ansible       | Ansible playbook file         |
+| lab_2-playbook.yml    | /lab_2/ansible       | Ansible playbook file         |
 | hosts                 | /lab_2/ansible       | Contains device list and IPs  |
 | config_db.json        | /files/{host}/       | Global configuration file     |
 
@@ -203,20 +203,20 @@ There are several relevant files for our ansible playbook
   ```
 - Run Ansible playbook to copy configurations to SONiC routers. Once copied then load configurations
     ```
-    ansible-playbook -i hosts sonic-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+    ansible-playbook -i hosts lab_2-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
     ```
 
     You should expect a large amount of output from ansible but, at the end of logs look for the following output
     ```
     PLAY RECAP
     ***************************************************************************************************************************************
-    leaf01                     : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-    leaf02                     : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-    spine01                    : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-    spine02                    : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+    leaf01               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+    leaf02               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+    spine01              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+    spine02              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
     ```
 > [!IMPORTANT]
-> Ansible playbook configured router *spine01*, *spine02*, and *leaf02*. You will configure router *leaf01* later in this lab.
+> Ansible playbook configured router *spine01*, *spine02*, and *leaf02*. You will manually configure router *leaf01* later in this lab.
 
 ## Network Connectivity
 Now is the time to validate that all of the links between nodes in the topology have been successfully brought up and IP addresses were assigned correctly.
