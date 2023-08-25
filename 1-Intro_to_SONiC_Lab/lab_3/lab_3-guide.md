@@ -13,7 +13,7 @@ In Lab 3 the student will explore the configuring the BGP routing protocol withi
     - [Configure BGP Leaf01 with FRR CLI](#configure-bgp-leaf01-with-frr-cli)
     - [Validate BGP Peering](#validate-bgp-peering)
        - [Verify BGP Peering Sessions](#verify-bgp-peering-sessions)
-       - [Verify BGP Routing Table](#verify-bgp-routing-table
+       - [Verify BGP Routing Table](#verify-bgp-routing-table)
        - [Validate End to End Connectivity](#Validate-end-to-end-connectivity)    
    
   - [End of Lab 3](#end-of-lab-3)
@@ -180,9 +180,7 @@ There are several relevant files for our ansible playbook
 
    Total number of neighbors 2
    ```
-### Verify IPv4 Routes Received
-
-### Check BGP Routing Table
+### Verify BGP Routing Table
 - Verify that *leaf01* has received the following
   ```
   show ipv6 route bgp
