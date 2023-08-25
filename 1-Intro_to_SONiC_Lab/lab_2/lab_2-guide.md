@@ -191,13 +191,13 @@ In this lab we are going to use an Ansible playbook to create the baseline confi
 
 There are several relevant files for our ansible playbook
 
-| Name                  | Location             | Notes                         |
-|:----------------------|:---------------------|:------------------------------|
-| lab_2-playbook.yml    | /lab_2/ansible       | Ansible playbook file         |
-| hosts                 | /lab_2/ansible       | Contains device list and IPs  |
-| config_db.json        | /files/{host}/       | Global configuration file     |
+| Name                  | Location                     | Notes                         |
+|:----------------------|:-----------------------------|:------------------------------|
+| lab_2-playbook.yml    | /lab_2/ansible               | Ansible playbook file         |
+| hosts                 | /lab_2/ansible               | Contains device list and IPs  |
+| config_db.json        | /lab_2/ansible/files/{host}/ | Global configuration file     |
 
-- Change to the ansible directory in lab 2
+- Change to the ansible directory in Lab 2
   ```
   cd ansible
   ```
