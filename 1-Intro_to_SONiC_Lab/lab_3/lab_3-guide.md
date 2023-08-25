@@ -40,7 +40,36 @@ In this lab we will have three separate BGP AS represented in the fabric. The sp
 ![BGP Topology](../topo-drawings/bgp-topology.png)
 
 ## Ansible BGP Playbook
+In Lab 3 we are going to use an Ansible playbook to create the BGP configuration in the topology. That means we are going to replace the */etc/sonic/frr/bgpd.conf* file which will contain FRR BGP parameters. 
 
+There are several relevant files for our ansible playbook
+
+| Name                  | Location                     | Notes                         |
+|:----------------------|:-----------------------------|:------------------------------|
+| lab_3-playbook.yml    | /lab_3/ansible               | Ansible playbook file         |
+| hosts                 | /lab_3/ansible               | Contains device list and IPs  |
+| config_db.json        | /lab_3/ansible/files/{host}/ | Global configuration file     |
+
+- Change to the ansible directory in Lab 3
+  ```
+  cd ansible
+  ```
+- Run Ansible playbook to copy configurations to SONiC routers. Once copied then load configurations
+    ```
+    ansible-playbook -i hosts lab_3-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+    ```
+
+    You should expect a large amount of output from ansible but, at the end of logs look for the following output
+    ```
+    PLAY RECAP
+    ***************************************************************************************************************************************
+    leaf01               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+    leaf02               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+    spine01              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+    spine02              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
+    ```
+> [!IMPORTANT]
+> Ansible playbook configured router *spine01*, *spine02*, and *leaf02*. You will manually configure router *leaf01* later in this lab.
 
 ## Configure BGP Leaf01 with FRR CLI
 
