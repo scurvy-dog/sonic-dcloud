@@ -1,5 +1,5 @@
 ---
-- name: Copy FRR config to hosts and perform config reload
+- name: Copy FRR config to hosts and restart BGP container
   hosts: sonic_nodes
   become: true
   tasks:
