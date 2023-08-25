@@ -72,6 +72,8 @@ There are several relevant files for our ansible playbook
 > [!IMPORTANT]
 > Ansible playbook configured router *spine01*, *spine02*, and *leaf02*. You will manually configure BGP for router *leaf01* in this lab.
 
+ - Check
+   
 ## Configure BGP Leaf01 with FRR CLI
 
 ## Validate BGP Peering
