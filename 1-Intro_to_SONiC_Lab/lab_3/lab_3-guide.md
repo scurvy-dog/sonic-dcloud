@@ -35,7 +35,9 @@ For *leaf01* you will be using the FRR CLI to add the BGP configuration. There a
     - From there on it will follow the same path as a REST config request for create, update and delete operations
 
 ## BGP Topology
+In this lab we will have three separate BGP AS represented in the fabric. The spine layer will be within it's own AS 65000. Each leaf will then have it's own separate BGP AS as represented in the topology diagram below. In this BGP DC fabric the leafs should be receiving equal cost paths through each of the spine layer port-channels through AS 65000.
 
+![BGP Topology](../topo-drawings/bgp-topology.png)
 
 ## Ansible BGP Playbook
 
