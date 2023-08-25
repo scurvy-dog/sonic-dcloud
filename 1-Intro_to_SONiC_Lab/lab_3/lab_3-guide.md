@@ -12,7 +12,7 @@ In Lab 3 the student will explore the configuring the BGP routing protocol withi
     - [Ansible BGP Playbook](#ansible-bgp-playbook)
     - [Configure BGP Leaf01 with FRR CLI](#configure-bgp-leaf01-with-frr-cli)
     - [Validate BGP Peering](#validate-bgp-peering)
-       - [Check BGP Neighbors]
+       - [Check BGP Peering Sessions](#verify-bgp-peering-sessions)
        - [Check Routing Tables](#check-bgp-routing-table)
        - [Check Connectivity]     
    
@@ -146,9 +146,12 @@ There are several relevant files for our ansible playbook
    ```
 ## Validate BGP Peering
 
-### Check BGP Routing Table
+### Verify BGP Peering Sessions
 - Verify that BGP peering sessions are established with *spine01* and *spine02* from leaf01
-   ```
+  ```
+  show ip bgp summary
+  ```
+  ```
    leaf01# show ip bgp summary
    IPv4 Unicast Summary (VRF default)
    BGP router identifier 10.0.0.4, local AS number 65004 vrf-id 0
@@ -179,7 +182,7 @@ There are several relevant files for our ansible playbook
    ```
 ### Verify IPv4 Routes Received
 
-### Verify IPv6 Routes Received
+### Check BGP Routing Table
 - Verify that *leaf01* has received the following
   ```
   show ipv6 route bgp
