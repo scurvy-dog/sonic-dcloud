@@ -280,7 +280,7 @@ There are several relevant files for our ansible playbook
   ```
   show bgp ipv4 unicast
   ```
-  ```
+  <pre>
   leaf01# show bgp ipv4 uni
   BGP table version is 10, local router ID is 10.0.0.4, vrf id 0
   Default local pref 100, local AS 65004
@@ -294,11 +294,11 @@ There are several relevant files for our ansible playbook
   *> 10.0.0.2/32      10.1.1.1                 0             0 65000 i
   *> 10.0.0.3/32      10.1.1.3                 0             0 65000 i
   *> 10.0.0.4/32      0.0.0.0                  0         32768 i
-  *> 10.0.0.5/32      10.1.1.1                               0 65000 65005 i
+<b>*> 10.0.0.5/32      10.1.1.1                               0 65000 65005 i
   *=                  10.1.1.3                               0 65000 65005 i
-
+</b>
   Displayed  4 routes and 5 total paths
-  ```
+  </pre>
 - Examine IPv6 BGP AS Path information in the route table
   ```
   leaf01# show bgp ipv6 uni
