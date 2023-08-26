@@ -1,5 +1,6 @@
 ## Validate Lab Topology
 
+````markdown
 ```
 IPv6 Unicast Summary (VRF default):
 BGP router identifier 10.0.0.3, local AS number 65000 vrf-id 0
@@ -9,8 +10,9 @@ Peers 2, using 1449 KiB of memory
 
 Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
 <code>**fc00:0:ffff::2**  4      65004         9         8        0    0    0 00:02:10            1        3 N/A**
-fc00:0:ffff::4  4      65005        30        28        0    0    0 00:18:26            1        3 N/A</code>
+fc00:0:ffff::4  4      **65005**        30        28        0    0    0 00:18:26            1        3 N/A</code>
 ```
+````
 
 ### Validate Client VMs
 
