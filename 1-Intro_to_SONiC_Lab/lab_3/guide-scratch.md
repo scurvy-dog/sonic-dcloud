@@ -13,6 +13,12 @@ Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down Sta
 fc00:0:ffff::4  4      **65005**        30        28        0    0    0 00:18:26            1        3 N/A</code>
 </pre>
 
+```html
+IPv6 Unicast Summary (VRF default):
+BGP router <b>identifier 10.0.0.3, local AS number 65000 vrf-id 0</b>
+<b>BGP table version 3</b>
+RIB entries 6, using 1152 bytes of memory
+```
 ### Validate Client VMs
 
 __Endpoint-1__
