@@ -1,6 +1,6 @@
 ## Validate Lab Topology
 
-```JSON
+```Markdown
 IPv6 Unicast Summary (VRF default):
 BGP router identifier 10.0.0.3, local AS number 65000 vrf-id 0
 BGP table version 3
