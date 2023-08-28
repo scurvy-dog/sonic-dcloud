@@ -110,7 +110,7 @@ There are several relevant files for our ansible playbook
    ```
    address-family ipv6 unicast
    network fc00:0:4::/48
-   network fc00:0:::1/128
+   network fc00:0:4::1/128
    neighbor fc00:0:ffff::1 activate
    neighbor fc00:0:ffff::3 activate
    exit-address-family
