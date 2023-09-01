@@ -46,12 +46,12 @@ Table Type Scheme
 | MIRROR              | Match on IPv4 ACL to mirror flow  | X       | X       |
 | MIRRORV6            | Match on IPv6 ACL to mirror flow  | X       | X       |
 | MIRROR_DSCP         | Match on DSCP ACL to mirror flow  | X       | X       |
-| PFCWD               | Match on DSCP ACL to mirror flow  | X       | X       |
-| MLAG                | Match on DSCP ACL to mirror flow  | X       | X       |
-| MUX                 | Match on DSCP ACL to mirror flow  | X       | X       |
-| DROP                | Match on DSCP ACL to mirror flow  | X       | X       |
-| CTRLPLANE           | Match on DSCP ACL to mirror flow  | X       | X       |
-| DTEL_FLOW_WATCHLIST | Match on DSCP ACL to mirror flow  | X       | X       |
+| PFCWD               | Research                          | X       | X       |
+| MLAG                | Research                          | X       | X       |
+| MUX                 | Research                          | X       | X       |
+| DROP                | Research                          | X       | X       |
+| CTRLPLANE           | Research                          | X       | X       |
+| DTEL_FLOW_WATCHLIST | Research                          | X       | X       |
 
 
 ## Basic ACL Walk Through
