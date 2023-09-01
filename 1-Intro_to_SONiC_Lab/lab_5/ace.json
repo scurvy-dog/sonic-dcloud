@@ -1,0 +1,17 @@
+{
+    "ACL_RULE": {
+        "DATAACL|ACE_DROP2": {
+            "PACKET_ACTION": "DROP",
+            "PRIORITY": "1",
+            "DST_IP": "10.0.0.5/32",
+            "IP_TYPE": "IP"
+     },
+        "DATAACL|ACE_DROP1": {
+            "PACKET_ACTION": "DROP",
+            "PRIORITY": "2",
+            "SRC_IP": "10.1.2.2/32",
+            "IP_TYPE": "IP",
+            "L4_SRC_PORT": "22"
+        }
+    }
+}
