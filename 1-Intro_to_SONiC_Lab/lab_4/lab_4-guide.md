@@ -11,13 +11,13 @@ In Lab 4 the student will explore the configuring stuffd
       - [Data Plane ACL]
       - [Control Plane ACL]
       - [Mirror/Span/Everflow ACL]
-    - [Basic ACL Walkthrough]
-        - [Create ACL Table]
-        - [Create ACL Rules]
-        - [Apply ACL and Test]
-    - [ACL Configuration Syntax]
-      - [ACL Table Syntax]
-      - [ACL Rule Syntax]
+    - [Basic ACL Walkthrough](#basic-acl-walkthrough)
+        - [Create ACL Table](#create-acl-table)
+        - [Create ACL Rules](#create-acl-rules)
+        - [Apply ACL and Test](#apply-acl-and-test)
+    - [ACL Configuration Syntax](#acl-configuration-syntax)
+      - [ACL Table Syntax](#acl-table-syntax)
+      - [ACL Rule Syntax](#acl-rule-syntax)
       - [CRUD Operations]
     - [ACL Scale]   
     - [ACL Troubleshooting]
