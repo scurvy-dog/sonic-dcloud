@@ -7,7 +7,7 @@ In Lab 4 the student will explore the configuring stuffd
 ## Contents
 - [Lab 4 Guide: Configure BGP \[40 Min\]](#lab-4-guide:-acl-overview-and-config-30-min)
     - [Description:](#description)
-    - [SONiC ACL Architecture]
+    - [SONiC ACL Architecture](#sonic-acl-architecture)
       - [Data Plane ACL]
       - [Control Plane ACL]
       - [Mirror/Span/Everflow ACL]
