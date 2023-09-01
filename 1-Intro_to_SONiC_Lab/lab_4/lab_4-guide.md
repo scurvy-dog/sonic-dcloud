@@ -21,6 +21,7 @@ In Lab 4 the student will explore the configuring stuffd
       - [CRUD Operations]
     - [ACL Scale]   
     - [ACL Troubleshooting]
+      - [Testing scenarios]
   - [End of Lab 4](#end-of-lab-4)
   
 ## Lab Objectives
