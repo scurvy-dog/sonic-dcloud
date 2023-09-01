@@ -34,6 +34,13 @@ The student upon completion of Lab 4 should have achieved the following objectiv
 
 ## SONiC ACL Architecture
 
+## ACL Table Scheme
+
+Table Type Scheme
+
+| Type  | Description            | Ingress | Egress  |
+|:------|:-----------------------|:-------:|:-------:|
+| L3    | IPv4 ACL               | X       | X       |
 
 ## Basic ACL Walk Through
 
