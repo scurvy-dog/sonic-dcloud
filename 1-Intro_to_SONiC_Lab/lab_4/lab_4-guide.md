@@ -38,9 +38,21 @@ The student upon completion of Lab 4 should have achieved the following objectiv
 
 Table Type Scheme
 
-| Type  | Description            | Ingress | Egress  |
-|:------|:-----------------------|:-------:|:-------:|
-| L3    | IPv4 ACL               | X       | X       |
+| Type                | Description                       | Ingress | Egress  | 
+|:--------------------|:----------------------------------|:-------:|:-------:|
+| L3                  | Match on IPv4 ACL                 | X       | X       |
+| L3V6                | Match on IPv6 ACL                 | X       | X       |
+| L3V4V6              | Match on IPv4 and v6 combined ACL | X       | X       |
+| MIRROR              | Match on IPv4 ACL to mirror flow  | X       | X       |
+| MIRRORV6            | Match on IPv6 ACL to mirror flow  | X       | X       |
+| MIRROR_DSCP         | Match on DSCP ACL to mirror flow  | X       | X       |
+| PFCWD               | Match on DSCP ACL to mirror flow  | X       | X       |
+| MLAG                | Match on DSCP ACL to mirror flow  | X       | X       |
+| MUX                 | Match on DSCP ACL to mirror flow  | X       | X       |
+| DROP                | Match on DSCP ACL to mirror flow  | X       | X       |
+| CTRLPLANE           | Match on DSCP ACL to mirror flow  | X       | X       |
+| DTEL_FLOW_WATCHLIST | Match on DSCP ACL to mirror flow  | X       | X       |
+
 
 ## Basic ACL Walk Through
 
