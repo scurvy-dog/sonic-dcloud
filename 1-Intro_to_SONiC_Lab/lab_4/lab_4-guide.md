@@ -22,6 +22,7 @@ In Lab 4 the student will explore the configuring stuffd
     - [ACL Scale]   
     - [ACL Troubleshooting]
       - [Testing scenarios]
+    - [ACL Config Appendix]
   - [End of Lab 4](#end-of-lab-4)
   
 ## Lab Objectives
