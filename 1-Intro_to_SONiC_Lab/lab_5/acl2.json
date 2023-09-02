@@ -1,0 +1,24 @@
+{
+    "ACL_TABLE": {
+        "DATAACL": {
+            "STAGE": "INGRESS",
+            "TYPE" : "L3V4V6",
+            "PORTS": [
+                "Ethernet16"
+            ]
+        }
+    },
+    "ACL_RULE": {
+      "DATAACL|RULE1": {
+	    "PRIORITY": "5",
+            "DST_IP": "10.1.3.0/24",
+	    "PACKET_ACTION": "DROP"
+        },
+      "DATAACL|RULE2": {
+	    "IP_TYPE": "IPV6ANY",
+	    "PRIORITY": "6",
+            "DST_IPV6": "fc00:0:5::/48",
+	    "PACKET_ACTION": "DROP"
+        }
+    }
+}

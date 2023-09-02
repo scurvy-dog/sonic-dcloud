@@ -54,6 +54,7 @@ show processes [cpu | memory | summary]
 show system memory
 show services
 show platform summary
+show platform pcieinfo
 show runningconfiguration
 ```
 

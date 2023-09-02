@@ -29,15 +29,19 @@
         dest: "/etc/sonic/frr/bgpd.conf"
         mode: 0644
 
-    - name: Reload configuration
-      expect:
-        command: sudo config reload
-        responses:
-          (.*)y/N(.*): "y"
-        timeout: 90
+    - name: shutdown sonic VMs
+      command: virsh destroy leaf01
       ignore_errors: yes
-      when: backup_result is not failed
-      register: reload_result
- 
-    - debug: var=reload_result.stdout_lines
+      register: virsh_result
 
+      command: virsh destroy leaf02
+      ignore_errors: yes
+      register: virsh_result
+
+      command: virsh destroy spine01
+      ignore_errors: yes
+      register: virsh_result
+
+      command: virsh destroy spine02
+      ignore_errors: yes
+      register: virsh_result

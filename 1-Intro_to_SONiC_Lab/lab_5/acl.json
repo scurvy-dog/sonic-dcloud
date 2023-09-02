@@ -1,12 +1,4 @@
 {
-    "ACL_RULE": {
-        "DATAACL|RULE0": {
-            "PACKET_ACTION": "DROP",
-            "PRIORITY": "999",
-            "SRC_IP": "10.1.2.3/32",
-            "DST_IP": "10.0.0.5/32"
-        }
-    },
     "ACL_TABLE": {
         "DATAACL": {
             "policy_desc": "DATAACL",
