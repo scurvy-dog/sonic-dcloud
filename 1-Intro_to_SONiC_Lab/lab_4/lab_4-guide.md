@@ -56,7 +56,7 @@ The student upon completion of Lab 4 should have achieved the following objectiv
 
 - For reference on Ethernet Header see this link [HERE](https://en.wikipedia.org/wiki/Ethernet_frame)
 - For reference on IPv4 Packet Header see this link [HERE](https://en.wikipedia.org/wiki/Internet_Protocol_version_4#Header)
-- For reference on IPv4 Packet Header see this link [HERE](https://en.wikipedia.org/wiki/IPv6#IPv6_packets)
+- For reference on IPv6 Packet Header see this link [HERE](https://en.wikipedia.org/wiki/IPv6#IPv6_packets)
 - For reference on ICMP Packet Header see this link [HERE](https://en.wikipedia.org/wiki/Ping_(networking_utility)#ICMP_packet)
 
 | Type                     | Description                                | Notes                 | 
