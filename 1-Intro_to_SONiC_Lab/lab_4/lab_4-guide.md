@@ -54,46 +54,44 @@ The student upon completion of Lab 4 should have achieved the following objectiv
 
 ### ACL Match Options
 
+For reference on Ethernet Header see this link [HERE](https://en.wikipedia.org/wiki/Ethernet_frame)
 For reference on IPv4 Packet Header see this link [HERE](https://en.wikipedia.org/wiki/Internet_Protocol_version_4#Header)
 For reference on IPv4 Packet Header see this link [HERE](https://en.wikipedia.org/wiki/IPv6#IPv6_packets)
+For reference on ICMP Packet Header see this link [HERE](https://en.wikipedia.org/wiki/Ping_(networking_utility)#ICMP_packet)
 
-| Type                     | Description                                | Notes              | 
-|:-------------------------|:-------------------------------------------|:-------------------|
-| MATCH_IN_PORTS           | Match Ingress Port                         |                    |
-| MATCH_OUT_PORTS          | Match Egress Port                          |                    |
-| MATCH_SRC_IP             | Match Source IPv4 Address                  |                    |
-| MATCH_DST_IP             | Match Destination IPv4 Address             |                    |
-| MATCH_SRC_IPV6           | Match Source IPv6 Address                  |                    |
-| MATCH_DST_IPV6           | Match Destination IPv6 Address             |                    |
-| MATCH_L4_SRC_PORT        | Match Source Layer 4 Port                  |                    |
-| MATCH_L4_DST_PORT        | Match Destination Layer 4 Port             |                    |
-| MATCH_L4_SRC_PORT_RANGE  | Match Source Layer 4 Port Range            |                    |
-| MATCH_L4_DST_PORT_RANGE  | Match Destination Layer 4 Port Range       |                    |
-| MATCH_ETHER_TYPE         | Match Ethernet Type Field                  |                    |
-| MATCH_VLAN_ID            | Match VLAN ID                              |                    |
+| Type                     | Description                                | Notes                 | 
+|:-------------------------|:-------------------------------------------|:----------------------|
+| MATCH_IN_PORTS           | Match Ingress Port                         |                       |
+| MATCH_OUT_PORTS          | Match Egress Port                          |                       |
+| MATCH_SRC_IP             | Match Source IPv4 Address                  |                       |
+| MATCH_DST_IP             | Match Destination IPv4 Address             |                       |
+| MATCH_SRC_IPV6           | Match Source IPv6 Address                  |                       |
+| MATCH_DST_IPV6           | Match Destination IPv6 Address             |                       |
+| MATCH_L4_SRC_PORT        | Match Source Layer 4 Port                  |                       |
+| MATCH_L4_DST_PORT        | Match Destination Layer 4 Port             |                       |
+| MATCH_L4_SRC_PORT_RANGE  | Match Source Layer 4 Port Range            |                       |
+| MATCH_L4_DST_PORT_RANGE  | Match Destination Layer 4 Port Range       |                       |
+| MATCH_ETHER_TYPE         | Match Ethernet Type Field                  |                       |
+| MATCH_VLAN_ID            | Match VLAN ID                              |                       |
 | MATCH_IP_PROTOCOL        | Match IP Protocol Number                   | In IPv4 / IPv6 Header |
-| MATCH_NEXT_HEADER        | Match IPv6 Next Header                     | Needs Research        |
-| MATCH_TCP_FLAGS          | Match TCP Flags Field                      |                    |
-| MATCH_IP_TYPE            | Match IP                  |                    |
-| MATCH_ETHER_TYPE         | Match Ethernet Type Field                  |                    |
+| MATCH_NEXT_HEADER        | Match IPv6 Next Header Field               |                       |
+| MATCH_TCP_FLAGS          | Match TCP Flags Field                      |                       |
+| MATCH_IP_TYPE            | Match IPv4 Options Type Field              |                       |
+| MATCH_ETHER_TYPE         | Match Ethernet Type Field                  |                       |
+| MATCH_DSCP               | Match IPv4 Header DSCP Field               | DSCP (6b)             |
+| MATCH_TC                 | Match IPv6 Header Traffic Class Field      | DSCP(6b) + ECN(2b)    |
+| MATCH_ICMP_TYPE          | Match ICMPv4 ICMP Type Field               |                       |
+| MATCH_ICMP_CODE          | Match ICMPv4 ICMP Code Field               |                       |
+| MATCH_ICMPV6_TYPE        | Match ICMPv6 Type Field                    |                       |
+| MATCH_ICMPV6_CODE        | Match ICMPv6 Options Field                 |                       |
+| MATCH_TUNNEL_VNI         | Match ICMPv6 Options Field                 | Research              |
+| MATCH_INNER_ETHER_TYPE   | Match Inner Header Ethernet Type Field     | Research              |
+| MATCH_INNER_IP_PROTOCOL  | Match Inner Header IP Protocol Number      | Research              |
+| MATCH_INNER_L4_SRC_PORT  | Match Inner Header Source Layer 4 Port     | Research              |
+| MATCH_INNER_L4_DST_PORT  | Match Inner Header Destination Layer 4 Port| Research              |
+| MATCH_BTH_OPCODE         | Match ???                                  | Research              |
+| MATCH_AETH_SYNDROME      | Match ???                                  | Research              |
 
-
-
-
-    { MATCH_IP_TYPE,           SAI_ACL_ENTRY_ATTR_FIELD_ACL_IP_TYPE },
-    { MATCH_DSCP,              SAI_ACL_ENTRY_ATTR_FIELD_DSCP },
-    { MATCH_TC,                SAI_ACL_ENTRY_ATTR_FIELD_TC },
-    { MATCH_ICMP_TYPE,         SAI_ACL_ENTRY_ATTR_FIELD_ICMP_TYPE },
-    { MATCH_ICMP_CODE,         SAI_ACL_ENTRY_ATTR_FIELD_ICMP_CODE },
-    { MATCH_ICMPV6_TYPE,       SAI_ACL_ENTRY_ATTR_FIELD_ICMPV6_TYPE },
-    { MATCH_ICMPV6_CODE,       SAI_ACL_ENTRY_ATTR_FIELD_ICMPV6_CODE },
-    { MATCH_TUNNEL_VNI,        SAI_ACL_ENTRY_ATTR_FIELD_TUNNEL_VNI },
-    { MATCH_INNER_ETHER_TYPE,  SAI_ACL_ENTRY_ATTR_FIELD_INNER_ETHER_TYPE },
-    { MATCH_INNER_IP_PROTOCOL, SAI_ACL_ENTRY_ATTR_FIELD_INNER_IP_PROTOCOL },
-    { MATCH_INNER_L4_SRC_PORT, SAI_ACL_ENTRY_ATTR_FIELD_INNER_L4_SRC_PORT },
-    { MATCH_INNER_L4_DST_PORT, SAI_ACL_ENTRY_ATTR_FIELD_INNER_L4_DST_PORT },
-    { MATCH_BTH_OPCODE,        SAI_ACL_ENTRY_ATTR_FIELD_BTH_OPCODE},
-    { MATCH_AETH_SYNDROME,     SAI_ACL_ENTRY_ATTR_FIELD_AETH_SYNDROME}
 
 ## Basic ACL Walk Through
 
