@@ -20,7 +20,7 @@ sudo brctl addbr leaf02-host2
 sudo ip link set leaf01-host1 up
 sudo ip link set leaf02-host2 up
 sudo ip link set eth1 up
-sudo ip link set eth1 up
+sudo ip link set eth2 up
 sudo brctl addif leaf01-host1 eth1
 sudo brctl addif leaf02-host2 eth2
 sudo ip addr add 10.1.2.3/24 dev leaf01-host1

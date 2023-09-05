@@ -28,23 +28,3 @@
         src: "{{ inventory_hostname }}/frr.conf"
         dest: "/etc/sonic/frr/bgpd.conf"
         mode: 0644
-
-    - name: shutdown leaf01
-      command: virsh destroy leaf01
-      ignore_errors: yes
-      register: virsh_result
-
-    - name: shutdown leaf02
-      command: virsh destroy leaf02
-      ignore_errors: yes
-      register: virsh_result
-
-    - name: shutdown spine01
-      command: virsh destroy spine01
-      ignore_errors: yes
-      register: virsh_result
-
-    - name: shutdown spine02
-      command: virsh destroy spine02
-      ignore_errors: yes
-      register: virsh_result

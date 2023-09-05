@@ -3,7 +3,7 @@
         "DATAACL": {
             "policy_desc": "DATAACL",
             "ports": [
-                "Ethernet16"
+                "Ethernet0"
             ],
             "stage": "ingress",
             "type": "L3"
@@ -22,7 +22,8 @@
             "MATCHES": [
                 "IN_PORTS",
                 "OUT_PORTS",
-                "SRC_IP"
+                "SRC_IP",
+                "DST_IP"
             ]
         }
     }
