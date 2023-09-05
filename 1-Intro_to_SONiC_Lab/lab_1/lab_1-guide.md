@@ -113,9 +113,10 @@ Starting from the vsonic VM log into each router instance 1-4 per the management
     ssh cisco@172.10.10.3
     ssh cisco@172.10.10.4
     ssh cisco@172.10.10.5
-
-    pw = cisco123
 ```
+> **NOTE**
+> Password for SONiC instances is cisco123
+> 
 Example:
 ```
 cisco@vsonic:~$ ssh cisco@172.10.10.2
