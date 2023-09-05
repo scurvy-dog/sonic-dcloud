@@ -84,7 +84,7 @@ For reference on ICMP Packet Header see this link [HERE](https://en.wikipedia.or
 | MATCH_ICMP_CODE          | Match ICMPv4 ICMP Code Field               |                       |
 | MATCH_ICMPV6_TYPE        | Match ICMPv6 Type Field                    |                       |
 | MATCH_ICMPV6_CODE        | Match ICMPv6 Options Field                 |                       |
-| MATCH_TUNNEL_VNI         | Match ICMPv6 Options Field                 | Research              |
+| MATCH_TUNNEL_VNI         | Match VXLAN VNID Field                     | VNI (24b)             |
 | MATCH_INNER_ETHER_TYPE   | Match Inner Header Ethernet Type Field     | Research              |
 | MATCH_INNER_IP_PROTOCOL  | Match Inner Header IP Protocol Number      | Research              |
 | MATCH_INNER_L4_SRC_PORT  | Match Inner Header Source Layer 4 Port     | Research              |
