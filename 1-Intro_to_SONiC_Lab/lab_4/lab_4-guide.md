@@ -60,39 +60,38 @@ The student upon completion of Lab 4 should have achieved the following objectiv
 - For reference on ICMP Packet Header see this link [HERE](https://en.wikipedia.org/wiki/Ping_(networking_utility)#ICMP_packet)
 - For referenec on VXLAN Packet Header see this link [HERE](https://learningnetwork.cisco.com/s/blogs/a0D3i000005YebJEAS/introduction-to-vxlan)
 
-| Type                     | Description                                | Notes                 | 
-|:-------------------------|:-------------------------------------------|:----------------------|
-| MATCH_IN_PORTS           | Match Ingress Port                         |                       |
-| MATCH_OUT_PORTS          | Match Egress Port                          |                       |
-| MATCH_SRC_IP             | Match Source IPv4 Address                  |                       |
-| MATCH_DST_IP             | Match Destination IPv4 Address             |                       |
-| MATCH_SRC_IPV6           | Match Source IPv6 Address                  |                       |
-| MATCH_DST_IPV6           | Match Destination IPv6 Address             |                       |
-| MATCH_L4_SRC_PORT        | Match Source Layer 4 Port                  |                       |
-| MATCH_L4_DST_PORT        | Match Destination Layer 4 Port             |                       |
-| MATCH_L4_SRC_PORT_RANGE  | Match Source Layer 4 Port Range            |                       |
-| MATCH_L4_DST_PORT_RANGE  | Match Destination Layer 4 Port Range       |                       |
-| MATCH_ETHER_TYPE         | Match Ethernet Type Field                  |                       |
-| MATCH_VLAN_ID            | Match VLAN ID                              |                       |
-| MATCH_IP_PROTOCOL        | Match IP Protocol Number                   | In IPv4 / IPv6 Header |
-| MATCH_NEXT_HEADER        | Match IPv6 Next Header Field               |                       |
-| MATCH_TCP_FLAGS          | Match TCP Flags Field                      |                       |
-| MATCH_IP_TYPE            | Match IPv4 Options Type Field              |                       |
-| MATCH_ETHER_TYPE         | Match Ethernet Type Field                  |                       |
-| MATCH_DSCP               | Match IPv4 Header DSCP Field               | DSCP (6b)             |
-| MATCH_TC                 | Match IPv6 Header Traffic Class Field      | DSCP(6b) + ECN(2b)    |
-| MATCH_ICMP_TYPE          | Match ICMPv4 ICMP Type Field               |                       |
-| MATCH_ICMP_CODE          | Match ICMPv4 ICMP Code Field               |                       |
-| MATCH_ICMPV6_TYPE        | Match ICMPv6 Type Field                    |                       |
-| MATCH_ICMPV6_CODE        | Match ICMPv6 Options Field                 |                       |
-| MATCH_TUNNEL_VNI         | Match VXLAN VNID Field                     | VNI (24b)             |
-| MATCH_INNER_ETHER_TYPE   | Match Inner Header Ethernet Type Field     | Research              |
-| MATCH_INNER_IP_PROTOCOL  | Match Inner Header IP Protocol Number      | Research              |
-| MATCH_INNER_L4_SRC_PORT  | Match Inner Header Source Layer 4 Port     | Research              |
-| MATCH_INNER_L4_DST_PORT  | Match Inner Header Destination Layer 4 Port| Research              |
-| MATCH_BTH_OPCODE         | Match ???                                  | Research              |
-| MATCH_AETH_SYNDROME      | Match ???                                  | Research              |
-
+| Type               | Description                                | Notes                                          | 
+|:-------------------|:-------------------------------------------|:-----------------------------------------------|
+| IN_PORTS           | Match Ingress Port                         |                                                |
+| OUT_PORTS          | Match Egress Port                          |                                                |
+| SRC_IP             | Match Source IPv4 Address                  | A valid IPv4 subnet in format IP/Mask          |
+| DST_IP             | Match Destination IPv4 Address             | A valid IPv4 subnet in format IP/Mask          |
+| SRC_IPV6           | Match Source IPv6 Address                  | A valid IPv6 subnet in format IP/Mask          |
+| DST_IPV6           | Match Destination IPv6 Address             | A valid IPv6 subnet in format IP/Mask          |
+| L4_SRC_PORT        | Match Source Layer 4 Port                  | Decimal integer [0..65535]                     |
+| L4_DST_PORT        | Match Destination Layer 4 Port             | Decimal integer [0..65535]                     |
+| L4_SRC_PORT_RANGE  | Match Source Layer 4 Port Range            | Two dash separated decimal integers [0..65535] |
+| L4_DST_PORT_RANGE  | Match Destination Layer 4 Port Range       | Two dash separated decimal integers [0..65535] |
+| ETHER_TYPE         | Match Ethernet Type Field                  |                                                |
+| VLAN_ID            | Match VLAN ID                              |                                                |
+| IP_PROTOCOL        | Match IP Protocol Number                   | Hexadecimal unsigned integer [0..FF]           |
+| NEXT_HEADER        | Match IPv6 Next Header Field               |                                                |
+| TCP_FLAGS          | Match TCP Flags Field                      | Hexadecimal unsigned integer [0..FF]           |
+| IP_TYPE            | Match IPv4 Options Type Field              | String of one type of: "IPv4"/"NON_IPv4"/"ARP" |
+| ETHER_TYPE         | Match Ethernet Type Field                  |                                                |
+| DSCP               | Match IPv4 Header DSCP Field               | DSCP (6b)                                      |
+| TC                 | Match IPv6 Header Traffic Class Field      | DSCP(6b) + ECN(2b)                             |
+| ICMP_TYPE          | Match ICMPv4 ICMP Type Field               |                                                |
+| ICMP_CODE          | Match ICMPv4 ICMP Code Field               |                                                |
+| ICMPV6_TYPE        | Match ICMPv6 Type Field                    |                                                |
+| ICMPV6_CODE        | Match ICMPv6 Options Field                 |                                                |
+| TUNNEL_VNI         | Match VXLAN VNID Field                     | VNI (24b)                                      |
+| INNER_ETHER_TYPE   | Match Inner Header Ethernet Type Field     | Research                                       |
+| INNER_IP_PROTOCOL  | Match Inner Header IP Protocol Number      | Research                                       |
+| INNER_L4_SRC_PORT  | Match Inner Header Source Layer 4 Port     | Research                                       |
+| INNER_L4_DST_PORT  | Match Inner Header Destination Layer 4 Port| Research                                       |
+| BTH_OPCODE         | Match ???                                  | Research                                       |
+| AETH_SYNDROME      | Match ???                                  | Research                                       |
 
 ## Basic ACL Walk Through
 
