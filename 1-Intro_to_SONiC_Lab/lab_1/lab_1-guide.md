@@ -103,7 +103,7 @@ cisco@vsonic:~$ virsh list
 ### Connect to SONiC Routers
 
 Starting from the vsonic VM log into each router instance 1-4 per the management topology diagram above. Example:
-    ```
+```
     ssh cisco@spine01
     ssh cisco@spine02
     ssh cisco@leaf01
@@ -115,7 +115,7 @@ Starting from the vsonic VM log into each router instance 1-4 per the management
     ssh cisco@172.10.10.5
 
     pw = cisco123
-    ```
+```
 Example:
 ```
 cisco@vsonic:~$ ssh cisco@172.10.10.2
