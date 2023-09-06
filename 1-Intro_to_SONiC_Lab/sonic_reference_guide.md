@@ -56,6 +56,7 @@ show services
 show platform summary
 show platform pcieinfo
 show runningconfiguration
+crm show resources all
 ```
 
 ## Configuration Commands
