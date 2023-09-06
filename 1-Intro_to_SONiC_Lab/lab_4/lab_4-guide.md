@@ -98,6 +98,22 @@ The student upon completion of Lab 4 should have achieved the following objectiv
 
 ## ACL Configuration Syntax
 
+**ACL Table Add - JSON Example**
+```
+{
+"ACL_TABLE": {
+            "ICMP_TEST": {
+                    "policy_desc" : "Block ssh traffic from endpoint 2",
+                    "type" : "L3",
+                    "stage": "ingress",
+                    "ports" : [
+                        "Ethernet16"
+                    ] 
+                    }
+        }
+}
+```
+
 ## ACL Scale
 
 ## ACL Troubleshooting
