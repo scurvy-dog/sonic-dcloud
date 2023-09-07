@@ -44,12 +44,15 @@ This lab is based on a simulated DC fabric design of four SONiC routers running 
 
 
 ### Device Access Table
-| VM Name        | Description              | Device Type | Access Type |   IP Address    |
-|:---------------|:-------------------------|:-----------:|:-----------:|:---------------:|
-| vSONiC         | Docker + SONiC routers   | VM          | SSH         | 198.18.128.100  |
-| File Server    | File Staging             | VM          | SSH         | 198.18.128.101  |
-| Endpoint-1     | Ubuntu client            | VM          | SSH         | 198.18.128.102  |
-| Endpoint-2     | Ubuntu client            | VM          | SSH         | 198.18.128.103  |
+| VM Name        | Description                  | Device Type | Access Type |   IP Address    |
+|:---------------|:-----------------------------|:-----------:|:-----------:|:---------------:|
+| File Server    | File Staging                 | VM          | SSH         | 198.18.128.100  |
+| Leaf-1         | C8k Emulator + SONiC routers | VM          | SSH         | 198.18.128.101  |
+| Leaf-2         | C8k Emulator + SONiC routers | VM          | SSH         | 198.18.128.102  |
+| Spine-1        | C8k Emulator + SONiC routers | VM          | SSH         | 198.18.128.103  |
+| Spine-2        | C8k Emulator + SONiC routers | VM          | SSH         | 198.18.128.104  |
+| Endpoint-1     | Ubuntu client                | VM          | SSH         | 198.18.128.105  |
+| Endpoint-2     | Ubuntu client                | VM          | SSH         | 198.18.128.106  |
 
 
 * Use vSONiC VM as jumpbox to access the SONiC routers as follows:
