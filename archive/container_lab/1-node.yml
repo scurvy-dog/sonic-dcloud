@@ -1,0 +1,44 @@
+# Topology - 2-stage CLOS where Leaf nodes leaf01 and leaf02 are have dual uplinks to Spine nodes spine01 and spine02
+#
+#     s1   s2
+#     / \ / \
+#    / /  \  \
+#   l1        l2
+#    |         |
+#   h1        h2
+
+name: c8201-sonic-4-node-clos
+
+mgmt:
+  #network: fixedips
+  network: mgt_net
+  ipv4_subnet: 172.10.10.0/24
+  ipv6_subnet: 2001:172:10:10::/80
+
+topology:
+  kinds:
+    linux:
+      image: c8000-clab-sonic:29
+      binds: 
+          - /home/cisco/images:/images
+      env:
+          IMAGE: /images/sonic-cisco-8000-clab.bin
+          PID: '8201-32FH'
+
+  nodes:
+
+    leaf01:
+      kind: linux
+      mgmt_ipv4: 172.10.10.4
+      mgmt_ipv6: 2001:172:10:10::4
+
+    leaf01e32-host1:
+      kind: bridge
+
+  links:
+
+    - endpoints: ["leaf01:eth3", "host:leaf01-eth3"]
+    - endpoints: ["leaf01:eth4", "host:leaf01-eth4"]
+
+    - endpoints: ["leaf01:eth5", "leaf01e32-host1:leaf01eth5"]
+
