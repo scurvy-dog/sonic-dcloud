@@ -59,8 +59,5 @@ topology:
     - endpoints: ["spine02:eth3", "host:spine02-eth3"]
     - endpoints: ["spine02:eth4", "host:spine02-eth4"]
 
-    - endpoints: ["leaf01:eth5", "host:leaf01-eth3"]
-    - endpoints: ["leaf01:eth6", "host:leaf01-eth4"]
-
     - endpoints: ["leaf01:eth5", "leaf01e32-host1:leaf01eth5"]
 
