@@ -17,7 +17,7 @@ topology:
 
   nodes:
 
-    leaf02:
+    leaf01:
       kind: linux
       mgmt_ipv4: 198.18.128.201
 
