@@ -31,7 +31,7 @@ The software virtualization stack used in this lab consists of several layers. A
 
 For connectivity between virtual routers we use point-to-point UDP tunnels within the host-VM. Connectivity could also be done through Linux bridge or OVS instances, but the UDP tunnel option allows the routers to exchange LLDP messages directly without bridge interference. For connecitivty between the SONiC VMs and external test VM clients are using linux bridges.
 
-![Software Stack](../topo-drawings/software-stack.png)
+![Software Stack](../topo-drawings/software-stack-c8k.png)
 
 ## Validate Device Access
 
