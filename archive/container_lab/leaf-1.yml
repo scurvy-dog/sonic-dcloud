@@ -2,7 +2,8 @@ name: c8201-sonic
 
 mgmt:
   network: mgt_net
-  ipv4_subnet: 172.10.10.0/24
+  ipv4_subnet: 198.18.128.0/24
+  bridge: mgt_br
 
 topology:
   kinds:
@@ -18,7 +19,7 @@ topology:
 
     leaf02:
       kind: linux
-      mgmt_ipv4: 172.10.10.201
+      mgmt_ipv4: 198.18.128.201
 
     leaf02e32-host2:
       kind: bridge
