@@ -1,13 +1,4 @@
-# Topology - 2-stage CLOS where Leaf nodes leaf01 and leaf02 are have dual uplinks to Spine nodes spine01 and spine02
-#
-#     s1   s2
-#     / \ / \
-#    / /  \  \
-#   l1        l2
-#    |         |
-#   h1        h2
-
-name: c8201-sonic-4-node-clos
+name: c8201-sonic-leaf-2
 
 mgmt:
   #network: fixedips
