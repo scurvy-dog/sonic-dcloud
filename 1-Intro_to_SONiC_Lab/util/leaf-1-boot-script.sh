@@ -19,7 +19,7 @@ sudo brctl addbr leaf01-host1
 sudo ip link set leaf01-host1 up
 sudo brctl addif leaf01-host1 ens224
 sudo ip addr add 198.18.11.254/24 dev leaf01-host1
-sudo ip route add 198.18.12.0/24 via 198.18.12.1
+sudo ip route add 198.18.12.0/24 via 198.18.11.1
 
 brctl show >> /home/cisco/util/boot-service.log
 ip route >> /home/cisco/util/boot-service.log
