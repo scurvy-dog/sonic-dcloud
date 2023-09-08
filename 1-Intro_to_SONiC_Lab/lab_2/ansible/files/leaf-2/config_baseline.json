@@ -51,6 +51,6 @@
         "PortChannel1|Ethernet8": {},
         "PortChannel2|Ethernet16": {},
         "PortChannel2|Ethernet24": {}
-    },
+    }
     
 }
