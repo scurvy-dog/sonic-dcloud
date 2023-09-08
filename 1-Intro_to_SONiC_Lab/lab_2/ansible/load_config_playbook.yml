@@ -12,7 +12,9 @@
 
     - name: Load configuration
       expect:
-        command: sudo config load -y /etc/sonic/config_baseline.json
+        command: sudo config load /etc/sonic/config_baseline.json
+        responses:
+          (.*)y/N(.*): "y"
         timeout: 90
       ignore_errors: yes
       register: reload_result
