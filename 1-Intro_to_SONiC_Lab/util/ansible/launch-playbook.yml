@@ -1,4 +1,7 @@
 ---
+
+# ansible-playbook -i hosts launch-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=C1sco12345 ansible_sudo_pass=C1sco12345" -vv
+
 - name: Run git pull and containerlab deployments
   hosts: sonic_nodes
   become: true
