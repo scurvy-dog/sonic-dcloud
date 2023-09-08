@@ -24,14 +24,14 @@
     - name: build leaf-1 to spine-1 vxlan 10
       command: sudo clab tools vxlan create --remote 172.10.10.103 --id 10 --link leaf-1-eth1
 
-    - name: build leaf-1 to spine-1 vxlan 20
-      command: sudo clab tools vxlan create --remote 172.10.10.103 --id 10 --link leaf-1-eth1
+    # - name: build leaf-1 to spine-1 vxlan 20
+    #   command: sudo clab tools vxlan create --remote 172.10.10.103 --id 10 --link leaf-1-eth1
 
-    - name: build leaf-1 to spine-2 vxlan 30
-      command: sudo clab tools vxlan create --remote 172.10.10.103 --id 10 --link leaf-1-eth1
+    # - name: build leaf-1 to spine-2 vxlan 30
+    #   command: sudo clab tools vxlan create --remote 172.10.10.103 --id 10 --link leaf-1-eth1
 
-    - name: build leaf-1 to spine-2 vxlan 40
-      command: sudo clab tools vxlan create --remote 172.10.10.103 --id 10 --link leaf-1-eth1
+    # - name: build leaf-1 to spine-2 vxlan 40
+    #   command: sudo clab tools vxlan create --remote 172.10.10.103 --id 10 --link leaf-1-eth1
 
 # - name: run clab vxlan commands on leaf-2
 #   hosts: leaf-2
