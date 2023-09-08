@@ -23,6 +23,7 @@
   tasks:
     - name: build leaf-1 to spine-1 vxlan 10
       command: sudo clab tools vxlan create --remote 172.10.10.103 --id 10 --link leaf-1-eth1
+      ignore_errors: yes
 
     # - name: build leaf-1 to spine-1 vxlan 20
     #   command: sudo clab tools vxlan create --remote 172.10.10.103 --id 10 --link leaf-1-eth1
