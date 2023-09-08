@@ -12,11 +12,11 @@
         chdir: /home/cisco/sonic-dcloud
       ignore_errors: yes
 
-    # - name: run containerlab deploy
-    #   command: mv /etc/sonic/frr/bgpd.conf /etc/sonic/frr/bgpd.conf.bak
-    #   args:
-    #     creates: /etc/sonic/frr/bgpd.conf.bak
-    #   ignore_errors: yes
-    #   register: backup_result
+    - name: run containerlab deploy
+      command: sudo containerlab deploy -t "{{ inventory_hostname }}/deploy.yml"
+      # args:
+      #   creates: /etc/sonic/frr/bgpd.conf.bak
+      ignore_errors: yes
+      register: backup_result
 
 
