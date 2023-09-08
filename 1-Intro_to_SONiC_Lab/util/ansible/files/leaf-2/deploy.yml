@@ -17,20 +17,20 @@ topology:
 
   nodes:
 
-    leaf02:
+    leaf-2:
       kind: linux
       mgmt_ipv4: 172.10.10.202
 
-    leaf02e32-host2:
+    sonic_e32:
       kind: bridge
 
   links:
 
-    - endpoints: ["leaf02:eth1", "host:leaf02-eth1"]
-    - endpoints: ["leaf02:eth2", "host:leaf02-eth2"]
+    - endpoints: ["leaf-2:eth1", "host:leaf-2-eth1"]
+    - endpoints: ["leaf-2:eth2", "host:leaf-2-eth2"]
 
-    - endpoints: ["leaf02:eth3", "host:leaf02-eth3"]
-    - endpoints: ["leaf02:eth4", "host:leaf02-eth4"]
+    - endpoints: ["leaf-2:eth3", "host:leaf-2-eth3"]
+    - endpoints: ["leaf-2:eth4", "host:leaf-2-eth4"]
 
-    - endpoints: ["leaf02:eth5", "leaf02e32-host2:leaf02eth5"]
+    - endpoints: ["leaf-2:eth5", "sonic_e32:leaf-2-eth5"]
 
