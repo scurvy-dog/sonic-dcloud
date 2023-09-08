@@ -15,8 +15,4 @@
         command: sudo config load -y /etc/sonic/config_baseline.json
         timeout: 90
       ignore_errors: yes
-      when: backup_result is not failed
       register: reload_result
- 
-    - debug: var=reload_result.stdout_lines
-
