@@ -12,3 +12,9 @@
       args:
         chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/util/ansible/files/
       ignore_errors: yes
+
+    - name: run containerlab destroy on all nodes
+      command: sudo clab tools vxlan delete
+      args:
+        chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/util/ansible/files/
+      ignore_errors: yes
