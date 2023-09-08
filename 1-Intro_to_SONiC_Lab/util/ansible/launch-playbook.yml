@@ -20,7 +20,7 @@
 
     - name: build leaf-1 vxlans
       hosts: leaf-1
-      cmd: |
+      shell: |
         sudo clab tools vxlan create --remote 172.10.10.103 --id 10 --link leaf-1-eth1
         sudo clab tools vxlan create --remote 172.10.10.103 --id 20 --link leaf-1-eth2
         sudo clab tools vxlan create --remote 172.10.10.104 --id 30 --link leaf-1-eth3
@@ -28,7 +28,7 @@
 
     - name: build leaf-2 vxlans
       hosts: leaf-2
-      cmd: |
+      shell: |
         sudo clab tools vxlan create --remote 172.10.10.104 --id 10 --link leaf-2-eth1
         sudo clab tools vxlan create --remote 172.10.10.104 --id 20 --link leaf-2-eth2
         sudo clab tools vxlan create --remote 172.10.10.103 --id 30 --link leaf-2-eth3
@@ -36,7 +36,7 @@
 
     - name: build spine-1 vxlans
       hosts: spine-1
-      cmd: |
+      shell: |
         sudo clab tools vxlan create --remote 172.10.10.101 --id 10 --link spine-1-eth1
         sudo clab tools vxlan create --remote 172.10.10.101 --id 20 --link spine-1-eth2
         sudo clab tools vxlan create --remote 172.10.10.102 --id 30 --link spine-1-eth3
@@ -44,7 +44,7 @@
 
     - name: build spine-2 vxlans
       hosts: spine-2
-      cmd: |
+      shell: |
         sudo clab tools vxlan create --remote 172.10.10.102 --id 10 --link spine-2-eth1
         sudo clab tools vxlan create --remote 172.10.10.102 --id 20 --link spine-2-eth2
         sudo clab tools vxlan create --remote 172.10.10.101 --id 30 --link spine-2-eth3
