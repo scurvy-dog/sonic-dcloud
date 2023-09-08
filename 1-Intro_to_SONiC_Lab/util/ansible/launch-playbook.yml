@@ -12,11 +12,11 @@
 #         chdir: /home/cisco/sonic-dcloud
 #       ignore_errors: yes
 
-    - name: run containerlab deploy
-      command: sudo containerlab deploy -t "{{ inventory_hostname }}/clab.yml"
-      args:
-        chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/util/ansible/files/
-      ignore_errors: yes
+    # - name: run containerlab deploy
+    #   command: sudo containerlab deploy -t "{{ inventory_hostname }}/clab.yml"
+    #   args:
+    #     chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/util/ansible/files/
+    #   ignore_errors: yes
 
 - name: run clab vxlan commands on leaf-1
   hosts: leaf-1
