@@ -13,9 +13,9 @@
       ignore_errors: yes
 
     - name: run containerlab deploy
-      command: sudo containerlab deploy -t "files/{{ inventory_hostname }}/deploy.yml"
-      # args:
-      #   creates: /etc/sonic/frr/bgpd.conf.bak
+      command: sudo containerlab deploy -t "{{ inventory_hostname }}/deploy.yml"
+      args:
+        chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/util/ansible/files/
       ignore_errors: yes
       register: backup_result
 
