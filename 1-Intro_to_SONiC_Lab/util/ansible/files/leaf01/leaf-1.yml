@@ -3,6 +3,7 @@ name: c8201-sonic
 mgmt:
   network: mgt_net
   ipv4_subnet: 172.10.10.0/24
+  bridge: sonic_mgt_br
 
 topology:
   kinds:
@@ -16,20 +17,20 @@ topology:
 
   nodes:
 
-    leaf02:
+    leaf01:
       kind: linux
       mgmt_ipv4: 172.10.10.201
 
-    leaf02e32-host2:
+    leaf01e32-host1:
       kind: bridge
 
   links:
 
-    - endpoints: ["leaf02:eth1", "host:leaf02-eth1"]
-    - endpoints: ["leaf02:eth2", "host:leaf02-eth2"]
+    - endpoints: ["leaf01:eth1", "host:leaf01-eth1"]
+    - endpoints: ["leaf01:eth2", "host:leaf01-eth2"]
 
-    - endpoints: ["leaf02:eth3", "host:leaf02-eth3"]
-    - endpoints: ["leaf02:eth4", "host:leaf02-eth4"]
+    - endpoints: ["leaf01:eth3", "host:leaf01-eth3"]
+    - endpoints: ["leaf01:eth4", "host:leaf01-eth4"]
 
-    - endpoints: ["leaf02:eth5", "leaf02e32-host2:leaf02eth5"]
+    - endpoints: ["leaf01:eth5", "leaf01e32-host1:leaf01eth5"]
 
