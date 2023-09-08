@@ -55,41 +55,5 @@ kernel.pid_max=1048575
 sudo sysctl -p
 ```
 
-leaf-1 to spine-1
-sudo clab tools vxlan create --remote 172.10.10.103 --id 10 --link leaf-1-eth1
-sudo clab tools vxlan create --remote 172.10.10.103 --id 20 --link leaf-1-eth2
-
-spine-1 to leaf-1
-sudo clab tools vxlan create --remote 172.10.10.101 --id 10 --link spine-1-eth1
-sudo clab tools vxlan create --remote 172.10.10.101 --id 20 --link spine-1-eth2
-
-
-leaf-1 to spine-2
-sudo clab tools vxlan create --remote 172.10.10.104 --id 30 --link leaf-1-eth3
-sudo clab tools vxlan create --remote 172.10.10.104 --id 40 --link leaf-1-eth4
-
-spine-2 to leaf-1
-sudo clab tools vxlan create --remote 172.10.10.101 --id 30 --link spine-2-eth3
-sudo clab tools vxlan create --remote 172.10.10.101 --id 40 --link spine-2-eth4
-
-
-
-leaf-2 to spine-1
-sudo clab tools vxlan create --remote 172.10.10.103 --id 10 --link leaf-2-eth1
-sudo clab tools vxlan create --remote 172.10.10.103 --id 20 --link leaf-2-eth2
-
-spine-1 to leaf-2
-sudo clab tools vxlan create --remote 172.10.10.102 --id 10 --link spine-1-eth1
-sudo clab tools vxlan create --remote 172.10.10.102 --id 20 --link spine-1-eth2
-
-
-leaf-2 to spine-2
-sudo clab tools vxlan create --remote 172.10.10.104 --id 30 --link leaf-2-eth3
-sudo clab tools vxlan create --remote 172.10.10.104 --id 40 --link leaf-2-eth4
-
-spine-2 to leaf-2
-sudo clab tools vxlan create --remote 172.10.10.102 --id 30 --link spine-2-eth3
-sudo clab tools vxlan create --remote 172.10.10.102 --id 40 --link spine-2-eth4
-
 
 
