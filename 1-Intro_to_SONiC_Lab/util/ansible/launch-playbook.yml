@@ -13,7 +13,7 @@
       ignore_errors: yes
 
     - name: run containerlab deploy
-      command: sudo containerlab deploy -t "{{ inventory_hostname }}/deploy.yml"
+      command: sudo containerlab deploy -t "files/{{ inventory_hostname }}/deploy.yml"
       # args:
       #   creates: /etc/sonic/frr/bgpd.conf.bak
       ignore_errors: yes
