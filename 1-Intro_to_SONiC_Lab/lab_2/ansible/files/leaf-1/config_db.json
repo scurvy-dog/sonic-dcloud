@@ -15,6 +15,58 @@
             "gwaddr": "172.10.10.1"
         }
     },
+
+    "LOOPBACK_INTERFACE": {
+        "Loopback0|10.0.0.4/32": {},
+        "Loopback0|fc00:0:4::1/128": {}
+    },
+
+    "INTERFACE": {
+        "Ethernet32": {},
+        "Ethernet32|10.1.2.1/24": {},
+        "Ethernet23|2001:1:2::1/64": {}
+    },
+
+    "PORTCHANNEL": {
+        "PortChannel1": {
+            "admin_status": "up",
+            "lacp_key": "auto",
+            "min_links": "1",
+            "mtu": "9100"
+        },
+        "PortChannel2": {
+            "admin_status": "up",
+            "lacp_key": "auto",
+            "min_links": "1",
+            "mtu": "9100"
+        }
+    },
+    "PORTCHANNEL_INTERFACE": {
+        "PortChannel1": {},
+        "PortChannel1|10.1.1.0/31": {},
+        "PortChannel1|fc00:0:ffff::/127": {},
+        "PortChannel2": {},
+        "PortChannel2|10.1.1.2/31": {},
+        "PortChannel2|fc00:0:ffff::2/127": {}
+    },
+    "PORTCHANNEL_MEMBER": {
+        "PortChannel1|Ethernet0": {},
+        "PortChannel1|Ethernet8": {},
+        "PortChannel2|Ethernet16": {},
+        "PortChannel2|Ethernet24": {}
+    },
+
+    "BGP_NEIGHBOR": {
+        "10.1.1.1": {
+            "asn": "65002", 
+            "holdtime": "10", 
+            "keepalive": "3", 
+            "local_addr": "10.1.1.0", 
+            "name": "spine01", 
+            "nhopself": "0", 
+            "rrclient": "0"
+        } 
+    }, 
     "PORT": {
         "Ethernet0": {
             "admin_status": "up",
