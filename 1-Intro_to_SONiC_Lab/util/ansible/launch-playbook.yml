@@ -12,27 +12,27 @@
 #         chdir: /home/cisco/sonic-dcloud
 #       ignore_errors: yes
 
-#     - name: run containerlab deploy
-#       command: sudo containerlab deploy -t "{{ inventory_hostname }}/clab.yml"
-#       args:
-#         chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/util/ansible/files/
-#       ignore_errors: yes
+    - name: run containerlab deploy
+      command: sudo containerlab deploy -t "{{ inventory_hostname }}/clab.yml"
+      args:
+        chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/util/ansible/files/
+      ignore_errors: yes
 
 - name: run clab vxlan commands on leaf-1
   hosts: leaf-1
   tasks:
     - name: build leaf-1 to spine-1 vxlan 10
-      command: sudo clab tools vxlan create --remote 172.10.10.103 --id 10 --link leaf-1-eth1
+      shell: sudo clab tools vxlan create --remote 172.10.10.103 --id 10 --link leaf-1-eth1
       ignore_errors: yes
 
-    # - name: build leaf-1 to spine-1 vxlan 20
-    #   command: sudo clab tools vxlan create --remote 172.10.10.103 --id 10 --link leaf-1-eth1
+    - name: build leaf-1 to spine-1 vxlan 20
+      command: sudo clab tools vxlan create --remote 172.10.10.103 --id 20 --link leaf-1-eth2
 
-    # - name: build leaf-1 to spine-2 vxlan 30
-    #   command: sudo clab tools vxlan create --remote 172.10.10.103 --id 10 --link leaf-1-eth1
+    - name: build leaf-1 to spine-2 vxlan 30
+      shell: sudo clab tools vxlan create --remote 172.10.10.104 --id 30 --link leaf-1-eth3
 
-    # - name: build leaf-1 to spine-2 vxlan 40
-    #   command: sudo clab tools vxlan create --remote 172.10.10.103 --id 10 --link leaf-1-eth1
+    - name: build leaf-1 to spine-2 vxlan 40
+      command: sudo clab tools vxlan create --remote 172.10.10.104 --id 40 --link leaf-1-eth4
 
 # - name: run clab vxlan commands on leaf-2
 #   hosts: leaf-2
