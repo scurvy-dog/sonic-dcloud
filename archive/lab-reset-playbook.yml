@@ -1,0 +1,30 @@
+---
+- name: Copy config_db.json configuration file to target hosts with backup and config reload
+  hosts: sonic_nodes
+  become: true
+  tasks:
+    - name: Create a backup of the existing configuration file
+      command: mv /etc/sonic/config_db.json /etc/sonic/config_db.json.bak
+      args:
+        creates: /etc/sonic/config_db.json.bak
+      ignore_errors: yes
+      register: backup_result
+
+    - name: Copy config_db.json files
+      copy:
+        src: "{{ inventory_hostname }}/config_db.json"
+        dest: "/etc/sonic/config_db.json"
+        mode: 0644
+
+    - name: Create a backup of the existing FRR file
+      command: mv /etc/sonic/frr/bgpd.conf /etc/sonic/frr/bgpd.conf.bak
+      args:
+        creates: /etc/sonic/frr/bgpd.conf.bak
+      ignore_errors: yes
+      register: backup_result
+
+    - name: Copy frr config files
+      copy:
+        src: "{{ inventory_hostname }}/frr.conf"
+        dest: "/etc/sonic/frr/bgpd.conf"
+        mode: 0644
