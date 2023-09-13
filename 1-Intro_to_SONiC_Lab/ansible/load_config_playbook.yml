@@ -18,3 +18,12 @@
         timeout: 90
       ignore_errors: yes
       register: reload_result
+
+    - name: Save configuration
+      expect:
+        command: sudo config save
+        responses:
+          (.*)y/N(.*): "y"
+        timeout: 90
+      ignore_errors: yes
+      register: reload_result
