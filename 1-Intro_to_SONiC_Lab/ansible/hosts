@@ -1,8 +1,8 @@
 [sonic_hosts]
-leaf-1 ansible_host=172.10.10.101
-leaf-2 ansible_host=172.10.10.102
-spine-1 ansible_host=172.10.10.103
-spine-2 ansible_host=172.10.10.104
+vm-leaf-1 ansible_host=172.10.10.101
+vm-leaf-2 ansible_host=172.10.10.102
+vm-spine-1 ansible_host=172.10.10.103
+vm-spine-2 ansible_host=172.10.10.104
 
 [sonic_nodes]
 leaf-1 ansible_host=172.10.10.201
