@@ -15,13 +15,13 @@
     - name: run containerlab deploy
       command: sudo containerlab deploy -t "{{ inventory_hostname }}/clab.yml"
       args:
-        chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/util/ansible/files/
+        chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/ansible/files/
       ignore_errors: yes
 
     - name: run vxlan shell script
       command: "{{ inventory_hostname }}/vxlan.sh"
       args:
-        chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/util/ansible/files/
+        chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/ansible/files/
       ignore_errors: yes
 
 
