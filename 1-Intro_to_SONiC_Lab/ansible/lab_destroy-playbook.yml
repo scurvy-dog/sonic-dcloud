@@ -10,11 +10,11 @@
     - name: run containerlab destroy on all host VMs
       command: sudo containerlab destroy -t "{{ inventory_hostname }}/clab.yml"
       args:
-        chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab
+        chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/ansible/hosts/files/
       ignore_errors: yes
 
     - name: delete vxlan tunnels on all host VMs
       command: sudo clab tools vxlan delete
       args:
-        chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab
+        chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/ansible/files/
       ignore_errors: yes
