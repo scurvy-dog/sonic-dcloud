@@ -6,11 +6,10 @@
             "mac": "52:54:00:74:c1:03",
             "hostname": "sonic-spine-1",
             "type": "LeafRouter",
-            "bgp_asn": "65000", 
             "docker_routing_config_mode": "split"
         }
     },
-        "MGMT_INTERFACE": {
+    "MGMT_INTERFACE": {
         "eth0|172.10.10.203/24": {
             "gwaddr": "172.10.10.1"
         }

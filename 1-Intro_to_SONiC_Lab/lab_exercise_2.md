@@ -346,19 +346,19 @@ To check on interface status and connectivity follow these steps on each router 
 
 1. Log into *leaf01*
    ```
-   ssh cisco@172.10.10.4
+   ssh cisco@172.10.10.201
    ```
 2. Configure *Loopback0* and add IPv4 and IPv6
    ```
-   sudo config interface ip add Loopback0 10.0.0.4/32
-   sudo config interface ip add Loopback0 fc00:0:4::1/128
+   sudo config interface ip add Loopback0 10.0.0.1/32
+   sudo config interface ip add Loopback0 fc00:0:1::1/128
    ```
-3. Configure Ethernet interface from *leaf01* to *endpoint01*
+3. Configure Ethernet interface from *leaf-1* to *endpoint01*
    ```
-   sudo config interface ip add Ethernet16 10.1.2.1/24
-   sudo config interface ip add Ethernet16 2001:1:2::1/64
+   sudo config interface ip add Ethernet32 10.1.2.1/24
+   sudo config interface ip add Ethernet32 2001:1:2::1/64
    ```
-4. Create Port Channels to *spine01* and *spine02*
+4. Create Port Channels to *spine-1* and *spine-2*
    ```
    sudo config portchannel add PortChannel1
    sudo config portchannel add PortChannel2
@@ -366,9 +366,9 @@ To check on interface status and connectivity follow these steps on each router 
 5.  Configure Port Channel interface members
     ```
     sudo config portchannel member add PortChannel1 Ethernet0
-    sudo config portchannel member add PortChannel1 Ethernet4
-    sudo config portchannel member add PortChannel2 Ethernet8
-    sudo config portchannel member add PortChannel2 Ethernet12
+    sudo config portchannel member add PortChannel1 Ethernet8
+    sudo config portchannel member add PortChannel2 Ethernet16
+    sudo config portchannel member add PortChannel2 Ethernet24
     ```
 6. Configure Port Channel IPs
    ```
