@@ -24,4 +24,10 @@
         chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/ansible/files/
       ignore_errors: yes
 
+    # - name: clear old ssh keys
+    #   command: "ssh-keygen -f "/home/cisco/.ssh/known_hosts" -R "172.10.10.203"
+    #   args:
+    #     chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/ansible/files/
+    #   ignore_errors: yes
+
 
