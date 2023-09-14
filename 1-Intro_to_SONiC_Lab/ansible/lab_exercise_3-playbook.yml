@@ -1,6 +1,6 @@
 ---
 - name: Copy FRR config to hosts and restart BGP container
-  hosts: sonic_nodes
+  hosts: sonic_subset
   become: true
   tasks:
 

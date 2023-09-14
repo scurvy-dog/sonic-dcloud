@@ -28,11 +28,14 @@ The student upon completion of Lab 2 should have achieved the following objectiv
 * Ability to see status of various services
 * Configuration Management structure
 * How to load configuration through Ansible
+* How to apply manual configuration through the SONiC CLI
 * Valadiate end to end topology 
 
 ## Tour of SONiC
 ### SONiC Software Architecture
-SONiC system's architecture comprises of various modules that interact among each other through a centralized and scalable infrastructure. This infrastructure relies on the use of a redis-database engine: a key-value database to provide a language independent interface, a method for data persistence, replication and multi-process communication among all SONiC subsystems.
+SONiC leverages a microservices-style architecture comprised of various modules running as Docker containers. The containers interact and communicate with each other through the Switch State Service (swss) container. The infrastructure also relies on the use of a redis-database engine: a key-value database to provide a language independent interface, a method for data persistence, replication and multi-process communication among all SONiC subsystems.
+
+Further reading: https://developer.cisco.com/docs/sonic/#!sonic-architecture
     
 By relying on the publisher/subscriber messaging paradigm offered by the redis-engine infrastructure, applications can subscribe only to the data-views that they require, and avoid implementation details that are irrelevant to their functionality.
 
@@ -81,7 +84,7 @@ c002ab9b311f   docker-database:latest               "/usr/local/bin/dock…"   7
 >For greater detail on container services see this link [HERE](https://github.com/sonic-net/SONiC/wiki/Architecture)
 
 ### Managing Configurations
-Configuration state in SONiC is perserved into several places. For persistant configuratin between reloads configuration files are used. The main configuration is found at */etc/sonic/config_db.json*. The second configuration file in this lab is for the FRR routing stack and it's configuratin is found at */etc/sonic/frr/bgpd.conf*. When the router boots it loads the configuration into these two files into the redis database. The redis database is the running configuration of the router where the various services read or write state information into the redis database.
+Configuration state in SONiC is saved in two separate locations. For persistant configuratin between reloads configuration files are used. The main configuration is found at */etc/sonic/config_db.json*. The second configuration file in this lab is for the FRR routing stack and it's configuratin is found at */etc/sonic/frr/bgpd.conf*. When the router boots it loads the configuration from these two files into the redis database. The redis database is the running configuration of the router where the various services read or write state information into the redis database.
 
 ![redis diagram](../topo-drawings/redis-diagram.png)
 
@@ -104,7 +107,7 @@ Running command: /usr/local/bin/sonic-cfggen -j /etc/sonic/config_db.json --writ
 
 This command is used to clear current configuration and import new configurationn from the input file or from */etc/sonic/config_db.json*. This command shall stop all services before clearing the configuration and it then restarts those services.
 
-The command *config reload* restarts various services running in the device and it takes some time to complete the command.
+The command *config reload* restarts various services/containers running in the device and it takes some time to complete the command.
 > **NOTE**
 > If the user had logged in using SSH, users might get disconnected depending upon the new management IP address. Users need to reconnect their SSH sessions.
 
@@ -134,7 +137,7 @@ Timeout, server 10.11.162.42 not responding.
 
 #### Saving Configuration to a File for Persistence
 
-The command *config save* is used to save the config DB configuration into the user-specified filename or into the default /etc/sonic/config_db.json. This saves the configuration into the disk which is available even after reboots. Saved file can be transferred to remote machines for debugging. If users wants to load the configuration from this new file at any point of time, they can use "config load" command and provide this newly generated file as input. If users wants this newly generated file to be used during reboot, they need to copy this file to /etc/sonic/config_db.json.
+The command *config save* is used to save the config DB configuration into the user-specified filename or into the default /etc/sonic/config_db.json. This saves the configuration into the disk which is available even after reboots. Saved files can be transferred to remote machines for debugging. If users wants to load the configuration from this new file at any point of time, they can use "config load" command and provide this newly generated file as input. If users wants this newly generated file to be used during reboot, they need to copy this file to /etc/sonic/config_db.json.
 
 - Usage:
 ```
@@ -153,7 +156,7 @@ cisco@spine01:~$ sudo config save -y /etc/sonic/config2.json
 
 #### Edit Configuration Through CLI
 
-Configuration management is also possible through the CLI. From the SONiC command prompt enter *config* and the command syntax needed. 
+Configuration management is also possible through the SONiC CLI. From the SONiC command prompt enter *config* and the command syntax needed. 
 ```
 cisco@leaf01:~$ config -?
 Usage: config [OPTIONS] COMMAND [ARGS]...
