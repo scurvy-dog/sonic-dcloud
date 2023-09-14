@@ -19,13 +19,6 @@
         "Loopback0|fc00:0:3::1/128": {}
     },
 
-    "INTERFACE": {
-        "Ethernet0": {},
-        "Ethernet8": {},
-        "Ethernet16": {},
-        "Ethernet24": {}
-    },
-
     "PORTCHANNEL": {
         "PortChannel1": {
             "admin_status": "up",
