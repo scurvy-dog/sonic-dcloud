@@ -364,7 +364,10 @@ There are several relevant files for our ansible playbook
     * 10.1.1.1, via PortChannel1, weight 1
     * 10.1.1.3, via PortChannel2, weight
   ```
-- Validate the route was installed in the Linux forwarding table (SONiC's FIB)
+
+### Validate the route was installed in the Linux forwarding table (SONiC's FIB)
+
+1. Exit the FRR CLI and then from Linux:
   ```
   cisco@leaf-1:~$ ip route
   ...
@@ -373,7 +376,7 @@ There are several relevant files for our ansible playbook
 	nexthop via 10.1.1.3 dev PortChannel2 weight 1
   ```
 
-## Validate End to End Connectivity
+## Validate SONiC End to End Connectivity
 
 - From *leaf-1* we will ping the *loopback0* interface on *leaf-2*
   ```
@@ -386,6 +389,34 @@ There are several relevant files for our ansible playbook
   64 bytes from 10.0.0.5: icmp_seq=2 ttl=63 time=1.75 ms
   ```
 
+### Validate Endpoint VM reachability
+
+__Endpoint-1__
+
+Endpoint-1 VM represents a standard linux host or endpoint connected to leaf-1
+
+1. SSH to Endpoint-1 Client VM from your laptop.
+   ```
+   ssh cisco@198.18.128.105
+   ```
+
+2. Ping Endpoint-2
+   ```
+   ping 198.18.12.2
+   ```
+
+__Endpoint-2__
+
+The Endpiont-2 VM represents a standard linux host or endpoint connected to leaf-2
+
+1. SSH to Endpoint-2 Client VM from your laptop.
+   ```
+   ssh cisco@198.18.128.106
+   ```
+2. Ping Endpoint-1
+   ```
+   ping 198.18.11.2
+   ```
 
 ## End of Lab Exercise 3
-Please proceed to [Lab Exercise 4](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_4/lab_exercise_4.md)
+Please proceed to [Lab Exercise 4](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_exercise_4.md)

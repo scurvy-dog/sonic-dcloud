@@ -113,4 +113,4 @@ The student upon completion of Lab Exercise 4 should have achieved the following
 
 
 ## End of Lab 4
-Please proceed to [Lab 5](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_5/lab_5-guide.md)
+Please proceed to [Lab 5](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_exercise_5.md)
