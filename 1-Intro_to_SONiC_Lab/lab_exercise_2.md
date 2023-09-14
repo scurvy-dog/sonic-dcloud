@@ -17,9 +17,9 @@ In Lab 2 the student will explore the SONiC network operating system, its compon
       - [Edit Configuration Through CLI](#edit-configuration-through-cli)
       - [FRR Configuration Management](#frr-configuration-management)
   - [Ansible Automation](#ansible-automation)
+  - [Configure Leaf-1 with SONiC CLI](#configure-leaf-1-with-sonic-cli)
   - [Network Connectivity](#network-connectivity)
-  - [Configure Leaf01 with CLI](#configure-leaf01-with-cli)
-  - [End of Lab 2](#end-of-lab-2)
+  - [End of Lab Exercise 2](#end-of-lab-exercise-2)
   
 ## Lab Objectives
 The student upon completion of Lab 2 should have achieved the following objectives:
@@ -190,23 +190,27 @@ copy run start
 ```
 
 ## Ansible Automation
-In this lab we are going to use an Ansible playbook to create the baseline configuration in the topology. That means we are going to replace the */etc/sonic/config_db.json* which will contain global parameters an link setup with IP addresses.
+In this lab we are going to use an Ansible playbook to create the baseline configuration on three of the four SONiC nodes in our topology. That means we are going to replace the */etc/sonic/config_db.json* which will contain global parameters an link setup with IP addresses.
 
 There are several relevant files for our ansible playbook
 
-| Name                  | Location                     | Notes                         |
-|:----------------------|:-----------------------------|:------------------------------|
-| lab_2-playbook.yml    | /lab_2/ansible               | Ansible playbook file         |
-| hosts                 | /lab_2/ansible               | Contains device list and IPs  |
-| config_db.json        | /lab_2/ansible/files/{host}/ | Global configuration file     |
+| Name                        | Location                     | Notes                         |
+|:----------------------------|:-----------------------------|:------------------------------|
+| lab_exercise_2-playbook.yml | /lab_2/ansible               | Ansible playbook file         |
+| hosts                       | /lab_2/ansible               | Contains device list and IPs  |
+| config_db.json              | /lab_2/ansible/files/{host}/ | Global configuration file     |
 
-- Change to the ansible directory in Lab 2
+- Change to the ansible directory
   ```
   cd ansible
   ```
-- Run Ansible playbook to copy configurations to SONiC routers. Once copied then load configurations
+- Run the lab_exercise_2 Ansible playbook to copy global and interface configurations to leaf-2 and both spine routers. Once copied the playbook will then load and save configurations. The playbook will load a subset of configuration to leaf-1. 
+
+> [!IMPORTANT]
+> Ansible playbook configured router *spine01*, *spine02*, and *leaf02*. You will manually configure router *leaf01* later in this lab.
+> 
     ```
-    ansible-playbook -i hosts lab_2-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+    ansible-playbook -i hosts lab_exercise_2-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
     ```
 
     You should expect a large amount of output from ansible but, at the end of logs look for the following output
@@ -218,18 +222,55 @@ There are several relevant files for our ansible playbook
     spine01              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
     spine02              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
     ```
-> [!IMPORTANT]
-> Ansible playbook configured router *spine01*, *spine02*, and *leaf02*. You will manually configure router *leaf01* later in this lab.
+
+## Configure Leaf-1 with SONiC CLI
+
+1. Log into *leaf-1*
+   ```
+   ssh cisco@172.10.10.201
+   ssh cisco@leaf-1
+   ```
+2. Configure *Loopback0* and add IPv4 and IPv6
+   ```
+   sudo config interface ip add Loopback0 10.0.0.1/32
+   sudo config interface ip add Loopback0 fc00:0:1::1/128
+   ```
+3. Configure Ethernet interface from *leaf-1* to *endpoint01*
+   ```
+   sudo config interface ip add Ethernet32 198.18.11.1/24
+   ```
+4. Create Port Channels to *spine-1* and *spine-2*
+   ```
+   sudo config portchannel add PortChannel1
+   sudo config portchannel add PortChannel2
+   ```
+5.  Configure Port Channel interface members
+    ```
+    sudo config portchannel member add PortChannel1 Ethernet0
+    sudo config portchannel member add PortChannel1 Ethernet8
+    sudo config portchannel member add PortChannel2 Ethernet16
+    sudo config portchannel member add PortChannel2 Ethernet24
+    ```
+6. Configure Port Channel IPs
+   ```
+   sudo config interface ip add PortChannel1 10.1.1.0/31
+   sudo config interface ip add PortChannel2 10.1.1.2/31
+   sudo config interface ip add PortChannel1 fc00:0:ffff::/127
+   sudo config interface ip add PortChannel2 fc00:0:ffff::2/127
+   ```
+
+7. Save configuration
+   ```
+   sudo config save
+   ```   
 
 ## Network Connectivity
-Now is the time to validate that all of the links between nodes in the topology have been successfully brought up and IP addresses were assigned correctly.
-
-It will take a minutes after ansible executes the config reload for the routers to be ready for testing.
+Next we'll validate that all of the links between nodes in the topology have been successfully brought up and IP addresses were assigned correctly.
 
 To check on interface status and connectivity follow these steps on each router in the topology
 
 **INTERFACES**
-- Log into each router referencing the IP and login credentials in lab_1
+- Log into each router referencing the IP and login credentials in lab_exercise_1
 - Check the interface status. The abbreviated output command for this would be. All interfaces should be in an UP/UP status
   
    ```
@@ -241,11 +282,11 @@ To check on interface status and connectivity follow these steps on each router 
    Interface    Oper    Admin           Alias    Description
    -----------  ------  -------  --------------  -------------
    Ethernet0      up       up    fortyGigE0/0
-   Ethernet4      up       up    fortyGigE0/4
-   Ethernet8      up       up    fortyGigE0/8
-   Ethernet12     up       up    fortyGigE0/12
-   Ethernet16    down      up    fortyGigE0/16
-   Ethernet20    down      up    fortyGigE0/24
+   Ethernet8      up       up    fortyGigE0/4
+   Ethernet16     up       up    fortyGigE0/8
+   Ethernet24     up       up    fortyGigE0/12
+   Ethernet32    down      up    fortyGigE0/16
+   Ethernet40    down      up    fortyGigE0/24
    ```
 - Show LLDP adjacency information to see interface remote neighbors
 
@@ -267,7 +308,7 @@ To check on interface status and connectivity follow these steps on each router 
   ```
 
 **PORT CHANNELS**
-- Port Channel configuration in the running configuration has three parts. Example below is for *leaf01*
+- Port Channel configuration in the running configuration has three parts. Example below is for *leaf-1*
   
   ```json
   "PORTCHANNEL": {                 <------ Port Channel Definition
@@ -314,7 +355,7 @@ To check on interface status and connectivity follow these steps on each router 
    2  PortChannel2  LACP(A)(Up)  Ethernet12(S) Ethernet8(S)    <------ See LADP status Active
    ```
 > [!IMPORTANT]
-> SONiC node *leaf01* is not configured yet so PortChanel1 will show a **Down** state
+> SONiC node *leaf-1* is not configured yet so PortChanel1 will show a **Down** state
 
 **IP Adjaceny**
 -    View the configured IP address as listed in the below diagram.
@@ -344,47 +385,7 @@ To check on interface status and connectivity follow these steps on each router 
   64 bytes from 10.1.1.6: icmp_seq=1 ttl=64 time=12.9 ms
   64 bytes from 10.1.1.6: icmp_seq=2 ttl=64 time=1.07 ms
   ```
-**Congratulations you have successfully completed Lab 2. You should now be ready to configure routing protocols.**
-## Configure Leaf01 with CLI
+**Congratulations you have successfully completed Lab Exercise 2. You should now be ready to configure routing protocols.**
 
-1. Log into *leaf01*
-   ```
-   ssh cisco@172.10.10.201
-   ```
-2. Configure *Loopback0* and add IPv4 and IPv6
-   ```
-   sudo config interface ip add Loopback0 10.0.0.1/32
-   sudo config interface ip add Loopback0 fc00:0:1::1/128
-   ```
-3. Configure Ethernet interface from *leaf-1* to *endpoint01*
-   ```
-   sudo config interface ip add Ethernet32 10.1.2.1/24
-   sudo config interface ip add Ethernet32 2001:1:2::1/64
-   ```
-4. Create Port Channels to *spine-1* and *spine-2*
-   ```
-   sudo config portchannel add PortChannel1
-   sudo config portchannel add PortChannel2
-   ```
-5.  Configure Port Channel interface members
-    ```
-    sudo config portchannel member add PortChannel1 Ethernet0
-    sudo config portchannel member add PortChannel1 Ethernet8
-    sudo config portchannel member add PortChannel2 Ethernet16
-    sudo config portchannel member add PortChannel2 Ethernet24
-    ```
-6. Configure Port Channel IPs
-   ```
-   sudo config interface ip add PortChannel1 10.1.1.0/31
-   sudo config interface ip add PortChannel2 10.1.1.2/31
-   sudo config interface ip add PortChannel1 fc00:0:ffff::/127
-   sudo config interface ip add PortChannel2 fc00:0:ffff::2/127
-   ```
-
-7. Save configuration
-   ```
-   sudo config save
-   ```   
-
-## End of Lab 2
+## End of Lab Exercise 2
 Please proceed to [Lab 3](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_3/lab_3-guide.md)
