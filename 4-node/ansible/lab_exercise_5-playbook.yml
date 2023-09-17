@@ -1,0 +1,22 @@
+---
+- name: Enable FRR BFD daemon and configure BFD sessions
+  hosts: sonic_subset
+  become: true
+  tasks:
+
+    - name: docker exec into FRR BGP container
+      command: docker exec -it bgp bash
+      ignore_errors: yes
+
+    - name: cd into /usr/lib/frr and start bfdd
+      command: ./bfdd &
+      args:
+        chdir: /usr/lib/frr
+      timeout: 10
+      ignore_errors: yes
+
+    - name: exit BGP container
+      command: exit
+      ignore_errors: yes
+
+

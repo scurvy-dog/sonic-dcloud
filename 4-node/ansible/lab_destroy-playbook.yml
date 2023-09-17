@@ -1,0 +1,14 @@
+---
+
+# ansible-playbook -i hosts lab_destroy-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+
+- name: Destroy containerlab sonic instances
+  hosts: localhost
+  become: true
+  tasks:
+
+    - name: run containerlab destroy on all host VMs
+      command: sudo containerlab destroy -t clab-topology.yaml
+      args:
+        chdir: /home/cisco/sonic-dcloud/4-node/ansible/
+      ignore_errors: yes
