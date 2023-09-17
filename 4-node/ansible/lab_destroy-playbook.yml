@@ -3,7 +3,7 @@
 # ansible-playbook -i hosts lab_destroy-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
 
 - name: Destroy containerlab sonic instances
-  hosts: localhost
+  hosts: sonic-host-vm
   become: true
   tasks:
 

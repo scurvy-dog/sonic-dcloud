@@ -1,5 +1,5 @@
-[localhost]
-localhost ansible_host=127.0.0.1
+[sonic-host-vm]
+sonic-host-vm ansible_host=127.0.0.1
 
 [sonic_nodes]
 leaf-1 ansible_host=172.10.10.201
