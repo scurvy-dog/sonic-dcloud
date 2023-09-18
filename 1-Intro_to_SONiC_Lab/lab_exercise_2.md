@@ -18,6 +18,7 @@ In Lab Exercise 2 the student will explore the SONiC network operating system, i
       - [FRR Configuration Management](#frr-configuration-management)
   - [Ansible Automation](#ansible-automation)
   - [Configure Leaf-1 with SONiC CLI](#configure-leaf-1-with-sonic-cli)
+  - [Configure hostnames](#configure-hostnames)
   - [Network Connectivity](#network-connectivity)
   - [End of Lab Exercise 2](#end-of-lab-exercise-2)
   
@@ -264,6 +265,23 @@ There are several relevant files for our ansible playbook
    sudo config save
    ```   
 
+## Configure hostnames
+The ansible config load/save step doesn't change the sonic nodes' /etc/hostname. This requires either a config reload or a change via sonic CLI.
+
+1. Use sonic CLI to configure leaf-2, spine-1, and spine-2 hostnames on each respective node:
+```
+sudo config hostname leaf-2
+sudo config save -y
+
+sudo config hostname spine-1
+sudo config save -y
+
+sudo config hostname spine-2
+sudo config save -y
+
+```
+2. Exit the sonic node and ssh back in to see the hostname change in effect
+
 ## Network Connectivity
 Next we'll validate that all of the links between nodes in the topology have been successfully brought up and IP addresses were assigned correctly.
 
@@ -274,19 +292,21 @@ To check on interface status and connectivity follow these steps on each router 
 - Check the interface status. The abbreviated output command for this would be. All interfaces should be in an UP/UP status
   
    ```
+   show interface status
+   or
    show interface description
    ```
-   For our vSONiC lab only configured interfaces that are mapped in KVM will show up/up status.
+
    ```
-   cisco@spine01:~$ show int description
-   Interface    Oper    Admin           Alias    Description
-   -----------  ------  -------  --------------  -------------
-   Ethernet0      up       up    fortyGigE0/0
-   Ethernet8      up       up    fortyGigE0/4
-   Ethernet16     up       up    fortyGigE0/8
-   Ethernet24     up       up    fortyGigE0/12
-   Ethernet32    down      up    fortyGigE0/16
-   Ethernet40    down      up    fortyGigE0/24
+   cisco@leaf-1:~$  show interface description
+    Interface    Oper    Admin    Alias    Description
+   -----------  ------  -------  -------  -------------
+   Ethernet0      up       up     etp0
+   Ethernet8      up       up     etp1
+   Ethernet16     up       up     etp2
+   Ethernet24     up       up     etp3
+   Ethernet32     up       up     etp4
+   Ethernet40     up       up     etp5
    ```
 - Show LLDP adjacency information to see interface remote neighbors
 
@@ -295,16 +315,17 @@ To check on interface status and connectivity follow these steps on each router 
   ```
 
   ```
-  cisco@spine01:~$ show lldp table
+  cisco@leaf-1:~$  show lldp table
   Capability codes: (R) Router, (B) Bridge, (O) Other
   LocalPort    RemoteDevice    RemotePortID    Capability    RemotePortDescr
   -----------  --------------  --------------  ------------  -----------------
-  Ethernet0    leaf01          fortyGigE0/0    BR            Ethernet0
-  Ethernet4    leaf01          fortyGigE0/4    BR            Ethernet4
-  Ethernet8    leaf02          fortyGigE0/8    BR            Ethernet8
-  Ethernet12   leaf02          fortyGigE0/12   BR            Ethernet12
+  Ethernet0    spine-1         etp0            BR            Ethernet0
+  Ethernet8    spine-1         etp1            BR            Ethernet8
+  Ethernet16   spine-2         etp2            BR            Ethernet16
+  Ethernet24   spine-2         etp3            BR            Ethernet24
   --------------------------------------------------
   Total entries displayed:  4
+  cisco@leaf-1:~$ 
   ```
 
 **PORT CHANNELS**
@@ -335,9 +356,9 @@ To check on interface status and connectivity follow these steps on each router 
     },
     "PORTCHANNEL_MEMBER": {         <------ Port Channel Member Links
         "PortChannel1|Ethernet0": {},
-        "PortChannel1|Ethernet4": {},
-        "PortChannel2|Ethernet8": {},
-        "PortChannel2|Ethernet12": {}
+        "PortChannel1|Ethernet8": {},
+        "PortChannel2|Ethernet16": {},
+        "PortChannel2|Ethernet24": {}
   ```
 
 - Check that the port-channels were created and look at the member links
@@ -346,16 +367,15 @@ To check on interface status and connectivity follow these steps on each router 
    ```
    
    ```
-   cisco@spine01:~$ show interface portchannel
+   cisco@leaf-1:~$ show interface portchannel
    Flags: A - active, I - inactive, Up - up, Dw - Down, N/A - not available,
-   S - selected, D - deselected, * - not synced
+          S - selected, D - deselected, * - not synced
    No.  Team Dev      Protocol     Ports
-   -----  ------------  -----------  --------------------------
-   1  PortChannel1  LACP(A)(Dw)  Ethernet0(D) Ethernet4(D)     <------ See LADP status Down
-   2  PortChannel2  LACP(A)(Up)  Ethernet12(S) Ethernet8(S)    <------ See LADP status Active
+   -----  ------------  -----------  ---------------------------
+      1  PortChannel1  LACP(A)(Up)  Ethernet0(S) Ethernet8(S)   <------ See LADP status Active
+      2  PortChannel2  LACP(A)(Up)  Ethernet24(S) Ethernet16(S)
+   cisco@leaf-1:~$     
    ```
-> [!IMPORTANT]
-> SONiC node *leaf-1* is not configured yet so PortChanel1 will show a **Down** state
 
 **IP Adjaceny**
 -    View the configured IP address as listed in the below diagram.
@@ -367,25 +387,41 @@ To check on interface status and connectivity follow these steps on each router 
   show ip interfaces
   ```
   ```
-  cisco@spine01:~$ show ip interfaces
+  cisco@leaf-1:~$ show ip interfaces
   Interface     Master    IPv4 address/mask    Admin/Oper    BGP Neighbor    Neighbor IP
   ------------  --------  -------------------  ------------  --------------  -------------
-  Loopback0               10.0.0.2/32          up/up         N/A             N/A
-  PortChannel1            10.1.1.1/31          up/down       leaf01          10.1.1.0
-  PortChannel2            10.1.1.7/31          up/up         N/A             N/A
+  Ethernet32              198.18.11.1/24       up/up         N/A             N/A
+  Loopback0               10.0.0.1/32          up/up         N/A             N/A
+  PortChannel1            10.1.1.0/31          up/up         N/A             N/A
+  PortChannel2            10.1.1.2/31          up/up         N/A             N/A
   docker0                 240.127.1.1/24       up/down       N/A             N/A
-  eth0                    172.10.10.2/24       up/up         N/A             N/A
+  eth0                    172.10.10.201/24     up/up         N/A             N/A
+  eth4                    192.168.123.188/24   up/up         N/A             N/A
   lo                      127.0.0.1/16         up/up         N/A             N/A
+  cisco@leaf-1:~$ 
   ```
 
 - Ping the adjacent IP for the routed linnks
   ```
-  cisco@spine01:~$ ping 10.1.1.6
-  PING 10.1.1.6 (10.1.1.6) 56(84) bytes of data.
-  64 bytes from 10.1.1.6: icmp_seq=1 ttl=64 time=12.9 ms
-  64 bytes from 10.1.1.6: icmp_seq=2 ttl=64 time=1.07 ms
+  cisco@leaf-1:~$ ping 10.1.1.1
+  PING 10.1.1.1 (10.1.1.1) 56(84) bytes of data.
+  64 bytes from 10.1.1.1: icmp_seq=1 ttl=64 time=280 ms
+  64 bytes from 10.1.1.1: icmp_seq=2 ttl=64 time=144 ms
+  ^C
+  --- 10.1.1.1 ping statistics ---
+  2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+  rtt min/avg/max/mdev = 143.566/211.937/280.309/68.371 ms
+  cisco@leaf-1:~$ ping 10.1.1.3
+  PING 10.1.1.3 (10.1.1.3) 56(84) bytes of data.
+  64 bytes from 10.1.1.3: icmp_seq=1 ttl=64 time=100 ms
+  64 bytes from 10.1.1.3: icmp_seq=2 ttl=64 time=249 ms
+  ^C
+  --- 10.1.1.3 ping statistics ---
+  3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+  rtt min/avg/max/mdev = 100.222/156.657/249.050/65.864 ms
+  cisco@leaf-1:~$ 
   ```
-**Congratulations you have successfully completed Lab Exercise 2. You should now be ready to configure routing protocols.**
+**Congratulations you have successfully completed Lab Exercise 2. We are now ready to configure routing protocols.**
 
 ## End of Lab Exercise 2
 Please proceed to [Lab 3](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_exercise_3.md)
