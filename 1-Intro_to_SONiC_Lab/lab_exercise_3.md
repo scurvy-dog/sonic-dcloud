@@ -15,6 +15,10 @@ In Lab Exercise 3 the student will explore configuring the BGP routing protocol 
   - [Validate BGP Peering](#validate-bgp-peering)
     - [Verify BGP Peering Sessions](#verify-bgp-peering-sessions)
     - [Verify BGP Routing Table](#verify-bgp-routing-table)
+    - [IPv4 BGP Route Validation Walk Through](#ipv4-bgp-route-validation-walk-through)
+    - [Validate the route was installed in the Linux forwarding table (SONiC's FIB)](#validate-the-route-was-installed-in-the-linux-forwarding-table-sonics-fib)
+  - [Validate SONiC End to End Connectivity](#validate-sonic-end-to-end-connectivity)
+    - [Validate Endpoint VM reachability](#validate-endpoint-vm-reachability)
   - [End of Lab Exercise 3](#end-of-lab-exercise-3)
   
 ## Lab Objectives
@@ -161,8 +165,8 @@ There are several relevant files for our ansible playbook
   Peers 2, using 1449 KiB of memory
 
   Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
-  10.1.1.1        4      65000        10        10        0    0    0 00:04:03            2        4 N/A
-  10.1.1.3        4      65000        10        10        0    0    0 00:04:03            2        4 N/A
+  10.1.1.1        4      65000        10        10        0    0    0 00:04:03            3        6 N/A
+  10.1.1.3        4      65000        10        10        0    0    0 00:04:03            3        6 N/A
 
   Total number of neighbors 2
 
@@ -189,8 +193,8 @@ There are several relevant files for our ansible playbook
    Peers 2, using 1449 KiB of memory
 
    Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
-   10.1.1.5        4      65000       169       170        0    0    0 02:37:08            2        4 N/A
-   10.1.1.7        4      65000       169       170        0    0    0 02:37:08            2        4 N/A
+   10.1.1.5        4      65000       169       170        0    0    0 02:37:08            3        6 N/A
+   10.1.1.7        4      65000       169       170        0    0    0 02:37:08            3        6 N/A
 
    Total number of neighbors 2
 
@@ -230,137 +234,127 @@ There are several relevant files for our ansible playbook
   ```
   leaf-1# show ip route bgp
   Codes: K - kernel route, C - connected, S - static, R - RIP,
-       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
-       T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
-       f - OpenFabric,
-       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
-       t - trapped, o - offload failure
-  B>* 10.0.0.2/32 [20/0] via 10.1.1.7, PortChannel2, weight 1, 02:59:13
-  B>* 10.0.0.3/32 [20/0] via 10.1.1.5, PortChannel1, weight 1, 02:59:13
-  B>* 10.0.0.4/32 [20/0] via 10.1.1.5, PortChannel1, weight 1, 00:26:19
-    *                    via 10.1.1.7, PortChannel2, weight 1, 00:26:19
+        O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+        T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+        f - OpenFabric,
+        > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+        t - trapped, o - offload failure
+
+  B>* 10.0.0.2/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:04:52
+    *                    via 10.1.1.3, PortChannel2, weight 1, 00:04:52
+  B>* 10.0.0.3/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:04:30
+  B>* 10.0.0.4/32 [20/0] via 10.1.1.3, PortChannel2, weight 1, 00:04:24
+  B>* 198.18.12.0/24 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:07:49
+    *                       via 10.1.1.3, PortChannel2, weight 1, 00:07:49
   ```
   
-- **Verify IPv6** routes *leaf-1* should have received the following
+- **Verify IPv6** routes *leaf-1* should have received the following. 
   ```
   show ipv6 route bgp
   ```
   ```
   leaf-1# show ipv6 route bgp
   Codes: K - kernel route, C - connected, S - static, R - RIPng,
-       O - OSPFv3, I - IS-IS, B - BGP, N - NHRP, T - Table,
-       v - VNC, V - VNC-Direct, A - Babel, F - PBR,
-       f - OpenFabric,
-       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
-       t - trapped, o - offload failure
+        O - OSPFv3, I - IS-IS, B - BGP, N - NHRP, T - Table,
+        v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+        f - OpenFabric,
+        > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+        t - trapped, o - offload failure
 
-  B>* fc00:0:2::1/128 [20/0] via fe80::5054:ff:fe74:c103, PortChannel1, weight 1, 00:06:02
-  B>* fc00:0:3::1/128 [20/0] via fe80::5054:ff:fe74:c104, PortChannel2, weight 1, 00:06:02
-  B>* fc00:0:5::1/128 [20/0] via fe80::5054:ff:fe74:c103, PortChannel1, weight 1, 00:06:02
-    *                        via fe80::5054:ff:fe74:c104, PortChannel2, weight 1, 00:06:02
+  B>* fc00:0:2::1/128 [20/0] via fe80::7a58:c8ff:fe83:e400, PortChannel2, weight 1, 00:02:29
+    *                        via fe80::7afe:fdff:feb2:6800, PortChannel1, weight 1, 00:02:29
+  B>* fc00:0:3::1/128 [20/0] via fe80::7afe:fdff:feb2:6800, PortChannel1, weight 1, 00:05:12
+  B>* fc00:0:4::1/128 [20/0] via fe80::7a58:c8ff:fe83:e400, PortChannel2, weight 1, 00:05:06
   ```
-- **Verify IPv6** routes *leaf12* should have received the following
-  ```
-  leaf-2# show ipv6 route bgp
-  Codes: K - kernel route, C - connected, S - static, R - RIPng,
-       O - OSPFv3, I - IS-IS, B - BGP, N - NHRP, T - Table,
-       v - VNC, V - VNC-Direct, A - Babel, F - PBR,
-       f - OpenFabric,
-       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
-       t - trapped, o - offload failure
-  B>* fc00:0:2::1/128 [20/0] via fc00:0:ffff::7, PortChannel2, weight 1, 00:09:31
-  B>* fc00:0:3::1/128 [20/0] via fc00:0:ffff::5, PortChannel1, weight 1, 00:09:32
-  B>* fc00:0:4::1/128 [20/0] via fc00:0:ffff::5, PortChannel1, weight 1, 00:05:50
-    *                        via fc00:0:ffff::7, PortChannel2, weight 1, 00:05:50
-  ```
+
+- *leaf-2* should show similar output.
+  
 - Examine IPv4 BGP AS Path information in the route table. This shows us what routes are installed in the BGP table vs which routes are installed into the routing table.
   ```
   show bgp ipv4 unicast
   ```
   <pre>
   leaf-1# show bgp ipv4 uni
-  BGP table version is 10, local router ID is 10.0.0.4, vrf id 0
-  Default local pref 100, local AS 65004
+  BGP table version is 6, local router ID is 10.0.0.1, vrf id 0
+  Default local pref 100, local AS 65001
   Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
-               i internal, r RIB-failure, S Stale, R Removed
+                i internal, r RIB-failure, S Stale, R Removed
   Nexthop codes: @NNN nexthop's vrf id, < announce-nh-self
   Origin codes:  i - IGP, e - EGP, ? - incomplete
   RPKI validation codes: V valid, I invalid, N Not found
 
-     Network          Next Hop            Metric LocPrf Weight Path
-  *> 10.0.0.2/32      10.1.1.1                 0             0 65000 i
-  *> 10.0.0.3/32      10.1.1.3                 0             0 65000 i
-  *> 10.0.0.4/32      0.0.0.0                  0         32768 i <b>
-  *> 10.0.0.5/32      10.1.1.1                               0 65000 65005 i
-  *=                  10.1.1.3                               0 65000 65005 i
+    Network          Next Hop            Metric LocPrf Weight Path
+  *> 10.0.0.1/32      0.0.0.0                  0         32768 i
+  *> 10.0.0.2/32      10.1.1.1                               0 65000 65002 i
+  *=                  10.1.1.3                               0 65000 65002 i
+  *> 10.0.0.3/32      10.1.1.1                 0             0 65000 i
+  *> 10.0.0.4/32      10.1.1.3                 0             0 65000 i
+  *> 198.18.11.0/24   0.0.0.0                  0         32768 i
+  *= 198.18.12.0/24   10.1.1.3                               0 65000 65002 i
+  *>                  10.1.1.1                               0 65000 65002 i
   </b>
-  Displayed  4 routes and 5 total paths
+  Displayed  6 routes and 8 total paths
   </pre>
+
 - Examine IPv6 BGP AS Path information in the route table
   ```
   leaf-1# show bgp ipv6 uni
-  BGP table version is 11, local router ID is 10.0.0.4, vrf id 0
-  Default local pref 100, local AS 65004
+  BGP table version is 5, local router ID is 10.0.0.1, vrf id 0
+  Default local pref 100, local AS 65001
   Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
-               i internal, r RIB-failure, S Stale, R Removed
+                i internal, r RIB-failure, S Stale, R Removed
   Nexthop codes: @NNN nexthop's vrf id, < announce-nh-self
   Origin codes:  i - IGP, e - EGP, ? - incomplete
   RPKI validation codes: V valid, I invalid, N Not found
 
-     Network          Next Hop                 Metric LocPrf Weight Path
-  *> fc00:0:2::1/128  fe80::5054:ff:fe74:c103       0             0 65000 i
-  *> fc00:0:3::1/128  fe80::5054:ff:fe74:c104
-                                                    0             0 65000 i
-     fc00:0:4::/48    ::                            0         32768       i
-  *> fc00:0:4::1/128  ::                            0         32768       i
-  *> fc00:0:5::1/128  fe80::5054:ff:fe74:c103       0               65000 65005
-  *=                  fe80::5054:ff:fe74:c104       0               65000 65005 i
+    Network          Next Hop            Metric LocPrf Weight Path
+    fc00:0:1::/48    ::                       0         32768 i
+  *> fc00:0:1::1/128  ::                       0         32768 i
+  *= fc00:0:2::1/128  fe80::7afe:fdff:feb2:6800
+                                                            0 65000 65002 i
+  *>                  fe80::7a58:c8ff:fe83:e400
+                                                            0 65000 65002 i
+  *> fc00:0:3::1/128  fe80::7afe:fdff:feb2:6800
+                                              0             0 65000 i
+  *> fc00:0:4::1/128  fe80::7a58:c8ff:fe83:e400
+                                              0             0 65000 i
+
+  Displayed  5 routes and 6 total paths
+  ```
 
 ### IPv4 BGP Route Validation Walk Through
-- Validate IPv4 BGP route received from peer. We will examine *10.0.0.5/32* originated from *leaf-2*
-  ```
-  leaf-1# show bgp ipv4 uni neighbors 10.1.1.1 advertised-routes
-  BGP table version is 12, local router ID is 10.0.0.4, vrf id 0
-  Default local pref 100, local AS 65004
-  Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
-               i internal, r RIB-failure, S Stale, R Removed
-  Nexthop codes: @NNN nexthop's vrf id, < announce-nh-self
-  Origin codes:  i - IGP, e - EGP, ? - incomplete
-  RPKI validation codes: V valid, I invalid, N Not found
+- Validate IPv4 BGP route received from peer. We will examine *10.0.0.2/32* originated from *leaf-2*
 
-      Network          Next Hop            Metric LocPrf Weight Path
-  *> 10.0.0.2/32      0.0.0.0                                0 65000 i
-  *> 10.0.0.3/32      0.0.0.0                                0 65000 i
-  *> 10.0.0.4/32      0.0.0.0                  0         32768 i
-  *> 10.0.0.5/32      0.0.0.0                                0 65000 65005 i  <---- Route Received Peer spine-1
-  *> 10.1.2.0/24      0.0.0.0                  0         32768 i
-  *> 10.1.3.0/24      0.0.0.0                                0 65000 65005 i
+- Validate route was received from *spine-1* and *spine-2* and added to the BGP table
   ```
-
-- Validate route was received from *spine11* and added to the BGP table
+  show ip bgp 10.0.0.2/32
   ```
-  leaf-1# show ip bgp 10.0.0.5/32
-  BGP routing table entry for 10.0.0.5/32, version 9
+  ```
+  leaf-1# show ip bgp 10.0.0.2/32
+  BGP routing table entry for 10.0.0.2/32, version 4
   Paths: (2 available, best #1, table default)
-  Advertised to non peer-group peers:
+    Advertised to non peer-group peers:
     10.1.1.1 10.1.1.3
-    65000 65005
-    10.1.1.1 from 10.1.1.1 (10.0.0.2)
-        Origin IGP, valid, external, multipath, best (Older Path)
-        Last update: Fri Aug 25 22:00:04 2023
-    65000 65005
-    10.1.1.3 from 10.1.1.3 (10.0.0.3)
-      Origin IGP, valid, external, multipath
-      Last update: Fri Aug 25 20:57:59 2023
+    65000 65002
+      10.1.1.1 from 10.1.1.1 (10.0.0.3)
+        Origin IGP, valid, external, multipath, best (Router ID)
+        Last update: Mon Sep 18 20:37:32 2023
+    65000 65002
+      10.1.1.3 from 10.1.1.3 (10.0.0.4)
+        Origin IGP, valid, external, multipath
+        Last update: Mon Sep 18 20:37:32 2023
   ```
 - Validate that BGP route was installed into the routing information base (RIB)
   ```
-  leaf-1# show ip route 10.0.0.5/32
-  Routing entry for 10.0.0.5/32
-  Known via "bgp", distance 20, metric 0, best
-    Last update 01:12:57 ago
+  show ip route 10.0.0.2/32
+  ```
+  ```
+  leaf-1# show ip route 10.0.0.2/32
+  Routing entry for 10.0.0.2/32
+    Known via "bgp", distance 20, metric 0, best
+    Last update 00:10:55 ago
     * 10.1.1.1, via PortChannel1, weight 1
-    * 10.1.1.3, via PortChannel2, weight
+    * 10.1.1.3, via PortChannel2, weight 1
   ```
 
 ### Validate the route was installed in the Linux forwarding table (SONiC's FIB)
@@ -369,7 +363,7 @@ There are several relevant files for our ansible playbook
   ```
   cisco@leaf-1:~$ ip route
   ...
-  10.0.0.5 nhid 111 proto bgp src 10.0.0.4 metric 20 
+  10.0.0.2 nhid 111 proto bgp src 10.0.0.1 metric 20 
 	nexthop via 10.1.1.1 dev PortChannel1 weight 1 
 	nexthop via 10.1.1.3 dev PortChannel2 weight 1
   ```
@@ -378,13 +372,13 @@ There are several relevant files for our ansible playbook
 
 - From *leaf-1* we will ping the *loopback0* interface on *leaf-2*
   ```
-  ping 10.0.0.5
+  ping 10.0.0.2
   ```
   ```
-  leaf-1# ping 10.0.0.5
-  PING 10.0.0.5 (10.0.0.5) 56(84) bytes of data.
-  64 bytes from 10.0.0.5: icmp_seq=1 ttl=63 time=2.10 ms
-  64 bytes from 10.0.0.5: icmp_seq=2 ttl=63 time=1.75 ms
+  leaf-1# ping 10.0.0.2
+  PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
+  64 bytes from 10.0.0.2: icmp_seq=1 ttl=63 time=101 ms
+  64 bytes from 10.0.0.2: icmp_seq=2 ttl=63 time=276 ms
   ```
 
 ### Validate Endpoint VM reachability
@@ -393,7 +387,7 @@ __Endpoint-1__
 
 Endpoint-1 VM represents a standard linux host or endpoint connected to leaf-1
 
-1. SSH to Endpoint-1 Client VM from your laptop.
+1. Open a new terminal and SSH to Endpoint-1 Client VM
    ```
    ssh cisco@198.18.128.105
    ```
@@ -402,18 +396,30 @@ Endpoint-1 VM represents a standard linux host or endpoint connected to leaf-1
    ```
    ping 198.18.12.2
    ```
+   ```
+   cisco@endpoint-1:~$ ping 198.18.12.1
+   PING 198.18.12.1 (198.18.12.1) 56(84) bytes of data.
+   64 bytes from 198.18.12.1: icmp_seq=1 ttl=62 time=698 ms
+   64 bytes from 198.18.12.1: icmp_seq=2 ttl=62 time=372 ms
+   ```
 
 __Endpoint-2__
 
 The Endpiont-2 VM represents a standard linux host or endpoint connected to leaf-2
 
-1. SSH to Endpoint-2 Client VM from your laptop.
+1. In another terminal SSH to Endpoint-2 Client VM
    ```
    ssh cisco@198.18.128.106
    ```
 2. Ping Endpoint-1
    ```
    ping 198.18.11.2
+   ```
+   ```
+   cisco@endpoint-2:~$ ping 198.18.11.2
+   PING 198.18.11.2 (198.18.11.2) 56(84) bytes of data.
+   64 bytes from 198.18.11.2: icmp_seq=1 ttl=61 time=177 ms
+   64 bytes from 198.18.11.2: icmp_seq=2 ttl=61 time=4.19 ms
    ```
 
 ## End of Lab Exercise 3
