@@ -65,7 +65,7 @@ You can see the list of the running containers with SONiC by running the below c
 docker ps
 ```
 ```
-admin@leaf01:~$ docker ps
+admin@leaf-1:~$ docker ps
 CONTAINER ID   IMAGE                                COMMAND                  CREATED       STATUS       PORTS     NAMES
 d3dec180edf1   docker-sonic-telemetry:latest        "/usr/local/bin/supe…"   7 hours ago   Up 3 hours             telemetry
 73408f13ba26   docker-snmp:latest                   "/usr/local/bin/supe…"   7 hours ago   Up 3 hours             snmp
@@ -99,7 +99,7 @@ config load [-y|--yes] [<filename>]
 ```
 - Example:
 ```
-cisco@spine01:~$ sudo config load
+cisco@spine-1:~$ sudo config load
 Load config from the file /etc/sonic/config_db.json? [y/N]: y
 Running command: /usr/local/bin/sonic-cfggen -j /etc/sonic/config_db.json --write-to-db
 ```
@@ -118,7 +118,7 @@ config reload [-y|--yes] [-l|--load-sysinfo] [<filename>] [-n|--no-service-resta
 ```
 - Example:
 ```
-cisco@spine01~$ sudo config reload
+cisco@spine-1~$ sudo config reload
 Clear current config and reload config from the file /etc/sonic/config_db.json? [y/N]: y
 Running command: systemctl stop dhcp_relay
 Running command: systemctl stop swss
@@ -147,19 +147,19 @@ config save [-y|--yes] [<filename>]
 - Example (Save configuration to /etc/sonic/config_db.json):
 
 ```
-cisco@spine01:~$ sudo config save -y
+cisco@spine-1:~$ sudo config save -y
 ```
 
 - Example (Save configuration to a specified file):
 ```
-cisco@spine01:~$ sudo config save -y /etc/sonic/config2.json
+cisco@spine-1:~$ sudo config save -y /etc/sonic/config2.json
 ```
 
 #### Edit Configuration Through CLI
 
 Configuration management is also possible through the SONiC CLI. From the SONiC command prompt enter *config* and the command syntax needed. 
 ```
-cisco@leaf01:~$ config -?
+cisco@leaf-1:~$ config -?
 Usage: config [OPTIONS] COMMAND [ARGS]...
 
   SONiC command line - 'config' command
@@ -208,7 +208,7 @@ There are several relevant files for our ansible playbook
 - Run the lab_exercise_2 Ansible playbook to copy global and interface configurations to leaf-2 and both spine routers. Once copied the playbook will then load and save configurations. The playbook will load a subset of configuration to leaf-1. 
 
 > [!IMPORTANT]
-> Ansible playbook configured router *spine01*, *spine02*, and *leaf02*. You will manually configure router *leaf01* later in this lab.
+> Ansible playbook configured router *spine-1*, *spine-2*, and *leaf-2*. You will manually configure router *leaf-1* later in this lab.
 > 
     ```
     ansible-playbook -i hosts lab_exercise_2-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
@@ -218,10 +218,10 @@ There are several relevant files for our ansible playbook
     ```
     PLAY RECAP
     ***************************************************************************************************************************************
-    leaf01               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-    leaf02               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-    spine01              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-    spine02              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
+    leaf-1               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+    leaf-2               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+    spine-1              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+    spine-2              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
     ```
 
 ## Configure Leaf-1 with SONiC CLI

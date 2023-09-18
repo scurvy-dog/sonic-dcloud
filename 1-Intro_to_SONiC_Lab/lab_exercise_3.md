@@ -25,7 +25,7 @@ The student upon completion of Lab 3 should have achieved the following objectiv
 * Valadiate end to end topology 
 
 ## FRR BGP Overview
-For this lab we will be using two mechanisms to configure FRR. The first is to use ansible to update the FRR config file */etc/sonic/frr/bgpd.conf*. When we do a config reload command it will load the FRR/BGP configurations into the running configuration which is stored in the *redis-database*. We will use this method to load FRR/BGP configuration for *spine-1*, *spine-2*, and *leaf-2*.
+For this lab we will be using two mechanisms to configure FRR. The first is to use ansible to update the FRR config file */etc/sonic/frr/bgpd.conf* on three of the four routers. When we do a config reload command it will load the FRR/BGP configurations into the running configuration which is stored in the *redis-database*. We will use this method to load FRR/BGP configuration for *spine-1*, *spine-2*, and *leaf-2*.
 
 For *leaf-1* we'll invoke the FRR CLI and add BGP configuration there. 
 
@@ -34,7 +34,7 @@ There are some items of note when using the FRR CLI in SONiC.
     - From there on it will follow the same path as a REST config request for create, update and delete operations
 
 ## BGP Topology
-In this lab we will have three separate BGP AS represented in the fabric. The spine layer will be within it's own AS 65000. Each leaf will run a separate BGP AS as represented in the topology diagram below. In this BGP DC fabric the leafs should be receiving equal cost paths through each of the spine layer port-channels through AS 65000.
+In this lab we will have three separate BGP AS represented in the fabric. The spine layer will run a single AS 65000. Each leaf will run a separate BGP AS as represented in the topology diagram below. In this BGP DC fabric the leafs should be receiving equal cost paths through each of the spine layer port-channels via AS 65000.
 
 ![BGP Topology](../topo-drawings/bgp-topology.png)
 
@@ -53,7 +53,7 @@ There are several relevant files for our ansible playbook
   ```
   cd ansible
   ```
-- Run Ansible playbook to copy configurations to SONiC routers. Once copied then load configurations
+- From the jumpbox VM run Ansible playbook to copy configurations to SONiC routers and restart BGP/FRR docker containers
     ```
     ansible-playbook -i hosts lab_exercise_3-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
     ```
@@ -63,15 +63,13 @@ There are several relevant files for our ansible playbook
     PLAY RECAP
     PLAY RECAP
     *************************************************************************************************************************
-    leaf02                     : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-    spine01                    : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-    spine02                    : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+    leaf-2                     : ok=5    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+    spine-1                    : ok=5    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+    spine-2                    : ok=5    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
     
     ```
 > [!IMPORTANT]
 > Ansible playbook configured router *spine-1*, *spine-2*, and *leaf-2*. Next we'll manually configure BGP for router *leaf-1*.
-
- - Check
    
 ## Configure BGP Leaf-1 with FRR CLI
 1. SSH to leaf-1 (ssh cisco@leaf-1) and invoke the FRR CLI shell
@@ -117,7 +115,7 @@ There are several relevant files for our ansible playbook
    ```
 6. Verify the new running configuration in FRR
    ```
-   leaf01# show running-config
+   leaf-1# show running-config
    ...
    router bgp 65001
      bgp router-id 10.0.0.1
@@ -150,12 +148,12 @@ There are several relevant files for our ansible playbook
 ## Validate BGP Peering
 
 ### Verify BGP Peering Sessions
-- Verify that BGP peering sessions are established with *spine01* and *spine02* from *leaf01*
+- Verify that BGP peering sessions are established with *spine-1* and *spine-2* from *leaf-1*
   ```
   show bgp summary
   ```
   ```
-  leaf01# show bgp summary
+  leaf-1# show bgp summary
   IPv4 Unicast Summary (VRF default)
   BGP router identifier 10.0.0.4, local AS number 65004 vrf-id 0
   BGP table version 4
@@ -183,7 +181,7 @@ There are several relevant files for our ansible playbook
   
 - Verify that BGP peering sessions are established with *spine-1* and *spine-2* from *leaf-2*
    ```
-   leaf02# show ip bgp summary
+   leaf-2# show ip bgp summary
    IPv4 Unicast Summary (VRF default)
    BGP router identifier 10.0.0.4, local AS number 65004 vrf-id 0
    BGP table version 4
@@ -215,7 +213,7 @@ There are several relevant files for our ansible playbook
   show ip route bgp
   ```
   ```
-  leaf01# show ip route bgp
+  leaf-1# show ip route bgp
   Codes: K - kernel route, C - connected, S - static, R - RIP,
        O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
        T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
@@ -230,7 +228,7 @@ There are several relevant files for our ansible playbook
   ```
 - **Verify IPv4** routes *leaf-2* should have received the following
   ```
-  leaf01# show ip route bgp
+  leaf-1# show ip route bgp
   Codes: K - kernel route, C - connected, S - static, R - RIP,
        O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
        T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
@@ -248,7 +246,7 @@ There are several relevant files for our ansible playbook
   show ipv6 route bgp
   ```
   ```
-  leaf01# show ipv6 route bgp
+  leaf-1# show ipv6 route bgp
   Codes: K - kernel route, C - connected, S - static, R - RIPng,
        O - OSPFv3, I - IS-IS, B - BGP, N - NHRP, T - Table,
        v - VNC, V - VNC-Direct, A - Babel, F - PBR,
@@ -263,7 +261,7 @@ There are several relevant files for our ansible playbook
   ```
 - **Verify IPv6** routes *leaf12* should have received the following
   ```
-  leaf02# show ipv6 route bgp
+  leaf-2# show ipv6 route bgp
   Codes: K - kernel route, C - connected, S - static, R - RIPng,
        O - OSPFv3, I - IS-IS, B - BGP, N - NHRP, T - Table,
        v - VNC, V - VNC-Direct, A - Babel, F - PBR,
@@ -280,7 +278,7 @@ There are several relevant files for our ansible playbook
   show bgp ipv4 unicast
   ```
   <pre>
-  leaf01# show bgp ipv4 uni
+  leaf-1# show bgp ipv4 uni
   BGP table version is 10, local router ID is 10.0.0.4, vrf id 0
   Default local pref 100, local AS 65004
   Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
@@ -300,7 +298,7 @@ There are several relevant files for our ansible playbook
   </pre>
 - Examine IPv6 BGP AS Path information in the route table
   ```
-  leaf01# show bgp ipv6 uni
+  leaf-1# show bgp ipv6 uni
   BGP table version is 11, local router ID is 10.0.0.4, vrf id 0
   Default local pref 100, local AS 65004
   Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
@@ -319,9 +317,9 @@ There are several relevant files for our ansible playbook
   *=                  fe80::5054:ff:fe74:c104       0               65000 65005 i
 
 ### IPv4 BGP Route Validation Walk Through
-- Validate IPv4 BGP route received from peer. We will examine *10.0.0.5/32* originated from *leaf02*
+- Validate IPv4 BGP route received from peer. We will examine *10.0.0.5/32* originated from *leaf-2*
   ```
-  leaf01# show bgp ipv4 uni neighbors 10.1.1.1 advertised-routes
+  leaf-1# show bgp ipv4 uni neighbors 10.1.1.1 advertised-routes
   BGP table version is 12, local router ID is 10.0.0.4, vrf id 0
   Default local pref 100, local AS 65004
   Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
@@ -334,14 +332,14 @@ There are several relevant files for our ansible playbook
   *> 10.0.0.2/32      0.0.0.0                                0 65000 i
   *> 10.0.0.3/32      0.0.0.0                                0 65000 i
   *> 10.0.0.4/32      0.0.0.0                  0         32768 i
-  *> 10.0.0.5/32      0.0.0.0                                0 65000 65005 i  <---- Route Received Peer spine01
+  *> 10.0.0.5/32      0.0.0.0                                0 65000 65005 i  <---- Route Received Peer spine-1
   *> 10.1.2.0/24      0.0.0.0                  0         32768 i
   *> 10.1.3.0/24      0.0.0.0                                0 65000 65005 i
   ```
 
 - Validate route was received from *spine11* and added to the BGP table
   ```
-  leaf01# show ip bgp 10.0.0.5/32
+  leaf-1# show ip bgp 10.0.0.5/32
   BGP routing table entry for 10.0.0.5/32, version 9
   Paths: (2 available, best #1, table default)
   Advertised to non peer-group peers:
@@ -357,7 +355,7 @@ There are several relevant files for our ansible playbook
   ```
 - Validate that BGP route was installed into the routing information base (RIB)
   ```
-  leaf01# show ip route 10.0.0.5/32
+  leaf-1# show ip route 10.0.0.5/32
   Routing entry for 10.0.0.5/32
   Known via "bgp", distance 20, metric 0, best
     Last update 01:12:57 ago
@@ -383,7 +381,7 @@ There are several relevant files for our ansible playbook
   ping 10.0.0.5
   ```
   ```
-  leaf01# ping 10.0.0.5
+  leaf-1# ping 10.0.0.5
   PING 10.0.0.5 (10.0.0.5) 56(84) bytes of data.
   64 bytes from 10.0.0.5: icmp_seq=1 ttl=63 time=2.10 ms
   64 bytes from 10.0.0.5: icmp_seq=2 ttl=63 time=1.75 ms
