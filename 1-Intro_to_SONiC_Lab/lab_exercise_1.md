@@ -142,4 +142,4 @@ cisco@sonic:~$
 ```
 
 ## End of Lab 1
-Please proceed to [Lab 2](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_2/lab_2-guide.md)
+Please proceed to [Lab 2](https://github.com/scurvy-dog/sonic-dcloud/edit/main/1-Intro_to_SONiC_Lab/lab_exercise_2.md)
