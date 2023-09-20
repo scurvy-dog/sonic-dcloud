@@ -15,10 +15,11 @@ The lab software stack is built off the SONiC master build with Cisco specific p
 * Lab 1 - Launching Topology [LINK](lab_exercise_1.md)
 * Lab 2 - Explore SONiC OS [LINK](lab_exercise_2.md)
 * Lab 3 - BGP Configuration [LINK](lab_exercise_3.md)
-* Lab 4 - QoS Configuration [LINK](lab_exercise_4.md)
-* Lab 5 - ACL Configuration [LINK](lab_exercise_5.md)
-* Lab 6 - End to End Testing [LINK](lab_exercise_6.md)
-* Lab 7 - Management Configuration [LINK](lab_7/lab_7-guide.md)
+* Lab 4 - ACL Configuration [LINK](lab_exercise_4.md)
+* Lab 5 - BFD Configuration [LINK](lab_exercise_5.md)
+* Lab 6 - QoS Configuration [LINK](lab_exercise_5.md)
+* Lab 7 - End to End Testing [LINK](lab_exercise_6.md)
+* Lab 8 - Management Configuration [LINK](lab_7/lab_7-guide.md)
 
 ## Github Repository Overview
 Each of the labs is designed to be completed in the order presented. Lab 1 is the baseline configurations 
