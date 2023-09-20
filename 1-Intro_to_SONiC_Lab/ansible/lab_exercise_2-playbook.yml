@@ -35,8 +35,12 @@
       command: sudo systemctl restart hostname-config
       ignore_errors: yes
 
-    - name: add loopback ipv4
-      command: "{{ inventory_hostname }}/loopback.sh"
-      args:
-        chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/ansible/files/
+    - name: Copy loopback shell script
+      copy:
+        src: "{{ inventory_hostname }}/loopback.sh"
+        dest: "/etc/sonic/loopback.sh"
+        mode: 0755
+
+    - name: run loopback shell script
+      command: "/etc/sonic/loopback.sh"
       ignore_errors: yes
