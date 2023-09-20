@@ -42,7 +42,7 @@ By relying on the publisher/subscriber messaging paradigm offered by the redis-e
 
 SONiC places each module in independent docker containers to keep high cohesion among semantically-affine components, while reducing coupling between disjointed ones. Each of these components are written to be entirely independent of the platform-specific details required to interact with lower-layer abstractions. See diagram below for high level architecture view.
 
-![Software Architecture](../topo-drawings/sonic-hld-architecture.png)
+![Software Architecture](./topo-drawings/sonic-hld-architecture.png)
 
 As of today, SONiC breaks its main functional components into the following docker containers:
 
@@ -87,7 +87,7 @@ c002ab9b311f   docker-database:latest               "/usr/local/bin/dock…"   7
 ### Managing Configurations
 Configuration state in SONiC is saved in two separate locations. For persistant configuratin between reloads configuration files are used. The main configuration is found at */etc/sonic/config_db.json*. The second configuration file in this lab is for the FRR routing stack and it's configuratin is found at */etc/sonic/frr/bgpd.conf*. When the router boots it loads the configuration from these two files into the redis database. The redis database is the running configuration of the router where the various services read or write state information into the redis database.
 
-![redis diagram](../topo-drawings/redis-diagram.png)
+![redis diagram](./topo-drawings/redis-diagram.png)
 
 #### Loading configuration from JSON file
 
@@ -172,7 +172,7 @@ FRR is an open-source routing stack that supports multiple protocols. In this la
 First FRR stores it's configuration in a separate file located at */etc/sonic/frr/bgpd.conf*. There are different methods to manage the configuration for FRR.
 
 
-![FRR Configuration Overview](../topo-drawings/frr-bgp-framework.png)
+![FRR Configuration Overview](./topo-drawings/frr-bgp-framework.png)
 
 
 **View Startup FRR Configuration**
@@ -373,7 +373,7 @@ To check on interface status and connectivity follow these steps on each router 
 **IP Adjaceny**
 -    View the configured IP address as listed in the below diagram.
 
-![Lab Topology](../topo-drawings/sonic-4-node-topology.png)
+![Lab Topology](./topo-drawings/sonic-4-node-topology.png)
 
 - Verify that IPs are configured on the SONiC routers
   ```
