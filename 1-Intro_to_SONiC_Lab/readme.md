@@ -24,15 +24,17 @@ The lab software stack is built off the SONiC master build with Cisco specific p
 Each of the labs is designed to be completed in the order presented. Lab 1 is the baseline configurations 
 needed to build the starting topology and launch the XRd and extended environment.
 
-### Individual Lab Directories
+### Individual  Directories
 Within each lab directory you should see several files of importance:
-(X = lab #)
 
-| File Name                | Description                                                   |
+
+| Directory/File Name      | Description                                                   |
 |:-------------------------|:--------------------------------------------------------------|
-| create-host-bridges.sh   | Creates linux bridges for host connectivity                   |
-| lab_guide-X.md           | User guide for this lab                                       |
-| topology.yml             | YAML input file for ContainerLab to create docker environment |
+| ansible                  | Contains all the ansible configurations                       |
+| appendix                 | Reference files                                               |
+| topo-drawings            | Reference diagram location                                    |
+| lab_exercise_X.md        | User guide for each lab                                       |
+
 
 ## Lab Topology
 
