@@ -36,5 +36,5 @@
       ignore_errors: yes
 
     - name: add loopback ipv4
-      command: command: "{{ inventory_hostname }}/loopback.sh"
+      command: "{{ inventory_hostname }}/loopback.sh"
       ignore_errors: yes
