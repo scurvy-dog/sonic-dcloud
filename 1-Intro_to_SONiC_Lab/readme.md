@@ -12,12 +12,12 @@ The lab software stack is built off the SONiC master build with Cisco specific p
 * Repository Overview [LINK](#git-repository-overview)
 * Lab Topology [LINK](#lab-topology)
 * Remote Access [LINK](#remote-access)
-* Lab 1 - Launching Topology [LINK](lab_1/lab_1-guide.md)
-* Lab 2 - Explore SONiC OS [LINK](lab_2/lab_2-guide.md)
-* Lab 3 - BGP Configuration [LINK](lab_3/lab_3-guide.md)
-* Lab 4 - QoS Configuration [LINK](lab_4/lab_4-guide.md)
-* Lab 5 - ACL Configuration [LINK](lab_5/lab_5-guide.md)
-* Lab 6 - End to End Testing [LINK](lab_6/lab_6-guide.md)
+* Lab 1 - Launching Topology [LINK](lab_exercise_1.md)
+* Lab 2 - Explore SONiC OS [LINK](lab_exercise_2.md)
+* Lab 3 - BGP Configuration [LINK](lab_exercise_3.md)
+* Lab 4 - QoS Configuration [LINK](lab_exercise_4.md)
+* Lab 5 - ACL Configuration [LINK](lab_exercise_5.md)
+* Lab 6 - End to End Testing [LINK](lab_exercise_6.md)
 * Lab 7 - Management Configuration [LINK](lab_7/lab_7-guide.md)
 
 ## Github Repository Overview
