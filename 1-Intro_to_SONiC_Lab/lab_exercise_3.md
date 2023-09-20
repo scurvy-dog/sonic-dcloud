@@ -423,4 +423,4 @@ The Endpiont-2 VM represents a standard linux host or endpoint connected to leaf
    ```
 
 ## End of Lab Exercise 3
-Please proceed to [Lab Exercise 4](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-Intro_to_SONiC_Lab/lab_exercise_4.md)
+Please proceed to [Lab 4](https://github.com/scurvy-dog/sonic-dcloud/edit/main/1-Intro_to_SONiC_Lab/lab_exercise_4.md)
