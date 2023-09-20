@@ -373,7 +373,7 @@ To check on interface status and connectivity follow these steps on each router 
 **IP Adjaceny**
 -    View the configured IP address as listed in the below diagram.
 
-![Lab Topology](../topo-drawings/sonic-4-node-topology.png)
+![Lab Topology](./topo-drawings/sonic-4-node-topology.png)
 
 - Verify that IPs are configured on the SONiC routers
   ```
