@@ -22,15 +22,6 @@
       ignore_errors: yes
       register: load_result
 
-    - name: Save configuration
-      expect:
-        command: sudo config save
-        responses:
-          (.*)y/N(.*): "y"
-        timeout: 90
-      ignore_errors: yes
-      register: save_result
-
     - name: restart hostname service
       command: sudo systemctl restart hostname-config
       ignore_errors: yes
@@ -44,3 +35,12 @@
     - name: run loopback shell script
       command: "/etc/sonic/loopback.sh"
       ignore_errors: yes
+
+    - name: Save sonic configuration
+      expect:
+        command: sudo config save
+        responses:
+          (.*)y/N(.*): "y"
+        timeout: 90
+      ignore_errors: yes
+      register: save_result
