@@ -37,4 +37,6 @@
 
     - name: add loopback ipv4
       command: "{{ inventory_hostname }}/loopback.sh"
+      args:
+        chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/ansible/files/
       ignore_errors: yes
