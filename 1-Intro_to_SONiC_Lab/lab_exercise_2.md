@@ -266,19 +266,12 @@ There are several relevant files for our ansible playbook
    ```   
 
 ## Configure hostnames
-The ansible config load/save step doesn't change the sonic nodes' /etc/hostname. This requires either a config reload or a change via sonic CLI.
+The command config hostname will update the underlying unix hostname and restart the service. The config save command needs to be made for persistance across reloads.
 
-1. Use sonic CLI to configure leaf-2, spine-1, and spine-2 hostnames on each respective node:
+1. Use sonic CLI to configure leaf-1 which causes the service to restart:
 ```
-sudo config hostname leaf-2
+sudo config hostname leaf-1
 sudo config save -y
-
-sudo config hostname spine-1
-sudo config save -y
-
-sudo config hostname spine-2
-sudo config save -y
-
 ```
 2. Exit the sonic node and ssh back in to see the hostname change in effect
 
