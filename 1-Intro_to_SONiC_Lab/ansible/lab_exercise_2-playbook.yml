@@ -3,7 +3,7 @@
 # ansible-playbook -i hosts lab_exercise_2-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
 
 - name: Copy config_update.json to sonic routers and perform a config load command
-  hosts: sonic_nodes
+  hosts: sonic_routers
   become: true
   tasks:
 

@@ -19,7 +19,7 @@ topology:
 
     leaf-2:
       kind: linux
-      mgmt_ipv4: 172.10.10.202
+      mgmt_ipv4: 172.10.10.102
 
     sonic_e32:
       kind: bridge

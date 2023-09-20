@@ -1,6 +1,6 @@
 ---
 - name: Enable FRR BFD daemon and configure BFD sessions
-  hosts: sonic_subset
+  hosts: sonic_router_subset
   become: true
   tasks:
 

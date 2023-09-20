@@ -19,7 +19,7 @@ topology:
 
     spine-2:
       kind: linux
-      mgmt_ipv4: 172.10.10.204
+      mgmt_ipv4: 172.10.10.104
 
   links:
 

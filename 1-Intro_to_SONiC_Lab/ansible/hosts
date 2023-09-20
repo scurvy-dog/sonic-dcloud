@@ -1,21 +1,21 @@
-[sonic_hosts]
-vm-leaf-1 ansible_host=172.10.10.101
-vm-leaf-2 ansible_host=172.10.10.102
-vm-spine-1 ansible_host=172.10.10.103
-vm-spine-2 ansible_host=172.10.10.104
+[sonic_host_vms]
+vm-leaf-1 ansible_host=172.10.10.201
+vm-leaf-2 ansible_host=172.10.10.202
+vm-spine-1 ansible_host=172.10.10.203
+vm-spine-2 ansible_host=172.10.10.204
 
-[sonic_nodes]
-leaf-1 ansible_host=172.10.10.201
-leaf-2 ansible_host=172.10.10.202
-spine-1 ansible_host=172.10.10.203
-spine-2 ansible_host=172.10.10.204
+[sonic_routers]
+leaf-1 ansible_host=172.10.10.101
+leaf-2 ansible_host=172.10.10.102
+spine-1 ansible_host=172.10.10.103
+spine-2 ansible_host=172.10.10.104
 
-[sonic_subset]
-leaf-2 ansible_host=172.10.10.202
-spine-1 ansible_host=172.10.10.203
-spine-2 ansible_host=172.10.10.204
+[sonic_router_subset]
+leaf-2 ansible_host=172.10.10.102
+spine-1 ansible_host=172.10.10.103
+spine-2 ansible_host=172.10.10.104
 
-[sonic_nodes:vars]
+[sonic_routers:vars]
 config_file_name=config_db.json
 
 ansible_ssh_common_args="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
