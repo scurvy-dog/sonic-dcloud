@@ -52,11 +52,7 @@
         mode: 0644
 
     - name: apt install nano-tiny
-      expect:
-        command: sudo apt-get install /var/cache/apt/archives/nano-tiny_3.2-3_amd64.deb
-        responses:
-          (.*)y/N(.*): "y"
-        timeout: 90
+      command: sudo apt-get install /var/cache/apt/archives/nano-tiny_3.2-3_amd64.deb -y
       ignore_errors: yes
       register: save_result
 
