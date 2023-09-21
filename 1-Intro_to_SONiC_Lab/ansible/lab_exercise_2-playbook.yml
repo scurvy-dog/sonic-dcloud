@@ -2,7 +2,7 @@
 
 # ansible-playbook -i hosts lab_exercise_2-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
 
-- name: Copy config_update.json to sonic routers and perform a config load command
+- name: Apply baseline config to SONiC routers, and install nano
   hosts: sonic_routers
   become: true
   tasks:
@@ -39,6 +39,21 @@
     - name: Save sonic configuration
       expect:
         command: sudo config save
+        responses:
+          (.*)y/N(.*): "y"
+        timeout: 90
+      ignore_errors: yes
+      register: save_result
+
+    - name: Copy nano debian package to VMs
+      copy:
+        src: "/home/cisco/images/nano_6.2-1_amd64.deb"
+        dest: "/home/cisco/images/nano_6.2-1_amd64.deb"
+        mode: 0644
+
+    - name: apt install nano
+      expect:
+        command: sudo apt-get install /home/cisco/images/nano_6.2-1_amd64.deb
         responses:
           (.*)y/N(.*): "y"
         timeout: 90

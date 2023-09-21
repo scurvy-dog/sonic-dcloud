@@ -2,7 +2,7 @@
 
 # ansible-playbook -i hosts lab_deploy-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
 
-- name: Run git pull and containerlab deployments
+- name: Setup lab and deploy SONiC containerlab nodes
   hosts: sonic_host_vms
   become: true
   tasks:
