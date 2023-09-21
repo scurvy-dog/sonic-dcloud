@@ -12,7 +12,7 @@
     #     minutes: 10
 
     - name: Run a command and direct output to a log file
-      command: "docker logs {{hostvars[inventory_hostname]['container'] }} | grep Router "
+      command: "docker logs {{hostvars[inventory_hostname]['container'] }} "
       #args:
         # Add any arguments to your command here
       async: 600 # Set an async timeout (seconds) to allow the command to run for up to 10 minutes
@@ -30,4 +30,4 @@
     - name: Save command output to a log file
       copy:
         content: "{{ job_result.stdout }}"
-        dest: logfile.log
+        dest: /home/cisco/logfile.log
