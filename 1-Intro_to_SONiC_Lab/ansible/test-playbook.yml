@@ -7,23 +7,13 @@
   become: true
   tasks:
 
-    - name: clear old ssh keys 
-      command: "rm .ssh/known_hosts"
-      args:
-        chdir: /home/cisco/
-      ignore_errors: yes
-
     # - name: Pause for 10 minutes
     #   pause:
     #     minutes: 10
 
-    - name: Print the command
-      debug:
-        msg: "Running command: docker logs -f {{hostvars[inventory_hostname]['container'] }} | grep Router "
-
     - name: Run a command and direct output to a log file
-      command: "docker logs -f {{hostvars[inventory_hostname]['container'] }} | grep Router"
-      args:
+      command: "docker logs -f {{hostvars[inventory_hostname]['container'] }} "
+      #args:
         # Add any arguments to your command here
       async: 600 # Set an async timeout (seconds) to allow the command to run for up to 10 minutes
       poll: 0    # Set poll to 0 to run the command asynchronously
@@ -40,4 +30,4 @@
     - name: Save command output to a log file
       copy:
         content: "{{ job_result.stdout }}"
-        dest: /home/cisco/logfile.log
+        dest: logfile.log
