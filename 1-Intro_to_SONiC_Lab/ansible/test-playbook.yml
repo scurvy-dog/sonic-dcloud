@@ -34,9 +34,9 @@
     - name: Save command output to a log file
       copy: 
         content: job_result.stdout
-        dest: /home/cisco/{{inventory_hostname}}.log
+        dest: /var/log/{{inventory_hostname}}.log
 
     # - name: Save command output to a log file
     #   copy:
     #     content: "{{ job_result.stdout }}"
-    #     dest: /home/cisco/{{inventory_hostname}}.log
+    #     dest: /var/log/{{inventory_hostname}}.log
