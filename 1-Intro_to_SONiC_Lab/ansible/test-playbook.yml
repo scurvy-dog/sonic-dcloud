@@ -27,8 +27,11 @@
       retries: 2  # Number of times to check the job status (600 * 1 second = 10 minutes)
       delay: 1      # Delay between retries (1 second)
 
+    - name: Debug Job Result
+      debug:
+        var: job_result.stdout
+
     - name: Save command output to a log file
       copy:
         content: "{{ job_result.stdout }}"
-        dest: /home/cisco/logfile.log
-      ignore_errors: yes
+        dest: /home/cisco/test.log
