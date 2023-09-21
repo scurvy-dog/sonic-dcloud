@@ -29,7 +29,6 @@ The student upon completion of Lab Exercise 4 should have achieved the following
 
 ### ACL Table Definition Types
 
-
 | Type                | Description                       | Ingress | Egress  | 
 |:--------------------|:----------------------------------|:-------:|:-------:|
 | L3                  | Match on IPv4 ACL                 | X       | X       |
@@ -87,7 +86,37 @@ The student upon completion of Lab Exercise 4 should have achieved the following
 | AETH_SYNDROME      | Match ???                                  | Research                                       |
 
 ## Basic ACL Walk Through
+The application of ACL policy is defined through two components; *ACL Tables* and *ACL Rules*.
 
+**ACL Tables**
+ACL tables are of two types. Data Plane ACLs and Control Plane ACLS.
+Data Plane tables purpose is to link a data plane traffic type to a set of defined interfaces. Data Plane ACL Tables have mandatory and optional defined fields as listed below
+
+**Example of ACL Table CLI**
+```
+cisco@leaf-2:~$ sudo config acl add table --help
+Usage: config acl add table [OPTIONS] <table_name> <table_type>
+  Add ACL table
+
+Options:
+  -d, --description TEXT
+  -p, --ports TEXT
+  -s, --stage [ingress|egress]
+```
+```
+sudo config acl add table ICMP_DROP L3 -p Ethernet32 -d "Inbound from Endpoint2" -s ingress
+```
+
+Parameters:
+    table_name: [MANDATORY] The name of the ACL table to create.
+    table_type: [MANDATORY]The type of ACL table to create. *See table above*
+    description: [OPTIONAL] A description of the table for the user. (default is the table_name)
+    ports: [OPTIONAL] A comma-separated list of ports/interfaces to add to the table. The behavior is as follows:
+        Physical ports will be bound as physical ports
+        Portchannels will be bound as portchannels - passing a portchannel member is invalid
+        VLANs will be expanded into their members.
+        (default is all interfaces)
+    stage: The stage this ACL table will be applied to, either *ingress* or *egress*. (default is ingress)
 
 ## ACL Configuration Syntax
 
