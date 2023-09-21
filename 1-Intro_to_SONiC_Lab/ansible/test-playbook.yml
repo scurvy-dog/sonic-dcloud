@@ -27,9 +27,10 @@
     #   retries: 2  # Number of times to check the job status (600 * 1 second = 10 minutes)
     #   delay: 1      # Delay between retries (1 second)
 
-    - name: Debug Job Result
-      debug:
-        var: command_result.stdout
+    - debug: var=command_result.stdout_lines
+    # - name: Debug Job Result
+    #   debug:
+    #     var: command_result.stdout
 
     - name: Save command output to a log file
       copy:
