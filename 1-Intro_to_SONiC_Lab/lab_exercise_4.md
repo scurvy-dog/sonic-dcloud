@@ -107,17 +107,14 @@ Options:
 sudo config acl add table ICMP_DROP L3 -p Ethernet32 -d "Inbound from Endpoint2" -s ingress
 ```
 
-Parameters:
+| Parameters | CLI Flag | Mandatory | Details                                          |
+|:-----------|:--------:|:---------:|:-------------------------------------------------|
+| table name | none     | X         | The name of the ACL table to create.             |
+| table type | none     | X         | Type of ACL table to create. *See table above*   |
+| description| -d       |           | Table description. Defaults to table name        |
+| ports      | -p       |           | Binds table to physical port,portchannel, VLAN   |
+| stage      | -s       |           | Valid options are ingress (default) or egress    |
 
-table_name: [MANDATORY] The name of the ACL table to create.
-    - table_type: [MANDATORY]The type of ACL table to create. *See table above*
-    - description: [OPTIONAL] A description of the table for the user. (default is the table_name)
-    - ports: [OPTIONAL] A comma-separated list of ports/interfaces to add to the table. The behavior is as follows:
-        Physical ports will be bound as physical ports
-        Portchannels will be bound as portchannels - passing a portchannel member is invalid
-        VLANs will be expanded into their members.
-        (default is all interfaces)
-    stage: The stage this ACL table will be applied to, either *ingress* or *egress*. (default is ingress)
 
 ## ACL Configuration Syntax
 
