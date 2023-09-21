@@ -34,4 +34,4 @@
     - name: Save command output to a log file
       copy:
         content: "{{ job_result.stdout }}"
-        dest: /home/cisco/test.log
+        dest: /home/cisco/test{{inventory_hostname}}.log
