@@ -48,12 +48,12 @@
     - name: Copy nano debian package to VMs
       copy:
         src: "/home/cisco/images/nano_6.2-1_amd64.deb"
-        dest: "/home/cisco/images/nano_6.2-1_amd64.deb"
+        dest: "/var/cache/apt/archives/nano_6.2-1_amd64.deb"
         mode: 0644
 
     - name: apt install nano
       expect:
-        command: sudo apt-get install /home/cisco/images/nano_6.2-1_amd64.deb
+        command: sudo apt-get install /var/cache/apt/archives/nano_6.2-1_amd64.deb
         responses:
           (.*)y/N(.*): "y"
         timeout: 90
