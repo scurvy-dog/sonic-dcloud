@@ -17,6 +17,10 @@
     #   pause:
     #     minutes: 10
 
+    - name: Print the command
+      debug:
+        msg: "Running command: docker logs -f {{hostvars[inventory_hostname]['container'] }} | grep Router "
+
     - name: Run a command and direct output to a log file
       command: "docker logs -f {{hostvars[inventory_hostname]['container'] }} | grep Router"
       args:
