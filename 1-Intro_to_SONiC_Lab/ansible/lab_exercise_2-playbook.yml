@@ -45,17 +45,21 @@
       ignore_errors: yes
       register: save_result
 
-    - name: Copy nano debian package to VMs
+    - name: Copy nano-tiny debian package to VMs
       copy:
-        src: "/home/cisco/images/nano_6.2-1_amd64.deb"
-        dest: "/var/cache/apt/archives/nano_6.2-1_amd64.deb"
+        src: "/home/cisco/images/nano-tiny_3.2-3_amd64.deb"
+        dest: "/var/cache/apt/archives/nano-tiny_3.2-3_amd64.deb"
         mode: 0644
 
-    - name: apt install nano
+    - name: apt install nano-tiny
       expect:
-        command: sudo apt-get install /var/cache/apt/archives/nano_6.2-1_amd64.deb
+        command: sudo apt-get install /var/cache/apt/archives/nano-tiny_3.2-3_amd64.deb
         responses:
           (.*)y/N(.*): "y"
         timeout: 90
       ignore_errors: yes
       register: save_result
+
+    - name: create nano binary from nano-tiny
+      command: "sudo cp /usr/bin/nano-tiny /usr/local/bin/nano"
+      ignore_errors: yes
