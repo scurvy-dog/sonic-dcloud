@@ -32,11 +32,6 @@
         var: job_result.stdout
 
     - name: Save command output to a log file
-      copy: 
-        content: job_result.stdout
+      copy:
+        content: "{{ job_result.stdout[0] }}"
         dest: /var/log/{{inventory_hostname}}.log
-
-    # - name: Save command output to a log file
-    #   copy:
-    #     content: "{{ job_result.stdout }}"
-    #     dest: /var/log/{{inventory_hostname}}.log
