@@ -31,3 +31,4 @@
       copy:
         content: "{{ job_result.stdout }}"
         dest: /home/cisco/logfile.log
+      ignore_errors: yes
