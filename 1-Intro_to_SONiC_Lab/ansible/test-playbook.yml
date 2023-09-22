@@ -47,3 +47,9 @@
     - name: debug grep result
       debug:
         var: grep_result.stdout
+
+    - name: Save grep output to a local log file
+      copy:
+        content: "{{ grep_result.stdout }}"
+        dest: "/home/cisco/{{inventory_hostname}}.log"
+        delegate_to: localhost
