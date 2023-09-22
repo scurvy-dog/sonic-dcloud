@@ -49,8 +49,8 @@
         var: grep_result.stdout
 
     - name: Save grep output to a local log file
-      copy:
-        content: "{{inventory_hostname}} {{ grep_result.stdout }}"
-        dest: "/home/cisco/deploy.log"
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{inventory_hostname}} {{ grep_result.stdout }}"
+        create: yes
       delegate_to: localhost
-      insertbefore: BOF
