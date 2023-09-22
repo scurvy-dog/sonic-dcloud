@@ -38,10 +38,15 @@
         create: yes
       delegate_to: localhost
 
-    - name: Get Timezone
-      shell: date
-      register: result
-    - set_fact:
-        myvar: "{{ result.stdout | community.general.jc('date') }}"
-    - debug:
-        msg: "The timezone is: {{ myvar.timezone }}"
+    - name: grep router
+      shell: docker logs {{hostvars[inventory_hostname]['container'] }} | grep $item
+      with_items: 
+        - Router
+      register: command_result
+
+    - name: write to file
+      copy:
+        content: "{{ command_result.stdout }}"
+        dest: "/home/cisco/{{inventory_hostname}}.log"
+      delegate_to: localhost
+
