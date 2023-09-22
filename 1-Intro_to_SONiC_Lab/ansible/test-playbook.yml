@@ -35,3 +35,4 @@
       copy:
         content: "{{ job_result.stdout[0] }}"
         dest: ./{{inventory_hostname}}.log
+      ignore_errors: yes
