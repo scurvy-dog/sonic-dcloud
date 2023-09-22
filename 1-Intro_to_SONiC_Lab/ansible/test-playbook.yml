@@ -27,10 +27,6 @@
       ignore_errors: true
       register: grep_result
 
-    - name: debug grep result
-      debug:
-        var: grep_result.stdout
-
     - name: Save grep output to a local log file
       lineinfile:
         path: "/home/cisco/deploy.log"
@@ -39,10 +35,12 @@
       delegate_to: localhost
 
     - name: grep router
-      shell: docker logs {{hostvars[inventory_hostname]['container'] }} | grep $item
-      with_items: 
-        - Router
+      shell: docker logs {{hostvars[inventory_hostname]['container'] }} | grep Router
       register: command_result
+
+    - name: debug router result
+      debug:
+        var: command_result.stdout
 
     - name: write to file
       copy:
