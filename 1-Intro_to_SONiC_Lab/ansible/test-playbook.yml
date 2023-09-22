@@ -39,9 +39,8 @@
       delegate_to: localhost
 
     - name: Get Timezone
-      tasks:
-      - shell: date
-        register: result
+      shell: date
+      register: result
       - set_fact:
           myvar: "{{ result.stdout | community.general.jc('date') }}"
       - debug:
