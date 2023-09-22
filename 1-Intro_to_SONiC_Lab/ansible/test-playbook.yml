@@ -13,17 +13,7 @@
 
     - name: Run a command and direct output to a log file
       command: "docker logs {{hostvars[inventory_hostname]['container'] }} "
-      # async: 600 # Set an async timeout (seconds) to allow the command to run for up to 10 minutes
-      # poll: 0    # Set poll to 0 to run the command asynchronously
       register: command_result
-
-    # - name: Wait for the command to complete
-    #   async_status:
-    #     jid: "{{ command_result.ansible_job_id }}"
-    #   register: job_result
-    #   until: job_result.finished
-    #   retries: 2  # Number of times to check the job status (600 * 1 second = 10 minutes)
-    #   delay: 1      # Delay between retries (1 second)
 
     - name: Save command output to a log file
       copy:
@@ -47,3 +37,12 @@
         line: "{{inventory_hostname}} {{ grep_result.stdout }}"
         create: yes
       delegate_to: localhost
+
+    - name: Get Timezone
+      tasks:
+      - shell: date
+        register: result
+      - set_fact:
+          myvar: "{{ result.stdout | community.general.jc('date') }}"
+      - debug:
+          msg: "The timezone is: {{ myvar.timezone }}"
