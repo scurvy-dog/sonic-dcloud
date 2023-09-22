@@ -37,15 +37,11 @@
         dest: "/home/cisco/{{inventory_hostname}}.log"
       #delegate_to: localhost
 
-    - name: ls
-      command: "ls"
-      register: ls_result
-
     - name: grep logfile
-      lineinfile: 
-        path: /home/cisco/{{inventory_hostname}}.log"
-        line: "Router"
-      #delegate_to: localhost
+      command:
+        cmd: "grep Router /home/cisco/{{inventory_hostname}}.log"
+      changed_when: false
+      ignore_errors: true
       register: grep_result
 
     - name: debug grep result
