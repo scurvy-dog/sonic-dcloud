@@ -41,7 +41,7 @@
     - name: Get Timezone
       shell: date
       register: result
-      - set_fact:
-          myvar: "{{ result.stdout | community.general.jc('date') }}"
-      - debug:
-          msg: "The timezone is: {{ myvar.timezone }}"
+    - set_fact:
+        myvar: "{{ result.stdout | community.general.jc('date') }}"
+    - debug:
+        msg: "The timezone is: {{ myvar.timezone }}"
