@@ -52,4 +52,4 @@
       copy:
         content: "{{ grep_result.stdout }}"
         dest: "/home/cisco/{{inventory_hostname}}.log"
-        delegate_to: localhost
+      delegate_to: localhost
