@@ -51,5 +51,5 @@
     - name: Save grep output to a local log file
       copy:
         content: "{{inventory_hostname}} {{ grep_result.stdout }}"
-        dest: "/home/cisco/{{inventory_hostname}}.log"
+        dest: "/home/cisco/deploy.log"
       delegate_to: localhost
