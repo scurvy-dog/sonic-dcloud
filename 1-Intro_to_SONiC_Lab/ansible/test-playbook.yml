@@ -36,4 +36,14 @@
         content: "{{ job_result.stdout }}"
         dest: "/home/cisco/{{inventory_hostname}}.log"
       delegate_to: localhost
-      ignore_errors: yes
+
+    - name: grep logfile
+      lineinfile: 
+        path: /home/cisco/{{inventory_hostname}}.log"
+        line: "Router"
+      delegate_to: localhost
+      register: grep_result
+
+    - name: debug grep result
+      debug:
+        var: grep_result.stdout
