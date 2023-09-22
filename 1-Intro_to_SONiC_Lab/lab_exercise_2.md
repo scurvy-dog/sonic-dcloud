@@ -218,10 +218,10 @@ You should expect a large amount of output from ansible but, at the end of logs 
 ```
 PLAY RECAP
     ***************************************************************************************************************************************
-    leaf-1               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-    leaf-2               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-    spine-1              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-    spine-2              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
+leaf-1               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+leaf-2               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+spine-1              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+spine-2              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
 ```
 
 ## Configure Leaf-1 with SONiC CLI
