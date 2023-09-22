@@ -7,9 +7,9 @@
   become: true
   tasks:
 
-    # - name: Pause for 10 minutes
-    #   pause:
-    #     minutes: 10
+    - name: Pause for 10 minutes
+      pause:
+        minutes: 10
 
     - name: Run a command and direct output to a log file
       command: "docker logs {{hostvars[inventory_hostname]['container'] }} "
@@ -27,15 +27,10 @@
       retries: 2  # Number of times to check the job status (600 * 1 second = 10 minutes)
       delay: 1      # Delay between retries (1 second)
 
-    # - name: Debug Job Result
-    #   debug:
-    #     var: job_result.stdout
-
     - name: Save command output to a log file
       copy:
         content: "{{ job_result.stdout }}"
         dest: "/home/cisco/{{inventory_hostname}}.log"
-      #delegate_to: localhost
 
     - name: grep logfile
       command:
