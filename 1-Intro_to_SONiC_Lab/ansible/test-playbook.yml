@@ -33,6 +33,7 @@
 
     - name: Save command output to a log file
       copy:
-        content: "{{ job_result.stdout[0] }}"
-        dest: ./{{inventory_hostname}}.log
+        content: "{{ job_result.stdout }}"
+        dest: "/home/cisco/{{inventory_hostname}}.log"
+      delegate_to: localhost
       ignore_errors: yes
