@@ -11,28 +11,28 @@
     #   pause:
     #     minutes: 10
 
-    - name: Run a command and direct output to a log file
-      command: "docker logs {{hostvars[inventory_hostname]['container'] }} "
-      register: command_result
+    # - name: Run a command and direct output to a log file
+    #   command: "docker logs {{hostvars[inventory_hostname]['container'] }} "
+    #   register: command_result
 
-    - name: Save command output to a log file
-      copy:
-        content: "{{ command_result.stdout }}"
-        dest: "/home/cisco/{{inventory_hostname}}.log"
+    # - name: Save command output to a log file
+    #   copy:
+    #     content: "{{ command_result.stdout }}"
+    #     dest: "/home/cisco/{{inventory_hostname}}.log"
 
-    - name: grep logfile
-      command:
-        cmd: "grep Router /home/cisco/{{inventory_hostname}}.log"
-      changed_when: false
-      ignore_errors: true
-      register: grep_result
+    # - name: grep logfile
+    #   command:
+    #     cmd: "grep Router /home/cisco/{{inventory_hostname}}.log"
+    #   changed_when: false
+    #   ignore_errors: true
+    #   register: grep_result
 
-    - name: Save grep output to a local log file
-      lineinfile:
-        path: "/home/cisco/deploy.log"
-        line: "{{inventory_hostname}} {{ grep_result.stdout }}"
-        create: yes
-      delegate_to: localhost
+    # - name: Save grep output to a local log file
+    #   lineinfile:
+    #     path: "/home/cisco/deploy.log"
+    #     line: "{{inventory_hostname}} {{ grep_result.stdout }}"
+    #     create: yes
+    #   delegate_to: localhost
 
     - name: grep router
       shell: docker logs {{hostvars[inventory_hostname]['container'] }} | grep Router
@@ -42,9 +42,16 @@
       debug:
         var: command_result.stdout
 
-    - name: write to file
-      copy:
-        content: "{{ command_result.stdout }}"
-        dest: "/home/cisco/{{inventory_hostname}}.log"
+    - name: Save grep output to a local log file
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{inventory_hostname}} {{ command_result.stdout }}"
+        create: yes
       delegate_to: localhost
+
+    # - name: write to file
+    #   copy:
+    #     content: "{{ command_result.stdout }}"
+    #     dest: "/home/cisco/{{inventory_hostname}}.log"
+    #   delegate_to: localhost
 
