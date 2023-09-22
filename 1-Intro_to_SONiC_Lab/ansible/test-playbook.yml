@@ -53,3 +53,4 @@
         content: "{{inventory_hostname}} {{ grep_result.stdout }}"
         dest: "/home/cisco/deploy.log"
       delegate_to: localhost
+      insertbefore: BOF
