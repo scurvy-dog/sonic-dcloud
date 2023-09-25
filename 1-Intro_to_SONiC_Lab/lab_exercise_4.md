@@ -86,13 +86,23 @@ The student upon completion of Lab Exercise 4 should have achieved the following
 | AETH_SYNDROME      | Match ???                                  | Research                                       |
 
 ## Basic ACL Walk Through
-The application of ACL policy is defined through two components; *ACL Tables* and *ACL Rules*.
+The core of ACLs in SONiC is the ACL Table which links interfaces with rules and defines the direction of the policy enforcement.
 
 ![ACL Overview](./topo-drawings/acl-overview.png)
 
 **ACL Tables**
 ACL tables are of two types. Data Plane ACLs and Control Plane ACLS.
-Data Plane tables purpose is to link a data plane traffic type to a set of defined interfaces. Data Plane ACL Tables have mandatory and optional defined fields as listed below
+Data Plane tables purpose is to link a data plane traffic type to a set of defined interfaces. ACL Tables can be created using either CLI or through a JSON definition which is loaded into config. We will show both options in this lab. 
+
+Data Plane ACL Tables have mandatory and optional defined fields as listed in the below table.
+
+| Parameters | CLI Flag | Mandatory | Details                                          |
+|:-----------|:--------:|:---------:|:-------------------------------------------------|
+| table name | none     | X         | The name of the ACL table to create.             |
+| table type | none     | X         | Type of ACL table to create. *See table above*   |
+| description| -d       |           | Table description. Defaults to table name        |
+| ports      | -p       |           | Binds table to physical port,portchannel, VLAN   |
+| stage      | -s       |           | Valid options are ingress (default) or egress    |
 
 **Example of ACL Table CLI**
 ```
@@ -106,39 +116,37 @@ Options:
   -s, --stage [ingress|egress]
 ```
 ```
-sudo config acl add table ICMP_DROP L3 -p Ethernet32 -d "Inbound from Endpoint2" -s ingress
+sudo config acl add table ICMP_DROP L3 -p Ethernet32 -d "BLock ICMP traffic from Endpoint2" -s ingress
+```
+```
+cisco@leaf-2:~$ sudo acl-loader show table
+Name       Type    Binding     Description                        Stage    Status
+---------  ------  ----------  ---------------------------------  -------  --------
+ICMP_DROP  L3      Ethernet32  BLock ICMP traffic from Endpoint2  ingress  Active
 ```
 
-| Parameters | CLI Flag | Mandatory | Details                                          |
-|:-----------|:--------:|:---------:|:-------------------------------------------------|
-| table name | none     | X         | The name of the ACL table to create.             |
-| table type | none     | X         | Type of ACL table to create. *See table above*   |
-| description| -d       |           | Table description. Defaults to table name        |
-| ports      | -p       |           | Binds table to physical port,portchannel, VLAN   |
-| stage      | -s       |           | Valid options are ingress (default) or egress    |
-
-
-## ACL Configuration Syntax
-
-**ACL Table Add - JSON Example**
+**Example of ACL Table JSON**
 ```
 {
 "ACL_TABLE": {
-            "ICMP_TEST": {
-                    "policy_desc" : "Block ssh traffic from endpoint 2",
+            "ICMP_DROP": {
+                    "policy_desc" : "Block IMCP traffic from endpoint 2",
                     "type" : "L3",
                     "stage": "ingress",
                     "ports" : [
-                        "Ethernet16"
+                        "Ethernet32"
                     ] 
                     }
         }
 }
 ```
 
-## ACL Scale
 
-## ACL Troubleshooting
+## ACL Rules
+ACL Rules contain the detail step by step policy that is implemented by the tables. ACL Rule structure will identify which ACL Table they should be joined to. ACL Rules can only be defined using JSON and have no CLI option. We will show a basic ACL Rule used to block ICMP traffic coming from Endpoint-2.
+
+```
+
 
 
 ## End of Lab 4
