@@ -130,6 +130,8 @@ sudo config acl remove table ICMP_DROP
 ```
 
 **Example of ACL Table JSON**
+Save this json acl table definition to a file on the SONiC device as acl_table_icmp.json
+
 ```
 {
 "ACL_TABLE": {
@@ -144,7 +146,10 @@ sudo config acl remove table ICMP_DROP
         }
 }
 ```
-
+**Adding ACL Table through JSON**
+```
+sudo config load acl_table_icmp.json
+```
 
 ## ACL Rules
 ACL Rules contain the detail step by step policy that is implemented by the tables. ACL Rule structure will identify which ACL Table they should be joined to. ACL Rules can only be defined using JSON and have no CLI option. We will show a basic ACL Rule used to block ICMP traffic coming from Endpoint-2 to *Loopback 0* on Leaf-2
