@@ -92,7 +92,7 @@ The core of ACLs in SONiC is the ACL Table which links interfaces with rules and
 
 ![ACL Overview](./topo-drawings/acl-overview.png)
 
-**ACL Tables**
+### ACL Tables
 ACL tables are of two types. Data Plane ACLs and Control Plane ACLS.
 Data Plane tables purpose is to link a data plane traffic type to a set of defined interfaces. ACL Tables can be created using either CLI or through a JSON definition which is loaded into config. We will show both options in this lab. 
 
@@ -106,7 +106,7 @@ Data Plane ACL Tables have mandatory and optional defined fields as listed in th
 | ports      | -p       |           | Binds table to physical port,portchannel, VLAN   |
 | stage      | -s       |           | Valid options are ingress (default) or egress    |
 
-### ACL Tables
+
 **Adding ACL Table with CLI**
 ```
 cisco@leaf-2:~$ sudo config acl add table --help
