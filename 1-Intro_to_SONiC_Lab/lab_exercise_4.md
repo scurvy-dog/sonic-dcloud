@@ -104,7 +104,7 @@ Data Plane ACL Tables have mandatory and optional defined fields as listed in th
 | ports      | -p       |           | Binds table to physical port,portchannel, VLAN   |
 | stage      | -s       |           | Valid options are ingress (default) or egress    |
 
-**Example of ACL Table CLI**
+**Adding ACL Table through CLI**
 ```
 cisco@leaf-2:~$ sudo config acl add table --help
 Usage: config acl add table [OPTIONS] <table_name> <table_type>
@@ -123,6 +123,10 @@ cisco@leaf-2:~$ sudo acl-loader show table
 Name       Type    Binding     Description                        Stage    Status
 ---------  ------  ----------  ---------------------------------  -------  --------
 ICMP_DROP  L3      Ethernet32  BLock ICMP traffic from Endpoint2  ingress  Active
+```
+**Remove ACL Table through CLI**
+```
+sudo config acl remove table ICMP_DROP
 ```
 
 **Example of ACL Table JSON**
@@ -143,11 +147,26 @@ ICMP_DROP  L3      Ethernet32  BLock ICMP traffic from Endpoint2  ingress  Activ
 
 
 ## ACL Rules
-ACL Rules contain the detail step by step policy that is implemented by the tables. ACL Rule structure will identify which ACL Table they should be joined to. ACL Rules can only be defined using JSON and have no CLI option. We will show a basic ACL Rule used to block ICMP traffic coming from Endpoint-2.
+ACL Rules contain the detail step by step policy that is implemented by the tables. ACL Rule structure will identify which ACL Table they should be joined to. ACL Rules can only be defined using JSON and have no CLI option. We will show a basic ACL Rule used to block ICMP traffic coming from Endpoint-2 to *Loopback 0* on Leaf-2
 
 ```
+{
+    "ACL_RULE": {
+        "ICMP_INGRESS|ICMP_FORWARD": {
+            "PACKET_ACTION": "FORWARD",
+            "PRIORITY": "10",
+            "SRC_IP": "198.18.12.1/32"
+        },
+        "ICMP_INGRESS|ICMP_DROP": {
+            "PACKET_ACTION": "DROP",
+            "PRIORITY": "20",
+            "SRC_IP": "10.0.0.2/32"
+        }
+    }
+}
+```
 
-
+### ACL Rule Syntax
 
 ## End of Lab 4
 Please proceed to [Lab 5](https://github.com/scurvy-dog/sonic-dcloud/edit/main/1-Intro_to_SONiC_Lab/lab_exercise_5.md)
