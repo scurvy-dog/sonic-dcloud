@@ -178,6 +178,11 @@ ACL Rules contain the detail step by step policy that is implemented by the tabl
 }
 ```
 
+**Loading the ACL rule JSON file into the running config**
+```
+sudo config load acl_rule_icmp.json
+```
+
 ### ACL Rule Syntax
 
 ## End of Lab 4
