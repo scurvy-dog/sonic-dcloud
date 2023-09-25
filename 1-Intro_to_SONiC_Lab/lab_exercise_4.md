@@ -88,6 +88,8 @@ The student upon completion of Lab Exercise 4 should have achieved the following
 ## Basic ACL Walk Through
 The application of ACL policy is defined through two components; *ACL Tables* and *ACL Rules*.
 
+![ACL Overview](./topo-drawings/acl-overview.png)
+
 **ACL Tables**
 ACL tables are of two types. Data Plane ACLs and Control Plane ACLS.
 Data Plane tables purpose is to link a data plane traffic type to a set of defined interfaces. Data Plane ACL Tables have mandatory and optional defined fields as listed below
