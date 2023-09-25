@@ -13,6 +13,8 @@ In Lab Exercise 4 the student will explore how SONiC utilizes ACLs in dataplane 
     - [ACL Table Definition Types](#acl-table-definition-types)
     - [ACL Match Options](#acl-match-options)
   - [Basic ACL Walk Through](#basic-acl-walk-through)
+    - [Add/Delete ACL Table](#acl-tables) 
+    - [Add/Delete ACL Rule](#acl-rules)
   - [ACL Configuration Syntax](#acl-configuration-syntax)
   - [ACL Scale](#acl-scale)
   - [ACL Troubleshooting](#acl-troubleshooting)
@@ -104,7 +106,8 @@ Data Plane ACL Tables have mandatory and optional defined fields as listed in th
 | ports      | -p       |           | Binds table to physical port,portchannel, VLAN   |
 | stage      | -s       |           | Valid options are ingress (default) or egress    |
 
-**Adding ACL Table through CLI**
+### ACL Tables
+**Adding ACL Table with CLI**
 ```
 cisco@leaf-2:~$ sudo config acl add table --help
 Usage: config acl add table [OPTIONS] <table_name> <table_type>
@@ -151,7 +154,7 @@ Save this json acl table definition to a file on the SONiC device as acl_table_i
 sudo config load acl_table_icmp.json
 ```
 
-## ACL Rules
+### ACL Rules
 ACL Rules contain the detail step by step policy that is implemented by the tables. ACL Rule structure will identify which ACL Table they should be joined to. ACL Rules can only be defined using JSON and have no CLI option. We will show a basic ACL Rule used to block ICMP traffic coming from Endpoint-2 to *Loopback 0* on Leaf-2
 
 ```
