@@ -1,4 +1,7 @@
 ---
+
+# ansible-playbook -i hosts lab_exercise_5-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+
 - name: Enable FRR BFD daemon and configure BFD sessions
   hosts: sonic_router_subset
   become: true
