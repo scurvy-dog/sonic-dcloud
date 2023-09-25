@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#sudo clab tools vxlan delete
+# sudo clab tools vxlan delete
 
 sudo clab tools vxlan create --remote 172.10.10.204 --id 10 --link leaf-2-eth1
 sudo clab tools vxlan create --remote 172.10.10.204 --id 20 --link leaf-2-eth2
