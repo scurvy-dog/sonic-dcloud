@@ -131,6 +131,8 @@ ICMP_DROP  L3      Ethernet32  BLock ICMP traffic from Endpoint2  ingress  Activ
 ```
 sudo config acl remove table ICMP_DROP
 ```
+**Adding ACL Table through JSON**
+To utilize JSON to create an ACL it is a two step process. First you must construct a valid JSON syntax file and store that on the SONiC router itself. The second step is to use the config load command to add the table into the running configuration. See steps below.
 
 **Example of ACL Table JSON**
 Save this json acl table definition to a file on the SONiC device as acl_table_icmp.json
@@ -149,13 +151,15 @@ Save this json acl table definition to a file on the SONiC device as acl_table_i
         }
 }
 ```
-**Adding ACL Table through JSON**
+**Loading the ACL table JSON file into the running config**
 ```
 sudo config load acl_table_icmp.json
 ```
 
 ### ACL Rules
 ACL Rules contain the detail step by step policy that is implemented by the tables. ACL Rule structure will identify which ACL Table they should be joined to. ACL Rules can only be defined using JSON and have no CLI option. We will show a basic ACL Rule used to block ICMP traffic coming from Endpoint-2 to *Loopback 0* on Leaf-2
+
+**Example JSON file that should be saved as acl_rule_icmp.json** 
 
 ```
 {
