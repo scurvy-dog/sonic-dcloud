@@ -22,3 +22,4 @@
     - name: delete deploy log
       command: sudo rm /home/cisco/deploy.log
       ignore_errors: yes
+      delegate_to: localhost
