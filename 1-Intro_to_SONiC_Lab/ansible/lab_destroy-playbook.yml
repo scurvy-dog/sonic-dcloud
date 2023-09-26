@@ -20,7 +20,5 @@
       ignore_errors: yes
 
     - name: delete deploy log
-      command: sudo rm deploy.log
-      args:
-        chdir: /home/cisco/
+      command: sudo rm /home/cisco/deploy.log
       ignore_errors: yes
