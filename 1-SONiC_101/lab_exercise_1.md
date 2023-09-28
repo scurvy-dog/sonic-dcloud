@@ -57,12 +57,12 @@ Please see the management topology network diagram below. Table-1 below lists th
 
 
 ### User Credentials
-For the vsonic VM use the following credentials:
+For the host VMs use the following credentials:
 ```
-User: cisco, Password: C1sco12345
+User: cisco, Password: cisco123
 ```
 
-For all instances you will use the same user credentials:
+For all SONiC router instances you will use the same user credentials:
 ```
 User: cisco, Password: cisco123
 ```
