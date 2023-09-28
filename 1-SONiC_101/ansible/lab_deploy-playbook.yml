@@ -27,7 +27,7 @@
     - name: run vxlan shell script to interconnect containerlab nodes across VMs
       command: "{{ inventory_hostname }}/vxlan.sh"
       args:
-        chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/ansible/files/
+        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
       ignore_errors: yes
 
     - name: clear old ssh keys 
