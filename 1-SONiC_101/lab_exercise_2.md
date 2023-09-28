@@ -5,8 +5,6 @@ In Lab Exercise 2 the student will explore the SONiC network operating system, i
 
 ## Contents
 - [Lab Exercise 2: Explore SONiC NOS \[40 Min\]](#lab-exercise-2-explore-sonic-nos-40-min)
-    - [Description:](#description)
-  - [Contents](#contents)
   - [Lab Objectives](#lab-objectives)
   - [Tour of SONiC](#tour-of-sonic)
     - [SONiC Software Architecture](#sonic-software-architecture)
