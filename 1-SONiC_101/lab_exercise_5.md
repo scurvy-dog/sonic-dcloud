@@ -117,4 +117,4 @@ leaf-1#
 ```
 
 ## End of Intro to SONiC Lab
-Please proceed to [SONiC SRv6 Lab](https://github.com/scurvy-dog/sonic-dcloud/blob/main/2-SRv6_Lab/readme.md)
+Please proceed to [SONiC 102 Lab](https://github.com/scurvy-dog/sonic-dcloud/2-SONiC_102/readme.md)
