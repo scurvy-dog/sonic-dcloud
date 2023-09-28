@@ -37,14 +37,25 @@ For connectivity between virtual SONiC routers we use point-to-point VXLAN tunne
 
 ## Validate Device Access
 
-Device access for this lab is primarly through SSH. All of the VMs within this toplogy can be accessed once you connect through Cisco AnyConnect VPN to the dCloud environment. Please see the management topology network diagram below. The vsonic VM acts as a jumpbox for our 4 sonic-vs routers, thus we will SSH into the vsonic VM and then initiate a separate SSH session to each of the routers. The vsonic VM has an /etc/hosts entry for each router name to save time.
+Device access for this lab is primarly through SSH. All of the VMs within this toplogy can be accessed once you connect through Cisco AnyConnect VPN to the dCloud environment. As an alternative to AnyConnect it is possible to launch ssh sessions through the dCloud web interface. Click on the *View* button in the session section. That will launch the Topology Viewer. Within Topology Viewer you can click each node and then initiate an SSH session which will open in a new browser tab. See image below
 
-```
-cisco@vsonic:~$ ping leaf01
-PING leaf01 (172.10.10.4) 56(84) bytes of data.
-64 bytes from leaf01 (172.10.10.4): icmp_seq=1 ttl=64 time=0.480 ms
-64 bytes from leaf01 (172.10.10.4): icmp_seq=2 ttl=64 time=0.362 ms
-```
+![dCloud Topology Viewer](./topo-drawings/dcloud-ssh.png)
+
+Please see the management topology network diagram below. Table-1 below lists the IP address of each of the individual VMs for quick access to the lab. Alternatively you can access the Jumpbox VM which has access to all host-vms and the sonic router instance. 
+
+![Management Topology](./topo-drawings/management-network-medium.png)
+
+**Table 1**
+| Host name  | IP Address     | Description             |
+|:-----------|:---------------|:------------------------|
+| Jumpbox    | 198.18.128.100 | Hosts ansible scripts   |
+| VM-Leaf-1  | 198.18.128.101 | Hosts sonic node leaf-1 |
+| VM-Leaf-2  | 198.18.128.102 | Hosts sonic node leaf-1 |
+| VM-Spine-1 | 198.18.128.103 | Hosts sonic node leaf-1 |
+| VM-Spine-2 | 198.18.128.104 | Hosts sonic node leaf-1 |
+| Endpoint-1 | 198.18.128.105 | VM used for testing     |
+| Endpoint-2 | 198.18.128.105 | VM used for testing     |
+
 
 ### User Credentials
 For the vsonic VM use the following credentials:
@@ -64,7 +75,12 @@ User: cisco, Password: cisco123
 For full size image see [LINK](./topo-drawings/management-network.png)
 
 ### vsonic Boot Script
-
+```
+cisco@vsonic:~$ ping leaf01
+PING leaf01 (172.10.10.4) 56(84) bytes of data.
+64 bytes from leaf01 (172.10.10.4): icmp_seq=1 ttl=64 time=0.480 ms
+64 bytes from leaf01 (172.10.10.4): icmp_seq=2 ttl=64 time=0.362 ms
+```
 
 ### Virsh and brctl Commands
 There should have been several Linux bridges created for connectivity 
