@@ -21,7 +21,7 @@
     - name: run containerlab deploy to launch sonic vxr8000 nodes
       command: sudo containerlab deploy -t "{{ inventory_hostname }}/clab.yml"
       args:
-        chdir: /home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/ansible/files/
+        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
       ignore_errors: yes
 
     - name: run vxlan shell script to interconnect containerlab nodes across VMs
