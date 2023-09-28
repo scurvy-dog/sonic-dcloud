@@ -118,7 +118,7 @@ This lab uses Ansible as the automation tool once the host vms have spun up. The
 >   cisco@vm-leaf-1:~$ docker exec -it clab-c8201-sonic-leaf-1 bash
 >   root@leaf-1:/#
 >   ``` 
->4. Now access the SONiC console
+>4. Now access the SONiC console ( cisco / cisco123 )
 >   ```
 >   root@leaf-1:~# telent 0 60000
 >   bash: telent: command not found
