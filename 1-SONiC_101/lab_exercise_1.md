@@ -82,56 +82,55 @@ This lab uses Ansible as the automation tool once the host vms have spun up. The
 
   	You should see output similar to
 	```
-    	cisco@jumpbox:~$ cat deploy.log 
+ 	cisco@jumpbox:~$ cat deploy.log 
 	vm-leaf-1 Router up
 	vm-spine-2 Router up
 	vm-spine-1 Router up
 	vm-leaf-2 Router up
 	```
+  3. Ping each SONiC router management interface to see if the router has finished booting
+     | Host name  | IP Address    |
+     |:-----------|:--------------|
+     | leaf-1     | 172.10.10.101 |
+     | leaf-2     | 172.10.10.102 |
+     | spine-1    | 172.10.10.103 |
+     | spine-2    | 172.10.10.104 |
 
-### vsonic Boot Script
-```
-cisco@vsonic:~$ ping leaf01
-PING leaf01 (172.10.10.4) 56(84) bytes of data.
-64 bytes from leaf01 (172.10.10.4): icmp_seq=1 ttl=64 time=0.480 ms
-64 bytes from leaf01 (172.10.10.4): icmp_seq=2 ttl=64 time=0.362 ms
-```
+     ```
+     cisco@vsonic:~$ ping leaf01
+     PING leaf01 (172.10.10.101) 56(84) bytes of data.
+     64 bytes from leaf01 (172.10.10.101): icmp_seq=1 ttl=64 time=0.480 ms
+     64 bytes from leaf01 (172.10.10.101): icmp_seq=2 ttl=64 time=0.362 ms
+     ```
 
-### Virsh and brctl Commands
-There should have been several Linux bridges created for connectivity 
-```
-brctl show
-```
-```
-cisco@vsonic:~$ brctl show
-bridge name	bridge id		STP enabled	interfaces	
-leaf01-host1		8000.0050568625d2	no		eth1  <----- Connection to Endpoint1
-							vnet3
-leaf02-host2		8000.00505686df6a	no		eth2  <----- Connection to Endpoint2
-							vnet5
-mgt-net		8000.52540005d85b	yes		mgt-net-nic   <----- Connection to mgmt port in vSONiC
-							vnet0
-							vnet1
-							vnet2
-							vnet4
-virbr0		8000.5254007c5aa2	yes		virbr0-nic
-```
+> **NOTE**
+>  SONiC router does not respond to ping. Follow these directions
 
-To see the status of the four SONiC VM run the following command
-```
-virsh list
-```
+1. SSH into the host-vm directly
+2. Find docker instance running the Cisco 8000 emulator and lookup the container name.
+   ```
+   cisco@vm-leaf-1:~$ docker ps
+   CONTAINER ID   IMAGE                 COMMAND                  CREATED      STATUS      PORTS     NAMES
+   beffe818e4ad   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   5 days ago   Up 5 days             clab-c8201-sonic-leaf-1
+   ```
+3. Session into the docker container
+   ```
+   cisco@vm-leaf-1:~$ docker exec -it clab-c8201-sonic-leaf-1 bash
+   root@leaf-1:/#
+   ``` 
+4. Now access the SONiC console
+   ```
+   root@leaf-1:~# telent 0 60000
+   bash: telent: command not found
+   root@leaf-1:~# telnet 0 60000
+   Trying 0.0.0.0...
+   Connected to 0.
+   Escape character is '^]'.
 
-You should see the below output if all is well in the world.
-```
-cisco@vsonic:~$ virsh list
- Id    Name                           State
-----------------------------------------------------
- 1     spine01                        running
- 2     spine02                        running
- 3     leaf01                         running
- 4     leaf02                         running
-```
+   sonic login:
+   ```
+
+
 
 ### Connect to SONiC Routers
 
