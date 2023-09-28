@@ -10,8 +10,8 @@ In Lab 1 we will explore the host-VM virtualization environment and log into the
   - [Lab Objectives](#lab-objectives)
   - [Virtualization Stack](#virtualization-stack)
   - [Device Access](#device-access)
-    - [User Credentials](#user-credentials)
     - [Management Network Topology](#management-network-topology)
+    - [User Credentials](#user-credentials)
     - [Check Build Scripts](#check-build-scripts)
     - [Connect to SONiC Routers](#connect-to-sonic-routers)
   - [End of Lab 1](#end-of-lab-1)
@@ -73,14 +73,14 @@ Now log into each of the Ubuntu host-vms listed in Table 1 and ensure you have a
 ## Check Build Scripts
 This lab uses Ansible as the automation tool once the host vms have spun up. There is an Ansible script that runs that starts the Containerlab build process on each of the SONiC host-vms (vm-leaf-1, vm-leaf-2, vm-spine-1, vm-spine-2). Lets validate that the build script completed successfully.
 
-	1. Log into the Jumpbox VM
- 	2. View the following file in the home directory.
-  	```
-   	cat /home/cisco/deploy.log
-    	```
-     	You should see output similar to
-      	```
-        cisco@jumpbox:~$ cat deploy.log 
+ 1. Log into the Jumpbox VM
+ 2. View the following file in the home directory.
+  ```
+  cat /home/cisco/deploy.log
+  ```
+  You should see output similar to
+```
+    cisco@jumpbox:~$ cat deploy.log 
 	vm-leaf-1 Router up
 	vm-spine-2 Router up
 	vm-spine-1 Router up
