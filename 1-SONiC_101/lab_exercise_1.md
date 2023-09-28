@@ -21,15 +21,17 @@ In Lab 1 we will explore the host-VM virtualization environment and log into the
 The student upon completion of Lab 1 should have achieved the following objectives:
 
 * Access to all devices in the lab
-* Understand the KVM/qemu virtualization environment and virsh utility
+* Understand the Docker virtualization environment and Cisco 8000 Emulator
 * Understanding of the lab topology and components
 * Access the SONiC nodes   
 
 ## Virtualization Stack
 
-The software virtualization stack used in this lab consists of several layers. At the base Linux OS level it is possible to run this lab either on bare metal or in a virtualized environment. In our dCloud lab we're running the router topology inside a host Ubuntu VM. To create the SONiC environment we are using the Cisco 8000 hardware emulator (C8k emulator). The emulator utilizes Docker to create a container which containes the simulated hardware environment. Within that simulated environment we boot into the SONiC operating system. 
+The software virtualization stack used in this lab consists of several layers. At the base Linux OS level it is possible to run this lab either on bare metal or in a virtualized environment. In our dCloud lab we're running the router topology inside a host Ubuntu VM. For simplicity for students we have a single Ubuntu VM to host each SONiC instance. The scale requirements for Cisco 8000 can be found at the link [HERE}(https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000-emulator/cisco8000-hardware-emulator-datasheet.html)
 
-For connectivity between virtual routers we use point-to-point UDP tunnels within the host-VM. Connectivity could also be done through Linux bridge or OVS instances, but the UDP tunnel option allows the routers to exchange LLDP messages directly without bridge interference. For connecitivty between the SONiC VMs and external test VM clients are using linux bridges.
+To create the SONiC environment we are using Containerlab to orchestrating and managing container-based network topology. Containerlab allows for us to use a yaml definition file to spin up the Cisco 8000 hardware emulator (C8k emulator). The C8k emulator utilizes itself utilizes Docker to create a container which containes the simulated hardware environment. Within that simulated environment we boot into the SONiC operating system. 
+
+For connectivity between virtual SONiC routers we use point-to-point VXLAN tunnels between the host-VMs. For connecitivty between the SONiC VMs and external test VM clients are using linux bridges.
 
 ![Software Stack](./topo-drawings/software-stack-c8k.png)
 
