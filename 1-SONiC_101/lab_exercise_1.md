@@ -113,24 +113,22 @@ This lab uses Ansible as the automation tool once the host vms have spun up. The
 >   CONTAINER ID   IMAGE                 COMMAND                  CREATED      STATUS      PORTS     NAMES
 >   beffe818e4ad   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   5 days ago   Up 5 days             clab-c8201-sonic-leaf-1
 >   ```
-3. Session into the docker container
-   ```
-   cisco@vm-leaf-1:~$ docker exec -it clab-c8201-sonic-leaf-1 bash
-   root@leaf-1:/#
-   ``` 
-4. Now access the SONiC console
-   ```
-   root@leaf-1:~# telent 0 60000
-   bash: telent: command not found
-   root@leaf-1:~# telnet 0 60000
-   Trying 0.0.0.0...
-   Connected to 0.
-   Escape character is '^]'.
-
-   sonic login:
-   ```
-
-
+>3. Session into the docker container
+>   ```
+>   cisco@vm-leaf-1:~$ docker exec -it clab-c8201-sonic-leaf-1 bash
+>   root@leaf-1:/#
+>   ``` 
+>4. Now access the SONiC console
+>   ```
+>   root@leaf-1:~# telent 0 60000
+>   bash: telent: command not found
+>   root@leaf-1:~# telnet 0 60000
+>   Trying 0.0.0.0...
+>   Connected to 0.
+>   Escape character is '^]'.
+>
+>   sonic login:
+>   ```
 
 ### Connect to SONiC Routers
 
