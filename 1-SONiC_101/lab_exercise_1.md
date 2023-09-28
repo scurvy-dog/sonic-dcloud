@@ -80,13 +80,14 @@ This lab uses Ansible as the automation tool once the host vms have spun up. The
 	cat /home/cisco/deploy.log
 	```
 
-  You should see output similar to
-    cisco@jumpbox:~$ cat deploy.log 
+  	You should see output similar to
+	```
+    	cisco@jumpbox:~$ cat deploy.log 
 	vm-leaf-1 Router up
 	vm-spine-2 Router up
 	vm-spine-1 Router up
 	vm-leaf-2 Router up
-
+	```
 
 ### vsonic Boot Script
 ```
