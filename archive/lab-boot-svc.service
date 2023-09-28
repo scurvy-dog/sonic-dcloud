@@ -3,7 +3,7 @@ Description=Script to perform git pull, build vnets, and launch sonic VMs on sta
 After=network-online.target
 
 [Service]
-ExecStart=/home/cisco/sonic-dcloud/1-Intro_to_SONiC_Lab/util/lab-boot-svc.sh
+ExecStart=/home/cisco/sonic-dcloud/1-SONiC_101/util/lab-boot-svc.sh
 
 [Install]
 WantedBy=multi-user.target
