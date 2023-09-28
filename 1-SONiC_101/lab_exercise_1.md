@@ -104,15 +104,15 @@ This lab uses Ansible as the automation tool once the host vms have spun up. The
      ```
 
 > **NOTE**
->  SONiC router does not respond to ping. Follow these directions
-
-1. SSH into the host-vm directly
-2. Find docker instance running the Cisco 8000 emulator and lookup the container name.
-   ```
-   cisco@vm-leaf-1:~$ docker ps
-   CONTAINER ID   IMAGE                 COMMAND                  CREATED      STATUS      PORTS     NAMES
-   beffe818e4ad   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   5 days ago   Up 5 days             clab-c8201-sonic-leaf-1
-   ```
+>  If SONiC router does not respond to ping. Follow these directions
+>
+>1. SSH into the host-vm directly
+>2. 2. Find docker instance running the Cisco 8000 emulator and lookup the container name.
+>   ```
+>   cisco@vm-leaf-1:~$ docker ps
+>   CONTAINER ID   IMAGE                 COMMAND                  CREATED      STATUS      PORTS     NAMES
+>   beffe818e4ad   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   5 days ago   Up 5 days             clab-c8201-sonic-leaf-1
+>   ```
 3. Session into the docker container
    ```
    cisco@vm-leaf-1:~$ docker exec -it clab-c8201-sonic-leaf-1 bash
