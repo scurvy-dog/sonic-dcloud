@@ -17,7 +17,7 @@ In Lab Exercise 4 the student will explore how SONiC utilizes ACLs in dataplane 
     - [Add/Delete ACL Rule](#acl-rules)
   - [ACL Configuration Syntax](#acl-configuration-syntax)
   - [ACL Counters](#acl-troubleshooting)
-  - [ACL 
+  - [ACL Examples](#acl-examples)
   - [End of Lab 4](#end-of-lab-4)
   
 ## Lab Objectives
@@ -126,12 +126,12 @@ ACL Rules contain the detail step by step policy that is implemented by the tabl
 ```
 {
     "ACL_RULE": {
-        "ICMP_INGRESS|ICMP_FORWARD": {
+        "ICMP_INGRESS|RULE_10": {
             "PACKET_ACTION": "FORWARD",
             "PRIORITY": "10",
             "SRC_IP": "198.18.12.1/32"
         },
-        "ICMP_INGRESS|ICMP_DROP": {
+        "ICMP_INGRESS|RULE_20": {
             "PACKET_ACTION": "DROP",
             "PRIORITY": "20",
             "SRC_IP": "10.0.0.2/32"
@@ -143,6 +143,19 @@ ACL Rules contain the detail step by step policy that is implemented by the tabl
 **Loading the ACL rule JSON file into the running config**
 ```
 sudo config load acl_rule_icmp.json
+```
+> **NOTE**
+> SONiC does not support the removal of ACLs through CLI. The below json will remove all ACL rules
+
+```
+{
+    "acl": {
+        "acl-sets": {
+            "acl-set": {
+            }
+        }
+    }
+}
 ```
 
 ### ACL Rule Syntax
