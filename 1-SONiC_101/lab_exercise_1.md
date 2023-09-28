@@ -107,7 +107,7 @@ This lab uses Ansible as the automation tool once the host vms have spun up. The
 >  If SONiC router does not respond to ping. Follow these directions
 >
 >1. SSH into the host-vm directly
->2. 2. Find docker instance running the Cisco 8000 emulator and lookup the container name.
+2.  Find docker instance running the Cisco 8000 emulator and lookup the container name.
 >   ```
 >   cisco@vm-leaf-1:~$ docker ps
 >   CONTAINER ID   IMAGE                 COMMAND                  CREATED      STATUS      PORTS     NAMES
@@ -129,6 +129,15 @@ This lab uses Ansible as the automation tool once the host vms have spun up. The
 >
 >   sonic login:
 >   ```
+>5. Check to see if management interface was created
+>   ```
+>   cisco@sonic:~$ show ip interface
+>   Interface    Master    IPv4 address/mask    Admin/Oper    BGP Neighbor    Neighbor IP
+>   -----------  --------  -------------------  ------------  --------------  -------------
+>   docker0                240.127.1.1/24       up/down       N/A             N/A
+>   eth0                   172.10.10.101/24     up/up         N/A             N/A           <--- MGMT INTERFACE
+>   eth4                   192.168.123.246/24   up/up         N/A             N/A 
+>   lo                     127.0.0.1/16         up/up         N/A             N/A  
 
 ### Connect to SONiC Routers
 
