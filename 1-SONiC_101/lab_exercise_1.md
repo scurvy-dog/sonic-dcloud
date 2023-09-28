@@ -9,11 +9,10 @@ In Lab 1 we will explore the host-VM virtualization environment and log into the
   - [Contents](#contents)
   - [Lab Objectives](#lab-objectives)
   - [Virtualization Stack](#virtualization-stack)
-  - [Validate Device Access](#validate-device-access)
+  - [Device Access](#device-access)
     - [User Credentials](#user-credentials)
     - [Management Network Topology](#management-network-topology)
-    - [vsonic Boot Script](#vsonic-boot-script)
-    - [Virsh and brctl Commands](#virsh-and-brctl-commands)
+    - [Check Build Scripts](#check-build-scripts)
     - [Connect to SONiC Routers](#connect-to-sonic-routers)
   - [End of Lab 1](#end-of-lab-1)
   
@@ -35,7 +34,7 @@ For connectivity between virtual SONiC routers we use point-to-point VXLAN tunne
 
 ![Software Stack](./topo-drawings/software-stack-c8k.png)
 
-## Validate Device Access
+## Device Access
 
 Device access for this lab is primarly through SSH. All of the VMs within this toplogy can be accessed once you connect through Cisco AnyConnect VPN to the dCloud environment. As an alternative to AnyConnect it is possible to launch ssh sessions through the dCloud web interface. Click on the *View* button in the session section. That will launch the Topology Viewer. Within Topology Viewer you can click each node and then initiate an SSH session which will open in a new browser tab. See image below
 
@@ -68,11 +67,26 @@ For all instances you will use the same user credentials:
 User: cisco, Password: cisco123
 ```
 
-### Management Network Topology
+### Validate Access
+Now log into each of the Ubuntu host-vms listed in Table 1 and ensure you have access to the devices.
 
-![Management Topology](./topo-drawings/management-network-medium.png)
+## Check Build Scripts
+This lab uses Ansible as the automation tool once the host vms have spun up. There is an Ansible script that runs that starts the Containerlab build process on each of the SONiC host-vms (vm-leaf-1, vm-leaf-2, vm-spine-1, vm-spine-2). Lets validate that the build script completed successfully.
 
-For full size image see [LINK](./topo-drawings/management-network.png)
+	1. Log into the Jumpbox VM
+ 	2. View the following file in the home directory.
+  	```
+   	cat /home/cisco/deploy.log
+    	```
+     	You should see output similar to
+      	```
+        cisco@jumpbox:~$ cat deploy.log 
+	vm-leaf-1 Router up
+	vm-spine-2 Router up
+	vm-spine-1 Router up
+	vm-leaf-2 Router up
+ 	```
+
 
 ### vsonic Boot Script
 ```
