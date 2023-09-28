@@ -16,8 +16,8 @@ In Lab Exercise 4 the student will explore how SONiC utilizes ACLs in dataplane 
     - [Add/Delete ACL Table](#acl-tables) 
     - [Add/Delete ACL Rule](#acl-rules)
   - [ACL Configuration Syntax](#acl-configuration-syntax)
-  - [ACL Scale](#acl-scale)
-  - [ACL Troubleshooting](#acl-troubleshooting)
+  - [ACL Counters](#acl-troubleshooting)
+  - [ACL 
   - [End of Lab 4](#end-of-lab-4)
   
 ## Lab Objectives
