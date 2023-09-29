@@ -39,7 +39,7 @@ For *leaf-1* we'll invoke the FRR CLI and add BGP configuration there.
 ## BGP Topology
 In this lab we will have three separate BGP AS represented in the fabric. The spine layer will run a single AS 65000. Each leaf will run a separate BGP AS as represented in the topology diagram below. In this BGP DC fabric the leafs should be receiving equal cost paths through each of the spine layer port-channels via AS 65000.
 
-![BGP Topology](../topo-drawings/bgp-topology.png)
+![BGP Topology](./topo-drawings/bgp-topology.png)
 
 ## Ansible BGP Playbook
 The lab_exercise_3 Ansible playbook will replace the */etc/sonic/frr/bgpd.conf* file in leaf-2 and both spine nodes, and will then restart the BGP containers.  
