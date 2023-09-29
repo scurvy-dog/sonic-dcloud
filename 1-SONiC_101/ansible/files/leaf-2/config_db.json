@@ -15,8 +15,8 @@
         }
     },
     "LOOPBACK_INTERFACE": {
-        "Loopback0|10.0.0.5/32": {},
-        "Loopback0|fc00:0:5::1/128": {}
+        "Loopback0|10.0.0.2/32": {},
+        "Loopback0|fc00:0:2::1/128": {}
     },
 
     "INTERFACE": {
