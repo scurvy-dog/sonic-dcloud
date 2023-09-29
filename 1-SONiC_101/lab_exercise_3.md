@@ -230,9 +230,9 @@ There are several relevant files for our ansible playbook
        > - selected route, * - FIB route, q - queued, r - rejected, b - backup
        t - trapped, o - offload failure
 
-  B>* 10.0.0.2/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24
-  B>* 10.0.0.3/32 [20/0] via 10.1.1.3, PortChannel2, weight 1, 00:25:24  
-  B>* 10.0.0.5/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24   
+  B>* 10.0.0.2/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24   <----- Route from spine-1
+  B>* 10.0.0.3/32 [20/0] via 10.1.1.3, PortChannel2, weight 1, 00:25:24   <----- Route from spine-2
+  B>* 10.0.0.4/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24   <----- Route from leaf-2
     *                    via 10.1.1.3, PortChannel2, weight 1, 00:25:24
   ```
 - **Verify IPv4** routes *leaf-2* should have received the following
@@ -245,11 +245,11 @@ There are several relevant files for our ansible playbook
         > - selected route, * - FIB route, q - queued, r - rejected, b - backup
         t - trapped, o - offload failure
 
-  B>* 10.0.0.2/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:04:52
+  B>* 10.0.0.1/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:04:52
     *                    via 10.1.1.3, PortChannel2, weight 1, 00:04:52
   B>* 10.0.0.3/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:04:30
   B>* 10.0.0.4/32 [20/0] via 10.1.1.3, PortChannel2, weight 1, 00:04:24
-  B>* 198.18.12.0/24 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:07:49
+  B>* 198.18.11.0/24 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:07:49
     *                       via 10.1.1.3, PortChannel2, weight 1, 00:07:49
   ```
   
@@ -266,7 +266,7 @@ There are several relevant files for our ansible playbook
         > - selected route, * - FIB route, q - queued, r - rejected, b - backup
         t - trapped, o - offload failure
 
-  B>* fc00:0:2::1/128 [20/0] via fe80::7a58:c8ff:fe83:e400, PortChannel2, weight 1, 00:02:29
+  B>* fc00:0:1::1/128 [20/0] via fe80::7a58:c8ff:fe83:e400, PortChannel2, weight 1, 00:02:29
     *                        via fe80::7afe:fdff:feb2:6800, PortChannel1, weight 1, 00:02:29
   B>* fc00:0:3::1/128 [20/0] via fe80::7afe:fdff:feb2:6800, PortChannel1, weight 1, 00:05:12
   B>* fc00:0:4::1/128 [20/0] via fe80::7a58:c8ff:fe83:e400, PortChannel2, weight 1, 00:05:06
