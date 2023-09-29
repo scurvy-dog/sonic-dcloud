@@ -9,8 +9,8 @@ In Lab Exercise 2 the student will explore the SONiC network operating system, i
   - [Tour of SONiC](#tour-of-sonic)
     - [SONiC Software Architecture](#sonic-software-architecture)
     - [Managing Configurations](#managing-configurations)
-      - [Loading configuration from JSON file](#loading-configuration-from-json-file)
-      - [Reloading configuration](#reloading-configuration)
+      - [Loading Configuration from JSON file](#loading-configuration-from-json-file)
+      - [Reloading Configuration](#reloading-configuration)
       - [Saving Configuration to a File for Persistence](#saving-configuration-to-a-file-for-persistence)
       - [Edit Configuration Through CLI](#edit-configuration-through-cli)
       - [FRR Configuration Management](#frr-configuration-management)
@@ -25,7 +25,7 @@ The student upon completion of Lab 2 should have achieved the following objectiv
 
 * Understanding of the software components within SONiC
 * Ability to see status of various services
-* Configuration Management structure
+* Configuration management structure
 * How to load configuration through Ansible
 * How to apply manual configuration through the SONiC CLI
 * Valadiate end to end topology 
@@ -38,7 +38,7 @@ Further reading: https://developer.cisco.com/docs/sonic/#!sonic-architecture
     
 By relying on the publisher/subscriber messaging paradigm offered by the redis-engine infrastructure, applications can subscribe only to the data-views that they require, and avoid implementation details that are irrelevant to their functionality.
 
-SONiC places each module in independent docker containers to keep high cohesion among semantically-affine components, while reducing coupling between disjointed ones. Each of these components are written to be entirely independent of the platform-specific details required to interact with lower-layer abstractions. See diagram below for high level architecture view.
+SONiC places each module in independent docker containers to keep high cohesion among semantically related components, while reducing coupling between disjointed ones. Each of these components are written to be entirely independent of the platform-specific details required to interact with lower-layer abstractions. See diagram below for high level architecture view.
 
 ![Software Architecture](./topo-drawings/sonic-hld-architecture.png)
 
@@ -83,13 +83,15 @@ c002ab9b311f   docker-database:latest               "/usr/local/bin/dock…"   7
 >For greater detail on container services see this link [HERE](https://github.com/sonic-net/SONiC/wiki/Architecture)
 
 ### Managing Configurations
-Configuration state in SONiC is saved in two separate locations. For persistant configuratin between reloads configuration files are used. The main configuration is found at */etc/sonic/config_db.json*. The second configuration file in this lab is for the FRR routing stack and it's configuratin is found at */etc/sonic/frr/bgpd.conf*. When the router boots it loads the configuration from these two files into the redis database. The redis database is the running configuration of the router where the various services read or write state information into the redis database.
+Configuration state in SONiC is saved in two separate locations. For persistant configuratin between reloads configuration files are used. The main configuration is found at */etc/sonic/config_db.json*. The second configuration file in this lab is for the FRR routing stack and it's configuratin is found at */etc/sonic/frr/bgpd.conf*. However, BGP configuration when saved from the redis database is pushed to config_db and as such is the preferred location if you were to edit the *"saved configuraiont"*.  
+
+When the router boots it loads the configuration from these two files into the redis database. The redis database is the running configuration of the router where the various services read or write state information into the redis database.
 
 ![redis diagram](./topo-drawings/redis-diagram.png)
 
 #### Loading configuration from JSON file
 
-The command *config load* is used to load the configuration from a JSON file like the file which SONiC saves its configuration to, */etc/sonic/config_db.json* This command loads the configuration from the input file (if user specifies this optional filename, it will use that input file. Otherwise, it will use the default */etc/sonic/config_db.json* file as the input file) into CONFIG_DB. The configuration present in the input file is applied on top of the already running configuration. This command does not flush the config DB before loading the new configuration (i.e., If the configuration present in the input file is same as the current running configuration, nothing happens) If the config present in the input file is not present in running configuration, it will be added. If the config present in the input file differs (when key matches) from that of the running configuration, it will be modified as per the new values for those keys.
+The command *config load* is used to load a configuration following the JSON schema. This command loads the configuration from the input file (if user specifies this optional filename, it will use that input file. Otherwise, it will use the default */etc/sonic/config_db.json* file as the input file) into CONFIG_DB. The configuration present in the input file is applied on top of the already running configuration. This command does not flush the config DB before loading the new configuration (i.e., If the configuration present in the input file is same as the current running configuration, nothing happens) If the config present in the input file is not present in running configuration, it will be added. If the config present in the input file differs (when key matches) from that of the running configuration, it will be modified as per the new values for those keys.
 
 - Usage:
 ```
@@ -136,7 +138,9 @@ Timeout, server 10.11.162.42 not responding.
 
 #### Saving Configuration to a File for Persistence
 
-The command *config save* is used to save the config DB configuration into the user-specified filename or into the default /etc/sonic/config_db.json. This saves the configuration into the disk which is available even after reboots. Saved files can be transferred to remote machines for debugging. If users wants to load the configuration from this new file at any point of time, they can use "config load" command and provide this newly generated file as input. If users wants this newly generated file to be used during reboot, they need to copy this file to /etc/sonic/config_db.json.
+The command *config save* is used to save the config DB configuration into the user-specified filename or into the default /etc/sonic/config_db.json. This saves the current redis database CONFIG_DB int the configuration specified by the user. This is analogous in Cisco IOS as the command *copy run start*. 
+
+Saved files can be transferred to remote machines for debugging. If users wants to load the configuration from this new file at any point of time, they can use "config load" command and provide this newly generated file as input. 
 
 - Usage:
 ```
