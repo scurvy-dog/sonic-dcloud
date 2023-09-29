@@ -177,7 +177,7 @@ First FRR stores it's configuration in a separate file located at */etc/sonic/fr
 ![FRR Configuration Overview](./topo-drawings/frr-bgp-framework.png)
 
 
-**View Startup FRR Configuration**
+**View Startup FRR BGP Configuration**
 ```
 show startupconfiguration bgp
 ```
@@ -197,24 +197,30 @@ In this lab we are going to use an Ansible playbook to create the baseline confi
 
 There are several relevant files for our ansible playbook
 
-| Name                        | Location                     | Notes                         |
-|:----------------------------|:-----------------------------|:------------------------------|
-| lab_exercise_2-playbook.yml | /lab_2/ansible               | Ansible playbook file         |
-| hosts                       | /lab_2/ansible               | Contains device list and IPs  |
-| config_db.json              | /lab_2/ansible/files/{host}/ | Global configuration file     |
+| Name                        | Location                           | Notes                               |
+|:----------------------------|:-----------------------------------|:------------------------------------|
+| lab_exercise_2-playbook.yml | /1-SONiC_101/ansible/              | Ansible playbook file               |
+| hosts                       | /1-SONiC_101/ansible/              | Contains device list and IPs        |
+| config_db.json              | /1-SONiC_101/ansible/files/{host}/ | Global configuration file for lab-2 |
 
-- Change to the ansible directory
+1. Log into host-vm *jumpbox*
+   ```
+   ssh cisco@198.18.128.100
+   ```
+2. Change to the ansible directory
   ```
   cd ansible
   ```
-- Run the lab_exercise_2 Ansible playbook to copy global and interface configurations to leaf-2 and both spine routers. Once copied the playbook will then load and save configurations. The playbook will load a subset of configuration to leaf-1. 
+3. Run the lab_exercise_2 Ansible playbook to copy global and interface configurations to leaf-2, spine-1, and spine-2 routers. Once copied the playbook will then load and save configurations. The playbook will load a subset of configuration to leaf-1.
+
+   ```
+   ansible-playbook -i hosts lab_exercise_2-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+   ```
 
 > [!IMPORTANT]
 > Ansible playbook configured router *spine-1*, *spine-2*, and *leaf-2*. You will manually configure router *leaf-1* later in this lab.
 > 
-```
-ansible-playbook -i hosts lab_exercise_2-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
-```
+
 
 You should expect a large amount of output from ansible but, at the end of logs look for the following output
 ```
