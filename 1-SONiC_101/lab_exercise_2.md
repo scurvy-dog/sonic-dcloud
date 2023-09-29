@@ -16,7 +16,7 @@ In Lab Exercise 2 the student will explore the SONiC network operating system, i
       - [FRR Configuration Management](#frr-configuration-management)
   - [Ansible Automation](#ansible-automation)
   - [Configure Leaf-1 with SONiC CLI](#configure-leaf-1-with-sonic-cli)
-  - [Configure hostnames](#configure-hostnames)
+  - [Configure Hostnames](#configure-hostnames)
   - [Network Connectivity](#network-connectivity)
   - [End of Lab Exercise 2](#end-of-lab-exercise-2)
   
