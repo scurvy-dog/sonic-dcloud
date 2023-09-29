@@ -30,6 +30,10 @@
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
       ignore_errors: yes
 
+    - name: reset user/group permissions on repo folders 
+      command: "chown -R cisco:cisco /home/cisco/sonic-dcloud"
+      ignore_errors: yes
+
     - name: clear old ssh keys 
       command: "rm .ssh/known_hosts"
       args:
