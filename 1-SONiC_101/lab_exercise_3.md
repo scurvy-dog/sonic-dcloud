@@ -78,7 +78,7 @@ There are several relevant files for our ansible playbook
 > Ansible playbook configured router *spine-1*, *spine-2*, and *leaf-2*. Next we'll manually configure BGP for router *leaf-1*.
    
 ## Configure BGP Leaf-1 with FRR CLI
-1. SSH to leaf-1 (ssh cisco@leaf-1) and invoke the FRR CLI shell
+1. SSH to SONiC router *leaf-1* (ssh cisco@leaf-1) and invoke the FRR CLI shell
    ```
    vtysh
    ```
@@ -86,7 +86,7 @@ There are several relevant files for our ansible playbook
    ```
    config terminal
    ```
-3. Start with the base BGP configuration. For *leaf-1* we will be using AS65001 per the topology diagram.
+3. Start with the base BGP configuration. For *leaf-1* we will be using AS65001 per the topology diagram. Enter the below CLI commands.
    ```
    router bgp 65001
    bgp router-id 10.0.0.1
@@ -143,8 +143,8 @@ There are several relevant files for our ansible playbook
    exit-address-family
    !
    address-family ipv6 unicast
-     network fc00:0:1::/48                     <---- Advertise local IPv6 network
-     network fc00:0:1::1/128                   <---- Advertise local IPv6 network
+     network fc00:0:1::/48                    <---- Advertise local IPv6 network
+     network fc00:0:1::1/128                  <---- Advertise local IPv6 network
      neighbor fc00:0:ffff::1 activate
      neighbor fc00:0:ffff::3 activate
    exit-address-family
@@ -212,7 +212,10 @@ There are several relevant files for our ansible playbook
 
    Total number of neighbors 2
    ```
-   
+
+| :exclamation:  Table below is incorrect needs update  |
+|-------------------------------------------------------|
+
 ### Verify BGP Routing Table
 - **Verify IPv4** routes. *leaf-1* should have received the following
   ```
@@ -228,8 +231,8 @@ There are several relevant files for our ansible playbook
        t - trapped, o - offload failure
 
   B>* 10.0.0.2/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24
-  B>* 10.0.0.3/32 [20/0] via 10.1.1.3, PortChannel2, weight 1, 00:25:24
-  B>* 10.0.0.5/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24
+  B>* 10.0.0.3/32 [20/0] via 10.1.1.3, PortChannel2, weight 1, 00:25:24  
+  B>* 10.0.0.5/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24   
     *                    via 10.1.1.3, PortChannel2, weight 1, 00:25:24
   ```
 - **Verify IPv4** routes *leaf-2* should have received the following
