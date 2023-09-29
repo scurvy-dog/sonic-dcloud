@@ -424,4 +424,4 @@ To check on interface status and connectivity follow these steps on each router 
 **Congratulations you have successfully completed Lab Exercise 2. We are now ready to configure routing protocols.**
 
 ## End of Lab Exercise 2
-Please proceed to [Lab 3](https://github.com/scurvy-dog/sonic-dcloud/edit/main/1-SONiC_101/lab_exercise_3.md)
+Please proceed to [Lab 3](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/lab_exercise_3.md)
