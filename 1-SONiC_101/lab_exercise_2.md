@@ -208,29 +208,28 @@ There are several relevant files for our ansible playbook
    ssh cisco@198.18.128.100
    ```
 2. Change to the ansible directory
-  ```
-  cd ansible
-  ```
+   ```
+   cd ansible
+   ```
 3. Run the lab_exercise_2 Ansible playbook to copy global and interface configurations to leaf-2, spine-1, and spine-2 routers. Once copied the playbook will then load and save configurations. The playbook will load a subset of configuration to leaf-1.
 
    ```
    ansible-playbook -i hosts lab_exercise_2-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
    ```
+   
+   > [!IMPORTANT]
+   > Ansible playbook configured router *spine-1*, *spine-2*, and *leaf-2*. You will manually configure router *leaf-1* later in this lab.
+   >
 
-> [!IMPORTANT]
-> Ansible playbook configured router *spine-1*, *spine-2*, and *leaf-2*. You will manually configure router *leaf-1* later in this lab.
-> 
-
-
-You should expect a large amount of output from ansible but, at the end of logs look for the following output
-```
-PLAY RECAP
-    ***************************************************************************************************************************************
-leaf-1               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-leaf-2               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-spine-1              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-spine-2              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
-```
+   You should expect a large amount of output from ansible but, at the end of logs look for the following output
+   ```
+   PLAY RECAP
+   ***************************************************************************************************************************************
+   leaf-1               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+   leaf-2               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+   spine-1              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+   spine-2              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+   ```
 
 ## Configure Leaf-1 with SONiC CLI
 
