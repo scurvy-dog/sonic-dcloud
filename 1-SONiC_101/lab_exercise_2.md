@@ -272,7 +272,7 @@ There are several relevant files for our ansible playbook
    sudo config save
    ```   
 
-## Configure hostnames
+## Configure Hostnames
 The command config hostname will update the underlying unix hostname and restart the service. The config save command needs to be made for persistance across reloads.
 
 1. Use sonic CLI to configure leaf-1 which causes the service to restart:
