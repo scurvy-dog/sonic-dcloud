@@ -48,29 +48,32 @@ There are several relevant files for our ansible playbook
 
 | Name                        | Location               | Notes                         |
 |:----------------------------|:-----------------------|:------------------------------|
-| lab_exercise_3-playbook.yml | /ansible               | Ansible playbook file         |
-| hosts                       | /ansible               | Contains device list and IPs  |
+| lab_exercise_3-playbook.yml | /ansible/              | Ansible playbook file         |
+| hosts                       | /ansible/              | Contains device list and IPs  |
 | frr.conf                    | /ansible/files/{host}/ | FRR BGP file -> bgpd.conf     |
 
-- Change to the ansible directory
-  ```
-  cd ansible
-  ```
-- From the jumpbox VM run Ansible playbook to copy configurations to SONiC routers and restart BGP/FRR docker containers
-    ```
-    ansible-playbook -i hosts lab_exercise_3-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
-    ```
 
-    You should expect a large amount of output from ansible but, at the end of logs look for the following output
-    ```
-    PLAY RECAP
-    PLAY RECAP
-    *************************************************************************************************************************
-    leaf-2                     : ok=5    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-    spine-1                    : ok=5    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-    spine-2                    : ok=5    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-    
-    ```
+1. Log into the *Jumpbox* VM.
+2. Change to the ansible directory
+   ```
+   cd ansible
+   ```
+   
+3. Ansible playbook to copy configurations to SONiC routers and restart BGP/FRR docker containers
+   ```
+   ansible-playbook -i hosts lab_exercise_3-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+   ```
+
+   You should expect a large amount of output from ansible but, at the end of logs look for the following output
+   ```
+   PLAY RECAP
+   PLAY RECAP
+   *************************************************************************************************************************
+   leaf-2                     : ok=5    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+   spine-1                    : ok=5    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+   spine-2                    : ok=5    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+   ```
+   
 > [!IMPORTANT]
 > Ansible playbook configured router *spine-1*, *spine-2*, and *leaf-2*. Next we'll manually configure BGP for router *leaf-1*.
    
