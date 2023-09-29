@@ -233,9 +233,9 @@ There are several relevant files for our ansible playbook
 
 ## Configure Leaf-1 with SONiC CLI
 
-1. Log into *leaf-1*
+1. Log into SONiC router *leaf-1*
    ```
-   ssh cisco@172.10.10.201
+   ssh cisco@172.10.10.101
    ssh cisco@leaf-1
    ```
 2. Configure *Loopback0* and add IPv4 and IPv6
@@ -255,9 +255,9 @@ There are several relevant files for our ansible playbook
 5.  Configure Port Channel interface members
     ```
     sudo config portchannel member add PortChannel1 Ethernet0
-    sudo config portchannel member add PortChannel1 Ethernet8
-    sudo config portchannel member add PortChannel2 Ethernet16
-    sudo config portchannel member add PortChannel2 Ethernet24
+    sudo config portchannel member add PortChannel1 Ethernet4
+    sudo config portchannel member add PortChannel2 Ethernet8
+    sudo config portchannel member add PortChannel2 Ethernet12
     ```
 6. Configure Port Channel IPs
    ```
@@ -276,10 +276,10 @@ There are several relevant files for our ansible playbook
 The command config hostname will update the underlying unix hostname and restart the service. The config save command needs to be made for persistance across reloads.
 
 1. Use sonic CLI to configure leaf-1 which causes the service to restart:
-```
-sudo config hostname leaf-1
-sudo config save -y
-```
+   ```
+   sudo config hostname leaf-1
+   sudo config save -y
+   ```
 2. Exit the sonic node and ssh back in to see the hostname change in effect
 
 ## Network Connectivity
@@ -356,9 +356,9 @@ To check on interface status and connectivity follow these steps on each router 
     },
     "PORTCHANNEL_MEMBER": {         <------ Port Channel Member Links
         "PortChannel1|Ethernet0": {},
-        "PortChannel1|Ethernet8": {},
-        "PortChannel2|Ethernet16": {},
-        "PortChannel2|Ethernet24": {}
+        "PortChannel1|Ethernet4": {},
+        "PortChannel2|Ethernet8": {},
+        "PortChannel2|Ethernet12": {}
   ```
 
 - Check that the port-channels were created and look at the member links
@@ -372,15 +372,15 @@ To check on interface status and connectivity follow these steps on each router 
           S - selected, D - deselected, * - not synced
    No.  Team Dev      Protocol     Ports
    -----  ------------  -----------  ---------------------------
-      1  PortChannel1  LACP(A)(Up)  Ethernet0(S) Ethernet8(S)   <------ See LADP status Active
-      2  PortChannel2  LACP(A)(Up)  Ethernet24(S) Ethernet16(S)
+      1  PortChannel1  LACP(A)(Up)  Ethernet0(S) Ethernet4(S)   <------ See LADP status Active
+      2  PortChannel2  LACP(A)(Up)  Ethernet8(S) Ethernet12(S)
    cisco@leaf-1:~$     
    ```
 
 **IP Adjaceny**
 -    View the configured IP address as listed in the below diagram.
 
-![Lab Topology](./topo-drawings/sonic-4-node-topology.png)
+![Lab Topology](./topo-drawings/sonic-101-topology.png)
 
 - Verify that IPs are configured on the SONiC routers
   ```
