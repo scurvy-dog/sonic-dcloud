@@ -16,7 +16,6 @@ In Lab Exercise 2 the student will explore the SONiC network operating system, i
       - [FRR Configuration Management](#frr-configuration-management)
   - [Ansible Automation](#ansible-automation)
   - [Configure Leaf-1 with SONiC CLI](#configure-leaf-1-with-sonic-cli)
-  - [Configure Hostnames](#configure-hostnames)
   - [Network Connectivity](#network-connectivity)
   - [End of Lab Exercise 2](#end-of-lab-exercise-2)
   
@@ -270,17 +269,16 @@ There are several relevant files for our ansible playbook
 7. Save configuration
    ```
    sudo config save
-   ```   
-
-## Configure Hostnames
-The command config hostname will update the underlying unix hostname and restart the service. The config save command needs to be made for persistance across reloads.
-
-1. Use sonic CLI to configure leaf-1 which causes the service to restart:
+   ```
+8. Configure Hostname- The command config hostname will update the underlying unix hostname and restart the service.
+   Use sonic CLI to configure leaf-1 which causes the service to restart:
+   
    ```
    sudo config hostname leaf-1
    sudo config save -y
    ```
-2. Exit the sonic node and ssh back in to see the hostname change in effect
+   
+10. Exit the sonic node and ssh back in to see the hostname change in effect
 
 ## Network Connectivity
 Next we'll validate that all of the links between nodes in the topology have been successfully brought up and IP addresses were assigned correctly.
