@@ -1,7 +1,7 @@
 # Lab 1 Guide: SONiC Topology Setup and Validation [30 Min]
 
 ### Description: 
-In Lab 1 we will explore the host-VM virtualization environment and log into the sonic-vs nodes and perform some system validation. The 4-node setup in Lab 1 will be used in all subsequent lab exercises. 
+In Lab 1 we will explore the host-VM virtualization environment and log into the SONiC router nodes and perform some system validation. The 4-node setup in Lab 1 will be used in all subsequent lab exercises. 
 
 ## Contents
 - [Lab 1 Guide: SONiC Topology Setup and Validation \[30 Min\]](#lab-1-guide-sonic-topology-setup-and-validation-30-min)
