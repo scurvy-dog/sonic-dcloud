@@ -9,7 +9,7 @@
      | vm-spine-1 | 198.18.128.103 |
      | vm-spine-2 | 198.18.128.104 |
 
-2. get the loal sonic-vxr8000 container's name:
+2. get the local sonic-vxr8000 container's name:
 
 ```
 docker ps
@@ -51,5 +51,3 @@ cd nobackup
 
 6. The script will output log info very similar to the docker logs info. After about 8-10 minutes we expect to see a 'Router up' message. 
 
-root@spine-1:/# cd nobackup/
-root@spine-1:/nobackup# ./startup.sh 8000.yaml 4
