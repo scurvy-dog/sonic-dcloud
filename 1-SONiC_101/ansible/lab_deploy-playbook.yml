@@ -12,6 +12,19 @@
         chdir: /home/cisco/sonic-dcloud
       ignore_errors: yes
       
+    - name: Copy motd file to remote vm
+      copy:
+        src: "motd"
+        dest: "/etc/motd"
+        mode: 0644 
+       
+    - name: Copy motd file to local host
+      copy:
+        src: "motd"
+        dest: "/etc/motd"
+        mode: 0644 
+        delegate_to: localhost  
+        
     - name: remove old deploy.log file
       command: rm deploy.log
       args:
