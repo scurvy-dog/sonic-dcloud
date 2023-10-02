@@ -10,9 +10,10 @@ In Lab 1 we will explore the host-VM virtualization environment and log into the
   - [Lab Objectives](#lab-objectives)
   - [Virtualization Stack](#virtualization-stack)
   - [Device Access](#device-access)
-    - [Management Network Topology](#management-network-topology)
     - [User Credentials](#user-credentials)
-    - [Check Build Scripts](#check-build-scripts)
+    - [Validate Access](#validate-access)
+  - [Check Build Scripts](#check-build-scripts)
+    - [Important](#important)
     - [Connect to SONiC Routers](#connect-to-sonic-routers)
   - [End of Lab 1](#end-of-lab-1)
   
@@ -88,6 +89,13 @@ This lab uses Ansible as the automation tool once the host vms have spun up. The
 	vm-spine-1 Router up
 	vm-leaf-2 Router up
 	```
+
+### Important 
+If the output of deploy.log shows any of the nodes failing to come up ("Router failed to come up"), we'll need to manually launch the build script. Instructions to do so are here:
+
+https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/if_sonic_fails_to_launch.md
+
+
   3. Ping each SONiC router management interface to see if the router has finished booting
      | Host name  | IP Address    |
      |:-----------|:--------------|
