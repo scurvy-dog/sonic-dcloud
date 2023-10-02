@@ -17,6 +17,7 @@
       args:
         chdir: /home/cisco
       ignore_errors: yes
+      delegate_to: localhost
       
     - name: run containerlab deploy to launch sonic vxr8000 nodes
       command: sudo containerlab deploy -t "{{ inventory_hostname }}/clab.yml"
