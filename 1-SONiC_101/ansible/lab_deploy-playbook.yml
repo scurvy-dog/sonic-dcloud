@@ -72,5 +72,13 @@
         line: "{{inventory_hostname}} {{ grep_result.stdout }}"
         create: yes
       delegate_to: localhost
-
-
+      
+- name: Setup lab and deploy endpoint nodes
+  hosts: endpoint_host_vms
+  become: true
+  tasks:
+    - name: Copy motd file to remote vm
+      copy:
+        src: "motd"
+        dest: "/etc/motd"
+        mode: 0644 
