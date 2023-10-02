@@ -16,10 +16,10 @@ docker ps
 ```
 Example output:
 ```
-cisco@vm-leaf-2:~$ docker ps
+cisco@vm-spine-2:~$ docker ps
 CONTAINER ID   IMAGE                 COMMAND                  CREATED          STATUS          PORTS     NAMES
-d1861990e9a8   c8000-clab-sonic:31   "/etc/prepEnv.sh /no…"   21 minutes ago   Up 21 minutes             clab-c8101-sonic-leaf-2
-cisco@vm-leaf-2:~$ 
+d1861990e9a8   c8000-clab-sonic:31   "/etc/prepEnv.sh /no…"   21 minutes ago   Up 21 minutes             clab-c8101-sonic-spine-2
+cisco@vm-spine-2:~$ 
 ```
 
 3. docker exec into the container:
@@ -29,7 +29,7 @@ docker exec -it <container name or ID> bash
 ```
 Example:
 ```
-docker exec -it clab-c8101-sonic-leaf-2 bash
+docker exec -it clab-c8101-sonic-spine-2 bash
 ```
 
 4. change directory into 'nobackup'
@@ -51,3 +51,24 @@ cd nobackup
 
 6. The script will output log info very similar to the docker logs info. After about 8-10 minutes we expect to see a 'Router up' message. 
 
+   Truncated example output:
+   ```
+   cisco@spine-2:~$ docker exec -it  clab-c8101-sonic-spine-2 bash
+   root@spine-2:/# cd nobackup/
+   root@spine-2:/nobackup# ./startup.sh 8000.yaml 4
+   Invoking /nobackup/startup.py 8000.yaml 4 4
+   ['/nobackup/startup.py', '8000.yaml', '4', '4']
+   MGMT_IP: 172.10.10.104  MASK: 255.255.255.0  GATEWAY: 172.10.10.1
+   Found 4 data interfaces (expected 4)
+   ...
+   ...
+   22:40:57 INFO R0:onie sonic login cisco/cisco123
+   22:40:57 INFO R0:reached sonic prompt
+   22:40:57 INFO R0:checking interfaces
+   22:41:01 INFO R0:found 0 interfaces (expected 32)
+   22:41:32 INFO R0:found 0 interfaces (expected 32)
+   22:42:04 INFO R0:found 32 interfaces (expected 32)
+   22:42:04 INFO R0:applying XR config
+   22:42:12 INFO Sim up
+   Router up
+   ```
