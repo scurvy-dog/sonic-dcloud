@@ -4,6 +4,10 @@ vm-leaf-2 ansible_host=172.10.10.202
 vm-spine-1 ansible_host=172.10.10.203
 vm-spine-2 ansible_host=172.10.10.204
 
+[endpoint_vms]
+endpoint-1 ansible_host=198.18.128.105
+endpoint-2 ansible_host=198.18.128.106
+
 [sonic_routers]
 leaf-1 ansible_host=172.10.10.101
 leaf-2 ansible_host=172.10.10.102

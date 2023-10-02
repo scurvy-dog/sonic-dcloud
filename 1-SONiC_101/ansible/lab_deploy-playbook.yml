@@ -74,7 +74,7 @@
       delegate_to: localhost
       
 - name: Setup lab and deploy endpoint nodes
-  hosts: endpoint_host_vms
+  hosts: endpoint_vms
   become: true
   tasks:
     - name: Copy motd file to remote vm
