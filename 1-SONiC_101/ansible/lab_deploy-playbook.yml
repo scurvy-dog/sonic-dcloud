@@ -41,9 +41,9 @@
         chdir: /home/cisco/
       ignore_errors: yes
 
-    - name: Pause for 12 minutes
+    - name: Pause for 10 minutes
       pause:
-        minutes: 12
+        minutes: 10
 
     - name: grep Router from docker logs
       shell: docker logs {{hostvars[inventory_hostname]['container'] }} | grep Router
