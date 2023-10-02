@@ -32,5 +32,5 @@ topology:
     - endpoints: ["leaf-2:eth3", "host:leaf-2-eth3"]
     - endpoints: ["leaf-2:eth4", "host:leaf-2-eth4"]
 
-    - endpoints: ["leaf-2:eth5", "sonic_e32:leaf-2-eth5"]
+    - endpoints: ["leaf-2:eth9", "sonic_e32:leaf-2-eth9"]
 
