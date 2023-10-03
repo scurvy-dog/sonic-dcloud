@@ -93,7 +93,7 @@ Options:
   -p, --ports TEXT
   -s, --stage [ingress|egress]
 ```
-- We will now add in an ACL table using the above parameters using the CLI below.
+We will now add in an ACL table using the above parameters using the CLI below.
   ```
   sudo config acl add table ICMP_DROP L3 -p Ethernet32 -d "BLock ICMP traffic from Endpoint2" -s ingress
   ```
@@ -107,8 +107,8 @@ Options:
 **Adding ACL Table through JSON**
 To utilize JSON to create an ACL it is a two step process. First you must construct a valid JSON syntax file and store that on the SONiC router itself. The second step is to use the config load command to add the table into the running configuration. See steps below.
 
-- **Example of ACL Table JSON**
-  Save this json acl table definition to a file on the SONiC device as acl_table_icmp.json
+**Example of ACL Table JSON**
+Save this json acl table definition to a file on the SONiC device as acl_table_icmp.json
 
 ```
 {
