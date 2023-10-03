@@ -154,6 +154,9 @@ There are several relevant files for our ansible playbook
 ## Validate BGP Peering
 
 ### Verify BGP Peering Sessions
+> [!NOTE]
+> FRR routing *show* commands must be done within the *vtysh* shell
+
 - Verify that BGP peering sessions are established with *spine-1* and *spine-2* from *leaf-1*
   ```
   show bgp summary
