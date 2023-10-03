@@ -10,12 +10,15 @@ In Lab Exercise 4 the student will explore how SONiC utilizes ACLs in dataplane 
   - [Contents](#contents)
   - [Lab Objectives](#lab-objectives)
   - [SONiC ACL Architecture](#sonic-acl-architecture)
-    - [ACL Table Definition Types](#acl-table-definition-types)
-    - [ACL Match Options](#acl-match-options)
-  - [Basic ACL Walk Through](#basic-acl-walk-through)
-    - [Add/Delete ACL Table](#acl-tables) 
-    - [Add/Delete ACL Rule](#acl-rules)
-  - [ACL Configuration Syntax](#acl-configuration-syntax)
+  - [ACL Tables](#acl-tables)
+    - [ACL Table Parameters](#acl-table-parameters)
+    - [ACL Table Syntax](#acl-table-syntax)
+    - [ACL Table Add](#acl-tables-add)
+    - [ACL Table Delete](#acl-table-delete)
+  - [ACL Rules](#acl-rules)
+    - [ACL Rule parameters](#acl-rule-parameters)
+    - [ACL Rule Syntax](#acl-rule-syntax)
+    - [ACL Rule Add/Delete](#acl-rules-add-delete)
   - [ACL Examples](#acl-examples)
   - [End of Lab 4](#end-of-lab-4)
   
@@ -27,9 +30,34 @@ The student upon completion of Lab Exercise 4 should have achieved the following
 * Ability to apply ACLs in SONiC
 
 ## SONiC ACL Architecture
+The core of ACLs in SONiC is the ACL Table which links interface(s) with rule sets and defines the direction of the policy enforcement. See the diagram below to see the relationship.
 
-### ACL Table Definition Types
+![ACL Overview](./topo-drawings/acl-overview.png)
 
+ACLs can be grouped into three general categories:
+    1. Data plane ACLs applied against physical interfaces
+    2. Control plane ACLs
+    3. Mirror ACLs for capturing and replicating traffic
+In this lab we will focus on the first type - Data plane ACLs.
+
+## ACL Tables
+In this lab we are focusing specifically on Data plane ACLs. The purpose of Data plane ACL tables is to link a set of rules that can be applied to data plane traffic to a group of defined interfaces. 
+
+ACL tables can be created or deleted using either CLI or through a JSON definition which is loaded into the running config. We will show both options in this lab. 
+
+### ACL Table Parameters
+Data Plane ACL Tables have mandatory and optional defined fields as listed in the below table.
+
+| Parameters | CLI Flag | Mandatory | Details                                          |
+|:-----------|:--------:|:---------:|:-------------------------------------------------|
+| table name | none     | X         | The name of the ACL table to create.             |
+| table type | none     | X         | Type of ACL table to create. *See table above*   |
+| description| -d       |           | Table description. Defaults to table name        |
+| ports      | -p       |           | Binds table to physical port,portchannel, VLAN   |
+| stage      | -s       |           | Valid options are ingress (default) or egress    |
+
+
+**Table Type Field Definitions**
 | Type                | Description                       | Ingress | Egress  | 
 |:--------------------|:----------------------------------|:-------:|:-------:|
 | L3                  | Match on IPv4 ACL                 | X       | X       |
@@ -45,27 +73,15 @@ The student upon completion of Lab Exercise 4 should have achieved the following
 | CTRLPLANE           | Research                          | X       | X       |
 | DTEL_FLOW_WATCHLIST | Research                          | X       | X       |
 
+### ACL Table Syntax
 
-## Basic ACL Walk Through
-The core of ACLs in SONiC is the ACL Table which links interfaces with rules and defines the direction of the policy enforcement.
-
-![ACL Overview](./topo-drawings/acl-overview.png)
-
-### ACL Tables
-ACL tables are of two types. Data Plane ACLs and Control Plane ACLS.
-Data Plane tables purpose is to link a data plane traffic type to a set of defined interfaces. ACL Tables can be created using either CLI or through a JSON definition which is loaded into config. We will show both options in this lab. 
-
-Data Plane ACL Tables have mandatory and optional defined fields as listed in the below table.
-
-| Parameters | CLI Flag | Mandatory | Details                                          |
-|:-----------|:--------:|:---------:|:-------------------------------------------------|
-| table name | none     | X         | The name of the ACL table to create.             |
-| table type | none     | X         | Type of ACL table to create. *See table above*   |
-| description| -d       |           | Table description. Defaults to table name        |
-| ports      | -p       |           | Binds table to physical port,portchannel, VLAN   |
-| stage      | -s       |           | Valid options are ingress (default) or egress    |
-
-
+In this example set of code we want to set the following parameters through CLI or JSON.
+- Name the ACL Table: ICMP_DROP
+- Traffic Type Affected: IPv4 Layer 3 packets
+- Interface Bindings: Ethernet 32
+- Traffic Direction: Ingress
+    
+#### ACL Table Add
 **Adding ACL Table with CLI**
 ```
 cisco@leaf-2:~$ sudo config acl add table --help
@@ -77,15 +93,17 @@ Options:
   -p, --ports TEXT
   -s, --stage [ingress|egress]
 ```
-```
-sudo config acl add table ICMP_DROP L3 -p Ethernet32 -d "BLock ICMP traffic from Endpoint2" -s ingress
-```
-```
-cisco@leaf-2:~$ sudo acl-loader show table
-Name       Type    Binding     Description                        Stage    Status
----------  ------  ----------  ---------------------------------  -------  --------
-ICMP_DROP  L3      Ethernet32  BLock ICMP traffic from Endpoint2  ingress  Active
-```
+We will now add in an ACL table using the above parameters using the CLI below.
+  ```
+  sudo config acl add table ICMP_DROP L3 -p Ethernet32 -d "BLock ICMP traffic from Endpoint2" -s ingress
+  ```
+  ```
+  cisco@leaf-2:~$ sudo acl-loader show table
+  Name       Type    Binding     Description                        Stage    Status
+  ---------  ------  ----------  ---------------------------------  -------  --------
+  ICMP_DROP  L3      Ethernet32  BLock ICMP traffic from Endpoint2  ingress  Active
+  ```
+
 **Adding ACL Table through JSON**
 To utilize JSON to create an ACL it is a two step process. First you must construct a valid JSON syntax file and store that on the SONiC router itself. The second step is to use the config load command to add the table into the running configuration. See steps below.
 
@@ -106,62 +124,23 @@ Save this json acl table definition to a file on the SONiC device as acl_table_i
         }
 }
 ```
+- **Loading the ACL table JSON file into the running config**
+  ```
+  sudo config load acl_table_icmp.json
+  ```
 
-**Loading the ACL table JSON file into the running config**
-```
-sudo config load acl_table_icmp.json
-```
+### ACL Table Delete
+Through CLI you an leverage the *sudo config acl remove* command as seen below
 
-**Remove ACL Table through CLI**
 ```
 sudo config acl remove table ICMP_DROP
 ```
 
-
-
-### ACL Rules
+## ACL Rules
 ACL Rules contain the detail step by step policy that is implemented by the tables. ACL Rule structure will identify which ACL Table they should be joined to. ACL Rules can only be defined using JSON and have no CLI option. We will show a basic ACL Rule used to block ICMP traffic coming from Endpoint-2 to *Loopback 0* on Leaf-2
 
-**Example JSON file that should be saved as acl_rule_icmp.json** 
-
-```
-{
-    "ACL_RULE": {
-        "ICMP_INGRESS|RULE_10": {
-            "PACKET_ACTION": "FORWARD",
-            "PRIORITY": "10",
-            "SRC_IP": "198.18.12.1/32"
-        },
-        "ICMP_INGRESS|RULE_20": {
-            "PACKET_ACTION": "DROP",
-            "PRIORITY": "20",
-            "SRC_IP": "10.0.0.2/32"
-        }
-    }
-}
-```
-
-**Loading the ACL rule JSON file into the running config**
-```
-sudo config load acl_rule_icmp.json
-```
-> **NOTE**
-> SONiC does not support the removal of ACLs through CLI. The below json will remove all ACL rules
-
-```
-{
-    "acl": {
-        "acl-sets": {
-            "acl-set": {
-            }
-        }
-    }
-}
-```
-
-### ACL Rule Syntax
-ACL rules follow the guideline of identifying the table and acl name and then have a set of key:value pairs which defines each rule in t
-**ACL Rule Match Options**
+### ACL Rule Parameters
+ACL rule sets have a much larger parameter set than tables due to the complex nature of the ACL match option combinations. There are over 30 plus parameters list in the table below. In this lab we will use 2-3 as examples.
 
 - For reference on Ethernet Header see this link [HERE](https://en.wikipedia.org/wiki/Ethernet_frame)
 - For reference on IPv4 Packet Header see this link [HERE](https://en.wikipedia.org/wiki/Internet_Protocol_version_4#Header)
@@ -202,6 +181,51 @@ ACL rules follow the guideline of identifying the table and acl name and then ha
 | BTH_OPCODE         | Match ???                                  | Research                                       |
 | AETH_SYNDROME      | Match ???                                  | Research                                       |
 
+
+### ACL Rule Syntax
+ACL rules follow the guideline of identifying the table and acl name and then have a set of key:value pairs which defines each rule in t
+
+**Example JSON file that should be saved as acl_rule_icmp.json** 
+
+```
+{
+    "ACL_RULE": {
+        "ICMP_INGRESS|RULE_10": {
+            "PACKET_ACTION": "FORWARD",
+            "PRIORITY": "10",
+            "SRC_IP": "198.18.12.1/32"
+        },
+        "ICMP_INGRESS|RULE_20": {
+            "PACKET_ACTION": "DROP",
+            "PRIORITY": "20",
+            "SRC_IP": "10.0.0.2/32"
+        }
+    }
+}
+```
+
+**Loading the ACL rule JSON file into the running config**
+```
+sudo config load acl_rule_icmp.json
+```
+> **NOTE**
+> SONiC does not support the removal of ACLs through CLI. The below json will remove all ACL rules
+
+- Take the below json and add it to file called acl-wipe.json. The below json will remove **ALL** ACL rules
+```
+{
+    "acl": {
+        "acl-sets": {
+            "acl-set": {
+            }
+        }
+    }
+}
+```
+Apply the command using the below.
+```
+sudo config acl update full acl-wipe.json
+```
 ## ACL Examples
 Below are two basic ACLs to show how to apply and check ACL effectivness 
 
@@ -233,6 +257,48 @@ Lets create an ACL Table that we will link to the interface
 4. Load the json definition file into the running config
    ```
    sudo config load eth32_acl_table.json
+   ```
+5. Verify the ACL table was installed.
+   ```
+   cisco@leaf-1:~$ show acl table
+   Name       Type    Binding     Description                         Stage    Status
+   ---------  ------  ----------  ----------------------------------  -------  --------
+   ICMP_DROP  L3      Ethernet32  Block IMCP traffic from endpoint 1  ingress  Active
+   ```
+6. In the home directory lets create a json definition file for the ACL Rule Set
+   ```
+   nano acl_ep1_ingress.json
+   ```
+7. Paste in the following code and save and exit.
+   ```
+   {
+     "ACL_RULE": {
+        "ICMP_DROP|RULE_10": {
+            "PACKET_ACTION": "DROP",
+            "PRIORITY": "10",
+            "SRC_IP": "198.18.12.2/32",
+            "IP_PROTOCOL":1
+        },
+        "ICMP_DROP|RULE_20": {
+            "PACKET_ACTION": "FORWARD",
+            "PRIORITY": "20",
+            "SRC_IP": "198.18.12.2/32"
+        }
+     }
+   }    
+   ```
+
+8. Verify the ACL rule set was installed
+   ```
+   cisco@leaf-1:~$ sudo config load acl_ep1_ingress.json
+   Load config from the file(s) acl_ep1_ingress.json ? [y/N]: y
+   Running command: /usr/local/bin/sonic-cfggen -j acl_ep1_ingress.json --write-to-db
+   cisco@leaf-1:~$ show acl rule
+   Table      Rule     Priority    Action    Match                   Status
+   ---------  -------  ----------  --------  ----------------------  --------
+   ICMP_DROP  RULE_20  20          FORWARD   SRC_IP: 198.18.12.2/32  Active
+   ICMP_DROP  RULE_10  10          DROP      IP_PROTOCOL: 1          Active  
+                                             SRC_IP: 198.18.12.2/32
    ```
 
 ## Scratch
