@@ -235,11 +235,12 @@ We've listed a number of verification steps to show various options from within 
        f - OpenFabric,
        > - selected route, * - FIB route, q - queued, r - rejected, b - backup
        t - trapped, o - offload failure
-
-       B>* 10.0.0.2/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24   <----- Route from leaf-1
-       B>* 10.0.0.3/32 [20/0] via 10.1.1.3, PortChannel2, weight 1, 00:25:24   <----- Route from spine-1
-       B>* 10.0.0.4/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24   <----- Route from spine-2
-         *                    via 10.1.1.3, PortChannel2, weight 1, 00:25:24
+     B>* 10.0.0.2/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:05:22  
+     *                    via 10.1.1.3, PortChannel2, weight 1, 00:05:22
+     B>* 10.0.0.3/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:05:22
+     B>* 10.0.0.4/32 [20/0] via 10.1.1.3, PortChannel2, weight 1, 03:09:17
+     B>* 198.18.12.0/24 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:05:22 <--- Leaf-2 Route via Spine-1
+     *                       via 10.1.1.3, PortChannel2, weight 1, 00:05:22   <--- Leaf-2 Route via Spine-2
      ```
 6. **Verify IPv4** routes. SONiC router *leaf-2* should have received the following
      ```
@@ -255,8 +256,8 @@ We've listed a number of verification steps to show various options from within 
        *                    via 10.1.1.7, PortChannel2, weight 1, 01:13:29
      B>* 10.0.0.3/32 [20/0] via 10.1.1.7, PortChannel2, weight 1, 01:13:29
      B>* 10.0.0.4/32 [20/0] via 10.1.1.5, PortChannel1, weight 1, 01:13:29
-     B>* 198.18.11.0/24 [20/0] via 10.1.1.5, PortChannel1, weight 1, 01:13:29
-      *                       via 10.1.1.7, PortChannel2, weight 1, 01:13:29
+     B>* 198.18.11.0/24 [20/0] via 10.1.1.5, PortChannel1, weight 1, 01:13:29  <--- Leaf-1 Route via Spine-1
+      *                       via 10.1.1.7, PortChannel2, weight 1, 01:13:29   <--- Leaf-2 Route via Spine-1
      ```
   
 7. **Verify IPv6** SONiC router *leaf-1* should have received the following.
@@ -297,7 +298,7 @@ We've listed a number of verification steps to show various options from within 
 
        Network          Next Hop            Metric LocPrf Weight Path
      *> 10.0.0.1/32      0.0.0.0                  0         32768 i
-     <b>*> 10.0.0.2/32</b>      10.1.1.1                               0 65000 65002 i
+     *> 10.0.0.2/32      10.1.1.1                               0 65000 65002 i
      *=                  10.1.1.3                               0 65000 65002 i
      *> 10.0.0.3/32      10.1.1.1                 0             0 65000 i
      *> 10.0.0.4/32      10.1.1.3                 0             0 65000 i
@@ -318,8 +319,8 @@ We've listed a number of verification steps to show various options from within 
      Origin codes:  i - IGP, e - EGP, ? - incomplete
      RPKI validation codes: V valid, I invalid, N Not found
 
-       Network          Next Hop            Metric LocPrf Weight Path
-       fc00:0:1::/48    ::                       0         32768 i
+       Network           Next Hop            Metric LocPrf Weight Path
+       fc00:0:1::/48     ::                       0         32768 i
      *> fc00:0:1::1/128  ::                       0         32768 i
      *= fc00:0:2::1/128  fe80::7afe:fdff:feb2:6800
                                                               0 65000 65002 i
@@ -369,14 +370,12 @@ Validate IPv4 BGP route received from peer. We will examine *10.0.0.2/32* origin
 
 ### Validate the route was installed in the Linux forwarding table (SONiC's FIB)
 
-12. Exit the FRR CLI and then from Linux:
+12. Exit the FRR CLI and then from display the Linux IP routing table:
      ```
      cisco@leaf-1:~$ ip route
-     ...
-     cisco@leaf-1:~$ ip route
-     10.0.0.2 nhid 121 proto bgp src 10.0.0.1 metric 20 
-       nexthop via 10.1.1.3 dev PortChannel2 weight 1 
-       nexthop via 10.1.1.1 dev PortChannel1 weight 1 
+     10.0.0.2 nhid 121 proto bgp src 10.0.0.1 metric 20       
+       nexthop via 10.1.1.3 dev PortChannel2 weight 1        <--- Leaf-2 Route via Spine-2
+       nexthop via 10.1.1.1 dev PortChannel1 weight 1        <--- Leaf-2 Route via Spine-1
      10.0.0.3 nhid 113 via 10.1.1.1 dev PortChannel1 proto bgp src 10.0.0.1 metric 20 
      10.0.0.4 nhid 112 via 10.1.1.3 dev PortChannel2 proto bgp src 10.0.0.1 metric 20 
      10.1.1.0/31 dev PortChannel1 proto kernel scope link src 10.1.1.0 
@@ -391,6 +390,7 @@ Validate IPv4 BGP route received from peer. We will examine *10.0.0.2/32* origin
 
 ## Validate SONiC End to End Connectivity
 
+### Validate Leaf-1 to Leaf-2 reachability
 1. From *leaf-1* we will ping the *loopback0* interface on *leaf-2*
      ```
      ping 10.0.0.2
@@ -402,11 +402,10 @@ Validate IPv4 BGP route received from peer. We will examine *10.0.0.2/32* origin
      64 bytes from 10.0.0.2: icmp_seq=2 ttl=63 time=276 ms
      ```
 
-### Validate Endpoint VM reachability
+### Validate Endpoint-1 to Endpoint-2 reachability
 
-__Endpoint-1__
-
-Endpoint-1 VM represents a standard linux host or endpoint connected to leaf-1
+*endpoint-1* VM represents a standard linux host or endpoint connected to SONiC router *leaf-1*. 
+*endpoint-2* VM represents a standard linux host or endpoint connected to SONiC router *leaf-2*.
 
 2. Open a new terminal and SSH to Endpoint-1 Client VM
      ```
@@ -424,23 +423,7 @@ Endpoint-1 VM represents a standard linux host or endpoint connected to leaf-1
      64 bytes from 198.18.12.2: icmp_seq=2 ttl=62 time=372 ms
      ```
 
-__Endpoint-2__
 
-The Endpiont-2 VM represents a standard linux host or endpoint connected to leaf-2
-
-4. In another terminal SSH to Endpoint-2 Client VM
-     ```
-     ssh cisco@198.18.128.106
-     ```
-5. Ping Endpoint-1
-     ```
-     ping 198.18.11.2
-     ```
-     ```
-     cisco@endpoint-2:~$ ping 198.18.11.2
-     PING 198.18.11.2 (198.18.11.2) 56(84) bytes of data.
-     64 bytes from 198.18.11.2: icmp_seq=1 ttl=61 time=177 ms
-     64 bytes from 198.18.11.2: icmp_seq=2 ttl=61 time=4.19 ms
      ```
 
 ## End of Lab Exercise 3
