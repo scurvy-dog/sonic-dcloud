@@ -111,7 +111,7 @@ If the output of deploy.log shows any of the nodes failing to come up ("Router f
      64 bytes from leaf01 (172.10.10.101): icmp_seq=2 ttl=64 time=0.362 ms
      ```
 
-> **NOTE**
+> [!NOTE]
 >  If SONiC router does not respond to ping. Follow these directions
 >
 >1. SSH into the host-vm directly
