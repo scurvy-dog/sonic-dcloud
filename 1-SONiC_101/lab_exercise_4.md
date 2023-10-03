@@ -2,7 +2,7 @@
 
 
 ### Description: 
-In Lab Exercise 4 the student will explore how SONiC utilizes ACLs in dataplane and control plane application. An overview of where and how SONiC applies ACLs will be provided and configuration examples.
+In Lab Exercise 4 the student will explore how SONiC utilizes ACLs in data-plane and control plane application. An overview of where and how SONiC applies ACLs will be provided and configuration examples.
 
 ## Contents
 - [Lab Exercise 4: ACL Overview and Config \[30 Min\]](#lab-exercise-4-acl-overview-and-config-30-min)
@@ -18,7 +18,8 @@ In Lab Exercise 4 the student will explore how SONiC utilizes ACLs in dataplane 
   - [ACL Rules](#acl-rules)
     - [ACL Rule parameters](#acl-rule-parameters)
     - [ACL Rule Syntax](#acl-rule-syntax)
-    - [ACL Rule Add/Delete](#acl-rules-add-delete)
+    - [ACL Rule Add](#acl-rules-add)
+    - [ACL Rule Delete](#acl-rules-delete)
   - [ACL Examples](#acl-examples)
   - [End of Lab 4](#end-of-lab-4)
   
@@ -35,18 +36,18 @@ The core of ACLs in SONiC is the ACL Table which links interface(s) with rule se
 ![ACL Overview](./topo-drawings/acl-overview.png)
 
 ACLs can be grouped into three general categories:
-    1. Data plane ACLs applied against physical interfaces
+    1. Data-plane ACLs applied against physical interfaces
     2. Control plane ACLs
     3. Mirror ACLs for capturing and replicating traffic
-In this lab we will focus on the first type - Data plane ACLs.
+In this lab we will focus on the first type - Data-plane ACLs.
 
 ## ACL Tables
-In this lab we are focusing specifically on Data plane ACLs. The purpose of Data plane ACL tables is to link a set of rules that can be applied to data plane traffic to a group of defined interfaces. 
+In this lab we are focusing specifically on data-plane ACLs. The purpose of data-plane ACL tables is to link a set of rules that can be applied to data-plane traffic to a group of defined interfaces. 
 
 ACL tables can be created or deleted using either CLI or through a JSON definition which is loaded into the running config. We will show both options in this lab. 
 
 ### ACL Table Parameters
-Data Plane ACL Tables have mandatory and optional defined fields as listed in the below table.
+Data-plane ACL Tables have mandatory and optional defined fields as listed in the below table.
 
 | Parameters | CLI Flag | Mandatory | Details                                          |
 |:-----------|:--------:|:---------:|:-------------------------------------------------|
@@ -148,6 +149,8 @@ ACL rule sets have a much larger parameter set than tables due to the complex na
 - For reference on ICMP Packet Header see this link [HERE](https://en.wikipedia.org/wiki/Ping_(networking_utility)#ICMP_packet)
 - For referenec on VXLAN Packet Header see this link [HERE](https://learningnetwork.cisco.com/s/blogs/a0D3i000005YebJEAS/introduction-to-vxlan)
 
+**Match Table Parameters**
+
 | Type               | Description                                | Notes                                          | 
 |:-------------------|:-------------------------------------------|:-----------------------------------------------|
 | IN_PORTS           | Match Ingress Port                         |                                                |
@@ -183,8 +186,24 @@ ACL rule sets have a much larger parameter set than tables due to the complex na
 
 
 ### ACL Rule Syntax
-ACL rules follow the guideline of identifying the table and acl name and then have a set of key:value pairs which defines each rule in t
+ACL rules are defined using the JSON syntax for purposes of importing into the runnging configuration (redis database). The syntax follows a strict heirarchy of objects and then defining key:value pairs. 
 
+The top level of the heirarchy is defined by the "ACL_RULE" object. Within the objects that data set are individual rules.
+Individual rules follows the below syntax
+```
+    "<ACL TABLE NAME>|<ACL RULE NAME>":{
+        "<KEY VALUE>": "<KEY VALUE>",
+        "<KEY VALUE>": "<KEY VALUE>"
+    }
+```
+Each ACL rule for data-plane ACL rule requires two key values: *PACKET_ACTION* and *PRIORITY*. 
+The remaining <key>:<value> pairs would be matching conditions found in the above table labled *Match Table Parameters*.
+
+If the ACL Table type is *L3* or *L3V6* then the ACL rule *PACKET_ACTION* valid options are {FORWARD | DROP}
+
+The *PRIORITY* value is processed by **highest numerical value first**. So in the below rule set RULE_20 with *PRIORITY 20* will be processed before RULE_10 *PRIORITY 10*.
+
+### ACL Rule Add
 **Example JSON file that should be saved as acl_rule_icmp.json** 
 
 ```
@@ -208,10 +227,13 @@ ACL rules follow the guideline of identifying the table and acl name and then ha
 ```
 sudo config load acl_rule_icmp.json
 ```
+
+### ACL Rule Delete
 > **NOTE**
 > SONiC does not support the removal of ACLs through CLI. The below json will remove all ACL rules
 
-- Take the below json and add it to file called acl-wipe.json. The below json will remove **ALL** ACL rules
+The below json will remove **ALL** ACL rule sets in the running configuration. Save the JSON into a file called acl-wipe.json
+  
 ```
 {
     "acl": {
@@ -222,10 +244,12 @@ sudo config load acl_rule_icmp.json
     }
 }
 ```
+
 Apply the command using the below.
 ```
 sudo config acl update full acl-wipe.json
 ```
+
 ## ACL Examples
 Below are two basic ACLs to show how to apply and check ACL effectivness 
 
@@ -271,21 +295,21 @@ Lets create an ACL Table that we will link to the interface
    ```
 7. Paste in the following code and save and exit.
    ```
-   {
-     "ACL_RULE": {
+  {
+    "ACL_RULE": {
         "ICMP_DROP|RULE_10": {
-            "PACKET_ACTION": "DROP",
+            "PACKET_ACTION": "FORWARD",
             "PRIORITY": "10",
-            "SRC_IP": "198.18.12.2/32",
-            "IP_PROTOCOL":1
+            "SRC_IP": "198.18.11.2/32"
         },
         "ICMP_DROP|RULE_20": {
-            "PACKET_ACTION": "FORWARD",
+            "PACKET_ACTION": "DROP",
             "PRIORITY": "20",
-            "SRC_IP": "198.18.12.2/32"
+            "SRC_IP": "198.18.11.2/32",
+            "IP_PROTOCOL":1
         }
-     }
-   }    
+    }
+}    
    ```
 
 8. Verify the ACL rule set was installed
