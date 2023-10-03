@@ -5,6 +5,8 @@ In Lab Exercise 3 the student will explore configuring the BGP routing protocol 
 
 ## Contents
 - [Lab Exercise 3: Configure and Validate BGP \[40 Min\]](#lab-exercise-3-configure-and-validate-bgp-40-min)
+    - [Description:](#description)
+  - [Contents](#contents)
   - [Lab Objectives](#lab-objectives)
   - [FRR BGP Overview](#frr-bgp-overview)
   - [BGP Topology](#bgp-topology)
@@ -27,7 +29,7 @@ The student upon completion of Lab 3 should have achieved the following objectiv
 * Valadiate end to end topology 
 
 ## FRR BGP Overview
-For this lab we will be using two mechanisms to configure FRR. The first is to use ansible to update the FRR config file */etc/sonic/frr/bgpd.conf* on three of the four routers. When we do a config reload command it will load the FRR/BGP configurations into the running configuration which is stored in the *redis-database*. We will use this method to load FRR/BGP configuration for *spine-1*, *spine-2*, and *leaf-2*.
+For this lab we will be using two mechanisms to configure FRR. The first is to use ansible to update the FRR config file */etc/sonic/frr/bgpd.conf* on three of the four routers. The playbook will then restart the SONiC "BGP" containers, which will come up with their FRR/BGP configurations, and the running configuration will also be stored in the *redis-database*. We will use this method to load FRR/BGP configuration for *spine-1*, *spine-2*, and *leaf-2*.
 
 For *leaf-1* we'll invoke the FRR CLI and add BGP configuration there. 
 
@@ -37,7 +39,7 @@ For *leaf-1* we'll invoke the FRR CLI and add BGP configuration there.
 > From there on it will follow the same path as a REST config request for create, update and delete operations
 
 ## BGP Topology
-In this lab we will have three separate BGP AS represented in the fabric. The spine layer will run a single AS 65000. Each leaf will run a separate BGP AS as represented in the topology diagram below. In this BGP DC fabric the leafs should be receiving equal cost paths through each of the spine layer port-channels via AS 65000.
+In this lab we will have three separate BGP ASNs represented in the fabric. The spine layer will run a single AS 65000. Each leaf will run a separate BGP AS as represented in the topology diagram below. In this BGP DC fabric the leafs should be receiving equal cost paths through each of the spine layer port-channels via AS 65000.
 
 ![BGP Topology](./topo-drawings/bgp-topology.png)
 
@@ -56,10 +58,10 @@ There are several relevant files for our ansible playbook
 1. Log into the *Jumpbox* VM.
 2. Change to the ansible directory
    ```
-   cd ansible
+   cd /sonic-dcloud/1-SONiC_101/ansible
    ```
    
-3. Ansible playbook to copy configurations to SONiC routers and restart BGP/FRR docker containers
+3. Run the Ansible playbook to copy configurations to SONiC routers and restart BGP/FRR docker containers
    ```
    ansible-playbook -i hosts lab_exercise_3-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
    ```
@@ -78,7 +80,7 @@ There are several relevant files for our ansible playbook
 > Ansible playbook configured router *spine-1*, *spine-2*, and *leaf-2*. Next we'll manually configure BGP for router *leaf-1*.
    
 ## Configure BGP Leaf-1 with FRR CLI
-1. SSH to SONiC router *leaf-1* (ssh cisco@leaf-1) and invoke the FRR CLI shell
+1. From the jumpbox or from vm-leaf-1 SSH to SONiC router *leaf-1* (ssh cisco@leaf-1) and invoke the FRR CLI shell
    ```
    vtysh
    ```
@@ -100,7 +102,7 @@ There are several relevant files for our ansible playbook
    neighbor fc00:0:ffff::1 remote-as 65000
    neighbor fc00:0:ffff::3 remote-as 65000
    ```
-4. Next we will add the IPv4 Unicast configuration
+4. Next we will add the IPv4 Unicast configuration and advertise leaf-1's loopback and endpoint attached prefix 198.18.11.0/24
    ```
    address-family ipv4 unicast
    network 10.0.0.1/32
@@ -109,7 +111,7 @@ There are several relevant files for our ansible playbook
    neighbor 10.1.1.3 activate
    exit-address-family
    ```
-5. Now add the IPv6 Unicast configuration
+5. Now add the IPv6 Unicast configuration 
    ```
    address-family ipv6 unicast
    network fc00:0:1::/48
@@ -157,7 +159,7 @@ There are several relevant files for our ansible playbook
 > [!NOTE]
 > FRR routing *show* commands must be done within the *vtysh* shell
 
-1. Log into SONiC router *leaf-1*
+1. Log into SONiC router *leaf-1* and invoke vtysh
 2. Verify that BGP peering sessions are established with *spine-1* and *spine-2*
      ```
      show bgp summary
@@ -195,25 +197,25 @@ There are several relevant files for our ansible playbook
      leaf-2# show bgp summary
      IPv4 Unicast Summary (VRF default):
      BGP router identifier 10.0.0.2, local AS number 65002 vrf-id 0
-     BGP table version 2
-     RIB entries 3, using 552 bytes of memory
+     BGP table version 6
+     RIB entries 11, using 2024 bytes of memory
      Peers 2, using 1447 KiB of memory
 
      Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
-     10.1.1.5        4      65000         0         0        0    0    0    never       Active        0 N/A
-     10.1.1.7        4      65000         0         0        0    0    0    never       Active        0 N/A
+     10.1.1.5        4      65000      1453      1453        0    0    0 01:12:20            3        6 N/A
+     10.1.1.7        4      65000      1453      1453        0    0    0 01:12:20            3        6 N/A
 
      Total number of neighbors 2
 
      IPv6 Unicast Summary (VRF default):
      BGP router identifier 10.0.0.2, local AS number 65002 vrf-id 0
-     BGP table version 1
-     RIB entries 2, using 368 bytes of memory
+     BGP table version 5
+     RIB entries 8, using 1472 bytes of memory
      Peers 2, using 1447 KiB of memory
 
      Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
-     fc00:0:ffff::5  4      65000         0         0        0    0    0    never       Active        0 N/A
-     fc00:0:ffff::7  4      65000         0         0        0    0    0    never       Active        0 N/A
+     fc00:0:ffff::5  4      65000      1456      1457        0    0    0 01:12:20            2        5 N/A
+     fc00:0:ffff::7  4      65000      1456      1457        0    0    0 01:12:20            2        5 N/A
 
      Total number of neighbors 2
      ```
@@ -241,18 +243,18 @@ There are several relevant files for our ansible playbook
      ```
      leaf-1# show ip route bgp
      Codes: K - kernel route, C - connected, S - static, R - RIP,
-        O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
-        T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
-        f - OpenFabric,
-        > - selected route, * - FIB route, q - queued, r - rejected, b - backup
-        t - trapped, o - offload failure
+          O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+          T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+          f - OpenFabric,
+          > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+          t - trapped, o - offload failure
 
-     B>* 10.0.0.1/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:04:52
-     *                    via 10.1.1.3, PortChannel2, weight 1, 00:04:52
-     B>* 10.0.0.3/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:04:30
-     B>* 10.0.0.4/32 [20/0] via 10.1.1.3, PortChannel2, weight 1, 00:04:24
-     B>* 198.18.11.0/24 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:07:49
-     *                       via 10.1.1.3, PortChannel2, weight 1, 00:07:49
+     B>* 10.0.0.1/32 [20/0] via 10.1.1.5, PortChannel1, weight 1, 01:13:29
+       *                    via 10.1.1.7, PortChannel2, weight 1, 01:13:29
+     B>* 10.0.0.3/32 [20/0] via 10.1.1.7, PortChannel2, weight 1, 01:13:29
+     B>* 10.0.0.4/32 [20/0] via 10.1.1.5, PortChannel1, weight 1, 01:13:29
+     B>* 198.18.11.0/24 [20/0] via 10.1.1.5, PortChannel1, weight 1, 01:13:29
+      *                       via 10.1.1.7, PortChannel2, weight 1, 01:13:29
      ```
   
 7. **Verify IPv6** SONiC router *leaf-1* should have received the following.
@@ -262,16 +264,18 @@ There are several relevant files for our ansible playbook
      ```
      leaf-1# show ipv6 route bgp
      Codes: K - kernel route, C - connected, S - static, R - RIPng,
-        O - OSPFv3, I - IS-IS, B - BGP, N - NHRP, T - Table,
-        v - VNC, V - VNC-Direct, A - Babel, F - PBR,
-        f - OpenFabric,
-        > - selected route, * - FIB route, q - queued, r - rejected, b - backup
-        t - trapped, o - offload failure
+          O - OSPFv3, I - IS-IS, B - BGP, N - NHRP, T - Table,
+          v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+          f - OpenFabric,
+          > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+          t - trapped, o - offload failure
 
-     B>* fc00:0:1::1/128 [20/0] via fe80::7a58:c8ff:fe83:e400, PortChannel2, weight 1, 00:02:29
-     *                        via fe80::7afe:fdff:feb2:6800, PortChannel1, weight 1, 00:02:29
-     B>* fc00:0:3::1/128 [20/0] via fe80::7afe:fdff:feb2:6800, PortChannel1, weight 1, 00:05:12
-     B>* fc00:0:4::1/128 [20/0] via fe80::7a58:c8ff:fe83:e400, PortChannel2, weight 1, 00:05:06
+     B>* fc00:0:2::/48 [20/0] via fe80::5054:ff:fe74:c103, PortChannel1, weight 1, 00:02:45
+       *                      via fe80::7acf:d2ff:fe73:b600, PortChannel2, weight 1, 00:02:45
+     B>* fc00:0:2::1/128 [20/0] via fe80::5054:ff:fe74:c103, PortChannel1, weight 1, 00:02:45
+       *                        via fe80::7acf:d2ff:fe73:b600, PortChannel2, weight 1, 00:02:45
+     B>* fc00:0:3::1/128 [20/0] via fe80::5054:ff:fe74:c103, PortChannel1, weight 1, 01:59:54
+     B>* fc00:0:4::1/128 [20/0] via fe80::7acf:d2ff:fe73:b600, PortChannel2, weight 1, 01:59:54
      ```
      - *leaf-2* should show similar output.
   
@@ -366,13 +370,24 @@ There are several relevant files for our ansible playbook
 ### Validate the route was installed in the Linux forwarding table (SONiC's FIB)
 
 1. Exit the FRR CLI and then from Linux:
-  ```
-  cisco@leaf-1:~$ ip route
-  ...
-  10.0.0.2 nhid 111 proto bgp src 10.0.0.1 metric 20 
-	nexthop via 10.1.1.1 dev PortChannel1 weight 1 
-	nexthop via 10.1.1.3 dev PortChannel2 weight 1
-  ```
+   ```
+   cisco@leaf-1:~$ ip route
+   ...
+   cisco@leaf-1:~$ ip route
+   10.0.0.2 nhid 121 proto bgp src 10.0.0.1 metric 20 
+     nexthop via 10.1.1.3 dev PortChannel2 weight 1 
+     nexthop via 10.1.1.1 dev PortChannel1 weight 1 
+   10.0.0.3 nhid 113 via 10.1.1.1 dev PortChannel1 proto bgp src 10.0.0.1 metric 20 
+   10.0.0.4 nhid 112 via 10.1.1.3 dev PortChannel2 proto bgp src 10.0.0.1 metric 20 
+   10.1.1.0/31 dev PortChannel1 proto kernel scope link src 10.1.1.0 
+   10.1.1.2/31 dev PortChannel2 proto kernel scope link src 10.1.1.2 
+   172.10.10.0/24 dev eth0 proto kernel scope link src 172.10.10.101 
+   192.168.123.0/24 dev eth4 proto kernel scope link src 192.168.123.4 
+   198.18.11.0/24 dev Ethernet32 proto kernel scope link src 198.18.11.1 
+   198.18.12.0/24 nhid 121 proto bgp src 10.0.0.1 metric 20 
+     nexthop via 10.1.1.3 dev PortChannel2 weight 1 
+     nexthop via 10.1.1.1 dev PortChannel1 weight 1 
+   ```
 
 ## Validate SONiC End to End Connectivity
 
@@ -403,10 +418,10 @@ Endpoint-1 VM represents a standard linux host or endpoint connected to leaf-1
    ping 198.18.12.2
    ```
    ```
-   cisco@endpoint-1:~$ ping 198.18.12.1
-   PING 198.18.12.1 (198.18.12.1) 56(84) bytes of data.
-   64 bytes from 198.18.12.1: icmp_seq=1 ttl=62 time=698 ms
-   64 bytes from 198.18.12.1: icmp_seq=2 ttl=62 time=372 ms
+   cisco@endpoint-1:~$ ping 198.18.12.2
+   PING 198.18.12.2 (198.18.12.2) 56(84) bytes of data.
+   64 bytes from 198.18.12.2: icmp_seq=1 ttl=62 time=698 ms
+   64 bytes from 198.18.12.2: icmp_seq=2 ttl=62 time=372 ms
    ```
 
 __Endpoint-2__
