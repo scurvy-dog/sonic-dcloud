@@ -159,9 +159,10 @@ There are several relevant files for our ansible playbook
 
 1. Log into SONiC router *leaf-1*
 2. Verify that BGP peering sessions are established with *spine-1* and *spine-2*
-  ```
-  show bgp summary
-  ```
+     ```
+     show bgp summary
+     ```
+     
   ```
   leaf-1# show bgp summary
   IPv4 Unicast Summary (VRF default)
