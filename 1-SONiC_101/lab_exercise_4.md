@@ -41,9 +41,9 @@ ACLs can be grouped into three general categories:
 In this lab we will focus on the first type - Data plane ACLs.
 
 ## ACL Tables
-In this lab we are focusing specifically on Data plane ACLs. The purpose Data plane ACL tables is to link a set of rules that can be applied to data plane traffic to a group of defined interfaces. 
+In this lab we are focusing specifically on Data plane ACLs. The purpose of Data plane ACL tables is to link a set of rules that can be applied to data plane traffic to a group of defined interfaces. 
 
-ACL Tables can be created or deleted using either CLI or through a JSON definition which is loaded into the running config. We will show both options in this lab. 
+ACL tables can be created or deleted using either CLI or through a JSON definition which is loaded into the running config. We will show both options in this lab. 
 
 ### ACL Table Parameters
 Data Plane ACL Tables have mandatory and optional defined fields as listed in the below table.
@@ -57,7 +57,7 @@ Data Plane ACL Tables have mandatory and optional defined fields as listed in th
 | stage      | -s       |           | Valid options are ingress (default) or egress    |
 
 
-** Table Type Field Definitions**
+**Table Type Field Definitions**
 | Type                | Description                       | Ingress | Egress  | 
 |:--------------------|:----------------------------------|:-------:|:-------:|
 | L3                  | Match on IPv4 ACL                 | X       | X       |
@@ -76,10 +76,10 @@ Data Plane ACL Tables have mandatory and optional defined fields as listed in th
 ### ACL Table Syntax
 
 In this example set of code we want to set the following parameters through CLI or JSON.
-    - Name the ACL Table: ICMP_DROP
-    - Traffic Type Affected: IPv4 Layer 3 packets
-    - Interface Bindings: Ethernet 32
-    - Traffic Direction: Ingress
+- Name the ACL Table: ICMP_DROP
+- Traffic Type Affected: IPv4 Layer 3 packets
+- Interface Bindings: Ethernet 32
+- Traffic Direction: Ingress
     
 #### ACL Table Add
 **Adding ACL Table with CLI**
@@ -93,21 +93,22 @@ Options:
   -p, --ports TEXT
   -s, --stage [ingress|egress]
 ```
-```
-sudo config acl add table ICMP_DROP L3 -p Ethernet32 -d "BLock ICMP traffic from Endpoint2" -s ingress
-```
-```
-cisco@leaf-2:~$ sudo acl-loader show table
-Name       Type    Binding     Description                        Stage    Status
----------  ------  ----------  ---------------------------------  -------  --------
-ICMP_DROP  L3      Ethernet32  BLock ICMP traffic from Endpoint2  ingress  Active
-```
+- We will now add in an ACL table using the above parameters using the CLI below.
+  ```
+  sudo config acl add table ICMP_DROP L3 -p Ethernet32 -d "BLock ICMP traffic from Endpoint2" -s ingress
+  ```
+  ```
+  cisco@leaf-2:~$ sudo acl-loader show table
+  Name       Type    Binding     Description                        Stage    Status
+  ---------  ------  ----------  ---------------------------------  -------  --------
+  ICMP_DROP  L3      Ethernet32  BLock ICMP traffic from Endpoint2  ingress  Active
+  ```
 
 **Adding ACL Table through JSON**
 To utilize JSON to create an ACL it is a two step process. First you must construct a valid JSON syntax file and store that on the SONiC router itself. The second step is to use the config load command to add the table into the running configuration. See steps below.
 
-**Example of ACL Table JSON**
-Save this json acl table definition to a file on the SONiC device as acl_table_icmp.json
+- **Example of ACL Table JSON**
+  Save this json acl table definition to a file on the SONiC device as acl_table_icmp.json
 
 ```
 {
@@ -123,10 +124,10 @@ Save this json acl table definition to a file on the SONiC device as acl_table_i
         }
 }
 ```
-**Loading the ACL table JSON file into the running config**
-```
-sudo config load acl_table_icmp.json
-```
+- **Loading the ACL table JSON file into the running config**
+  ```
+  sudo config load acl_table_icmp.json
+  ```
 
 ### ACL Table Delete
 Through CLI you an leverage the *sudo config acl remove* command as seen below
