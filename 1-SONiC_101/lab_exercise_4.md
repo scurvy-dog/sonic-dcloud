@@ -211,6 +211,7 @@ sudo config load acl_rule_icmp.json
 > **NOTE**
 > SONiC does not support the removal of ACLs through CLI. The below json will remove all ACL rules
 
+- Take the below json and add it to file called acl-wipe.json. The below json will remove **ALL** ACL rules
 ```
 {
     "acl": {
@@ -221,7 +222,10 @@ sudo config load acl_rule_icmp.json
     }
 }
 ```
-
+Apply the command using the below.
+```
+sudo config acl update full acl-wipe.json
+```
 ## ACL Examples
 Below are two basic ACLs to show how to apply and check ACL effectivness 
 
