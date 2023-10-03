@@ -220,40 +220,40 @@ There are several relevant files for our ansible playbook
 
 ### Verify BGP Routing Table
 6. **Verify IPv4** routes. SONiC router *leaf-1* should have received the following
-  ```
-  show ip route bgp
-  ```
-  ```
-  leaf-1# show ip route bgp
-  Codes: K - kernel route, C - connected, S - static, R - RIP,
+     ```
+     show ip route bgp
+     ```
+     ```
+     leaf-1# show ip route bgp
+     Codes: K - kernel route, C - connected, S - static, R - RIP,
        O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
        T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
        f - OpenFabric,
        > - selected route, * - FIB route, q - queued, r - rejected, b - backup
        t - trapped, o - offload failure
 
-  B>* 10.0.0.2/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24   <----- Route from spine-1
-  B>* 10.0.0.3/32 [20/0] via 10.1.1.3, PortChannel2, weight 1, 00:25:24   <----- Route from spine-2
-  B>* 10.0.0.4/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24   <----- Route from leaf-2
-    *                    via 10.1.1.3, PortChannel2, weight 1, 00:25:24
-  ```
+       B>* 10.0.0.2/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24   <----- Route from spine-1
+       B>* 10.0.0.3/32 [20/0] via 10.1.1.3, PortChannel2, weight 1, 00:25:24   <----- Route from spine-2
+       B>* 10.0.0.4/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24   <----- Route from leaf-2
+         *                    via 10.1.1.3, PortChannel2, weight 1, 00:25:24
+     ```
 7. **Verify IPv4** routes. SONiC router *leaf-2* should have received the following
-  ```
-  leaf-1# show ip route bgp
-  Codes: K - kernel route, C - connected, S - static, R - RIP,
+     ```
+     leaf-1# show ip route bgp
+     Codes: K - kernel route, C - connected, S - static, R - RIP,
         O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
         T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
         f - OpenFabric,
         > - selected route, * - FIB route, q - queued, r - rejected, b - backup
         t - trapped, o - offload failure
 
-  B>* 10.0.0.1/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:04:52
-    *                    via 10.1.1.3, PortChannel2, weight 1, 00:04:52
-  B>* 10.0.0.3/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:04:30
-  B>* 10.0.0.4/32 [20/0] via 10.1.1.3, PortChannel2, weight 1, 00:04:24
-  B>* 198.18.11.0/24 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:07:49
-    *                       via 10.1.1.3, PortChannel2, weight 1, 00:07:49
-  ```
+     B>* 10.0.0.1/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:04:52
+     *                    via 10.1.1.3, PortChannel2, weight 1, 00:04:52
+     B>* 10.0.0.3/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:04:30
+     B>* 10.0.0.4/32 [20/0] via 10.1.1.3, PortChannel2, weight 1, 00:04:24
+     B>* 198.18.11.0/24 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:07:49
+     *                       via 10.1.1.3, PortChannel2, weight 1, 00:07:49
+     ```
   
 8. **Verify IPv6** routes *leaf-1* should have received the following. 
   ```
