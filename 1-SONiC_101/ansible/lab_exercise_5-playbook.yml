@@ -7,6 +7,13 @@
   become: true
   tasks:
 
+    - name: test
+      command: ls -la /etc/sonic/
+      ignore_errors: yes
+      register: test_result
+ 
+    - debug: var=test_result.stdout_lines
+
     - name: docker exec into FRR BGP container
       command: docker exec -it bgp bash
       ignore_errors: yes

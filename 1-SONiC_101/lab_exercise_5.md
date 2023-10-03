@@ -4,30 +4,59 @@ insert TOC here
 
 ## BFD 
 
-SONiC has FRR running in its "BGP" container. By default the FRR/BGP container is only running the bgpd process. To enable additional FRR daemons such as ISIS or BFD we need to 'exec' into the container and enable the daemon:
+SONiC has FRR running in its "BGP" container. By default the FRR/BGP container runs the zebra, staticd, bgpd, and a couple other processes. Currently to enable additional FRR daemons such as ISIS or BFD we need to 'exec' into the container and enable the daemon. Once enabled, we can then vtysh into FRR and apply our BFD configuration.
 
-1. docker exec into the BGP container in each router
+For the purposes of this lab we'll run another Ansible playbook which will perform enable BFD daemons and apply configurations on leaf-2, spine-1, and spine-2. We'll then log into leaf-1 and enable and configure BFD manually.
 
-```
-docker exec -it bgp bash
-```
-
-2. cd into / and enable the bfdd process to run in background:
-
-```
-cd /usr/lib/frr
-./bfdd &
+1.  From jumpbox run lab_exercise_5-playbook.yml:
+   
+	```
+	ansible-playbook -i hosts lab_exercise_5-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+	```
+Example output:
 ```
 
-Example:
-```
-root@spine01:/# cd /usr/lib/frr
-root@spine01:/usr/lib/frr# ./bfdd &
-[1] 370
-root@spine01:/usr/lib/frr# 
 ```
 
-### configure BFD
+Next we'll manually enable/configure BFD on leaf-1
+
+2.  SSH to leaf-1 and docker exec into its BGP container 
+
+	```
+	docker exec -it bgp bash
+	```
+
+3.  cd into /usr/lib/frr and enable the bfdd process to run in the background:
+
+	```
+	cd /usr/lib/frr
+	./bfdd &
+	```
+
+	Example:
+	```
+	root@spine01:/# cd /usr/lib/frr
+	root@spine01:/usr/lib/frr# ./bfdd &
+	[1] 370
+	root@spine01:/usr/lib/frr# 
+	```
+
+4.  You can validate the daemon is running with the systemd service command:
+   
+	```
+	service frr status
+	```
+	Example output:
+	```
+	root@spine-2:/# service frr status
+	Status of watchfrr: running.
+	Status of zebra: running.
+	Status of bgpd: running.
+	Status of staticd: running.
+	Status of bfdd: running.
+	```
+
+### configure BFD in FRR
 1. start bfd daemon
    
 2. configure BFD on spine-1
