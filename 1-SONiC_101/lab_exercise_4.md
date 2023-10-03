@@ -26,8 +26,6 @@ The student upon completion of Lab Exercise 4 should have achieved the following
 * Ability to apply ACLs in SONiC
 
 ## SONiC ACL Architecture
-
-## Basic ACL Walk Through
 The core of ACLs in SONiC is the ACL Table which links interfaces with rules and defines the direction of the policy enforcement. See the diagram below to see the relationship.
 
 ![ACL Overview](./topo-drawings/acl-overview.png)
