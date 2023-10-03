@@ -279,8 +279,8 @@ There are several relevant files for our ansible playbook
      ```
      show bgp ipv4 unicast
      ```
-     <pre>
-	leaf-1# show bgp ipv4 uni
+<pre>
+  leaf-1# show bgp ipv4 uni
   BGP table version is 6, local router ID is 10.0.0.1, vrf id 0
   Default local pref 100, local AS 65001
   Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
@@ -298,7 +298,7 @@ There are several relevant files for our ansible playbook
   *> 198.18.11.0/24   0.0.0.0                  0         32768 i
   *= 198.18.12.0/24   10.1.1.3                               0 65000 65002 i
   *>                  10.1.1.1                               0 65000 65002 i
-  </b>
+  <b></b>
   Displayed  6 routes and 8 total paths
   </pre>
 
