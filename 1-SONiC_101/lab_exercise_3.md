@@ -162,65 +162,61 @@ There are several relevant files for our ansible playbook
      ```
      show bgp summary
      ```
-     
-  ```
-  leaf-1# show bgp summary
-  IPv4 Unicast Summary (VRF default)
-  BGP router identifier 10.0.0.4, local AS number 65004 vrf-id 0
-  BGP table version 4
-  RIB entries 7, using 1344 bytes of memory
-  Peers 2, using 1449 KiB of memory
+     ```
+     leaf-1# show bgp summary
+     IPv4 Unicast Summary (VRF default)
+     BGP router identifier 10.0.0.4, local AS number 65004 vrf-id 0
+     BGP table version 4
+     RIB entries 7, using 1344 bytes of memory
+     Peers 2, using 1449 KiB of memory
 
-  Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
-  10.1.1.1        4      65000        10        10        0    0    0 00:04:03            3        6 N/A    <--- spine-1
-  10.1.1.3        4      65000        10        10        0    0    0 00:04:03            3        6 N/A    <--- spine-2
+     Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+     10.1.1.1        4      65000        10        10        0    0    0 00:04:03            3        6 N/A    <--- spine-1
+     10.1.1.3        4      65000        10        10        0    0    0 00:04:03            3        6 N/A    <--- spine-2
 
-  Total number of neighbors 2
+     Total number of neighbors 2
 
-  IPv6 Unicast Summary (VRF default):
-  BGP router identifier 10.0.0.4, local AS number 65004 vrf-id 0
-  BGP table version 11
-  RIB entries 8, using 1536 bytes of memory
-  Peers 2, using 1449 KiB of memory
+     IPv6 Unicast Summary (VRF default):
+     BGP router identifier 10.0.0.4, local AS number 65004 vrf-id 0
+     BGP table version 11
+     RIB entries 8, using 1536 bytes of memory
+     Peers 2, using 1449 KiB of memory
 
-  Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
-  fc00:0:ffff::1  4      65000        47        52        0    0    0 00:22:32            2        4 N/A
-  fc00:0:ffff::3  4      65000        47        54        0    0    0 00:22:32            2        4 N/A
+     Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+     fc00:0:ffff::1  4      65000        47        52        0    0    0 00:22:32            2        4 N/A
+     fc00:0:ffff::3  4      65000        47        54        0    0    0 00:22:32            2        4 N/A
 
-  Total number of neighbors 2
-  ```
+     Total number of neighbors 2
+     ```
   
 3. Log into SONiC router *leaf-2*
 4. Verify that BGP peering sessions are established with *spine-1* and *spine-2*
-   ```
- leaf-2# show bgp summary
- IPv4 Unicast Summary (VRF default):
- BGP router identifier 10.0.0.2, local AS number 65002 vrf-id 0
- BGP table version 2
- RIB entries 3, using 552 bytes of memory
- Peers 2, using 1447 KiB of memory
- 
- Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
- 10.1.1.5        4      65000         0         0        0    0    0    never       Active        0 N/A
- 10.1.1.7        4      65000         0         0        0    0    0    never       Active        0 N/A
- 
- Total number of neighbors 2
- 
- IPv6 Unicast Summary (VRF default):
- BGP router identifier 10.0.0.2, local AS number 65002 vrf-id 0
- BGP table version 1
- RIB entries 2, using 368 bytes of memory
- Peers 2, using 1447 KiB of memory
- 
- Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
- fc00:0:ffff::5  4      65000         0         0        0    0    0    never       Active        0 N/A
- fc00:0:ffff::7  4      65000         0         0        0    0    0    never       Active        0 N/A
- 
- Total number of neighbors 2
- ```
+     ```
+     leaf-2# show bgp summary
+     IPv4 Unicast Summary (VRF default):
+     BGP router identifier 10.0.0.2, local AS number 65002 vrf-id 0
+     BGP table version 2
+     RIB entries 3, using 552 bytes of memory
+     Peers 2, using 1447 KiB of memory
 
-| :exclamation:  Table below is incorrect needs update  |
-|-------------------------------------------------------|
+     Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+     10.1.1.5        4      65000         0         0        0    0    0    never       Active        0 N/A
+     10.1.1.7        4      65000         0         0        0    0    0    never       Active        0 N/A
+
+     Total number of neighbors 2
+
+     IPv6 Unicast Summary (VRF default):
+     BGP router identifier 10.0.0.2, local AS number 65002 vrf-id 0
+     BGP table version 1
+     RIB entries 2, using 368 bytes of memory
+     Peers 2, using 1447 KiB of memory
+
+     Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+     fc00:0:ffff::5  4      65000         0         0        0    0    0    never       Active        0 N/A
+     fc00:0:ffff::7  4      65000         0         0        0    0    0    never       Active        0 N/A
+
+     Total number of neighbors 2
+     ```
 
 ### Verify BGP Routing Table
 6. **Verify IPv4** routes. SONiC router *leaf-1* should have received the following
