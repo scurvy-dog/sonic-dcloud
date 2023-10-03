@@ -93,9 +93,6 @@ This lab uses Ansible as the automation tool once the host vms have spun up. The
 ### Important 
 If the output of deploy.log shows any of the nodes failing to come up ("Router failed to come up"), we'll need to manually launch the build script. Instructions to do so are here:
 
-![If Router fails to come up](if_sonic_fails_to_launch.md)
-
-
   1. Ping each SONiC router management interface to see if the router has finished booting
      | Host name  | IP Address    |
      |:-----------|:--------------|
@@ -147,6 +144,8 @@ If the output of deploy.log shows any of the nodes failing to come up ("Router f
 >   eth4                   192.168.123.246/24   up/up         N/A             N/A 
 >   lo                     127.0.0.1/16         up/up         N/A             N/A  
 
+> [!IMPORTANT]
+> If the SONiC router did not spin up or spin up correctly see instructins [HERE](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/if_sonic_fails_to_launch.md)
 ### Connect to SONiC Routers
 
 Starting from the vsonic VM log into each router instance 1-4 per the management topology diagram above. Example:
