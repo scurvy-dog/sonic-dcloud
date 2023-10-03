@@ -16,7 +16,6 @@ In Lab Exercise 4 the student will explore how SONiC utilizes ACLs in dataplane 
     - [Add/Delete ACL Table](#acl-tables) 
     - [Add/Delete ACL Rule](#acl-rules)
   - [ACL Configuration Syntax](#acl-configuration-syntax)
-  - [ACL Counters](#acl-troubleshooting)
   - [ACL Examples](#acl-examples)
   - [End of Lab 4](#end-of-lab-4)
   
@@ -108,15 +107,17 @@ Save this json acl table definition to a file on the SONiC device as acl_table_i
 }
 ```
 
+**Loading the ACL table JSON file into the running config**
+```
+sudo config load acl_table_icmp.json
+```
+
 **Remove ACL Table through CLI**
 ```
 sudo config acl remove table ICMP_DROP
 ```
 
-**Loading the ACL table JSON file into the running config**
-```
-sudo config load acl_table_icmp.json
-```
+
 
 ### ACL Rules
 ACL Rules contain the detail step by step policy that is implemented by the tables. ACL Rule structure will identify which ACL Table they should be joined to. ACL Rules can only be defined using JSON and have no CLI option. We will show a basic ACL Rule used to block ICMP traffic coming from Endpoint-2 to *Loopback 0* on Leaf-2
@@ -201,6 +202,38 @@ ACL rules follow the guideline of identifying the table and acl name and then ha
 | BTH_OPCODE         | Match ???                                  | Research                                       |
 | AETH_SYNDROME      | Match ???                                  | Research                                       |
 
+## ACL Examples
+Below are two basic ACLs to show how to apply and check ACL effectivness 
+
+### ACL Example - Block ICMP to Loopback
+In this example we will block ICMP traffic destined to from *endpoint-1* to *loopback 0* on *leaf-1*
+We will need to apply the ACL to the *Ethernet 32* interface of *leaf-1*
+Lets create an ACL Table that we will link to the interface
+
+1. First login to SONiC Router *leaf-1*
+2. In the home directory lets create a json definition file for the ACL Table
+   ```
+   nano eth32_acl_table.json
+   ```
+3. Paste in the following code and save and exit.
+   ```
+   {
+   "ACL_TABLE": {
+            "ICMP_DROP": {
+                    "policy_desc" : "Block IMCP traffic from endpoint 1",
+                    "type" : "L3",
+                    "stage": "ingress",
+                    "ports" : [
+                        "Ethernet32"
+                    ] 
+                    }
+        }
+   }
+   ```
+4. Load the json definition file into the running config
+   ```
+   sudo config load eth32_acl_table.json
+   ```
 
 ## Scratch
 aclshow -a
