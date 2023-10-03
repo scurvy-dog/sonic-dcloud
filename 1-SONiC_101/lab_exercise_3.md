@@ -391,7 +391,7 @@ Validate IPv4 BGP route received from peer. We will examine *10.0.0.2/32* origin
 
 ## Validate SONiC End to End Connectivity
 
-13. From *leaf-1* we will ping the *loopback0* interface on *leaf-2*
+1. From *leaf-1* we will ping the *loopback0* interface on *leaf-2*
      ```
      ping 10.0.0.2
      ```
@@ -408,12 +408,12 @@ __Endpoint-1__
 
 Endpoint-1 VM represents a standard linux host or endpoint connected to leaf-1
 
-14. Open a new terminal and SSH to Endpoint-1 Client VM
+2. Open a new terminal and SSH to Endpoint-1 Client VM
      ```
      ssh cisco@198.18.128.105
      ```
 
-15. Ping Endpoint-2
+3. Ping Endpoint-2
      ```
      ping 198.18.12.2
      ```
@@ -428,11 +428,11 @@ __Endpoint-2__
 
 The Endpiont-2 VM represents a standard linux host or endpoint connected to leaf-2
 
-16. In another terminal SSH to Endpoint-2 Client VM
+4. In another terminal SSH to Endpoint-2 Client VM
      ```
      ssh cisco@198.18.128.106
      ```
-17. Ping Endpoint-1
+5. Ping Endpoint-1
      ```
      ping 198.18.11.2
      ```
