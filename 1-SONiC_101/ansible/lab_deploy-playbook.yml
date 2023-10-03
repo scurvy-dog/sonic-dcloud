@@ -59,7 +59,7 @@
         minutes: 10
 
     - name: grep Router from docker logs
-      shell: docker logs {{hostvars[inventory_hostname]['container'] }} | grep Router
+      shell: docker logs -t {{hostvars[inventory_hostname]['container'] }} | grep Router
       register: grep_result
 
     - name: debug grep result
