@@ -157,7 +157,8 @@ There are several relevant files for our ansible playbook
 > [!NOTE]
 > FRR routing *show* commands must be done within the *vtysh* shell
 
-- Verify that BGP peering sessions are established with *spine-1* and *spine-2* from *leaf-1*
+1. Log into SONiC router *leaf-1*
+2. Verify that BGP peering sessions are established with *spine-1* and *spine-2*
   ```
   show bgp summary
   ```
@@ -170,8 +171,8 @@ There are several relevant files for our ansible playbook
   Peers 2, using 1449 KiB of memory
 
   Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
-  10.1.1.1        4      65000        10        10        0    0    0 00:04:03            3        6 N/A
-  10.1.1.3        4      65000        10        10        0    0    0 00:04:03            3        6 N/A
+  10.1.1.1        4      65000        10        10        0    0    0 00:04:03            3        6 N/A    <--- spine-1
+  10.1.1.3        4      65000        10        10        0    0    0 00:04:03            3        6 N/A    <--- spine-2
 
   Total number of neighbors 2
 
@@ -188,39 +189,40 @@ There are several relevant files for our ansible playbook
   Total number of neighbors 2
   ```
   
-- Verify that BGP peering sessions are established with *spine-1* and *spine-2* from *leaf-2*
+3. Log into SONiC router *leaf-2*
+4. Verify that BGP peering sessions are established with *spine-1* and *spine-2*
    ```
-   leaf-2# show ip bgp summary
-   IPv4 Unicast Summary (VRF default)
-   BGP router identifier 10.0.0.4, local AS number 65004 vrf-id 0
-   BGP table version 4
-   RIB entries 7, using 1344 bytes of memory
-   Peers 2, using 1449 KiB of memory
-
-   Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
-   10.1.1.5        4      65000       169       170        0    0    0 02:37:08            3        6 N/A
-   10.1.1.7        4      65000       169       170        0    0    0 02:37:08            3        6 N/A
-
-   Total number of neighbors 2
-
-   IPv6 Unicast Summary (VRF default):
-   BGP router identifier 10.0.0.5, local AS number 65005 vrf-id 0
-   BGP table version 12
-   RIB entries 8, using 1536 bytes of memory
-   Peers 2, using 1449 KiB of memory
-
-   Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
-   fc00:0:ffff::5  4      65000       196       210        0    0    0 02:51:46            2        4 N/A
-   fc00:0:ffff::7  4      65000       195       210        0    0    0 02:51:46            2        4 N/A
-
-   Total number of neighbors 2
-   ```
+ leaf-2# show bgp summary
+ IPv4 Unicast Summary (VRF default):
+ BGP router identifier 10.0.0.2, local AS number 65002 vrf-id 0
+ BGP table version 2
+ RIB entries 3, using 552 bytes of memory
+ Peers 2, using 1447 KiB of memory
+ 
+ Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+ 10.1.1.5        4      65000         0         0        0    0    0    never       Active        0 N/A
+ 10.1.1.7        4      65000         0         0        0    0    0    never       Active        0 N/A
+ 
+ Total number of neighbors 2
+ 
+ IPv6 Unicast Summary (VRF default):
+ BGP router identifier 10.0.0.2, local AS number 65002 vrf-id 0
+ BGP table version 1
+ RIB entries 2, using 368 bytes of memory
+ Peers 2, using 1447 KiB of memory
+ 
+ Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+ fc00:0:ffff::5  4      65000         0         0        0    0    0    never       Active        0 N/A
+ fc00:0:ffff::7  4      65000         0         0        0    0    0    never       Active        0 N/A
+ 
+ Total number of neighbors 2
+ ```
 
 | :exclamation:  Table below is incorrect needs update  |
 |-------------------------------------------------------|
 
 ### Verify BGP Routing Table
-- **Verify IPv4** routes. *leaf-1* should have received the following
+6. **Verify IPv4** routes. SONiC router *leaf-1* should have received the following
   ```
   show ip route bgp
   ```
@@ -238,7 +240,7 @@ There are several relevant files for our ansible playbook
   B>* 10.0.0.4/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24   <----- Route from leaf-2
     *                    via 10.1.1.3, PortChannel2, weight 1, 00:25:24
   ```
-- **Verify IPv4** routes *leaf-2* should have received the following
+7. **Verify IPv4** routes. SONiC router *leaf-2* should have received the following
   ```
   leaf-1# show ip route bgp
   Codes: K - kernel route, C - connected, S - static, R - RIP,
@@ -256,7 +258,7 @@ There are several relevant files for our ansible playbook
     *                       via 10.1.1.3, PortChannel2, weight 1, 00:07:49
   ```
   
-- **Verify IPv6** routes *leaf-1* should have received the following. 
+8. **Verify IPv6** routes *leaf-1* should have received the following. 
   ```
   show ipv6 route bgp
   ```
