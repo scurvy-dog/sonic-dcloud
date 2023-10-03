@@ -234,6 +234,48 @@ Lets create an ACL Table that we will link to the interface
    ```
    sudo config load eth32_acl_table.json
    ```
+5. Verify the ACL table was installed.
+   ```
+   cisco@leaf-1:~$ show acl table
+   Name       Type    Binding     Description                         Stage    Status
+   ---------  ------  ----------  ----------------------------------  -------  --------
+   ICMP_DROP  L3      Ethernet32  Block IMCP traffic from endpoint 1  ingress  Active
+   ```
+6. In the home directory lets create a json definition file for the ACL Rule Set
+   ```
+   nano acl_ep1_ingress.json
+   ```
+7. Paste in the following code and save and exit.
+   ```
+   {
+     "ACL_RULE": {
+        "ICMP_DROP|RULE_10": {
+            "PACKET_ACTION": "DROP",
+            "PRIORITY": "10",
+            "SRC_IP": "198.18.12.2/32",
+            "IP_PROTOCOL":1
+        },
+        "ICMP_DROP|RULE_20": {
+            "PACKET_ACTION": "FORWARD",
+            "PRIORITY": "20",
+            "SRC_IP": "198.18.12.2/32"
+        }
+     }
+   }    
+   ```
+
+8. Verify the ACL rule set was installed
+   ```
+   cisco@leaf-1:~$ sudo config load acl_ep1_ingress.json
+   Load config from the file(s) acl_ep1_ingress.json ? [y/N]: y
+   Running command: /usr/local/bin/sonic-cfggen -j acl_ep1_ingress.json --write-to-db
+   cisco@leaf-1:~$ show acl rule
+   Table      Rule     Priority    Action    Match                   Status
+   ---------  -------  ----------  --------  ----------------------  --------
+   ICMP_DROP  RULE_20  20          FORWARD   SRC_IP: 198.18.12.2/32  Active
+   ICMP_DROP  RULE_10  10          DROP      IP_PROTOCOL: 1          Active  
+                                             SRC_IP: 198.18.12.2/32
+   ```
 
 ## Scratch
 aclshow -a
