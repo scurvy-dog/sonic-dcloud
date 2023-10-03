@@ -232,9 +232,9 @@ There are several relevant files for our ansible playbook
        > - selected route, * - FIB route, q - queued, r - rejected, b - backup
        t - trapped, o - offload failure
 
-       B>* 10.0.0.2/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24   <----- Route from spine-1
-       B>* 10.0.0.3/32 [20/0] via 10.1.1.3, PortChannel2, weight 1, 00:25:24   <----- Route from spine-2
-       B>* 10.0.0.4/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24   <----- Route from leaf-2
+       B>* 10.0.0.2/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24   <----- Route from leaf-1
+       B>* 10.0.0.3/32 [20/0] via 10.1.1.3, PortChannel2, weight 1, 00:25:24   <----- Route from spine-1
+       B>* 10.0.0.4/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24   <----- Route from spine-2
          *                    via 10.1.1.3, PortChannel2, weight 1, 00:25:24
      ```
 6. **Verify IPv4** routes. SONiC router *leaf-2* should have received the following
@@ -255,33 +255,32 @@ There are several relevant files for our ansible playbook
      *                       via 10.1.1.3, PortChannel2, weight 1, 00:07:49
      ```
   
-7. **Verify IPv6** routes *leaf-1* should have received the following. 
-  ```
-  show ipv6 route bgp
-  ```
-  ```
-  leaf-1# show ipv6 route bgp
-  Codes: K - kernel route, C - connected, S - static, R - RIPng,
+7. **Verify IPv6** SONiC router *leaf-1* should have received the following.
+     ```
+     show ipv6 route bgp
+     ```
+     ```
+     leaf-1# show ipv6 route bgp
+     Codes: K - kernel route, C - connected, S - static, R - RIPng,
         O - OSPFv3, I - IS-IS, B - BGP, N - NHRP, T - Table,
         v - VNC, V - VNC-Direct, A - Babel, F - PBR,
         f - OpenFabric,
         > - selected route, * - FIB route, q - queued, r - rejected, b - backup
         t - trapped, o - offload failure
 
-  B>* fc00:0:1::1/128 [20/0] via fe80::7a58:c8ff:fe83:e400, PortChannel2, weight 1, 00:02:29
-    *                        via fe80::7afe:fdff:feb2:6800, PortChannel1, weight 1, 00:02:29
-  B>* fc00:0:3::1/128 [20/0] via fe80::7afe:fdff:feb2:6800, PortChannel1, weight 1, 00:05:12
-  B>* fc00:0:4::1/128 [20/0] via fe80::7a58:c8ff:fe83:e400, PortChannel2, weight 1, 00:05:06
-  ```
-
-- *leaf-2* should show similar output.
+     B>* fc00:0:1::1/128 [20/0] via fe80::7a58:c8ff:fe83:e400, PortChannel2, weight 1, 00:02:29
+     *                        via fe80::7afe:fdff:feb2:6800, PortChannel1, weight 1, 00:02:29
+     B>* fc00:0:3::1/128 [20/0] via fe80::7afe:fdff:feb2:6800, PortChannel1, weight 1, 00:05:12
+     B>* fc00:0:4::1/128 [20/0] via fe80::7a58:c8ff:fe83:e400, PortChannel2, weight 1, 00:05:06
+     ```
+     - *leaf-2* should show similar output.
   
-- Examine IPv4 BGP AS Path information in the route table. This shows us what routes are installed in the BGP table vs which routes are installed into the routing table.
-  ```
-  show bgp ipv4 unicast
-  ```
-  <pre>
-  leaf-1# show bgp ipv4 uni
+8. Examine IPv4 BGP AS Path information in the route table. This shows us what routes are installed in the BGP table vs which routes are installed into the routing table.
+     ```
+     show bgp ipv4 unicast
+     ```
+     <pre>
+	leaf-1# show bgp ipv4 uni
   BGP table version is 6, local router ID is 10.0.0.1, vrf id 0
   Default local pref 100, local AS 65001
   Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
