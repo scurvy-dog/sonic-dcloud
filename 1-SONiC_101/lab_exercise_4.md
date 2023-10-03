@@ -12,7 +12,6 @@ In Lab Exercise 4 the student will explore how SONiC utilizes ACLs in dataplane 
   - [SONiC ACL Architecture](#sonic-acl-architecture)
     - [ACL Table Definition Types](#acl-table-definition-types)
     - [ACL Match Options](#acl-match-options)
-  - [Basic ACL Walk Through](#basic-acl-walk-through)
     - [Add/Delete ACL Table](#acl-tables) 
     - [Add/Delete ACL Rule](#acl-rules)
   - [ACL Configuration Syntax](#acl-configuration-syntax)
@@ -27,6 +26,31 @@ The student upon completion of Lab Exercise 4 should have achieved the following
 * Ability to apply ACLs in SONiC
 
 ## SONiC ACL Architecture
+
+## Basic ACL Walk Through
+The core of ACLs in SONiC is the ACL Table which links interfaces with rules and defines the direction of the policy enforcement. See the diagram below to see the relationship.
+
+![ACL Overview](./topo-drawings/acl-overview.png)
+
+ACLs can be grouped into three categories
+    1. Data plane ACLs applied against physical interfaces
+    2. Control plane ACLs
+    3. Mirror ACLs for capturing and replicating traffic
+
+### ACL Tables
+ACL tables are of two types. Data Plane ACLs and Control Plane ACLS.
+Data Plane tables purpose is to link a data plane traffic type to a set of defined interfaces. ACL Tables can be created using either CLI or through a JSON definition which is loaded into config. We will show both options in this lab. 
+
+Data Plane ACL Tables have mandatory and optional defined fields as listed in the below table.
+
+| Parameters | CLI Flag | Mandatory | Details                                          |
+|:-----------|:--------:|:---------:|:-------------------------------------------------|
+| table name | none     | X         | The name of the ACL table to create.             |
+| table type | none     | X         | Type of ACL table to create. *See table above*   |
+| description| -d       |           | Table description. Defaults to table name        |
+| ports      | -p       |           | Binds table to physical port,portchannel, VLAN   |
+| stage      | -s       |           | Valid options are ingress (default) or egress    |
+
 
 ### ACL Table Definition Types
 
@@ -45,25 +69,6 @@ The student upon completion of Lab Exercise 4 should have achieved the following
 | CTRLPLANE           | Research                          | X       | X       |
 | DTEL_FLOW_WATCHLIST | Research                          | X       | X       |
 
-
-## Basic ACL Walk Through
-The core of ACLs in SONiC is the ACL Table which links interfaces with rules and defines the direction of the policy enforcement.
-
-![ACL Overview](./topo-drawings/acl-overview.png)
-
-### ACL Tables
-ACL tables are of two types. Data Plane ACLs and Control Plane ACLS.
-Data Plane tables purpose is to link a data plane traffic type to a set of defined interfaces. ACL Tables can be created using either CLI or through a JSON definition which is loaded into config. We will show both options in this lab. 
-
-Data Plane ACL Tables have mandatory and optional defined fields as listed in the below table.
-
-| Parameters | CLI Flag | Mandatory | Details                                          |
-|:-----------|:--------:|:---------:|:-------------------------------------------------|
-| table name | none     | X         | The name of the ACL table to create.             |
-| table type | none     | X         | Type of ACL table to create. *See table above*   |
-| description| -d       |           | Table description. Defaults to table name        |
-| ports      | -p       |           | Binds table to physical port,portchannel, VLAN   |
-| stage      | -s       |           | Valid options are ingress (default) or egress    |
 
 
 **Adding ACL Table with CLI**
