@@ -219,7 +219,7 @@ There are several relevant files for our ansible playbook
      ```
 
 ### Verify BGP Routing Table
-6. **Verify IPv4** routes. SONiC router *leaf-1* should have received the following
+5. **Verify IPv4** routes. SONiC router *leaf-1* should have received the following
      ```
      show ip route bgp
      ```
@@ -237,7 +237,7 @@ There are several relevant files for our ansible playbook
        B>* 10.0.0.4/32 [20/0] via 10.1.1.1, PortChannel1, weight 1, 00:25:24   <----- Route from leaf-2
          *                    via 10.1.1.3, PortChannel2, weight 1, 00:25:24
      ```
-7. **Verify IPv4** routes. SONiC router *leaf-2* should have received the following
+6. **Verify IPv4** routes. SONiC router *leaf-2* should have received the following
      ```
      leaf-1# show ip route bgp
      Codes: K - kernel route, C - connected, S - static, R - RIP,
@@ -255,7 +255,7 @@ There are several relevant files for our ansible playbook
      *                       via 10.1.1.3, PortChannel2, weight 1, 00:07:49
      ```
   
-8. **Verify IPv6** routes *leaf-1* should have received the following. 
+7. **Verify IPv6** routes *leaf-1* should have received the following. 
   ```
   show ipv6 route bgp
   ```
