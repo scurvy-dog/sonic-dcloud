@@ -119,7 +119,7 @@ If the output of deploy.log shows any of the nodes failing to come up ("Router f
 >   ```
 >   cisco@vm-leaf-1:~$ docker ps
 >   CONTAINER ID   IMAGE                 COMMAND                  CREATED      STATUS      PORTS     NAMES
->   beffe818e4ad   c8000-clab-sonic:29   "/etc/prepEnv.sh /no…"   5 days ago   Up 5 days             clab-c8201-sonic-leaf-1
+>   d1861990e9a8   c8000-clab-sonic:31   "/etc/prepEnv.sh /no…"   16 hours ago  Up 16 hours          clab-c8101-sonic-leaf-2
 >   ```
 >3. Session into the docker container
 >   ```
