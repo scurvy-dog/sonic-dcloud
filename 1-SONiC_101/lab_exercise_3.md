@@ -221,6 +221,8 @@ There are several relevant files for our ansible playbook
      ```
 
 ### Verify BGP Routing Table
+We've listed a number of verification steps to show various options from within the FRR CLI. Feel free to do all, or just some of these steps.
+
 5. **Verify IPv4** routes. SONiC router *leaf-1* should have received the following
      ```
      show ip route bgp
@@ -283,124 +285,122 @@ There are several relevant files for our ansible playbook
      ```
      show bgp ipv4 unicast
      ```
-<pre>
-  leaf-1# show bgp ipv4 uni
-  BGP table version is 6, local router ID is 10.0.0.1, vrf id 0
-  Default local pref 100, local AS 65001
-  Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
-                i internal, r RIB-failure, S Stale, R Removed
-  Nexthop codes: @NNN nexthop's vrf id, < announce-nh-self
-  Origin codes:  i - IGP, e - EGP, ? - incomplete
-  RPKI validation codes: V valid, I invalid, N Not found
+     ```
+     leaf-1# show bgp ipv4 uni
+     BGP table version is 6, local router ID is 10.0.0.1, vrf id 0
+     Default local pref 100, local AS 65001
+     Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
+                  i internal, r RIB-failure, S Stale, R Removed
+     Nexthop codes: @NNN nexthop's vrf id, < announce-nh-self
+     Origin codes:  i - IGP, e - EGP, ? - incomplete
+     RPKI validation codes: V valid, I invalid, N Not found
 
-    Network          Next Hop            Metric LocPrf Weight Path
-  *> 10.0.0.1/32      0.0.0.0                  0         32768 i
-  <b>*> 10.0.0.2/32</b>      10.1.1.1                               0 65000 65002 i
-  *=                  10.1.1.3                               0 65000 65002 i
-  *> 10.0.0.3/32      10.1.1.1                 0             0 65000 i
-  *> 10.0.0.4/32      10.1.1.3                 0             0 65000 i
-  *> 198.18.11.0/24   0.0.0.0                  0         32768 i
-  *= 198.18.12.0/24   10.1.1.3                               0 65000 65002 i
-  *>                  10.1.1.1                               0 65000 65002 i
-  <b></b>
-  Displayed  6 routes and 8 total paths
-  </pre>
+       Network          Next Hop            Metric LocPrf Weight Path
+     *> 10.0.0.1/32      0.0.0.0                  0         32768 i
+     <b>*> 10.0.0.2/32</b>      10.1.1.1                               0 65000 65002 i
+     *=                  10.1.1.3                               0 65000 65002 i
+     *> 10.0.0.3/32      10.1.1.1                 0             0 65000 i
+     *> 10.0.0.4/32      10.1.1.3                 0             0 65000 i
+     *> 198.18.11.0/24   0.0.0.0                  0         32768 i
+     *= 198.18.12.0/24   10.1.1.3                               0 65000 65002 i
+     *>                  10.1.1.1                               0 65000 65002 i
+     Displayed  6 routes and 8 total paths
+     ```
 
-- Examine IPv6 BGP AS Path information in the route table
-  ```
-  leaf-1# show bgp ipv6 uni
-  BGP table version is 5, local router ID is 10.0.0.1, vrf id 0
-  Default local pref 100, local AS 65001
-  Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
-                i internal, r RIB-failure, S Stale, R Removed
-  Nexthop codes: @NNN nexthop's vrf id, < announce-nh-self
-  Origin codes:  i - IGP, e - EGP, ? - incomplete
-  RPKI validation codes: V valid, I invalid, N Not found
+9. Examine IPv6 BGP AS Path information in the route table
+     ```
+     leaf-1# show bgp ipv6 uni
+     BGP table version is 5, local router ID is 10.0.0.1, vrf id 0
+     Default local pref 100, local AS 65001
+     Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
+                  i internal, r RIB-failure, S Stale, R Removed
+     Nexthop codes: @NNN nexthop's vrf id, < announce-nh-self
+     Origin codes:  i - IGP, e - EGP, ? - incomplete
+     RPKI validation codes: V valid, I invalid, N Not found
 
-    Network          Next Hop            Metric LocPrf Weight Path
-    fc00:0:1::/48    ::                       0         32768 i
-  *> fc00:0:1::1/128  ::                       0         32768 i
-  *= fc00:0:2::1/128  fe80::7afe:fdff:feb2:6800
-                                                            0 65000 65002 i
-  *>                  fe80::7a58:c8ff:fe83:e400
-                                                            0 65000 65002 i
-  *> fc00:0:3::1/128  fe80::7afe:fdff:feb2:6800
-                                              0             0 65000 i
-  *> fc00:0:4::1/128  fe80::7a58:c8ff:fe83:e400
-                                              0             0 65000 i
-
-  Displayed  5 routes and 6 total paths
-  ```
+       Network          Next Hop            Metric LocPrf Weight Path
+       fc00:0:1::/48    ::                       0         32768 i
+     *> fc00:0:1::1/128  ::                       0         32768 i
+     *= fc00:0:2::1/128  fe80::7afe:fdff:feb2:6800
+                                                              0 65000 65002 i
+     *>                  fe80::7a58:c8ff:fe83:e400
+                                                              0 65000 65002 i
+     *> fc00:0:3::1/128  fe80::7afe:fdff:feb2:6800
+                                                0             0 65000 i
+     *> fc00:0:4::1/128  fe80::7a58:c8ff:fe83:e400
+                                                0             0 65000 i
+     Displayed  5 routes and 6 total paths
+     ```
 
 ### IPv4 BGP Route Validation Walk Through
-- Validate IPv4 BGP route received from peer. We will examine *10.0.0.2/32* originated from *leaf-2*
+Validate IPv4 BGP route received from peer. We will examine *10.0.0.2/32* originated from *leaf-2*
 
-- Validate route was received from *spine-1* and *spine-2* and added to the BGP table
-  ```
-  show ip bgp 10.0.0.2/32
-  ```
-  ```
-  leaf-1# show ip bgp 10.0.0.2/32
-  BGP routing table entry for 10.0.0.2/32, version 4
-  Paths: (2 available, best #1, table default)
-    Advertised to non peer-group peers:
-    10.1.1.1 10.1.1.3
-    65000 65002
-      10.1.1.1 from 10.1.1.1 (10.0.0.3)
-        Origin IGP, valid, external, multipath, best (Router ID)
-        Last update: Mon Sep 18 20:37:32 2023
-    65000 65002
-      10.1.1.3 from 10.1.1.3 (10.0.0.4)
-        Origin IGP, valid, external, multipath
-        Last update: Mon Sep 18 20:37:32 2023
-  ```
-- Validate that BGP route was installed into the routing information base (RIB)
-  ```
-  show ip route 10.0.0.2/32
-  ```
-  ```
-  leaf-1# show ip route 10.0.0.2/32
-  Routing entry for 10.0.0.2/32
-    Known via "bgp", distance 20, metric 0, best
-    Last update 00:10:55 ago
-    * 10.1.1.1, via PortChannel1, weight 1
-    * 10.1.1.3, via PortChannel2, weight 1
-  ```
+10. Validate route was received from *spine-1* and *spine-2* and added to the BGP table
+     ```
+     show ip bgp 10.0.0.2/32
+     ```
+     ```
+     leaf-1# show ip bgp 10.0.0.2/32
+     BGP routing table entry for 10.0.0.2/32, version 4
+     Paths: (2 available, best #1, table default)
+       Advertised to non peer-group peers:
+       10.1.1.1 10.1.1.3
+       65000 65002
+         10.1.1.1 from 10.1.1.1 (10.0.0.3)
+           Origin IGP, valid, external, multipath, best (Router ID)
+           Last update: Mon Sep 18 20:37:32 2023
+       65000 65002
+         10.1.1.3 from 10.1.1.3 (10.0.0.4)
+           Origin IGP, valid, external, multipath
+           Last update: Mon Sep 18 20:37:32 2023
+     ```
+11. Validate that BGP route was installed into the routing information base (RIB)
+     ```
+     show ip route 10.0.0.2/32
+     ```
+     ```
+     leaf-1# show ip route 10.0.0.2/32
+     Routing entry for 10.0.0.2/32
+       Known via "bgp", distance 20, metric 0, best
+       Last update 00:10:55 ago
+       * 10.1.1.1, via PortChannel1, weight 1
+       * 10.1.1.3, via PortChannel2, weight 1
+     ```
 
 ### Validate the route was installed in the Linux forwarding table (SONiC's FIB)
 
-1. Exit the FRR CLI and then from Linux:
-   ```
-   cisco@leaf-1:~$ ip route
-   ...
-   cisco@leaf-1:~$ ip route
-   10.0.0.2 nhid 121 proto bgp src 10.0.0.1 metric 20 
-     nexthop via 10.1.1.3 dev PortChannel2 weight 1 
-     nexthop via 10.1.1.1 dev PortChannel1 weight 1 
-   10.0.0.3 nhid 113 via 10.1.1.1 dev PortChannel1 proto bgp src 10.0.0.1 metric 20 
-   10.0.0.4 nhid 112 via 10.1.1.3 dev PortChannel2 proto bgp src 10.0.0.1 metric 20 
-   10.1.1.0/31 dev PortChannel1 proto kernel scope link src 10.1.1.0 
-   10.1.1.2/31 dev PortChannel2 proto kernel scope link src 10.1.1.2 
-   172.10.10.0/24 dev eth0 proto kernel scope link src 172.10.10.101 
-   192.168.123.0/24 dev eth4 proto kernel scope link src 192.168.123.4 
-   198.18.11.0/24 dev Ethernet32 proto kernel scope link src 198.18.11.1 
-   198.18.12.0/24 nhid 121 proto bgp src 10.0.0.1 metric 20 
-     nexthop via 10.1.1.3 dev PortChannel2 weight 1 
-     nexthop via 10.1.1.1 dev PortChannel1 weight 1 
-   ```
+12. Exit the FRR CLI and then from Linux:
+     ```
+     cisco@leaf-1:~$ ip route
+     ...
+     cisco@leaf-1:~$ ip route
+     10.0.0.2 nhid 121 proto bgp src 10.0.0.1 metric 20 
+       nexthop via 10.1.1.3 dev PortChannel2 weight 1 
+       nexthop via 10.1.1.1 dev PortChannel1 weight 1 
+     10.0.0.3 nhid 113 via 10.1.1.1 dev PortChannel1 proto bgp src 10.0.0.1 metric 20 
+     10.0.0.4 nhid 112 via 10.1.1.3 dev PortChannel2 proto bgp src 10.0.0.1 metric 20 
+     10.1.1.0/31 dev PortChannel1 proto kernel scope link src 10.1.1.0 
+     10.1.1.2/31 dev PortChannel2 proto kernel scope link src 10.1.1.2 
+     172.10.10.0/24 dev eth0 proto kernel scope link src 172.10.10.101 
+     192.168.123.0/24 dev eth4 proto kernel scope link src 192.168.123.4 
+     198.18.11.0/24 dev Ethernet32 proto kernel scope link src 198.18.11.1 
+     198.18.12.0/24 nhid 121 proto bgp src 10.0.0.1 metric 20 
+       nexthop via 10.1.1.3 dev PortChannel2 weight 1 
+       nexthop via 10.1.1.1 dev PortChannel1 weight 1 
+     ```
 
 ## Validate SONiC End to End Connectivity
 
-- From *leaf-1* we will ping the *loopback0* interface on *leaf-2*
-  ```
-  ping 10.0.0.2
-  ```
-  ```
-  leaf-1# ping 10.0.0.2
-  PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
-  64 bytes from 10.0.0.2: icmp_seq=1 ttl=63 time=101 ms
-  64 bytes from 10.0.0.2: icmp_seq=2 ttl=63 time=276 ms
-  ```
+13. From *leaf-1* we will ping the *loopback0* interface on *leaf-2*
+     ```
+     ping 10.0.0.2
+     ```
+     ```
+     leaf-1# ping 10.0.0.2
+     PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
+     64 bytes from 10.0.0.2: icmp_seq=1 ttl=63 time=101 ms
+     64 bytes from 10.0.0.2: icmp_seq=2 ttl=63 time=276 ms
+     ```
 
 ### Validate Endpoint VM reachability
 
@@ -408,40 +408,40 @@ __Endpoint-1__
 
 Endpoint-1 VM represents a standard linux host or endpoint connected to leaf-1
 
-1. Open a new terminal and SSH to Endpoint-1 Client VM
-   ```
-   ssh cisco@198.18.128.105
-   ```
+14. Open a new terminal and SSH to Endpoint-1 Client VM
+     ```
+     ssh cisco@198.18.128.105
+     ```
 
-2. Ping Endpoint-2
-   ```
-   ping 198.18.12.2
-   ```
-   ```
-   cisco@endpoint-1:~$ ping 198.18.12.2
-   PING 198.18.12.2 (198.18.12.2) 56(84) bytes of data.
-   64 bytes from 198.18.12.2: icmp_seq=1 ttl=62 time=698 ms
-   64 bytes from 198.18.12.2: icmp_seq=2 ttl=62 time=372 ms
-   ```
+15. Ping Endpoint-2
+     ```
+     ping 198.18.12.2
+     ```
+     ```
+     cisco@endpoint-1:~$ ping 198.18.12.2
+     PING 198.18.12.2 (198.18.12.2) 56(84) bytes of data.
+     64 bytes from 198.18.12.2: icmp_seq=1 ttl=62 time=698 ms
+     64 bytes from 198.18.12.2: icmp_seq=2 ttl=62 time=372 ms
+     ```
 
 __Endpoint-2__
 
 The Endpiont-2 VM represents a standard linux host or endpoint connected to leaf-2
 
-1. In another terminal SSH to Endpoint-2 Client VM
-   ```
-   ssh cisco@198.18.128.106
-   ```
-2. Ping Endpoint-1
-   ```
-   ping 198.18.11.2
-   ```
-   ```
-   cisco@endpoint-2:~$ ping 198.18.11.2
-   PING 198.18.11.2 (198.18.11.2) 56(84) bytes of data.
-   64 bytes from 198.18.11.2: icmp_seq=1 ttl=61 time=177 ms
-   64 bytes from 198.18.11.2: icmp_seq=2 ttl=61 time=4.19 ms
-   ```
+16. In another terminal SSH to Endpoint-2 Client VM
+     ```
+     ssh cisco@198.18.128.106
+     ```
+17. Ping Endpoint-1
+     ```
+     ping 198.18.11.2
+     ```
+     ```
+     cisco@endpoint-2:~$ ping 198.18.11.2
+     PING 198.18.11.2 (198.18.11.2) 56(84) bytes of data.
+     64 bytes from 198.18.11.2: icmp_seq=1 ttl=61 time=177 ms
+     64 bytes from 198.18.11.2: icmp_seq=2 ttl=61 time=4.19 ms
+     ```
 
 ## End of Lab Exercise 3
 Please proceed to [Lab 4](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/lab_exercise_4.md)
