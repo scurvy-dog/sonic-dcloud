@@ -13,7 +13,8 @@ In Lab Exercise 4 the student will explore how SONiC utilizes ACLs in dataplane 
   - [ACL Tables](#acl-tables)
     - [ACL Table Parameters](#acl-table-parameters)
     - [ACL Table Syntax](#acl-table-syntax)
-    - [ACL Table Add/Delete](#acl-tables-add-delete)
+    - [ACL Table Add](#acl-tables-add)
+    - [ACL Table Delete](#acl-table-delete)
   - [ACL Rules](#acl-rules)
     - [ACL Rule parameters](#acl-rule-parameters)
     - [ACL Rule Syntax](#acl-rule-syntax)
@@ -80,7 +81,8 @@ In this example set of code we want to set the following parameters through CLI 
     - Interface Bindings: Ethernet 32
     - Traffic Direction: Ingress
     
-**Adding ACL Table with CLI**   
+#### ACL Table Add
+**Adding ACL Table with CLI**
 ```
 cisco@leaf-2:~$ sudo config acl add table --help
 Usage: config acl add table [OPTIONS] <table_name> <table_type>
@@ -126,56 +128,18 @@ Save this json acl table definition to a file on the SONiC device as acl_table_i
 sudo config load acl_table_icmp.json
 ```
 
-**Remove ACL Table through CLI**
+### ACL Table Delete
+Through CLI you an leverage the *sudo config acl remove* command as seen below
+
 ```
 sudo config acl remove table ICMP_DROP
 ```
 
-
-
-### ACL Rules
+## ACL Rules
 ACL Rules contain the detail step by step policy that is implemented by the tables. ACL Rule structure will identify which ACL Table they should be joined to. ACL Rules can only be defined using JSON and have no CLI option. We will show a basic ACL Rule used to block ICMP traffic coming from Endpoint-2 to *Loopback 0* on Leaf-2
 
-**Example JSON file that should be saved as acl_rule_icmp.json** 
-
-```
-{
-    "ACL_RULE": {
-        "ICMP_INGRESS|RULE_10": {
-            "PACKET_ACTION": "FORWARD",
-            "PRIORITY": "10",
-            "SRC_IP": "198.18.12.1/32"
-        },
-        "ICMP_INGRESS|RULE_20": {
-            "PACKET_ACTION": "DROP",
-            "PRIORITY": "20",
-            "SRC_IP": "10.0.0.2/32"
-        }
-    }
-}
-```
-
-**Loading the ACL rule JSON file into the running config**
-```
-sudo config load acl_rule_icmp.json
-```
-> **NOTE**
-> SONiC does not support the removal of ACLs through CLI. The below json will remove all ACL rules
-
-```
-{
-    "acl": {
-        "acl-sets": {
-            "acl-set": {
-            }
-        }
-    }
-}
-```
-
-### ACL Rule Syntax
-ACL rules follow the guideline of identifying the table and acl name and then have a set of key:value pairs which defines each rule in t
-**ACL Rule Match Options**
+### ACL Rule Parameters
+ACL rule sets have a much larger parameter set than tables due to the complex nature of the ACL match option combinations. There are over 30 plus parameters list in the table below. In this lab we will use 2-3 as examples.
 
 - For reference on Ethernet Header see this link [HERE](https://en.wikipedia.org/wiki/Ethernet_frame)
 - For reference on IPv4 Packet Header see this link [HERE](https://en.wikipedia.org/wiki/Internet_Protocol_version_4#Header)
@@ -215,6 +179,47 @@ ACL rules follow the guideline of identifying the table and acl name and then ha
 | INNER_L4_DST_PORT  | Match Inner Header Destination Layer 4 Port| Research                                       |
 | BTH_OPCODE         | Match ???                                  | Research                                       |
 | AETH_SYNDROME      | Match ???                                  | Research                                       |
+
+
+### ACL Rule Syntax
+ACL rules follow the guideline of identifying the table and acl name and then have a set of key:value pairs which defines each rule in t
+
+**Example JSON file that should be saved as acl_rule_icmp.json** 
+
+```
+{
+    "ACL_RULE": {
+        "ICMP_INGRESS|RULE_10": {
+            "PACKET_ACTION": "FORWARD",
+            "PRIORITY": "10",
+            "SRC_IP": "198.18.12.1/32"
+        },
+        "ICMP_INGRESS|RULE_20": {
+            "PACKET_ACTION": "DROP",
+            "PRIORITY": "20",
+            "SRC_IP": "10.0.0.2/32"
+        }
+    }
+}
+```
+
+**Loading the ACL rule JSON file into the running config**
+```
+sudo config load acl_rule_icmp.json
+```
+> **NOTE**
+> SONiC does not support the removal of ACLs through CLI. The below json will remove all ACL rules
+
+```
+{
+    "acl": {
+        "acl-sets": {
+            "acl-set": {
+            }
+        }
+    }
+}
+```
 
 ## ACL Examples
 Below are two basic ACLs to show how to apply and check ACL effectivness 
