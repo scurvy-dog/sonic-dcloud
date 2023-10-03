@@ -149,7 +149,7 @@ ACL rule sets have a much larger parameter set than tables due to the complex na
 - For reference on ICMP Packet Header see this link [HERE](https://en.wikipedia.org/wiki/Ping_(networking_utility)#ICMP_packet)
 - For referenec on VXLAN Packet Header see this link [HERE](https://learningnetwork.cisco.com/s/blogs/a0D3i000005YebJEAS/introduction-to-vxlan)
 
-**MATCH TABLE PARAMETERS**
+**Match Table Parameters**
 
 | Type               | Description                                | Notes                                          | 
 |:-------------------|:-------------------------------------------|:-----------------------------------------------|
@@ -188,20 +188,20 @@ ACL rule sets have a much larger parameter set than tables due to the complex na
 ### ACL Rule Syntax
 ACL rules are defined using the JSON syntax for purposes of importing into the runnging configuration (redis database). The syntax follows a strict heirarchy of objects and then defining key:value pairs. 
 
-The top level is defined by the "ACL_RULE" object and within that data set contained in {} are individual rules.
-Individual rule syntax follows the below
+The top level of the heirarchy is defined by the "ACL_RULE" object. Within the objects that data set are individual rules.
+Individual rules follows the below syntax
 ```
     "<ACL TABLE NAME>|<ACL RULE NAME>":{
-        "<KEY VALUE>": "<KEY VALUE",
-        "<KEY VALUE>": "<KEY VALUE"
+        "<KEY VALUE>": "<KEY VALUE>",
+        "<KEY VALUE>": "<KEY VALUE>"
     }
 ```
-Each ACL rule for data-plane ACL rule  should have the below two required key values: *packet_action* and *priority*. The remaining key:value pairs would be matching conditions found in the above table labled *Match Table Parameters*.
+Each ACL rule for data-plane ACL rule requires two key values: *PACKET_ACTION* and *PRIORITY*. 
+The remaining <key>:<value> pairs would be matching conditions found in the above table labled *Match Table Parameters*.
 
-If the ACL Table type that the ACL rule is matched to is type *L3* or *L3V6* then the valide 
-PACKET_ACTION options are {FORWARD | DROP}
+If the ACL Table type is *L3* or *L3V6* then the ACL rule *PACKET_ACTION* valid options are {FORWARD | DROP}
 
-The PRIORITY value is processed by **highest numerical value first**. So in the below rule set RULE_20 with *PRIORITY 20* will be processed before RULE_10 *PRIORITY 10*.
+The *PRIORITY* value is processed by **highest numerical value first**. So in the below rule set RULE_20 with *PRIORITY 20* will be processed before RULE_10 *PRIORITY 10*.
 
 ### ACL Rule Add
 **Example JSON file that should be saved as acl_rule_icmp.json** 
@@ -232,8 +232,8 @@ sudo config load acl_rule_icmp.json
 > **NOTE**
 > SONiC does not support the removal of ACLs through CLI. The below json will remove all ACL rules
 
-- The below json will remove **ALL** ACL rule sets in the running configuration. Save the JSON into a file called acl-wipe.json
-- 
+The below json will remove **ALL** ACL rule sets in the running configuration. Save the JSON into a file called acl-wipe.json
+  
 ```
 {
     "acl": {
