@@ -423,8 +423,5 @@ Validate IPv4 BGP route received from peer. We will examine *10.0.0.2/32* origin
      64 bytes from 198.18.12.2: icmp_seq=2 ttl=62 time=372 ms
      ```
 
-
-     ```
-
 ## End of Lab Exercise 3
 Please proceed to [Lab 4](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/lab_exercise_4.md)
