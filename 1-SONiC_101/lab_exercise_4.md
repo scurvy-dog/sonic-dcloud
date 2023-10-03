@@ -21,6 +21,8 @@ In Lab Exercise 4 the student will explore how SONiC utilizes ACLs in data-plane
     - [ACL Rule Add](#acl-rules-add)
     - [ACL Rule Delete](#acl-rules-delete)
   - [ACL Examples](#acl-examples)
+    - [Example 1 - Match ICMP](#example-1---match-ip-protocol-and-drop-icmp)
+    - [Example 2 - Match TCP Port](#example-2---match-tcp-port-and-drop) 
   - [End of Lab 4](#end-of-lab-4)
   
 ## Lab Objectives
@@ -125,10 +127,10 @@ Save this json acl table definition to a file on the SONiC device as acl_table_i
         }
 }
 ```
-- **Loading the ACL table JSON file into the running config**
-  ```
-  sudo config load acl_table_icmp.json
-  ```
+**Loading the ACL table JSON file into the running config**
+```
+sudo config load acl_table_icmp.json
+```
 
 ### ACL Table Delete
 Through CLI you an leverage the *sudo config acl remove* command as seen below
@@ -253,17 +255,30 @@ sudo config acl update full acl-wipe.json
 ## ACL Examples
 Below are two basic ACLs to show how to apply and check ACL effectivness 
 
-### ACL Example - Block ICMP to Loopback
-In this example we will block ICMP traffic destined to from *endpoint-1* to *loopback 0* on *leaf-1*
+### Example 1 - MATCH IP Protocol and DROP ICMP
+In this example we will block ICMP traffic sourced from *endpoint-1* to  *leaf-1* *loopback 0* 
 We will need to apply the ACL to the *Ethernet 32* interface of *leaf-1*
 Lets create an ACL Table that we will link to the interface
 
-1. First login to SONiC Router *leaf-1*
-2. In the home directory lets create a json definition file for the ACL Table
+1. SSH to *endpoint-1*
+2. Ping from the shell to *leaf-1 loopback 0* interface
+   ```
+   ping 10.0.0.1
+   ```
+   You should see response as below:
+   cisco@endpoint-1:~$ ping 10.0.0.1
+   PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data.
+   64 bytes from 10.0.0.1: icmp_seq=1 ttl=64 time=4.42 ms
+   64 bytes from 10.0.0.1: icmp_seq=2 ttl=64 time=3.70 ms
+   64 bytes from 10.0.0.1: icmp_seq=3 ttl=64 time=10.5 ms
+   ```
+   
+3. Login to SONiC Router *leaf-1*
+5. In the home directory create a json definition file for the ACL Table
    ```
    nano eth32_acl_table.json
    ```
-3. Paste in the following code and save and exit.
+6. Paste in the following code and save and exit.
    ```
    {
    "ACL_TABLE": {
@@ -278,52 +293,64 @@ Lets create an ACL Table that we will link to the interface
         }
    }
    ```
-4. Load the json definition file into the running config
+7. Load the json definition file into the running config
    ```
    sudo config load eth32_acl_table.json
    ```
-5. Verify the ACL table was installed.
+8. Verify the ACL table was installed.
    ```
    cisco@leaf-1:~$ show acl table
    Name       Type    Binding     Description                         Stage    Status
    ---------  ------  ----------  ----------------------------------  -------  --------
    ICMP_DROP  L3      Ethernet32  Block IMCP traffic from endpoint 1  ingress  Active
    ```
-6. In the home directory lets create a json definition file for the ACL Rule Set
+9. Check that there are now ACL Rules applied
    ```
-   nano acl_ep1_ingress.json
+   show acl rule
    ```
-7. Paste in the following code and save and exit.
    ```
-  {
-    "ACL_RULE": {
-        "ICMP_DROP|RULE_10": {
-            "PACKET_ACTION": "FORWARD",
-            "PRIORITY": "10",
-            "SRC_IP": "198.18.11.2/32"
-        },
-        "ICMP_DROP|RULE_20": {
-            "PACKET_ACTION": "DROP",
-            "PRIORITY": "20",
-            "SRC_IP": "198.18.11.2/32",
-            "IP_PROTOCOL":1
-        }
-    }
-}    
-   ```
+    cisco@leaf-1:~$ show acl rule
+    Table    Rule    Priority    Action    Match    Status
+    -------  ------  ----------  --------  -------  --------
+    ```
+    
+10. In the home directory lets create a json definition file for the ACL Rule Set
+    ```
+    nano acl_ep1_ingress.json
+    ```
+11. Paste in the following code and save and exit.
+    ```
+    {
+      "ACL_RULE": {
+          "ICMP_DROP|RULE_10": {
+              "PACKET_ACTION": "FORWARD",
+              "PRIORITY": "10",
+              "SRC_IP": "198.18.11.2/32"
+          },
+          "ICMP_DROP|RULE_20": {
+              "PACKET_ACTION": "DROP",
+              "PRIORITY": "20",
+              "SRC_IP": "198.18.11.2/32",
+              "IP_PROTOCOL":1
+          }
+      }
+    }    
+    ```
 
-8. Verify the ACL rule set was installed
-   ```
-   cisco@leaf-1:~$ sudo config load acl_ep1_ingress.json
-   Load config from the file(s) acl_ep1_ingress.json ? [y/N]: y
-   Running command: /usr/local/bin/sonic-cfggen -j acl_ep1_ingress.json --write-to-db
-   cisco@leaf-1:~$ show acl rule
-   Table      Rule     Priority    Action    Match                   Status
-   ---------  -------  ----------  --------  ----------------------  --------
-   ICMP_DROP  RULE_20  20          FORWARD   SRC_IP: 198.18.12.2/32  Active
-   ICMP_DROP  RULE_10  10          DROP      IP_PROTOCOL: 1          Active  
-                                             SRC_IP: 198.18.12.2/32
-   ```
+12. Verify the ACL rule set was installed
+    ```
+    cisco@leaf-1:~$ sudo config load acl_ep1_ingress.json
+    Load config from the file(s) acl_ep1_ingress.json ? [y/N]: y
+    Running command: /usr/local/bin/sonic-cfggen -j acl_ep1_ingress.json --write-to-db
+    cisco@leaf-1:~$ show acl rule
+    Table      Rule     Priority    Action    Match                   Status
+    ---------  -------  ----------  --------  ----------------------  --------
+    ICMP_DROP  RULE_20  20          FORWARD   SRC_IP: 198.18.11.2/32  Active
+    ICMP_DROP  RULE_10  10          DROP      IP_PROTOCOL: 1          Active  
+                                              SRC_IP: 198.18.11.2/32
+    ```
+    
+### Example 2 - MATCH TCP Port and DROP
 
 ## Scratch
 aclshow -a
