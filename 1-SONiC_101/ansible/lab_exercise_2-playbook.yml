@@ -47,7 +47,7 @@
 
     - name: Copy nano-tiny debian package to VMs
       copy:
-        src: "/home/cisco/images/nano-tiny_3.2-3_amd64.deb"
+        src: "/home/cisco/packages/nano-tiny_3.2-3_amd64.deb"
         dest: "/var/cache/apt/archives/nano-tiny_3.2-3_amd64.deb"
         mode: 0644
 
