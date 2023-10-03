@@ -54,18 +54,18 @@
         chdir: /home/cisco/
       ignore_errors: yes
 
-    - name: Pause for 10 minutes
+    - name: Pause for 4 minutes
       pause:
-        minutes: 10
+        minutes: 4
 
-    - name: grep Router from docker logs
-      shell: docker logs -t {{hostvars[inventory_hostname]['container'] }} | grep Router
+    - name: Wait for 'Router' to appear in logs
+      shell: docker logs -t {{ hostvars[inventory_hostname]['container'] }} | grep Router
       register: grep_result
-
-    - name: debug grep result
-      debug:
-        var: grep_result.stdout
-
+      until: grep_result.stdout_lines | length > 0
+      retries: 12  # Number of times to retry
+      delay: 30  # Delay between retries
+      timeout: 600  # Maximum time to wait (in seconds) 
+      
     - name: Save grep output to a local log file
       lineinfile:
         path: "/home/cisco/deploy.log"
