@@ -291,7 +291,7 @@ There are several relevant files for our ansible playbook
 
     Network          Next Hop            Metric LocPrf Weight Path
   *> 10.0.0.1/32      0.0.0.0                  0         32768 i
-  *> 10.0.0.2/32      10.1.1.1                               0 65000 65002 i
+  <b>*> 10.0.0.2/32</b>      10.1.1.1                               0 65000 65002 i
   *=                  10.1.1.3                               0 65000 65002 i
   *> 10.0.0.3/32      10.1.1.1                 0             0 65000 i
   *> 10.0.0.4/32      10.1.1.3                 0             0 65000 i
