@@ -15,11 +15,8 @@ The lab software stack is built off the SONiC master build with Cisco specific p
 * Lab 1 - Launching Topology [LINK](lab_exercise_1.md)
 * Lab 2 - Explore SONiC OS [LINK](lab_exercise_2.md)
 * Lab 3 - BGP Configuration [LINK](lab_exercise_3.md)
-* Lab 4 - ACL Configuration [LINK](lab_exercise_4.md)
-* Lab 5 - BFD Configuration [LINK](lab_exercise_5.md)
-* Lab 6 - QoS Configuration [LINK](lab_exercise_5.md)
-* Lab 7 - End to End Testing [LINK](lab_exercise_6.md)
-* Lab 8 - Management Configuration [LINK](lab_7/lab_7-guide.md)
+* Lab 4 - BFD Configuration [LINK](lab_exercise_4.md)
+* Lab 5 - ACL Configuration [LINK](lab_exercise_5.md)
 
 ## Github Repository Overview
 Each of the labs is designed to be completed in the order presented. Lab 1 is the baseline configurations 
@@ -49,7 +46,7 @@ This lab is based on a simulated DC fabric design of four SONiC routers running 
 ### Device Access Table
 | VM Name        | Description                  | Device Type | Access Type |   IP Address    |
 |:---------------|:-----------------------------|:-----------:|:-----------:|:---------------:|
-| File Server    | File Staging                 | VM          | SSH         | 198.18.128.100  |
+| Jumpbox        | File Staging                 | VM          | SSH         | 198.18.128.100  |
 | Leaf-1         | C8k Emulator + SONiC routers | VM          | SSH         | 198.18.128.101  |
 | Leaf-2         | C8k Emulator + SONiC routers | VM          | SSH         | 198.18.128.102  |
 | Spine-1        | C8k Emulator + SONiC routers | VM          | SSH         | 198.18.128.103  |
@@ -58,12 +55,12 @@ This lab is based on a simulated DC fabric design of four SONiC routers running 
 | Endpoint-2     | Ubuntu client                | VM          | SSH         | 198.18.128.106  |
 
 
-* Use vSONiC VM as jumpbox to access the SONiC routers as follows:
+* Use Jumpbox VM to access the SONiC routers as follows:
 
 | Device Name    | Device Type | Access Type |   IP Address    |                                           
 |:---------------|:------------|:------------|:---------------:|                          
-| spine01        | router      | SSH         | 172.10.10.2     |
-| spine02        | router      | SSH         | 172.10.10.3     |
-| leaf01         | router      | SSH         | 172.10.10.4     |
-| leaf02         | router      | SSH         | 172.10.10.5     |
+| leaf-1         | router      | SSH         | 172.10.10.2     |
+| leaf-2         | router      | SSH         | 172.10.10.3     |
+| spine-1        | router      | SSH         | 172.10.10.4     |
+| spine-2        | router      | SSH         | 172.10.10.5     |
 
