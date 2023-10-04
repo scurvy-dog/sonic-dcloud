@@ -1,13 +1,13 @@
 ---
 
-# ansible-playbook -i hosts lab_exercise_2-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+# ansible-playbook -i hosts leaf-1-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
 
 - name: Apply config_db.json and FRR config to leaf-1 and install nano
   hosts: leaf-1
   become: true
   tasks:
 
-    - name: Copy config_baseline.json files
+    - name: Copy config_db.json file
       copy:
         src: "leaf-1/config_db.json"
         dest: "/etc/sonic/new_config_db.json"
