@@ -1,7 +1,7 @@
 # SONiC 101 - Exercise 4: Bi-directional Forward Detection (BFD) [20 Min]
 
 ### Description: 
-In Lab Exercise 4 the student will explore how SONiC utilizes BFD..
+In Lab Exercise 4 the student will explore the use of BFD 
 
 ## Contents
 - [Exercise 4: Bi-directional Forward Detection BFD \[20 Min\]]
