@@ -3,6 +3,11 @@
 ### Description: 
 In Lab Exercise 4 the student will explore the use of BFD 
 
+> [!IMPORTANT]
+> BFD is a feature in development within SONiC
+> 
+
+
 ## Contents
 - [Exercise 4: Bi-directional Forward Detection BFD \[20 Min\]]
     - [Description:](#description)
