@@ -445,4 +445,4 @@ Utilizing the same table *EP1_DROP* we will update the ACL rule set on interface
    ```
 
 ## End of Lab 4
-Please proceed to [Lab 5](https://github.com/scurvy-dog/sonic-dcloud/edit/main/1-SONiC_101/lab_exercise_5.md)
+Please proceed to [Lab 5](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/lab_exercise_5.md)
