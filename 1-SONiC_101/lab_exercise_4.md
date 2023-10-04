@@ -302,6 +302,7 @@ Lets create an ACL table that we will link to the interface.
    ```
    show acl table
    ```
+   ```
    cisco@leaf-1:~$ show acl table
    Name       Type    Binding     Description                         Stage    Status
    ---------  ------  ----------  ----------------------------------  -------  --------
