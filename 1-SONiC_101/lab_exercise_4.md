@@ -1,4 +1,4 @@
-# SONiC 101 - Exercise 4: Bi-directional Forward Detection (BFD) [20 Min]
+# SONiC 101 - Exercise 4: BFD Configuration [20 Min]
 
 ### Description: 
 In Lab Exercise 4 the student will explore BFD as its currently implemented in SONiC. As we've seen, SONiC has FRR running in its "bgp" docker container. By default the FRR/BGP container runs zebra, staticd, and bgpd daemons, as well as a couple other processes. To enable additional FRR daemons such as ISIS or BFD we need to 'exec' into the container and enable the daemon. Once enabled, we can then vtysh into FRR and apply our BFD configuration.
