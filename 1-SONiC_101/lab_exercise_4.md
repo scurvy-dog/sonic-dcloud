@@ -25,7 +25,7 @@ The student upon completion of Lab Exercise 5 should have achieved the following
 For the purposes of this lab we will enable BFD between *leaf-1* and *spine-1* on the port-channel interface connecting the two routers. See diagram below.
 ![BFD diagram](./topo-drawings/bfd-overview.png)
 
-BFD daemons and apply configurations on *leaf-1*, *spine-1*, and *spine-2*. We'll then log into *leaf-1* and enable and configure BFD manually.
+You will be manually configuring the BFD configurations on *leaf-1* and *spine-1*. 
 
 1. Next we'll manually enable/configure BFD on leaf-1
 
