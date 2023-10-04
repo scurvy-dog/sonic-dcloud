@@ -18,8 +18,8 @@ In Lab Exercise 4 the student will explore how SONiC utilizes ACLs in data-plane
   - [ACL Rules](#acl-rules)
     - [ACL Rule parameters](#acl-rule-parameters)
     - [ACL Rule Syntax](#acl-rule-syntax)
-    - [ACL Rule Add](#acl-rules-add)
-    - [ACL Rule Delete](#acl-rules-delete)
+    - [ACL Rule Add](#acl-rule-add)
+    - [ACL Rule Delete](#acl-rule-delete)
   - [ACL Examples](#acl-examples)
     - [Example 1 - Match ICMP](#example-1---match-ip-protocol-and-drop-icmp)
     - [Example 2 - Match TCP Port](#example-2---match-tcp-port-and-drop) 
@@ -256,14 +256,15 @@ sudo config acl update full acl-wipe.json
 Below are two basic ACLs to show how to apply and check ACL effectivness 
 
 ### Example 1 - MATCH IP Protocol and DROP ICMP
-In this example we will block ICMP traffic sourced from *endpoint-1* to  *leaf-1* *loopback 0* 
-We will need to apply the ACL to the *Ethernet 32* interface of *leaf-1*
-Lets create an ACL Table that we will link to the interface
+In this example we will block ICMP traffic sourced from *endpoint-1* to SONiC router *leaf-1* *loopback 0* interface.
+We will need to apply the ACL to the *Ethernet 32* interface of *leaf-1*.
+Lets create an ACL table that we will link to the interface.
 
 1. SSH to *endpoint-1*
-2. Ping from the shell to *leaf-1 loopback 0* interface
+2. Ping *leaf-1 loopback 0* interface
    ```
    ping 10.0.0.1
+   ```
    ```
    You should see response as below:
    cisco@endpoint-1:~$ ping 10.0.0.1
@@ -274,7 +275,7 @@ Lets create an ACL Table that we will link to the interface
    ```
    
 3. Login to SONiC router *leaf-1*
-4. In the home directory create a json definition file for the ACL Table
+4. In the home directory create a json definition file for the ACL table we will create.
    ```
    nano eth32_acl_table.json
    ```
