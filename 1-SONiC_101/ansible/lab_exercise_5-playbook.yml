@@ -26,8 +26,10 @@
       ansible.builtin.command:
         cmd: |
           docker exec -it bgp bash -c '
-            cd /usr/lib/frr &&
-            ./bfdd &
+            /usr/lib/frr/bfdd &
             exit
           '
       ignore_errors: yes 
+      register: exec_result
+
+    - debug: var=exec_result.stdout_lines
