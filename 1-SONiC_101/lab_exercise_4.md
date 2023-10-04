@@ -10,7 +10,8 @@ In Lab Exercise 4 the student will explore BFD as its currently implemented in S
 - [Exercise 4: Bi-directional Forward Detection BFD \[20 Min\]]
     - [Description:](#description)
   - [Lab Objectives](#lab-objectives)
-  - [BGP Configuration](#bfd-configuration)
+  - [Start BFD Daemon](#start-bfd-daemon)
+  - [Configure BFD within FRR](#configure-bffd-within-frr)
   - [End of Lab 4](#end-of-lab-4)
   
 ## Lab Objectives
@@ -20,7 +21,7 @@ The student upon completion of Lab Exercise 5 should have achieved the following
 * BFD Configuratin in FRR
 * Validate BFD sessions
 
-## BFD Configuration
+## Start BFD Daemon
 
 For the purposes of this lab we will enable BFD between *leaf-1* and *spine-1* on the port-channel interface connecting the two routers. See diagram below.
 ![BFD diagram](./topo-drawings/bfd-overview.png)
@@ -62,56 +63,38 @@ You will be manually configuring the BFD configurations on *leaf-1* and *spine-1
 
 	[1]+  Stopped                 docker exec -it bgp /usr/lib/frr/bfdd
 	```
-### we might use this section if we copy the daemons file over to frr
-1.  You can validate the daemon is running with the systemd service command:
-   
-	```
-	service frr status
-	```
-	Example output:
-	```
-	root@spine-2:/# service frr status
-	Status of watchfrr: running.
-	Status of zebra: running.
-	Status of bgpd: running.
-	Status of staticd: running.
-	Status of bfdd: running.
-	```
 
-### configure BFD in FRR 
-1.  vtysh into FRR on both leaf-1 and spine-1
-
-2.  Configure BFD on leaf-1
-	```
-	vtysh
-	conf t
-	```
+### Configure BFD within FRR
+1. Login to *leaf-1* and then enter the FRR shell configuration mode
+   ```
+   vtysh
+   configure terminal
+   ```
+2.  Configure BFD on *leaf-1*
 	```
 	bfd
 	peer 10.1.1.1
 	exit
-	!
+	
 	router bgp 65001
 	neighbor 10.1.1.1 bfd
 	```
-
-3.  Configure BFD on spine-1
-
-	```
-	vtysh
-	conf t
-	```
+3. Login to *spine-1* and then enter the FRR shell configuration mode
+   ```
+   vtysh
+   configure terminal
+   ```
+4.  Configure BFD on *spine-1*
 	```
 	bfd
 	peer 10.1.1.0
 	exit
-	!
-	router bgp 65000
+	
+	router bgp 65001
 	neighbor 10.1.1.0 bfd
 	```
-
-4.  Verify BFD sessions show 'Status: up'
-
+ 
+5.  Verify BFD sessions from *leaf-1* using the below command. Look for the peer status message "Status: up:
 	```
 	show bfd peer 10.1.1.1
 	```
@@ -122,7 +105,7 @@ You will be manually configuring the BFD configurations on *leaf-1* and *spine-1
 			ID: 2118180714
 			Remote ID: 4205222022
 			Active mode
-			Status: up                 <------------- 
+			Status: up                 <-------- Relevant message
 			Uptime: 3 minute(s), 19 second(s)
 			Diagnostics: ok
 			Remote diagnostics: ok
@@ -138,32 +121,27 @@ You will be manually configuring the BFD configurations on *leaf-1* and *spine-1
 				Receive interval: 300ms
 				Transmission interval: 300ms
 				Echo receive interval: 50ms
-
-	leaf-1# 
 	```
 
-5.  We can also run tcpdump on SONiC's Ethernet interfaces to see the BFD packets coming in and out:
-
-	```
-	sudo tcpdump -ni Ethernet4 -vv
-	```
-	Example output:
-	```
-	cisco@leaf-1:~$ sudo tcpdump -ni Ethernet4 -vv
-	tcpdump: listening on Ethernet4, link-type EN10MB (Ethernet), snapshot length 262144 bytes
-	18:39:23.206477 IP (tos 0xc0, ttl 255, id 42139, offset 0, flags [DF], proto UDP (17), length 52)
-		10.1.1.1.49152 > 10.1.1.0.3784: [udp sum ok] 
-		BCM-LI-SHIM: direction unused, pkt-type unknown, pkt-subtype untagged, li-id 792
-		(invalid)
-	18:39:23.248328 IP (tos 0xc0, ttl 255, id 65413, offset 0, flags [DF], proto UDP (17), length 52)
-		10.1.1.0.49152 > 10.1.1.1.3784: [udp sum ok] 
-		BCM-LI-SHIM: direction unused, pkt-type unknown, pkt-subtype untagged, li-id 792
-		(invalid)
-	```
-
-6.  Test convergence by failing an interface...uh, we probably don't want to do this...
-
-
+6. You can also run tcpdump on SONiC's Ethernet interfaces to see the BFD packets coming in and out. We will utilize tcpdump on the PortChannel1 that we configured early in the exercise. BFD is utilizing UDP port 3784 so we will add that to our tcpdump filter.
+   SSH into SONiC router *leaf-1*
+   ```
+   sudo tcpdump -ni PortChannel1 -vv udp port 3784 -c 4
+   ```
+   Example output:
+   ```
+   cisco@leaf-1:~$ sudo tcpdump -ni PortChannel1 -vv udp port 3784 -c 3
+   tcpdump: listening on Ethernet4, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+   18:39:23.206477 IP (tos 0xc0, ttl 255, id 42139, offset 0, flags [DF], proto UDP (17), length 52)
+   10.1.1.1.49152 > 10.1.1.0.3784: [udp sum ok]
+   BCM-LI-SHIM: direction unused, pkt-type unknown, pkt-subtype untagged, li-id 792
+   (invalid)
+   
+   18:39:23.248328 IP (tos 0xc0, ttl 255, id 65413, offset 0, flags [DF], proto UDP (17), length 52)
+   10.1.1.0.49152 > 10.1.1.1.3784: [udp sum ok]
+   BCM-LI-SHIM: direction unused, pkt-type unknown, pkt-subtype untagged, li-id 792
+   (invalid)
+   ```
 
 ## End of Lab 4
 Please proceed to [Lab 5](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/lab_exercise_5.md)
