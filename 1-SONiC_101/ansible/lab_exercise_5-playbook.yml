@@ -25,7 +25,7 @@
     - name: Execute commands inside BGP container
       ansible.builtin.command:
         cmd: |
-          docker exec -it bgp_container bash -c '
+          docker exec -it bgp bash -c '
             cd /usr/lib/frr &&
             ./bfdd &
             exit
