@@ -1,10 +1,10 @@
-# Lab Exercise 3: Configure and Validate BGP [40 Min]
+# SONiC 101 - Exercise 3: Configure and Validate BGP [40 Min]
 
 ### Description: 
-In Lab Exercise 3 the student will explore configuring the BGP routing protocol within SONiC
+In Exercise 3 the student will explore configuring the BGP routing protocol within SONiC
 
 ## Contents
-- [Lab Exercise 3: Configure and Validate BGP \[40 Min\]](#lab-exercise-3-configure-and-validate-bgp-40-min)
+- [Exercise 3: Configure and Validate BGP \[40 Min\]](#lab-exercise-3-configure-and-validate-bgp-40-min)
     - [Description:](#description)
   - [Contents](#contents)
   - [Lab Objectives](#lab-objectives)

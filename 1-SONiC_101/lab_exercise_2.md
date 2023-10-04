@@ -1,10 +1,10 @@
-# Lab Exercise 2: Explore SONiC NOS [40 Min]
+# SONiC 101 - Exercise 2: Explore SONiC NOS [40 Min]
 
 ### Description: 
-In Lab Exercise 2 the student will explore the SONiC network operating system, its components, services, config management, and CLI. Second, they will run an Ansible script to apply global and interface configurations to the nodes in our topology. And finally we will validate connectivity between SONiC nodes and from SONiC nodes to our endpoint VMs.
+In Exercise 2 the student will explore the SONiC network operating system, its components, services, config management, and CLI. Second, they will run an Ansible script to apply global and interface configurations to the nodes in our topology. And finally we will validate connectivity between SONiC nodes and from SONiC nodes to our endpoint VMs.
 
 ## Contents
-- [Lab Exercise 2: Explore SONiC NOS \[40 Min\]](#lab-exercise-2-explore-sonic-nos-40-min)
+- [Exercise 2: Explore SONiC NOS \[40 Min\]](#lab-exercise-2-explore-sonic-nos-40-min)
   - [Lab Objectives](#lab-objectives)
   - [Tour of SONiC](#tour-of-sonic)
     - [SONiC Software Architecture](#sonic-software-architecture)

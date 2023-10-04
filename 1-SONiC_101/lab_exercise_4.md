@@ -1,11 +1,11 @@
-# Lab Exercise 4: ACL Overview and Config [35 Min]
+# SONiC 101 - Exercise 4: ACL Overview and Config [35 Min]
 
 
 ### Description: 
-In Lab Exercise 4 the student will explore how SONiC utilizes ACLs in data-plane and control plane application. An overview of where and how SONiC applies ACLs will be provided and configuration examples.
+In Exercise 4 the student will explore how SONiC utilizes ACLs in data-plane and control plane application. An overview of where and how SONiC applies ACLs will be provided and configuration examples.
 
 ## Contents
-- [Lab Exercise 4: ACL Overview and Config \[30 Min\]](#lab-exercise-4-acl-overview-and-config-35-min)
+- [Exercise 4: ACL Overview and Config \[30 Min\]](#lab-exercise-4-acl-overview-and-config-35-min)
     - [Description:](#description)
   - [Contents](#contents)
   - [Lab Objectives](#lab-objectives)
@@ -179,12 +179,12 @@ ACL rule sets have a much larger parameter set than tables due to the complex na
 | ICMPV6_TYPE        | Match ICMPv6 Type Field                    |                                                |
 | ICMPV6_CODE        | Match ICMPv6 Options Field                 |                                                |
 | TUNNEL_VNI         | Match VXLAN VNID Field                     | VNI (24b)                                      |
-| INNER_ETHER_TYPE   | Match Inner Header Ethernet Type Field     | Research                                       |
-| INNER_IP_PROTOCOL  | Match Inner Header IP Protocol Number      | Research                                       |
-| INNER_L4_SRC_PORT  | Match Inner Header Source Layer 4 Port     | Research                                       |
-| INNER_L4_DST_PORT  | Match Inner Header Destination Layer 4 Port| Research                                       |
-| BTH_OPCODE         | Match ???                                  | Research                                       |
-| AETH_SYNDROME      | Match ???                                  | Research                                       |
+| INNER_ETHER_TYPE   | Match Inner Header Ethernet Type Field     |                                                |
+| INNER_IP_PROTOCOL  | Match Inner Header IP Protocol Number      |                                                |
+| INNER_L4_SRC_PORT  | Match Inner Header Source Layer 4 Port     |                                                |
+| INNER_L4_DST_PORT  | Match Inner Header Destination Layer 4 Port|                                                |
+| BTH_OPCODE         |                                            |                                                |
+| AETH_SYNDROME      |                                            |                                                |
 
 
 ### ACL Rule Syntax
@@ -196,14 +196,15 @@ Individual rules follows the below syntax
     "<ACL TABLE NAME>|<ACL RULE NAME>":{
         "<KEY VALUE>": "<KEY VALUE>",
         "<KEY VALUE>": "<KEY VALUE>"
-    }
+        }
 ```
 Each ACL rule for data-plane ACL rule requires two key values: *PACKET_ACTION* and *PRIORITY*. 
 The remaining <key>:<value> pairs would be matching conditions found in the above table labled *Match Table Parameters*.
 
-If the ACL Table type is *L3* or *L3V6* then the ACL rule *PACKET_ACTION* valid options are {FORWARD | DROP}
-
-The *PRIORITY* value is processed by **highest numerical value first**. So in the below rule set RULE_20 with *PRIORITY 20* will be processed before RULE_10 *PRIORITY 10*.
+> [!NOTE]
+> If the ACL Table type is *L3* or *L3V6* then the ACL rule *PACKET_ACTION* valid options are {FORWARD | DROP}
+>
+> The *PRIORITY* value is processed by **highest numerical value first**. So in the below rule set RULE_20 with *PRIORITY 20* will be processed before RULE_10 *PRIORITY 10*.
 
 ### ACL Rule Add
 **Example JSON file that should be saved as acl_rule_icmp.json** 
@@ -302,6 +303,7 @@ Lets create an ACL table that we will link to the interface.
    ```
    show acl table
    ```
+   ```
    cisco@leaf-1:~$ show acl table
    Name       Type    Binding     Description                         Stage    Status
    ---------  ------  ----------  ----------------------------------  -------  --------
@@ -353,7 +355,18 @@ Lets create an ACL table that we will link to the interface.
     EP1_DROP   RULE_10  10          DROP      IP_PROTOCOL: 1          Active  
                                               SRC_IP: 198.18.11.2/32
     ```
-    
+12. Repeat ping test from *endpoint-1* to *leaf-1 loopback 0* interface. You should see 100% packet loss
+    ```
+    ping 10.0.0.1
+    ```
+    ```
+    cisco@endpoint-1:~$ ping 10.0.0.1
+    PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data.
+    ^C
+    --- 10.0.0.1 ping statistics ---
+    8 packets transmitted, 0 received, 100% packet loss, time 7148ms
+    ```
+
 ### Example 2 - MATCH TCP Port and DROP
 In this example we will block iPerf3 traffic sourced from *endpoint-1* (client) to  *endpoint-2* (server). iPerf3 will utilize TPC port 5201 for the data flow.
 Utilizing the same table *EP1_DROP* we will update the ACL rule set on interface *Ethernet 32* on *leaf-1*
