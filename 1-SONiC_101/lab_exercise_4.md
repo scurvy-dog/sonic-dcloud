@@ -81,93 +81,91 @@ You will be manually configuring the BFD configurations on *leaf-1* and *spine-1
 	```
 
 ### configure BFD in FRR 
-1. vtysh into FRR on both leaf-1 and spine-1
+1.  vtysh into FRR on both leaf-1 and spine-1
 
-1. configure BFD on leaf-1
-```
-vtysh
-conf t
-```
-```
-bfd
- peer 10.1.1.1
- peer 10.1.1.3
- exit
- !
-router bgp 65001
- neighbor 10.1.1.1 bfd
- neighbor 10.1.1.3 bfd
-```
-   
-2. configure BFD on spine-1
-```
-vtysh
-conf t
-```
-```
-bfd
- peer 10.1.1.0
- peer 10.1.1.6
- exit
- !
-router bgp 65000
- neighbor 10.1.1.0 bfd
- neighbor 10.1.1.6 bfd
-```
+2.  Configure BFD on leaf-1
+	```
+	vtysh
+	conf t
+	```
+	```
+	bfd
+	peer 10.1.1.1
+	exit
+	!
+	router bgp 65001
+	neighbor 10.1.1.1 bfd
+	```
 
-1. config BFD on spine-2
-```
-bfd
- peer 10.1.1.2
- peer 10.1.1.4
- exit
- !
-router bgp 65000
- neighbor 10.1.1.2 bfd
- neighbor 10.1.1.4 bfd
-```
+3.  Configure BFD on spine-1
 
-1. config BFD on leaf-2
-```
-bfd
- peer 10.1.1.5
- peer 10.1.1.7
- exit
- !
-router bgp 65002
- neighbor 10.1.1.5 bfd
- neighbor 10.1.1.7 bfd
-```
+	```
+	vtysh
+	conf t
+	```
+	```
+	bfd
+	peer 10.1.1.0
+	exit
+	!
+	router bgp 65000
+	neighbor 10.1.1.0 bfd
+	```
 
-1. Verify BFD sessions:
+4.  Verify BFD sessions show 'Status: up'
 
-```
-leaf-1# show bfd peer 10.1.1.1
-BFD Peer:
-	peer 10.1.1.1 vrf default
-		ID: 2663753925
-		Remote ID: 1540583716
-		Active mode
-		Status: up            <---- We are looking for this
-		Uptime: 41 second(s)
-		Diagnostics: ok
-		Remote diagnostics: ok
-		Peer Type: configured
-		RTT min/avg/max: 0/0/0 usec
-		Local timers:
-			Detect-multiplier: 3
-			Receive interval: 300ms
-			Transmission interval: 300ms
-			Echo receive interval: 50ms
-			Echo transmission interval: disabled
-		Remote timers:
-			Detect-multiplier: 3
-			Receive interval: 300ms
-			Transmission interval: 300ms
-			Echo receive interval: 50ms
+	```
+	show bfd peer 10.1.1.1
+	```
+	```
+	leaf-1# show bfd peer 10.1.1.1
+	BFD Peers:
+		peer 10.1.1.1 vrf default
+			ID: 2118180714
+			Remote ID: 4205222022
+			Active mode
+			Status: up
+			Uptime: 3 minute(s), 19 second(s)
+			Diagnostics: ok
+			Remote diagnostics: ok
+			Peer Type: configured
+			Local timers:
+				Detect-multiplier: 3
+				Receive interval: 300ms
+				Transmission interval: 300ms
+				Echo receive interval: 50ms
+				Echo transmission interval: disabled
+			Remote timers:
+				Detect-multiplier: 3
+				Receive interval: 300ms
+				Transmission interval: 300ms
+				Echo receive interval: 50ms
 
-leaf-1# 
-```
+	leaf-1# 
+	```
+
+5.  We can also run tcpdump on SONiC's Ethernet interfaces to see the BFD packets coming in and out:
+
+	```
+	sudo tcpdump -ni Ethernet4 -vv
+	```
+	Example output:
+	```
+	cisco@leaf-1:~$ sudo tcpdump -ni Ethernet4 -vv
+	tcpdump: listening on Ethernet4, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+	18:39:23.206477 IP (tos 0xc0, ttl 255, id 42139, offset 0, flags [DF], proto UDP (17), length 52)
+		10.1.1.1.49152 > 10.1.1.0.3784: [udp sum ok] 
+		BCM-LI-SHIM: direction unused, pkt-type unknown, pkt-subtype untagged, li-id 792
+		(invalid)
+	18:39:23.248328 IP (tos 0xc0, ttl 255, id 65413, offset 0, flags [DF], proto UDP (17), length 52)
+		10.1.1.0.49152 > 10.1.1.1.3784: [udp sum ok] 
+		BCM-LI-SHIM: direction unused, pkt-type unknown, pkt-subtype untagged, li-id 792
+		(invalid)
+	```
+
+6.  Test convergence by failing an interface...uh, we probably don't want to do this...
+
+
 
 ## End of Lab 4
 Please proceed to [Lab 5](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/lab_exercise_5.md)
