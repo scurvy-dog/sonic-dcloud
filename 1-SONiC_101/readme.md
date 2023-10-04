@@ -12,14 +12,14 @@ The lab software stack is built off the SONiC master build with Cisco specific p
 * Repository Overview [LINK](#git-repository-overview)
 * Lab Topology [LINK](#lab-topology)
 * Remote Access [LINK](#remote-access)
-* Lab 1 - Launching Topology [LINK](lab_exercise_1.md)
-* Lab 2 - Explore SONiC OS [LINK](lab_exercise_2.md)
-* Lab 3 - BGP Configuration [LINK](lab_exercise_3.md)
-* Lab 4 - BFD Configuration [LINK](lab_exercise_4.md)
-* Lab 5 - ACL Configuration [LINK](lab_exercise_5.md)
+* Exercise 1 - Launching Topology [LINK](lab_exercise_1.md)
+* Exercise 2 - Explore SONiC OS [LINK](lab_exercise_2.md)
+* Exercise 3 - BGP Configuration [LINK](lab_exercise_3.md)
+* Exercise 4 - BFD Configuration [LINK](lab_exercise_4.md)
+* Exercise 5 - ACL Configuration [LINK](lab_exercise_5.md)
 
 ## Github Repository Overview
-Each of the labs is designed to be completed in the order presented. Lab 1 is the baseline configurations 
+Each of the labs is designed to be completed in the order presented. Exercise 1 is the baseline configurations 
 needed to build the starting topology and launch the XRd and extended environment.
 
 ### Individual  Directories
@@ -59,8 +59,8 @@ This lab is based on a simulated DC fabric design of four SONiC routers running 
 
 | Device Name    | Device Type | Access Type |   IP Address    |                                           
 |:---------------|:------------|:------------|:---------------:|                          
-| leaf-1         | router      | SSH         | 172.10.10.2     |
-| leaf-2         | router      | SSH         | 172.10.10.3     |
-| spine-1        | router      | SSH         | 172.10.10.4     |
-| spine-2        | router      | SSH         | 172.10.10.5     |
+| leaf-1         | router      | SSH         | 172.10.10.101   |
+| leaf-2         | router      | SSH         | 172.10.10.102   |
+| spine-1        | router      | SSH         | 172.10.10.103   |
+| spine-2        | router      | SSH         | 172.10.10.104   |
 
