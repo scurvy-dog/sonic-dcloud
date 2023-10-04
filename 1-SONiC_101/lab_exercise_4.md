@@ -1,15 +1,15 @@
-# Lab Exercise 5: Bi-directional Forward Detection (BFD) [20 Min]
+# SONiC 101 - Exercise 4: Bi-directional Forward Detection (BFD) [20 Min]
 
 ### Description: 
-In Lab Exercise 5 the student will explore how SONiC utilizes BFD..
+In Lab Exercise 4 the student will explore how SONiC utilizes BFD..
 
 ## Contents
-- [Lab Exercise 5: Bi-directional Forward Detection BFD \[20 Min\]]
+- [Exercise 4: Bi-directional Forward Detection BFD \[20 Min\]]
     - [Description:](#description)
   - [Lab Objectives](#lab-objectives)
   - [SONiC ACL Architecture](#sonic-acl-architecture)
 
-  - [End of Lab 5](#end-of-lab-5)
+  - [End of Lab 4](#end-of-lab-4)
   
 ## Lab Objectives
 The student upon completion of Lab Exercise 5 should have achieved the following objectives:
