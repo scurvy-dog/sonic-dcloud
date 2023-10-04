@@ -161,5 +161,5 @@ BFD Peer:
 leaf-1# 
 ```
 
-## End of Intro to SONiC Lab
-Please proceed to [SONiC 102 Lab](https://github.com/scurvy-dog/sonic-dcloud/2-SONiC_102/readme.md)
+## End of Lab 4
+Please proceed to [Lab 5](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/lab_exercise_5.md)
