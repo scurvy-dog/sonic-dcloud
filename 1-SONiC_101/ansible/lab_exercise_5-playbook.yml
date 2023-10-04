@@ -19,7 +19,7 @@
     #   ignore_errors: yes
 
     - name: Execute commands inside BGP container
-      command: docker exec -it bgp --workdir /usr/lib/frr bfdd &
+      command: docker exec -it bgp /usr/lib/frr/bfdd &
       ignore_errors: yes 
       register: exec_result
 
