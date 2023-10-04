@@ -1,11 +1,11 @@
-# Lab Exercise 4: ACL Overview and Config [30 Min]
+# Lab Exercise 4: ACL Overview and Config [35 Min]
 
 
 ### Description: 
 In Lab Exercise 4 the student will explore how SONiC utilizes ACLs in data-plane and control plane application. An overview of where and how SONiC applies ACLs will be provided and configuration examples.
 
 ## Contents
-- [Lab Exercise 4: ACL Overview and Config \[30 Min\]](#lab-exercise-4-acl-overview-and-config-30-min)
+- [Lab Exercise 4: ACL Overview and Config \[30 Min\]](#lab-exercise-4-acl-overview-and-config-35-min)
     - [Description:](#description)
   - [Contents](#contents)
   - [Lab Objectives](#lab-objectives)
