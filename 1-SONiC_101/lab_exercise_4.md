@@ -179,12 +179,12 @@ ACL rule sets have a much larger parameter set than tables due to the complex na
 | ICMPV6_TYPE        | Match ICMPv6 Type Field                    |                                                |
 | ICMPV6_CODE        | Match ICMPv6 Options Field                 |                                                |
 | TUNNEL_VNI         | Match VXLAN VNID Field                     | VNI (24b)                                      |
-| INNER_ETHER_TYPE   | Match Inner Header Ethernet Type Field     | Research                                       |
-| INNER_IP_PROTOCOL  | Match Inner Header IP Protocol Number      | Research                                       |
-| INNER_L4_SRC_PORT  | Match Inner Header Source Layer 4 Port     | Research                                       |
-| INNER_L4_DST_PORT  | Match Inner Header Destination Layer 4 Port| Research                                       |
-| BTH_OPCODE         | Match ???                                  | Research                                       |
-| AETH_SYNDROME      | Match ???                                  | Research                                       |
+| INNER_ETHER_TYPE   | Match Inner Header Ethernet Type Field     |                                                |
+| INNER_IP_PROTOCOL  | Match Inner Header IP Protocol Number      |                                                |
+| INNER_L4_SRC_PORT  | Match Inner Header Source Layer 4 Port     |                                                |
+| INNER_L4_DST_PORT  | Match Inner Header Destination Layer 4 Port|                                                |
+| BTH_OPCODE         |                                            |                                                |
+| AETH_SYNDROME      |                                            |                                                |
 
 
 ### ACL Rule Syntax
@@ -196,7 +196,7 @@ Individual rules follows the below syntax
     "<ACL TABLE NAME>|<ACL RULE NAME>":{
         "<KEY VALUE>": "<KEY VALUE>",
         "<KEY VALUE>": "<KEY VALUE>"
-    }
+        }
 ```
 Each ACL rule for data-plane ACL rule requires two key values: *PACKET_ACTION* and *PRIORITY*. 
 The remaining <key>:<value> pairs would be matching conditions found in the above table labled *Match Table Parameters*.
