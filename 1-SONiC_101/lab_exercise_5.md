@@ -1,11 +1,11 @@
-# SONiC 101 - Exercise 4: ACL Overview and Config [35 Min]
+# SONiC 101 - Exercise 5: ACL Overview and Config [35 Min]
 
 
 ### Description: 
-In Exercise 4 the student will explore how SONiC utilizes ACLs in data-plane and control plane application. An overview of where and how SONiC applies ACLs will be provided and configuration examples.
+In Exercise 5 the student will explore how SONiC utilizes ACLs in data-plane and control plane application. An overview of where and how SONiC applies ACLs will be provided and configuration examples.
 
 ## Contents
-- [Exercise 4: ACL Overview and Config \[30 Min\]](#lab-exercise-4-acl-overview-and-config-35-min)
+- [Exercise 5: ACL Overview and Config \[30 Min\]](#lab-exercise-5-acl-overview-and-config-35-min)
     - [Description:](#description)
   - [Contents](#contents)
   - [Lab Objectives](#lab-objectives)
@@ -23,10 +23,10 @@ In Exercise 4 the student will explore how SONiC utilizes ACLs in data-plane and
   - [ACL Examples](#acl-examples)
     - [Example 1 - Match ICMP](#example-1---match-ip-protocol-and-drop-icmp)
     - [Example 2 - Match TCP Port](#example-2---match-tcp-port-and-drop) 
-  - [End of Lab 4](#end-of-lab-4)
+  - [End of Lab 5](#end-of-lab-5)
   
 ## Lab Objectives
-The student upon completion of Lab Exercise 4 should have achieved the following objectives:
+The student upon completion of Lab Exercise 5 should have achieved the following objectives:
 
 * Understand types of ACLs SONiC Supports
 * Basic ACL syntax construction
@@ -63,9 +63,9 @@ Data-plane ACL Tables have mandatory and optional defined fields as listed in th
 **Table Type Field Definitions**
 | Type                | Description                       | Ingress | Egress  | 
 |:--------------------|:----------------------------------|:-------:|:-------:|
-| L3                  | Match on IPv4 ACL                 | X       | X       |
+| L3                  | Match on IPv ACL                 | X       | X       |
 | L3V6                | Match on IPv6 ACL                 | X       | X       |
-| L3V4V6              | Match on IPv4 and v6 combined ACL | X       | X       |
+| L3VV6              | Match on IPv and v6 combined ACL | X       | X       |
 | MIRROR              | Match on IPv4 ACL to mirror flow  | X       | X       |
 | MIRRORV6            | Match on IPv6 ACL to mirror flow  | X       | X       |
 | MIRROR_DSCP         | Match on DSCP ACL to mirror flow  | X       | X       |
@@ -444,5 +444,6 @@ Utilizing the same table *EP1_DROP* we will update the ACL rule set on interface
 
    ```
 
-## End of Lab 4
-Please proceed to [Lab 5](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/lab_exercise_5.md)
+## End of Intro to SONiC Lab
+Please proceed to [SONiC 102 Lab](https://github.com/scurvy-dog/sonic-dcloud/2-SONiC_102/readme.md)
+
