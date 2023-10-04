@@ -18,13 +18,13 @@
     #   timeout: 10
     #   ignore_errors: yes
 
-    # - name: exit BGP container
-    #   command: exit
-    #   ignore_errors: yes
-
     - name: Execute commands inside BGP container
       command: docker exec -it bgp /usr/lib/frr/bfdd &
       ignore_errors: yes 
       register: exec_result
 
     - debug: var=exec_result.stdout_lines
+
+    - name: exit BGP container
+      command: exit
+      ignore_errors: yes
