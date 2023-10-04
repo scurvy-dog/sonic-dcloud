@@ -1,6 +1,13 @@
 # SONiC Node Failure Instructions
 
-### If a SONiC node fails to launch at dcloud lab startup
+## When to use?
+There are two potential scenarioes where trouble may happen with the SONiC node. In both cases the fastest remediation is to have the container torn down and rebuilt. Be aware that once the container is back up and running configuration would need to be reapplied.
+
+### Issue Scenarios
+1. Initial SONiC node fails to populate interfaces from the Cisco 8000 Emulator
+2. The SONiC node has general container instability which can happen in the virtual environment
+
+## Step by Step Instructions
 
 1. ssh to the sonic node's host VM:
 
