@@ -1,0 +1,32 @@
+# ansible-playbook -i hosts lab_test-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+
+- name: Setup lab and deploy SONiC containerlab nodes
+  hosts: sonic_host_vms
+  become: true
+  tasks:
+
+    - name: run deploy playbook
+      include_tasks: lab_deploy-playbook.yml
+      ignore_errors: yes
+
+- name: Run lab 2 and lab 3 playbooks
+  hosts: sonic_routers
+  become: true
+  tasks:
+
+    - name: run lab 2 "config_db baseline" playbook
+      include_tasks: lab_exercise_2-playbook.yml
+      ignore_errors: yes
+
+    - name: run lab 3 "frr bgp" playbook
+      include_tasks: lab_exercise_3-playbook.yml
+      ignore_errors: yes
+
+- name: Run leaf-1 playbook to get it caught up
+  hosts: leaf-1
+  become: true
+  tasks:
+
+    - name: run leaf-1 playbook
+      include_tasks: leaf-1-playbook.yml
+      ignore_errors: yes
