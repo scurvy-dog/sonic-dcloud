@@ -27,9 +27,7 @@ For the purposes of this lab we will enable BFD between *leaf-1* and *spine-1* o
 
 You will be manually configuring the BFD configurations on *leaf-1* and *spine-1*. 
 
-1. Next we'll manually enable/configure BFD on leaf-1 and spine-1
-
-2.  SSH to leaf-1 and spine-1 and use docker exec to enable the BFD daemon:
+1.  SSH to leaf-1 and spine-1 and use docker exec to enable FRR's BFD daemon inside the 'bgp' container:
 
 	```
 	docker exec -it bgp /usr/lib/frr/bfdd &
@@ -41,7 +39,7 @@ You will be manually configuring the BFD configurations on *leaf-1* and *spine-1
 	[1] 17877
 	```
 
-3.  You can validate the daemon is running using 'ps -eaf'
+2.  You can validate the daemon is running using 'ps -eaf'
    
 	```
 	docker exec -it bgp ps -eaf
@@ -65,7 +63,7 @@ You will be manually configuring the BFD configurations on *leaf-1* and *spine-1
 	[1]+  Stopped                 docker exec -it bgp /usr/lib/frr/bfdd
 	```
 ### we might use this section if we copy the daemons file over to frr
-3.  You can validate the daemon is running with the systemd service command:
+1.  You can validate the daemon is running with the systemd service command:
    
 	```
 	service frr status
@@ -124,7 +122,7 @@ You will be manually configuring the BFD configurations on *leaf-1* and *spine-1
 			ID: 2118180714
 			Remote ID: 4205222022
 			Active mode
-			Status: up
+			Status: up                 <------------- 
 			Uptime: 3 minute(s), 19 second(s)
 			Diagnostics: ok
 			Remote diagnostics: ok
