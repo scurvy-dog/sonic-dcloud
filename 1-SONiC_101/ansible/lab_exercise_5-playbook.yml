@@ -1,0 +1,40 @@
+---
+
+# ansible-playbook -i hosts lab_exercise_5-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+
+- name: Apply config_db.json and FRR config to leaf-1 and install nano
+  hosts: leaf-1
+  become: true
+  tasks:
+
+    - name: Copy acl json files
+      copy:
+        src: "leaf-1/acl_ep1_ingress.json.json"
+        dest: "/home/cisco/acl_ep1_ingress.json"
+        mode: 0644
+
+    - name: Copy acl json files
+      copy:
+        src: "leaf-1/eth32_acl_table.json"
+        dest: "/home/cisco/eth32_acl_table.json"
+        mode: 0644
+
+    - name: Load acl table configuration
+      expect:
+        command: sudo config load /home/cisco/acl_ep1_ingress.json
+        responses:
+          (.*)y/N(.*): "y"
+        timeout: 90
+
+      ignore_errors: yes
+      register: load_result
+
+    - name: Load acl ruleset configuration
+      expect:
+        command: sudo config load /home/cisco/eth32_acl_table.json
+        responses:
+          (.*)y/N(.*): "y"
+        timeout: 90
+        
+      ignore_errors: yes
+      register: load_result
