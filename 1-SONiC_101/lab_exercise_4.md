@@ -255,7 +255,7 @@ sudo config acl update full acl-wipe.json
 ## ACL Examples
 Below are two basic ACLs to show how to apply and check ACL effectivness 
 
-### Example 1 - MATCH IP Protocol and DROP ICMP
+### Example 1 - Match IP Protocol and DROP ICMP
 In this example we will block ICMP traffic sourced from *endpoint-1* to SONiC router *leaf-1* *loopback 0* interface.
 We will need to apply the ACL to the *Ethernet 32* interface of *leaf-1*.
 Lets create an ACL table that we will link to the interface.
@@ -284,14 +284,14 @@ Lets create an ACL table that we will link to the interface.
    {
    "ACL_TABLE": {
             "EP1_DROP": {
-                    "policy_desc" : "Block IMCP traffic from endpoint 1",
+                    "policy_desc" : "DROP selective traffic from endpoint-1",
                     "type" : "L3",
                     "stage": "ingress",
                     "ports" : [
                         "Ethernet32"
                     ] 
                     }
-        }
+           }
    }
    ```
 6. Load the json definition file into the running config
@@ -300,12 +300,14 @@ Lets create an ACL table that we will link to the interface.
    ```
 7. Verify the ACL table was installed.
    ```
+   show acl table
+   ```
    cisco@leaf-1:~$ show acl table
    Name       Type    Binding     Description                         Stage    Status
    ---------  ------  ----------  ----------------------------------  -------  --------
    EP1_DROP   L3      Ethernet32  Block IMCP traffic from endpoint 1  ingress  Active
    ```
-8. Check that there are now ACL Rules applied
+8. Check that there are no ACL Rules applied
    ```
    show acl rule
    ```
@@ -343,6 +345,7 @@ Lets create an ACL table that we will link to the interface.
     cisco@leaf-1:~$ sudo config load acl_ep1_ingress.json
     Load config from the file(s) acl_ep1_ingress.json ? [y/N]: y
     Running command: /usr/local/bin/sonic-cfggen -j acl_ep1_ingress.json --write-to-db
+    
     cisco@leaf-1:~$ show acl rule
     Table      Rule     Priority    Action    Match                   Status
     ---------  -------  ----------  --------  ----------------------  --------
@@ -352,11 +355,11 @@ Lets create an ACL table that we will link to the interface.
     ```
     
 ### Example 2 - MATCH TCP Port and DROP
-In this example we will block iPerf3 traffic sourced from *endpoint-1* (client) to  *endpoint-2* (server). iPERF3 will utilize TPC port 5201 for the data flow.
-We will update the ACL on interface *Ethernet 32* interface of *leaf-1* and utilize the same table *EP1_DROP*
+In this example we will block iPerf3 traffic sourced from *endpoint-1* (client) to  *endpoint-2* (server). iPerf3 will utilize TPC port 5201 for the data flow.
+Utilizing the same table *EP1_DROP* we will update the ACL rule set on interface *Ethernet 32* on *leaf-1*
 
 1. SSH to *endpoint-2*
-2. Start the iPerf3 Server Process
+2. Start the iPerf3 server process
    ```
    iperf3 -s
    ```
@@ -387,7 +390,7 @@ We will update the ACL on interface *Ethernet 32* interface of *leaf-1* and util
 
    iperf Done.
    ```
-4. SSH into *leaf-1*. Now lets update the ACL rules applied to ACL table *EP1_DROP* on *leaf-1*.
+4. SSH into *leaf-1*. Now lets update the ACL rule set applied to ACL table *EP1_DROP*.
 5. In the home directory create a json definition file for the ACL rule for iPerf3
    ```
    nano iperf3_rule_update.json
@@ -419,6 +422,8 @@ We will update the ACL on interface *Ethernet 32* interface of *leaf-1* and util
    EP1_DROP  RULE_10  10          FORWARD   SRC_IP: 198.18.11.2/32  Active
    ```
 9. Now switch back to *endpoint-1* and rerun the iPerf3 test.
+   ```
+   iperf3 -c 198.18.12.2
    ```
    You should see output like the below showing the iPerf3 test hangs
    ```
