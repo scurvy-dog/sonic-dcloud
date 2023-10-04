@@ -2,56 +2,17 @@
 
 # ansible-playbook -i hosts test-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
 
-- name: Setup lab and deploy SONiC containerlab nodes
-  hosts: sonic_host_vms
+- name: Enable FRR BFD daemon and configure BFD sessions
+  hosts: sonic_router_subset
   become: true
   tasks:
 
-    # - name: Pause for 10 minutes
-    #   pause:
-    #     minutes: 10
+  - name: Copy playbook to remote hosts
+    copy:
+      src: lab_exercise_5-playbook.yml
+      dest: /home/cisco/lab_exercise_5-playbook.yml
 
-    # - name: Run a command and direct output to a log file
-    #   command: "docker logs {{hostvars[inventory_hostname]['container'] }} "
-    #   register: command_result
+  - name: Execute playbook on remote hosts
+    command: ansible-playbook /home/cisco/lab_exercise_5-playbook.yml
 
-    # - name: Save command output to a log file
-    #   copy:
-    #     content: "{{ command_result.stdout }}"
-    #     dest: "/home/cisco/{{inventory_hostname}}.log"
-
-    # - name: grep logfile
-    #   command:
-    #     cmd: "grep Router /home/cisco/{{inventory_hostname}}.log"
-    #   changed_when: false
-    #   ignore_errors: true
-    #   register: grep_result
-
-    # - name: Save grep output to a local log file
-    #   lineinfile:
-    #     path: "/home/cisco/deploy.log"
-    #     line: "{{inventory_hostname}} {{ grep_result.stdout }}"
-    #     create: yes
-    #   delegate_to: localhost
-
-    - name: grep router
-      shell: docker logs {{hostvars[inventory_hostname]['container'] }} | grep Router
-      register: command_result
-
-    - name: debug router result
-      debug:
-        var: command_result.stdout
-
-    - name: Save grep output to a local log file
-      lineinfile:
-        path: "/home/cisco/deploy.log"
-        line: "{{inventory_hostname}} {{ command_result.stdout }}"
-        create: yes
-      delegate_to: localhost
-
-    # - name: write to file
-    #   copy:
-    #     content: "{{ command_result.stdout }}"
-    #     dest: "/home/cisco/{{inventory_hostname}}.log"
-    #   delegate_to: localhost
 
