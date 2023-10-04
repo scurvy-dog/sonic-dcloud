@@ -6,7 +6,8 @@
 #   tasks:
 
 - name: run deploy playbook
-  include_tasks: lab_deploy-playbook.yml
+  ansible.builtin.include_tasks: 
+    file: lab_deploy-playbook.yml
   ignore_errors: yes
 
 # - name: Run lab 2 and lab 3 playbooks
