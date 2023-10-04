@@ -273,16 +273,16 @@ Lets create an ACL Table that we will link to the interface
    64 bytes from 10.0.0.1: icmp_seq=3 ttl=64 time=10.5 ms
    ```
    
-3. Login to SONiC Router *leaf-1*
-5. In the home directory create a json definition file for the ACL Table
+3. Login to SONiC router *leaf-1*
+4. In the home directory create a json definition file for the ACL Table
    ```
    nano eth32_acl_table.json
    ```
-6. Paste in the following code and save and exit.
+5. Paste in the following code and save and exit.
    ```
    {
    "ACL_TABLE": {
-            "ICMP_DROP": {
+            "EP1_DROP": {
                     "policy_desc" : "Block IMCP traffic from endpoint 1",
                     "type" : "L3",
                     "stage": "ingress",
@@ -293,18 +293,18 @@ Lets create an ACL Table that we will link to the interface
         }
    }
    ```
-7. Load the json definition file into the running config
+6. Load the json definition file into the running config
    ```
    sudo config load eth32_acl_table.json
    ```
-8. Verify the ACL table was installed.
+7. Verify the ACL table was installed.
    ```
    cisco@leaf-1:~$ show acl table
    Name       Type    Binding     Description                         Stage    Status
    ---------  ------  ----------  ----------------------------------  -------  --------
-   ICMP_DROP  L3      Ethernet32  Block IMCP traffic from endpoint 1  ingress  Active
+   EP1_DROP   L3      Ethernet32  Block IMCP traffic from endpoint 1  ingress  Active
    ```
-9. Check that there are now ACL Rules applied
+8. Check that there are now ACL Rules applied
    ```
    show acl rule
    ```
@@ -314,20 +314,20 @@ Lets create an ACL Table that we will link to the interface
     -------  ------  ----------  --------  -------  --------
     ```
     
-10. In the home directory lets create a json definition file for the ACL Rule Set
+9. In the home directory lets create a json definition file for the ACL Rule Set
     ```
     nano acl_ep1_ingress.json
     ```
-11. Paste in the following code and save and exit.
+10. Paste in the following code and save and exit.
     ```
     {
       "ACL_RULE": {
-          "ICMP_DROP|RULE_10": {
+          "EP1_DROP|RULE_10": {
               "PACKET_ACTION": "FORWARD",
               "PRIORITY": "10",
               "SRC_IP": "198.18.11.2/32"
           },
-          "ICMP_DROP|RULE_20": {
+          "EP1_DROP|RULE_20": {
               "PACKET_ACTION": "DROP",
               "PRIORITY": "20",
               "SRC_IP": "198.18.11.2/32",
@@ -337,7 +337,7 @@ Lets create an ACL Table that we will link to the interface
     }    
     ```
 
-12. Verify the ACL rule set was installed
+11. Verify the ACL rule set was installed
     ```
     cisco@leaf-1:~$ sudo config load acl_ep1_ingress.json
     Load config from the file(s) acl_ep1_ingress.json ? [y/N]: y
@@ -345,16 +345,85 @@ Lets create an ACL Table that we will link to the interface
     cisco@leaf-1:~$ show acl rule
     Table      Rule     Priority    Action    Match                   Status
     ---------  -------  ----------  --------  ----------------------  --------
-    ICMP_DROP  RULE_20  20          FORWARD   SRC_IP: 198.18.11.2/32  Active
-    ICMP_DROP  RULE_10  10          DROP      IP_PROTOCOL: 1          Active  
+    EP1_DROP   RULE_20  20          FORWARD   SRC_IP: 198.18.11.2/32  Active
+    EP1_DROP   RULE_10  10          DROP      IP_PROTOCOL: 1          Active  
                                               SRC_IP: 198.18.11.2/32
     ```
     
 ### Example 2 - MATCH TCP Port and DROP
+In this example we will block iPerf3 traffic sourced from *endpoint-1* (client) to  *endpoint-2* (server). iPERF3 will utilize TPC port 5201 for the data flow.
+We will update the ACL on interface *Ethernet 32* interface of *leaf-1* and utilize the same table *EP1_DROP*
 
-## Scratch
-aclshow -a
-sonic-clear acl
+1. SSH to *endpoint-2*
+2. Start the iPerf3 Server Process
+   ```
+   iperf3 -s
+   ```
+3. SSH to *endpoint-1* and run a control test of iPerf3 to *endpoint-2*
+   ```
+   iperf3 -c 198.18.12.2
+   ```
+   You should see output like the below:
+   ```
+   cisco@endpoint-1:~$ iperf3 -c 198.18.12.2
+   Connecting to host 198.18.12.2, port 5201
+   [  5] local 198.18.11.2 port 59272 connected to 198.18.12.2 port 5201
+   [ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+   [  5]   0.00-1.00   sec  16.4 MBytes   137 Mbits/sec   24    144 KBytes
+   [  5]   1.00-2.00   sec  24.0 MBytes   201 Mbits/sec    6    232 KBytes
+   [  5]   2.00-3.00   sec  28.9 MBytes   242 Mbits/sec    9    304 KBytes
+   [  5]   3.00-4.00   sec  30.1 MBytes   253 Mbits/sec   56    359 KBytes
+   [  5]   4.00-5.00   sec  25.9 MBytes   217 Mbits/sec   13    403 KBytes
+   [  5]   5.00-6.00   sec  22.9 MBytes   192 Mbits/sec   29    437 KBytes
+   [  5]   6.00-7.00   sec  26.1 MBytes   219 Mbits/sec   12    474 KBytes
+   [  5]   7.00-8.00   sec  24.4 MBytes   205 Mbits/sec    0    512 KBytes
+   [  5]   8.00-9.00   sec  23.2 MBytes   194 Mbits/sec    2    542 KBytes
+   [  5]   9.00-10.00  sec  25.2 MBytes   212 Mbits/sec   33    573 KBytes
+   - - - - - - - - - - - - - - - - - - - - - - - - -
+   [ ID] Interval           Transfer     Bitrate         Retr
+   [  5]   0.00-10.00  sec   247 MBytes   207 Mbits/sec  184             sender
+   [  5]   0.00-10.05  sec   245 MBytes   204 Mbits/sec                  receiver
+
+   iperf Done.
+   ```
+4. SSH into *leaf-1*. Now lets update the ACL rules applied to ACL table *EP1_DROP* on *leaf-1*.
+5. In the home directory create a json definition file for the ACL rule for iPerf3
+   ```
+   nano iperf3_rule_update.json
+   ```
+6. Paste in the following code and save and exit.
+   ```
+   {
+    "ACL_RULE": {
+        "EP1_DROP|RULE_30": {
+            "PACKET_ACTION": "DROP",
+            "PRIORITY": "30",
+            "L4_DST_PORT": "5201"
+        }
+     }
+   }
+   ```
+7. Load the json definition file into the running config
+   ```
+   sudo config load iperf3_rule_update.json
+   ```
+8. Verify the ACL table was installed.
+   ```
+   cisco@leaf-1:~$ show acl rule
+   Table     Rule     Priority    Action    Match                   Status
+   --------  -------  ----------  --------  ----------------------  --------
+   EP1_DROP  RULE_30  30          DROP      L4_DST_PORT: 5201       Active
+   EP1_DROP  RULE_20  20          DROP      IP_PROTOCOL: 1          Active
+                                            SRC_IP: 198.18.11.2/32
+   EP1_DROP  RULE_10  10          FORWARD   SRC_IP: 198.18.11.2/32  Active
+   ```
+9. Now switch back to *endpoint-1* and rerun the iPerf3 test.
+   ```
+   You should see output like the below showing the iPerf3 test hangs
+   ```
+   cisco@endpoint-1:~$ iperf3 -c 198.18.12.2
+
+   ```
 
 ## End of Lab 4
 Please proceed to [Lab 5](https://github.com/scurvy-dog/sonic-dcloud/edit/main/1-SONiC_101/lab_exercise_5.md)
