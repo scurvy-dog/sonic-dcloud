@@ -1,4 +1,4 @@
-# Lab Exercise 4: ACL Overview and Config [35 Min]
+# SONiC 101 - Exercise 4: ACL Overview and Config [35 Min]
 
 
 ### Description: 
