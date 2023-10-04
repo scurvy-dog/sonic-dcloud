@@ -10,31 +10,24 @@ In Lab Exercise 4 the student will explore BFD as its currently implemented in S
 - [Exercise 4: Bi-directional Forward Detection BFD \[20 Min\]]
     - [Description:](#description)
   - [Lab Objectives](#lab-objectives)
-  - [SONiC ACL Architecture](#sonic-acl-architecture)
+  - [BGP Configuration](#bfd-configuration)
   - [End of Lab 4](#end-of-lab-4)
   
 ## Lab Objectives
 The student upon completion of Lab Exercise 5 should have achieved the following objectives:
 
-* Point 1
-* Point 2
-* Point 3
+* Understand the relationship of FRR process and the SONiC BGP container
+* BFD Configuratin in FRR
+* Validate BFD sessions
 
-## BFD setup
+## BFD Configuration
 
-For the purposes of this lab we'll run another Ansible playbook which will perform enable BFD daemons and apply configurations on leaf-2, spine-1, and spine-2. We'll then log into leaf-1 and enable and configure BFD manually.
+For the purposes of this lab we will enable BFD between *leaf-1* and *spine-1* on the port-channel interface connecting the two routers. See diagram below.
+![BFD diagram](./topo-drawings/bfd-overview.png)
 
-1.  From jumpbox run lab_exercise_5-playbook.yml:
-   
-	```
-	ansible-playbook -i hosts lab_exercise_5-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
-	```
-Example output:
-```
+BFD daemons and apply configurations on *leaf-1*, *spine-1*, and *spine-2*. We'll then log into *leaf-1* and enable and configure BFD manually.
 
-```
-
-Next we'll manually enable/configure BFD on leaf-1
+1. Next we'll manually enable/configure BFD on leaf-1
 
 2.  SSH to leaf-1 and docker exec into its BGP container 
 
