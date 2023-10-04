@@ -1,19 +1,16 @@
 # SONiC 101 - Exercise 4: Bi-directional Forward Detection (BFD) [20 Min]
 
 ### Description: 
-In Lab Exercise 4 the student will explore the use of BFD 
+In Lab Exercise 4 the student will explore BFD as its currently implemented in SONiC. As we've seen, SONiC has FRR running in its "bgp" docker container. By default the FRR/BGP container runs zebra, staticd, and bgpd daemons, as well as a couple other processes. To enable additional FRR daemons such as ISIS or BFD we need to 'exec' into the container and enable the daemon. Once enabled, we can then vtysh into FRR and apply our BFD configuration.
 
 > [!IMPORTANT]
-> BFD is a feature in development within SONiC
-> 
-
+> BFD is a feature in development within SONiC. In this lab exercise we'll manually enable the BFD daemon and configure BFD, however, the daemon won't persist across router reloads or restarts of the bgp container
 
 ## Contents
 - [Exercise 4: Bi-directional Forward Detection BFD \[20 Min\]]
     - [Description:](#description)
   - [Lab Objectives](#lab-objectives)
   - [SONiC ACL Architecture](#sonic-acl-architecture)
-
   - [End of Lab 4](#end-of-lab-4)
   
 ## Lab Objectives
@@ -23,9 +20,7 @@ The student upon completion of Lab Exercise 5 should have achieved the following
 * Point 2
 * Point 3
 
-## BFD 
-
-SONiC has FRR running in its "BGP" container. By default the FRR/BGP container runs the zebra, staticd, bgpd, and a couple other processes. Currently to enable additional FRR daemons such as ISIS or BFD we need to 'exec' into the container and enable the daemon. Once enabled, we can then vtysh into FRR and apply our BFD configuration.
+## BFD setup
 
 For the purposes of this lab we'll run another Ansible playbook which will perform enable BFD daemons and apply configurations on leaf-2, spine-1, and spine-2. We'll then log into leaf-1 and enable and configure BFD manually.
 
