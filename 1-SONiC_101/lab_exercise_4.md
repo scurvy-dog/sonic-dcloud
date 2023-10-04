@@ -201,9 +201,10 @@ Individual rules follows the below syntax
 Each ACL rule for data-plane ACL rule requires two key values: *PACKET_ACTION* and *PRIORITY*. 
 The remaining <key>:<value> pairs would be matching conditions found in the above table labled *Match Table Parameters*.
 
-If the ACL Table type is *L3* or *L3V6* then the ACL rule *PACKET_ACTION* valid options are {FORWARD | DROP}
-
-The *PRIORITY* value is processed by **highest numerical value first**. So in the below rule set RULE_20 with *PRIORITY 20* will be processed before RULE_10 *PRIORITY 10*.
+> [!NOTE]
+> If the ACL Table type is *L3* or *L3V6* then the ACL rule *PACKET_ACTION* valid options are {FORWARD | DROP}
+>
+> The *PRIORITY* value is processed by **highest numerical value first**. So in the below rule set RULE_20 with *PRIORITY 20* will be processed before RULE_10 *PRIORITY 10*.
 
 ### ACL Rule Add
 **Example JSON file that should be saved as acl_rule_icmp.json** 
