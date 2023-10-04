@@ -9,25 +9,15 @@
 
     - name: Copy acl json files
       copy:
-        src: "leaf-1/acl_ep1_ingress.json.json"
-        dest: "/home/cisco/acl_ep1_ingress.json"
-        mode: 0644
-
-    - name: Copy acl json files
-      copy:
         src: "leaf-1/eth32_acl_table.json"
         dest: "/home/cisco/eth32_acl_table.json"
         mode: 0644
-
-    - name: Load acl table configuration
-      expect:
-        command: sudo config load /home/cisco/acl_ep1_ingress.json
-        responses:
-          (.*)y/N(.*): "y"
-        timeout: 90
-
-      ignore_errors: yes
-      register: load_result
+        
+    - name: Copy acl json files
+      copy:
+        src: "leaf-1/acl_ep1_ingress.json"
+        dest: "/home/cisco/acl_ep1_ingress.json"
+        mode: 0644
 
     - name: Load acl ruleset configuration
       expect:
@@ -36,5 +26,15 @@
           (.*)y/N(.*): "y"
         timeout: 90
         
+      ignore_errors: yes
+      register: load_result
+
+      - name: Load acl rule set configuration
+      expect:
+        command: sudo config load /home/cisco/acl_ep1_ingress.json
+        responses:
+          (.*)y/N(.*): "y"
+        timeout: 90
+
       ignore_errors: yes
       register: load_result
