@@ -2,27 +2,33 @@
 
 # ansible-playbook -i hosts lab_exercise_5-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
 
+# - name: Enable FRR BFD daemon and configure BFD sessions
+#   hosts: sonic_router_subset
+#   become: true
+#   tasks:
+
+#     - name: docker exec into FRR BGP container
+#       command: docker exec -it bgp bash
+#       ignore_errors: yes
+
+#     - name: cd into /usr/lib/frr and start bfdd
+#       command: ./bfdd &
+#       args:
+#         chdir: /usr/lib/frr
+#       timeout: 10
+#       ignore_errors: yes
+
+#     - name: exit BGP container
+#       command: exit
+#       ignore_errors: yes
+
 - name: Enable FRR BFD daemon and configure BFD sessions
   hosts: sonic_router_subset
   become: true
+  vars:
+    ansible_shell_executable: "/usr/bin/docker exec -i bgp bash"
   tasks:
-
-    - name: docker exec into FRR BGP container
-      command: docker exec -it bgp bash
-      ignore_errors: yes
-      register: exec_result
-
-    - debug: var=exec_result.stdout_lines
-
-    - name: cd into /usr/lib/frr and start bfdd
-      command: ./bfdd &
-      args:
-        chdir: /usr/lib/frr
-      timeout: 10
-      ignore_errors: yes
-
-    - name: exit BGP container
-      command: exit
-      ignore_errors: yes
-
-
+    - name: Execute commands inside FRR BGP container
+      script: |
+        cd /usr/lib/frr
+        ./bfdd &
