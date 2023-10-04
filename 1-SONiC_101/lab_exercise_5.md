@@ -1,6 +1,22 @@
-# Lab Exercise 5: BFD and End to end testing and traffic generation [20 Min]
+# Lab Exercise 5: Bi-directional Forward Detection (BFD) [20 Min]
 
-insert TOC here
+### Description: 
+In Lab Exercise 5 the student will explore how SONiC utilizes BFD..
+
+## Contents
+- [Lab Exercise 5: Bi-directional Forward Detection BFD \[20 Min\]]
+    - [Description:](#description)
+  - [Lab Objectives](#lab-objectives)
+  - [SONiC ACL Architecture](#sonic-acl-architecture)
+
+  - [End of Lab 5](#end-of-lab-5)
+  
+## Lab Objectives
+The student upon completion of Lab Exercise 5 should have achieved the following objectives:
+
+* Point 1
+* Point 2
+* Point 3
 
 ## BFD 
 
