@@ -57,7 +57,7 @@ You will be manually configuring the BFD configurations on *leaf-1* and *spine-1
 	root          48       1  0 17:12 pts/0    00:00:00 /usr/bin/python3 /usr/local/bin/bgpcfgd
 	root          53       1  0 17:12 pts/0    00:00:00 /usr/bin/python3 /usr/local/bin/bgpmon
 	root          55       1  0 17:12 pts/0    00:00:00 fpmsyncd
-	frr          387       0  0 17:32 pts/1    00:00:00 /usr/lib/frr/bfdd
+	frr          387       0  0 17:32 pts/1    00:00:00 /usr/lib/frr/bfdd   <----- BFD Daemon Process
 	root         397       0  0 17:32 pts/2    00:00:00 ps -eaf
 
 	[1]+  Stopped                 docker exec -it bgp /usr/lib/frr/bfdd
