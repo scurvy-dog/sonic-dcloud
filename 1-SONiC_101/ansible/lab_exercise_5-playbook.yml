@@ -23,12 +23,7 @@
     #   ignore_errors: yes
 
     - name: Execute commands inside BGP container
-      ansible.builtin.command:
-        cmd: |
-          docker exec -it bgp bash -c '
-            /usr/lib/frr/bfdd &
-            exit
-          '
+      command: docker exec -it bgp /usr/lib/frr/bfdd &
       ignore_errors: yes 
       register: exec_result
 
