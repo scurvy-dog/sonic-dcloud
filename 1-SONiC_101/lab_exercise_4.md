@@ -27,30 +27,45 @@ For the purposes of this lab we will enable BFD between *leaf-1* and *spine-1* o
 
 You will be manually configuring the BFD configurations on *leaf-1* and *spine-1*. 
 
-1. Next we'll manually enable/configure BFD on leaf-1
+1. Next we'll manually enable/configure BFD on leaf-1 and spine-1
 
-2.  SSH to leaf-1 and docker exec into its BGP container 
-
-	```
-	docker exec -it bgp bash
-	```
-
-3.  cd into /usr/lib/frr and enable the bfdd process to run in the background:
+2.  SSH to leaf-1 and spine-1 and use docker exec to enable the BFD daemon:
 
 	```
-	cd /usr/lib/frr
-	./bfdd &
+	docker exec -it bgp /usr/lib/frr/bfdd &
 	```
 
 	Example:
 	```
-	root@spine01:/# cd /usr/lib/frr
-	root@spine01:/usr/lib/frr# ./bfdd &
-	[1] 370
-	root@spine01:/usr/lib/frr# 
+	cisco@leaf-1:~$ docker exec -it bgp /usr/lib/frr/bfdd &
+	[1] 17877
 	```
 
-4.  You can validate the daemon is running with the systemd service command:
+3.  You can validate the daemon is running using 'ps -eaf'
+   
+	```
+	docker exec -it bgp ps -eaf
+	```
+	Example output (don't worry about the "Stopped" message at the bottom, the daemon is running in the background):
+	```
+	cisco@leaf-1:~$ docker exec -it bgp ps -eaf
+	UID          PID    PPID  C STIME TTY          TIME CMD
+	root           1       0  0 17:11 pts/0    00:00:01 /usr/bin/python3 /usr/local/bin/supervisord
+	root          26       1  0 17:11 pts/0    00:00:00 python3 /usr/bin/supervisor-proc-exit-listener --container-name bgp
+	root          27       1  0 17:11 pts/0    00:00:00 /usr/sbin/rsyslogd -n -iNONE
+	frr           31       1  0 17:12 pts/0    00:00:00 /usr/lib/frr/zebra -A 127.0.0.1 -s 90000000 -M fpm -M snmp
+	frr           45       1  0 17:12 pts/0    00:00:00 /usr/lib/frr/staticd -A 127.0.0.1
+	frr           46       1  0 17:12 pts/0    00:00:00 /usr/lib/frr/bgpd -A 127.0.0.1 -M snmp
+	root          48       1  0 17:12 pts/0    00:00:00 /usr/bin/python3 /usr/local/bin/bgpcfgd
+	root          53       1  0 17:12 pts/0    00:00:00 /usr/bin/python3 /usr/local/bin/bgpmon
+	root          55       1  0 17:12 pts/0    00:00:00 fpmsyncd
+	frr          387       0  0 17:32 pts/1    00:00:00 /usr/lib/frr/bfdd
+	root         397       0  0 17:32 pts/2    00:00:00 ps -eaf
+
+	[1]+  Stopped                 docker exec -it bgp /usr/lib/frr/bfdd
+	```
+### we might use this section if we copy the daemons file over to frr
+3.  You can validate the daemon is running with the systemd service command:
    
 	```
 	service frr status
@@ -65,24 +80,8 @@ You will be manually configuring the BFD configurations on *leaf-1* and *spine-1
 	Status of bfdd: running.
 	```
 
-### configure BFD in FRR
-1. start bfd daemon
-   
-2. configure BFD on spine-1
-```
-vtysh
-conf t
-```
-```
-bfd
- peer 10.1.1.0
- peer 10.1.1.6
- exit
- !
-router bgp 65000
- neighbor 10.1.1.0 bfd
- neighbor 10.1.1.6 bfd
-```
+### configure BFD in FRR 
+1. vtysh into FRR on both leaf-1 and spine-1
 
 1. configure BFD on leaf-1
 ```
@@ -98,6 +97,22 @@ bfd
 router bgp 65001
  neighbor 10.1.1.1 bfd
  neighbor 10.1.1.3 bfd
+```
+   
+2. configure BFD on spine-1
+```
+vtysh
+conf t
+```
+```
+bfd
+ peer 10.1.1.0
+ peer 10.1.1.6
+ exit
+ !
+router bgp 65000
+ neighbor 10.1.1.0 bfd
+ neighbor 10.1.1.6 bfd
 ```
 
 1. config BFD on spine-2
