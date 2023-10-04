@@ -1,6 +1,13 @@
 # SONiC Node Failure Instructions
 
-### If a SONiC node fails to launch at dcloud lab startup
+## When to use?
+There are two potential scenarioes where trouble may happen with the SONiC node. In both cases the fastest remediation is to have the container torn down and rebuilt. Be aware that once the container is back up and running configuration would need to be reapplied.
+
+### Issue Scenarios
+1. Initial SONiC node fails to populate interfaces from the Cisco 8000 Emulator
+2. The SONiC node has general container instability which can happen in the virtual environment
+
+## Step by Step Instructions
 
 1. ssh to the sonic node's host VM:
 
@@ -39,17 +46,17 @@
 
 5. Run the startup.sh shell script as follows:
 
-   If leaf-1 or leaf-2 failed:
+   If *leaf-1* or *leaf-2* failed:
    ```
    ./startup.sh 8000.yaml 5
    ```
 
-   if spine-1 or spine-2 failed:
+   if *spine-1* or *spine-2* failed:
    ```
    ./startup.sh 8000.yaml 4
    ```
 
-6. The script will output log info very similar to the docker logs info. After about 8-10 minutes we expect to see a 'Router up' message. 
+6. The script will output log info very similar to the docker logs info. The script will monitor the SONiC node and test to see if the Cisco 8000 emulator has created interfaces for the SONiC node. Expect about 8-10 minutes to see a 'Router up' message. 
 
    Truncated example output:
    ```
@@ -67,8 +74,8 @@
    22:40:57 INFO R0:checking interfaces
    22:41:01 INFO R0:found 0 interfaces (expected 32)
    22:41:32 INFO R0:found 0 interfaces (expected 32)
-   22:42:04 INFO R0:found 32 interfaces (expected 32)
+   22:42:04 INFO R0:found 32 interfaces (expected 32)     <---------- Key Log Message
    22:42:04 INFO R0:applying XR config
    22:42:12 INFO Sim up
-   Router up
+   Router up                                              <---------- Key Log Message
    ```
