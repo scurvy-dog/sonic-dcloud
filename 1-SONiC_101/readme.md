@@ -38,7 +38,7 @@ Within each lab directory you should see several files of importance:
 
 This lab is based on a simulated DC fabric design of four SONiC routers running in a docker instance. In addition there are two client VMs named Endpoint-1 and Endpoint-2. Each client system is running the Ubuntu OS.
 
-![Lab Topology](topo-drawings/sonic-4-node-topology.png)
+![Lab Topology](topo-drawings/sonic-101-topology.png)
 
 ## Remote Access
 
