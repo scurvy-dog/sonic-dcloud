@@ -1,0 +1,24 @@
+---
+
+# ansible-playbook -i hosts lab_exercise_5-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+
+- name: Enable FRR BFD daemon and configure BFD sessions
+  hosts: sonic_router_subset
+  become: true
+  tasks:
+
+    - name: Execute bfdd command inside BGP container
+      ansible.builtin.command:
+        cmd: docker exec -it bgp /usr/lib/frr/bfdd &
+        async: 30  # Set a timeout for the command (adjust as needed)
+        poll: 0     # Poll the command status immediately and don't wait
+      register: bfdd_command_result
+      ignore_errors: yes  # Ignore errors if the command fails
+
+    - name: Wait for the bfdd command to complete (optional)
+      async_status:
+        jid: "{{ bfdd_command_result.ansible_job_id }}"
+      register: job_result
+      until: job_result.finished
+      retries: 2  # Adjust the number of retries as needed
+      delay: 10    # Adjust the delay between retries as needed
