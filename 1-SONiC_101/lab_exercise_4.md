@@ -354,7 +354,18 @@ Lets create an ACL table that we will link to the interface.
     EP1_DROP   RULE_10  10          DROP      IP_PROTOCOL: 1          Active  
                                               SRC_IP: 198.18.11.2/32
     ```
-    
+12. Repeat ping test from *endpoint-1* to *leaf-1 loopback 0* interface. You should see 100% packet loss
+    ```
+    ping 10.0.0.1
+    ```
+    ```
+    cisco@endpoint-1:~$ ping 10.0.0.1
+    PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data.
+    ^C
+    --- 10.0.0.1 ping statistics ---
+    8 packets transmitted, 0 received, 100% packet loss, time 7148ms
+    ```
+
 ### Example 2 - MATCH TCP Port and DROP
 In this example we will block iPerf3 traffic sourced from *endpoint-1* (client) to  *endpoint-2* (server). iPerf3 will utilize TPC port 5201 for the data flow.
 Utilizing the same table *EP1_DROP* we will update the ACL rule set on interface *Ethernet 32* on *leaf-1*
