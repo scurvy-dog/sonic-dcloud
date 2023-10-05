@@ -9,7 +9,7 @@
 
     - name: Copy config_db.json file
       copy:
-        src: "config_db.json"
+        src: "leaf-1/config_db.json"
         dest: "/etc/sonic/new_config_db.json"
         mode: 0644
 
@@ -28,7 +28,7 @@
 
     - name: Copy loopback shell script
       copy:
-        src: "loopback.sh"
+        src: "leaf-1/loopback.sh"
         dest: "/etc/sonic/loopback.sh"
         mode: 0755
 
@@ -69,7 +69,7 @@
 
     - name: Copy frr config files
       copy:
-        src: "frr.conf"
+        src: "leaf-1/frr.conf"
         dest: "/etc/sonic/frr/bgpd.conf"
         mode: 0644
 
