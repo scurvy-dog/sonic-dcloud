@@ -15,3 +15,7 @@
 - name: run leaf-1 playbook
   import_playbook: leaf-1-playbook.yml
   ignore_errors: yes
+
+- name: run lab 5 "acl" playbook
+  import_playbook: lab_exercise_5-playbook.yml
+  ignore_errors: yes
