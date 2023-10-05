@@ -22,10 +22,12 @@
       register: bfdd_command_result
       ignore_errors: yes  # Ignore errors if the command fails
 
-    - name: Wait for the bfdd command to complete (optional)
-      async_status:
-        jid: "{{ bfdd_command_result.ansible_job_id }}"
-      register: job_result
-      until: job_result.finished
-      retries: 2  # Adjust the number of retries as needed
-      delay: 10    # Adjust the delay between retries as needed
+    - debug: var=bfdd_command_result.stdout_lines
+
+    # - name: Wait for the bfdd command to complete (optional)
+    #   async_status:
+    #     jid: "{{ bfdd_command_result.ansible_job_id }}"
+    #   register: job_result
+    #   until: job_result.finished
+    #   retries: 2  # Adjust the number of retries as needed
+    #   delay: 10    # Adjust the delay between retries as needed
