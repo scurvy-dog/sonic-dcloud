@@ -54,15 +54,15 @@
         chdir: /home/cisco/
       ignore_errors: yes
 
-    - name: Pause for 4 minutes
+    - name: Pause for 5 minutes
       pause:
-        minutes: 4
+        minutes: 5
 
     - name: Wait for 'Router' to appear in logs
       shell: docker logs -t {{ hostvars[inventory_hostname]['container'] }} | grep Router
       register: grep_result
       until: grep_result.stdout_lines | length > 0
-      retries: 12  # Number of times to retry
+      retries: 18  # Number of times to retry
       delay: 30  # Delay between retries
       timeout: 600  # Maximum time to wait (in seconds) 
       
