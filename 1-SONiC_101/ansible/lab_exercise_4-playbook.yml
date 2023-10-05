@@ -7,11 +7,18 @@
   become: true
   tasks:
 
+    # - name: Execute bfdd command inside BGP container
+    #   ansible.builtin.command:
+    #     cmd: docker exec -it bgp /usr/lib/frr/bfdd &
+    #     async: 30  # Set a timeout for the command (adjust as needed)
+    #     poll: 0     # Poll the command status immediately and don't wait
+    #   register: bfdd_command_result
+    #   ignore_errors: yes  # Ignore errors if the command fails
+
     - name: Execute bfdd command inside BGP container
-      ansible.builtin.command:
-        cmd: docker exec -it bgp /usr/lib/frr/bfdd &
-        async: 30  # Set a timeout for the command (adjust as needed)
-        poll: 0     # Poll the command status immediately and don't wait
+      command: docker exec -it bgp /usr/lib/frr/bfdd &
+      async: 30  # Set a timeout for the command (adjust as needed)
+      poll: 0     # Poll the command status immediately and don't wait
       register: bfdd_command_result
       ignore_errors: yes  # Ignore errors if the command fails
 
