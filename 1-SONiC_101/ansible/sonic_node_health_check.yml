@@ -1,20 +1,7 @@
 ---
 - name: Ping and run new task
   hosts: vm-leaf-1
-  gather_facts: false
-
-  # tasks:
-  #   - name: Ping IP address
-  #     ping:
-  #       host: 172.10.10.101
-  #     register: ping_result
-
-  #   - name: Run new task if ping fails
-  #     debug:
-  #       msg: "Ping failed, running new task"
-  #     when: ping_result.failed
-
-  # become: yes  
+  gather_facts: false 
 
   tasks:
     - name: Ping all hosts
@@ -22,11 +9,11 @@
         cmd: "ping leaf-1 -c 1"
       register: ping_result
 
-    - name: Execute a command on failed hosts
-      ansible.builtin.command:
-        cmd: docker ps
+    - name: attempt to re-deploy leaf-1
+      import_playbook: vm-leaf-1-playbook.yml
+      ignore_errors: yes
       when: ping_result.failed
-      register: container_check
+      register: re-deploy-leaf-1
 
     - name: Print the ping results
       debug:
@@ -34,7 +21,7 @@
 
     - name: Print docker ps result
       debug:
-        var: container_check
+        var: re-deploy-leaf-1
 
   tasks:
     - name: Ping all hosts
@@ -42,11 +29,11 @@
         cmd: "ping leaf-2 -c 1"
       register: ping_result
 
-    - name: Execute a command on failed hosts
-      ansible.builtin.command:
-        cmd: docker ps
+    - name: attempt to re-deploy leaf-2
+      import_playbook: vm-leaf-2-playbook.yml
+      ignore_errors: yes
       when: ping_result.failed
-      register: container_check
+      register: re-deploy-leaf-2
 
     - name: Print the ping results
       debug:
@@ -54,4 +41,4 @@
 
     - name: Print docker ps result
       debug:
-        var: container_check
+        var: re-deploy-leaf-2
