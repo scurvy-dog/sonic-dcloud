@@ -1,6 +1,6 @@
 ---
 - name: Ping and run new task
-  hosts: vm-leaf-1
+  hosts: vm-leaf-2
   gather_facts: false 
   tasks:
     - name: Ping leaf-2
