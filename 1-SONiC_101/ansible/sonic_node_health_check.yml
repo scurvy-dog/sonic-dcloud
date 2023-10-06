@@ -11,8 +11,7 @@
 
     - name: attempt to re-deploy leaf-1
       import_playbook: vm-leaf-1-playbook.yml
-      ignore_errors: yes
-      when: ping_result.failed
+      when: ping_result.rc != 0
 
     - name: Print the ping results
       debug:
@@ -29,8 +28,7 @@
 
     - name: attempt to re-deploy leaf-2
       import_playbook: vm-leaf-2-playbook.yml
-      ignore_errors: yes
-      when: ping_result.failed
+      when: ping_result.rc != 0
 
     - name: Print the ping results
       debug:
