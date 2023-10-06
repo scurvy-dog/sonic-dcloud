@@ -3,37 +3,20 @@
   hosts: vm-leaf-1
   gather_facts: false 
 
-  tasks:
-    - name: Ping all hosts
-      ansible.builtin.shell:
-        cmd: "ping leaf-1 -c 1"
-      register: ping_result
-
-    - name: attempt to re-deploy leaf-1
-      import_playbook: vm-leaf-1-playbook.yml
-      when: ping_result.rc != 0
-
-    - name: Print the ping results
-      debug:
-        var: ping_result
-
-    - name: Print docker ps result
-      debug:
-        var: re-deploy-leaf-1
-
-    - name: Ping all hosts
+    - name: Ping leaf-2
       ansible.builtin.shell:
         cmd: "ping leaf-2 -c 1"
       register: ping_result
 
-    - name: attempt to re-deploy leaf-2
-      import_playbook: vm-leaf-2-playbook.yml
-      when: ping_result.rc != 0
-
     - name: Print the ping results
       debug:
         var: ping_result
 
-    - name: Print docker ps result
-      debug:
-        var: re-deploy-leaf-2
+- name: Conditional Playbook Execution
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Execute playbook based on condition
+      block:
+        - include: vm-leaf-2-playbook.yml
+          when: "'Run playbook on ping failure' in ansible_play_names"
