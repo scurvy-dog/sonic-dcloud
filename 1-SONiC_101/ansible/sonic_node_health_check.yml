@@ -1,0 +1,16 @@
+---
+- name: Ping and run new task
+  hosts: sonic_router
+  gather_facts: false
+
+  tasks:
+    - name: Ping IP address
+      ping:
+        host: 172.10.10.101
+      register: ping_result
+
+    - name: Run new task if ping fails
+      debug:
+        msg: "Ping failed, running new task"
+      when: ping_result.failed
+
