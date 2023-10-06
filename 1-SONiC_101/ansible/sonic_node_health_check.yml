@@ -19,7 +19,7 @@
   tasks:
     - name: Ping all hosts
       ansible.builtin.shell:
-        cmd: "ping leaf-1"
+        cmd: "ping leaf-1 -c 1"
       register: ping_result
 
     - name: Execute a command on failed hosts
@@ -39,7 +39,7 @@
   tasks:
     - name: Ping all hosts
       ansible.builtin.shell:
-        cmd: "ping leaf-2"
+        cmd: "ping leaf-2 -c 1"
       register: ping_result
 
     - name: Execute a command on failed hosts
