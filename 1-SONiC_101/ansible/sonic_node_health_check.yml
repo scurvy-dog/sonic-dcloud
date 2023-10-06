@@ -2,7 +2,7 @@
 - name: Ping and run new task
   hosts: vm-leaf-1
   gather_facts: false 
-
+  tasks:
     - name: Ping leaf-2
       ansible.builtin.shell:
         cmd: "ping leaf-2 -c 1"
