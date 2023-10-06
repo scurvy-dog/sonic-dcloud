@@ -1,16 +1,31 @@
 ---
 - name: Ping and run new task
-  hosts: sonic_router
+  hosts: sonic_routers
   gather_facts: false
 
+  # tasks:
+  #   - name: Ping IP address
+  #     ping:
+  #       host: 172.10.10.101
+  #     register: ping_result
+
+  #   - name: Run new task if ping fails
+  #     debug:
+  #       msg: "Ping failed, running new task"
+  #     when: ping_result.failed
+
+  # become: yes  
+
   tasks:
-    - name: Ping IP address
-      ping:
-        host: 172.10.10.101
+    - name: Ping all hosts
+      ansible.builtin.ping:
       register: ping_result
 
-    - name: Run new task if ping fails
-      debug:
-        msg: "Ping failed, running new task"
+    - name: Execute a command on failed hosts
+      ansible.builtin.command:
+        cmd: docker ps
       when: ping_result.failed
 
+    - name: Print the ping results
+      debug:
+        var: ping_result
