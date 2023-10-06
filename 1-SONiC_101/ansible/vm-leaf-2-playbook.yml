@@ -3,6 +3,7 @@
 - name: Try re-launching leaf-2
   hosts: vm-leaf-2
   become: true
+  tasks:
     - name: run containerlab deploy to launch sonic vxr8000 nodes
       command: sudo containerlab deploy -t "{{ inventory_hostname }}/clab.yml"
       args:
