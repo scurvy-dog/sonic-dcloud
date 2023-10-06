@@ -22,7 +22,6 @@
       debug:
         var: re-deploy-leaf-1
 
-  tasks:
     - name: Ping all hosts
       ansible.builtin.shell:
         cmd: "ping leaf-2 -c 1"
