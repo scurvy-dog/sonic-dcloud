@@ -1,6 +1,6 @@
 ---
 - name: Ping and run new task
-  hosts: sonic_routers
+  hosts: localhost
   gather_facts: false
 
   # tasks:
@@ -18,9 +18,10 @@
 
   tasks:
     - name: Ping all hosts
-      ansible.builtin.ping:
+      ansible.builtin.shell:
+        cmd: "ansible all -m ping"
       register: ping_result
-      delegate_to: localhost
+
 
     - name: Execute a command on failed hosts
       ansible.builtin.command:
