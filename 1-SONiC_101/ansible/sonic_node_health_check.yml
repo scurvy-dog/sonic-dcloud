@@ -1,6 +1,6 @@
 ---
 - name: Ping and run new task
-  hosts: localhost
+  hosts: jumpbox
   gather_facts: false
 
   # tasks:

@@ -22,4 +22,7 @@ spine-2 ansible_host=172.10.10.104
 [sonic_routers:vars]
 config_file_name=config_db.json
 
+[jumpbox]
+localhost ansible_connection=local
+
 ansible_ssh_common_args="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
