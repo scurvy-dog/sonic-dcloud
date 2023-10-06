@@ -20,12 +20,18 @@
     - name: Ping all hosts
       ansible.builtin.ping:
       register: ping_result
+      delegate_to: localhost
 
     - name: Execute a command on failed hosts
       ansible.builtin.command:
         cmd: docker ps
       when: ping_result.failed
+      register: container_check
 
     - name: Print the ping results
       debug:
         var: ping_result
+
+    - name: Print docker ps result
+      debug:
+        var: container_check
