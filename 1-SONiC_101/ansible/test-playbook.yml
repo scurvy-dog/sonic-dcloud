@@ -1,0 +1,11 @@
+
+hosts:sonic_routers
+tasks:
+
+- name: Ping all nodes
+
+      ansible.builtin.ping:
+      register: ping_result
+
+ - debug:
+    msg: "{{ ping_result }}"

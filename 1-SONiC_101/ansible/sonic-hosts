@@ -1,0 +1,5 @@
+[sonic_routers]
+leaf-1 ansible_host=172.10.10.101
+leaf-2 ansible_host=172.10.10.102
+spine-1 ansible_host=172.10.10.103
+spine-2 ansible_host=172.10.10.104
