@@ -18,7 +18,7 @@ There are two potential scenarioes where trouble may happen with the SONiC node.
      | vm-spine-1 | 198.18.128.103 |
      | vm-spine-2 | 198.18.128.104 |
 
-2. Determine the local sonic-vxr8000 container's name:
+2. Determine the local SONiC/8000 container's name:
    ```
    docker ps
    ```
@@ -56,7 +56,7 @@ There are two potential scenarioes where trouble may happen with the SONiC node.
    ./startup.sh 8000.yaml 4
    ```
 
-6. The script will output log info very similar to the docker logs info. The script will monitor the SONiC node and test to see if the Cisco 8000 emulator has created interfaces for the SONiC node. Expect about 8-10 minutes to see a 'Router up' message. 
+6. The script will output log info very similar to the docker logs info. The script will monitor the SONiC node and test to see if the Cisco 8000 emulator has created interfaces for the SONiC node. Expect about 10-12 minutes to see a 'Router up' message. 
 
    Truncated example output:
    ```

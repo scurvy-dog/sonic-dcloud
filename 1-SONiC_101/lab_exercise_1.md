@@ -4,7 +4,7 @@
 In Exercise 1 we will explore the host-VM virtualization environment and log into the SONiC router nodes and perform some system validation. The 4-node setup in Lab 1 will be used in all subsequent lab exercises. 
 
 ## Contents
-- [Exercise 1: SONiC Topology Setup and Validation \[30 Min\]](#lab-1-guide-sonic-topology-setup-and-validation-30-min)
+- [SONiC 101 - Exercise 1: SONiC Topology Setup and Validation \[30 Min\]](#sonic-101---exercise-1-sonic-topology-setup-and-validation-30-min)
     - [Description:](#description)
   - [Contents](#contents)
   - [Lab Objectives](#lab-objectives)
@@ -13,7 +13,6 @@ In Exercise 1 we will explore the host-VM virtualization environment and log int
     - [User Credentials](#user-credentials)
     - [Validate Access](#validate-access)
   - [Check Build Scripts](#check-build-scripts)
-    - [Important](#important)
     - [Connect to SONiC Routers](#connect-to-sonic-routers)
   - [End of Lab 1](#end-of-lab-1)
   
@@ -27,9 +26,9 @@ The student upon completion of Lab 1 should have achieved the following objectiv
 
 ## Virtualization Stack
 
-The software virtualization stack used in this lab consists of several layers. At the base Linux OS level it is possible to run this lab either on bare metal or in a virtualized environment. In our dCloud lab we're running the router topology inside a host Ubuntu VM. For simplicity for students we have a single Ubuntu VM to host each SONiC instance. The scale requirements for Cisco 8000 can be found at the link [HERE}(https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000-emulator/cisco8000-hardware-emulator-datasheet.html)
+The software virtualization stack used in this lab consists of several layers. At the base Linux OS level it is possible to run this lab either on bare metal or in a virtualized environment. In our dCloud lab we're running the 4-router topology inside 4 host Ubuntu VMs.  The scale requirements for Cisco 8000 can be found at the link [HERE}(https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000-emulator/cisco8000-hardware-emulator-datasheet.html)
 
-To create the SONiC environment we are using Containerlab to orchestrating and managing container-based network topology. Containerlab allows for us to use a yaml definition file to spin up the Cisco 8000 hardware emulator (C8k emulator). The C8k emulator utilizes itself utilizes Docker to create a container which containes the simulated hardware environment. Within that simulated environment we boot into the SONiC operating system. 
+To create the SONiC environment we are using Containerlab to orchestrate and manage our container-based network topology. Containerlab allows for us to use a yaml definition file to spin up the Cisco 8000 hardware emulator (C8k emulator). The C8k emulator itself utilizes Docker to create a container which containes the simulated hardware environment. Within that simulated environment we boot into the SONiC operating system. 
 
 For connectivity between virtual SONiC routers we use point-to-point VXLAN tunnels between the host-VMs. For connecitivty between the SONiC VMs and external test VM clients are using linux bridges.
 
@@ -72,26 +71,37 @@ User: cisco, Password: cisco123
 Now log into each of the Ubuntu host-vms listed in Table 1 and ensure you have access to the devices.
 
 ## Check Build Scripts
-This lab uses Ansible as the automation tool once the host vms have spun up. There is an Ansible script that runs that starts the Containerlab build process on each of the SONiC host-vms (vm-leaf-1, vm-leaf-2, vm-spine-1, vm-spine-2). Lets validate that the build script completed successfully.
+This lab uses Ansible as the automation tool once the host vms have spun up. There is an Ansible script that runs at dCloud Lab startup that kicks off the Containerlab build process on each of the SONiC host-vms (vm-leaf-1, vm-leaf-2, vm-spine-1, vm-spine-2). The Containerlab/SONiC build script takes about 12-15 minutes to run after dCloud startup, so grab a cup of coffee and check in around 15 minutes after dCloud says your lab is up. 
+
+To validate that the build script completed successfully.
 
  1. Log into the Jumpbox VM
  2. View the following file in the home directory.
     
-	```
-	cat /home/cisco/deploy.log
-	```
+    ```
+    cat /home/cisco/deploy.log
+    ```
 
   	You should see output similar to
-	```
- 	cisco@jumpbox:~$ cat deploy.log 
-	vm-leaf-1 Router up
-	vm-spine-2 Router up
-	vm-spine-1 Router up
-	vm-leaf-2 Router up
-	```
+    ```
+    cisco@jumpbox:~$ cat deploy.log 
+    vm-leaf-1 Router up
+    vm-spine-2 Router up
+    vm-spine-1 Router up
+    vm-leaf-2 Router up
+    ```
 
-### Important 
-If the output of deploy.log shows any of the nodes failing to come up ("Router failed to come up"), we'll need to manually launch the build script. Instructions to do so are here:
+> [!IMPORTANT]
+If the output of deploy.log shows any of the nodes failing to come up, example:
+
+```
+vm-leaf-2 2023-10-09T18:57:38.829294188Z Router failed to come up
+```
+Then we'll need to manually launch the build script. Instructions to do so are:
+
+> [HERE](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/if_sonic_fails_to_launch.md)
+
+If all routers came up, then we may proceed to ping and connectivity checks:
 
   1. Ping each SONiC router management interface to see if the router has finished booting
      | Host name  | IP Address    |
@@ -125,8 +135,6 @@ If the output of deploy.log shows any of the nodes failing to come up ("Router f
 >   ``` 
 >4. Now access the SONiC console ( cisco / cisco123 )
 >   ```
->   root@leaf-1:~# telent 0 60000
->   bash: telent: command not found
 >   root@leaf-1:~# telnet 0 60000
 >   Trying 0.0.0.0...
 >   Connected to 0.
@@ -144,8 +152,6 @@ If the output of deploy.log shows any of the nodes failing to come up ("Router f
 >   eth4                   192.168.123.246/24   up/up         N/A             N/A 
 >   lo                     127.0.0.1/16         up/up         N/A             N/A  
 
-> [!IMPORTANT]
-> If the SONiC router did not spin up or spin up correctly see instructins [HERE](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/if_sonic_fails_to_launch.md)
 ### Connect to SONiC Routers
 
 Starting from the vsonic VM log into each router instance 1-4 per the management topology diagram above. Example:
