@@ -1,11 +1,40 @@
+  gather_facts: false
+  tasks:
 
-hosts:sonic_routers
-tasks:
+  - name: Ping leaf1
+    shell: ping -c 1 -W 5 172.10.10.101
+    register: ping_result
+    ignore_errors: true
 
-- name: Ping all nodes
+  - name: Test Ping Result Leaf 1
+    when: ( ping_result.failed == true)
+    debug:
+      msg: "Leaf 1 ping failed"
 
-      ansible.builtin.ping:
-      register: ping_result
+  - name: Test Ping Result Leaf 1
+    when: ( ping_result.failed == false)
+    debug:
+      msg: "Leaf 1 ping success"
 
- - debug:
-    msg: "{{ ping_result }}"
+  - name: print debug
+    debug:
+      msg: "{{ ping_result.stdout }}"
+
+  - name: Ping  leaf 2
+    shell: ping -c 1 -W 5 172.10.10.102
+    register: ping_result2
+    ignore_errors: true
+
+  - name: Test Ping Result Leaf 2
+    when: ( ping_result2.failed == true)
+    debug:
+      msg: "Leaf 2 ping failed"
+
+  - name: Test Ping Result Leaf 2
+    when: ( ping_result2.failed == false)
+    debug:
+      msg: "Leaf 2 ping success"
+
+  - name: print debug
+    debug:
+      msg: "{{ ping_result2.stdout}}"
