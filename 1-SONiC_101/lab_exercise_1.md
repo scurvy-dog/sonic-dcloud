@@ -112,10 +112,10 @@ If all routers came up, then we may proceed to ping and connectivity checks:
      | spine-2    | 172.10.10.104 |
 
      ```
-     cisco@vsonic:~$ ping leaf01
+     cisco@vsonic:~$ ping leaf-1
      PING leaf01 (172.10.10.101) 56(84) bytes of data.
-     64 bytes from leaf01 (172.10.10.101): icmp_seq=1 ttl=64 time=0.480 ms
-     64 bytes from leaf01 (172.10.10.101): icmp_seq=2 ttl=64 time=0.362 ms
+     64 bytes from leaf-1 (172.10.10.101): icmp_seq=1 ttl=64 time=0.480 ms
+     64 bytes from leaf-1 (172.10.10.101): icmp_seq=2 ttl=64 time=0.362 ms
      ```
 
 > [!NOTE]
