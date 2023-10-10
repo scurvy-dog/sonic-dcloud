@@ -53,7 +53,7 @@ Please see the management topology network diagram below. Table-1 below lists th
 | VM-Spine-1 | 198.18.128.103 | Hosts sonic node leaf-1 |
 | VM-Spine-2 | 198.18.128.104 | Hosts sonic node leaf-1 |
 | Endpoint-1 | 198.18.128.105 | VM used for testing     |
-| Endpoint-2 | 198.18.128.105 | VM used for testing     |
+| Endpoint-2 | 198.18.128.106 | VM used for testing     |
 
 
 ### User Credentials
