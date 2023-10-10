@@ -1,6 +1,6 @@
 ---
 
-# ansible-playbook -i hosts leaf-1-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+# ansible-playbook -i ../hosts leaf-1-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
 
 - name: Apply config_db.json and FRR config to leaf-1 and install nano
   hosts: leaf-1
