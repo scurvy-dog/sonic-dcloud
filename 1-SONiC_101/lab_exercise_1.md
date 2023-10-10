@@ -156,10 +156,10 @@ If all routers came up, then we may proceed to ping and connectivity checks:
 
 Starting from the vsonic VM log into each router instance 1-4 per the management topology diagram above. Example:
 ```
-    ssh cisco@spine01
-    ssh cisco@spine02
-    ssh cisco@leaf01
-    ssh cisco@leaf02
+    ssh cisco@spine-1
+    ssh cisco@spine-2
+    ssh cisco@leaf-1
+    ssh cisco@leaf-2
     or
     ssh cisco@172.10.10.2
     ssh cisco@172.10.10.3
