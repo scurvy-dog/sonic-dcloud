@@ -86,20 +86,28 @@ In this example set of code we want to set the following parameters through CLI 
     
 #### ACL Table Add
 **Adding ACL Table with CLI**
-```
-cisco@leaf-2:~$ sudo config acl add table --help
-Usage: config acl add table [OPTIONS] <table_name> <table_type>
-  Add ACL table
 
-Options:
-  -d, --description TEXT
-  -p, --ports TEXT
-  -s, --stage [ingress|egress]
-```
+Example command help output
+    ```
+    cisco@leaf-2:~$ sudo config acl add table --help
+    Usage: config acl add table [OPTIONS] <table_name> <table_type>
+    Add ACL table
+    
+    Options:
+    -d, --description TEXT
+    -p, --ports TEXT
+    -s, --stage [ingress|egress]
+    ```
+    
 We will now add in an ACL table using the above parameters using the CLI below.
   ```
   sudo config acl add table ICMP_DROP L3 -p Ethernet32 -d "BLock ICMP traffic from Endpoint2" -s ingress
   ```
+  Run the following show command to see the new table
+  ```
+  sudo acl-loader show table
+  ```
+  Example output.
   ```
   cisco@leaf-2:~$ sudo acl-loader show table
   Name       Type    Binding     Description                        Stage    Status
@@ -192,7 +200,7 @@ ACL rules are defined using the JSON syntax for purposes of importing into the r
 
 The top level of the heirarchy is defined by the "ACL_RULE" object. Within the objects that data set are individual rules.
 Individual rules follows the below syntax
-```
+``` json
     "<ACL TABLE NAME>|<ACL RULE NAME>":{
         "<KEY VALUE>": "<KEY VALUE>",
         "<KEY VALUE>": "<KEY VALUE>"
