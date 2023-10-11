@@ -70,6 +70,12 @@ User: cisco, Password: cisco123
 ### Validate Access
 Now log into each of the Ubuntu host-vms listed in Table 1 and ensure you have access to the devices.
 
+### Git repository location
+All documentation and scripts used in this lab are cloned to the cisco user home directory. To start look for the 
+```
+/home/cisco/sonic-dcloud/1-SONiC_101
+```
+
 ## Check Build Scripts
 This lab uses Ansible as the automation tool once the host vms have spun up. There is an Ansible script that runs at dCloud Lab startup that kicks off the Containerlab build process on each of the SONiC host-vms (vm-leaf-1, vm-leaf-2, vm-spine-1, vm-spine-2). The Containerlab/SONiC build script takes about 12-15 minutes to run after dCloud startup, so grab a cup of coffee and check in around 15 minutes after dCloud says your lab is up. 
 
