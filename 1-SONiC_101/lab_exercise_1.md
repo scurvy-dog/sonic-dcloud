@@ -28,7 +28,7 @@ The student upon completion of Lab 1 should have achieved the following objectiv
 
 The software virtualization stack used in this lab consists of several layers. At the base Linux OS level it is possible to run this lab either on bare metal or in a virtualized environment. In our dCloud lab we're running the 4-router topology inside 4 host Ubuntu VMs.  The scale requirements for Cisco 8000 can be found at the link [HERE}(https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000-emulator/cisco8000-hardware-emulator-datasheet.html)
 
-To create the SONiC environment we are using Containerlab to orchestrate and manage our container-based network topology. Containerlab allows for us to use a yaml definition file to spin up the Cisco 8000 hardware emulator (C8k emulator). The C8k emulator itself utilizes Docker to create a container which containes the simulated hardware environment. Within that simulated environment we boot into the SONiC operating system. 
+To create the SONiC environment we are using Containerlab to orchestrate and manage our container-based network topology. Containerlab allows for us to use a yaml definition file to spin up the Cisco 8000 hardware emulator (C8k emulator). The C8k emulator itself utilizes Docker to create a container which contains the simulated hardware environment. Within that simulated environment we boot into the SONiC operating system. 
 
 For connectivity between virtual SONiC routers we use point-to-point VXLAN tunnels between the host-VMs. For connecitivty between the SONiC VMs and external test VM clients are using linux bridges.
 
