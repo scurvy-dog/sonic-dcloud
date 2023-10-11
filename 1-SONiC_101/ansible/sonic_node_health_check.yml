@@ -1,22 +1,144 @@
----
-- name: Ping and run new task
-  hosts: vm-leaf-2
-  gather_facts: false 
-  tasks:
-    - name: Ping leaf-2
-      ansible.builtin.shell:
-        cmd: "ping leaf-2 -c 1"
-      register: ping_result
-
-    - name: Print the ping results
-      debug:
-        var: ping_result
-
-- name: Conditional Playbook Execution
+- name: Check each SONiC Routers Health
+  gather_facts: false
   hosts: localhost
-  gather_facts: no
   tasks:
-    - name: Execute playbook based on condition
-      block:
-        - include: vm-leaf-2-playbook.yml
-          when: "'Run playbook on ping failure' in ansible_play_names"
+
+  # CHECK SONiC ROUTER LEAF-1 STATUS
+  - name: Ping test leaf-1
+    shell: ping -c 1 -W 5 172.10.10.101
+    register: ping_result1
+    ignore_errors: true
+
+  - name: Conditional check if ping to leaf-1 failed
+    block:
+      - name: Output to deploy log file
+        lineinfile:
+          path: "/home/cisco/deploy.log"
+          line: "vm-leaf-1 failed to start SONiC leaf-1 virtual router."
+          create: yes
+
+      - name: Print debug output
+        debug:
+          msg: "vm-leaf-1 failed to start SONiC leaf-1 virtual router."
+      
+      - name: run leaf-1 playbook
+        import_playbook: other-playbooks/leaf-1-rebuild.yml
+        ignore_errors: yes
+          
+    when: (ping_result1.failed == true)
+
+  - name: Conditional check if ping to leaf-1 success
+    block:
+      - name: Output to deploy log file
+        lineinfile:
+          path: "/home/cisco/deploy.log"
+          line: "vm-leaf-1 successfully started SONiC leaf-1 virtual router."
+          create: yes
+
+      - name: print debug
+        debug:
+          msg: "vm-leaf-1 successfully started SONiC leaf-1 virtual router."
+
+    when: (ping_result1.failed == false)
+
+  # CHECK SONiC ROUTER LEAF-2 STATUS
+  - name: Ping test leaf-2
+    shell: ping -c 1 -W 5 172.10.10.102
+    register: ping_result2
+    ignore_errors: true
+
+  - name: Conditional check if ping to leaf-2 failed
+    block:
+      - name: Output to deploy log file
+        lineinfile:
+          path: "/home/cisco/deploy.log"
+          line: "vm-leaf-2 failed to start SONiC leaf-2 virtual router."
+          create: yes
+
+      - name: Print debug output
+        debug:
+          msg: "vm-leaf-2 failed to start SONiC leaf-2 virtual router."
+          
+    when: (ping_result2.failed == true)
+
+  - name: Conditional check if ping to leaf-1 success
+    block:
+      - name: Output to deploy log file
+        lineinfile:
+          path: "/home/cisco/deploy.log"
+          line: "vm-leaf-2 successfully started SONiC leaf-2 virtual router."
+          create: yes
+
+      - name: print debug
+        debug:
+          msg: "vm-leaf-2 successfully started SONiC leaf-2 virtual router."
+
+    when: (ping_result2.failed == false)
+
+  # CHECK SONiC ROUTER SPINE-1 STATUS
+  - name: Ping test spine-1
+    shell: ping -c 1 -W 5 172.10.10.103
+    register: ping_result3
+    ignore_errors: true
+
+  - name: Conditional check if ping to spine-1 failed
+    block:
+      - name: Output to deploy log file
+        lineinfile:
+          path: "/home/cisco/deploy.log"
+          line: "vm-spine-1 failed to start SONiC spine-1 virtual router."
+          create: yes
+
+      - name: Print debug output
+        debug:
+          msg: "vm-spine-1 failed to start SONiC spine-1 virtual router."
+          
+    when: (ping_result3.failed == true)
+
+  - name: Conditional check if ping to spine-1 success
+    block:
+      - name: Output to deploy log file
+        lineinfile:
+          path: "/home/cisco/deploy.log"
+          line: "vm-spine-1 successfully started SONiC spine-1 virtual router."
+          create: yes
+
+      - name: print debug
+        debug:
+          msg: "vm-spine-1 successfully started SONiC spine-1 virtual router."
+
+    when: (ping_result3.failed == false)
+
+  # CHECK SONiC ROUTER SPINE-2 STATUS
+  - name: Ping test spine-2
+    shell: ping -c 1 -W 5 172.10.10.104
+    register: ping_result4
+    ignore_errors: true
+
+  - name: Conditional check if ping to spine-2 failed
+    block:
+      - name: Output to deploy log file
+        lineinfile:
+          path: "/home/cisco/deploy.log"
+          line: "vm-spine-2 failed to start SONiC spine-2 virtual router."
+          create: yes
+
+      - name: Print debug output
+        debug:
+          msg: "vm-spine-2 failed to start SONiC spine-2 virtual router."
+          
+    when: (ping_result4.failed == true)
+
+  - name: Conditional check if ping to spine-2 success
+    block:
+      - name: Output to deploy log file
+        lineinfile:
+          path: "/home/cisco/deploy.log"
+          line: "vm-spine-2 successfully started SONiC spine-2 virtual router."
+          create: yes
+
+      - name: print debug
+        debug:
+          msg: "vm-spine-2 successfully started SONiC spine-2 virtual router."
+
+    when: (ping_result4.failed == false)
