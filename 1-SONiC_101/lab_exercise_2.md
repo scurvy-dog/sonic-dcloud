@@ -51,7 +51,7 @@ As of today, SONiC breaks its main functional components into the following dock
 | LLDP                 | Hosts LLDP. Includes 3 process *llpd*, *LLDP-syncd*, *LLDPmgr* |
 | MGMT-Framework       | North Bound Interfaces (NBIs) for  managing configuration and status|
 | PMON                 | Runs *sensord* daemon used to log and alert sensor data |
-| RADV                 |
+| RADV                 | Hosts *radv* daemon and handles IPv6 router solicitations / router advertisements |
 | SNMP                 | Hosts SNMP feature. *SNMPD* and *SNMP-Agent* |
 | SWSS                 | Collection of tools to allow communication among all SONiC modules |
 | SYNCD                | synchronization of the switch's network state with the switch's actual hardware/ASIC |
