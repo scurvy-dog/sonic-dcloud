@@ -199,11 +199,11 @@ In this lab we are going to use an Ansible playbook to create the baseline confi
 
 There are several relevant files for our ansible playbook
 
-| Name                        | Location                           | Notes                               |
-|:----------------------------|:-----------------------------------|:------------------------------------|
-| lab_exercise_2-playbook.yml | /1-SONiC_101/ansible/              | Ansible playbook file               |
-| hosts                       | /1-SONiC_101/ansible/              | Contains device list and IPs        |
-| config_db.json              | /1-SONiC_101/ansible/files/{host}/ | Global configuration file for lab-2 |
+| Name                        | Location                                         | Notes                               |
+|:----------------------------|:-------------------------------------------------|:------------------------------------|
+| lab_exercise_2-playbook.yml | ~/sonic-dcloud/1-SONiC_101/ansible/              | Ansible playbook file               |
+| hosts                       | ~/sonic-dcloud/1-SONiC_101/ansible/              | Contains device list and IPs        |
+| config_db.json              | ~/sonic-dcloud/1-SONiC_101/ansible/files/{host}/ | Global configuration file for lab-2 |
 
 1. Log into host-vm *jumpbox*
    ```
@@ -273,15 +273,8 @@ There are several relevant files for our ansible playbook
    ```
    sudo config save
    ```
-8. Configure Hostname- The command config hostname will update the underlying unix hostname and restart the service.
-   Use sonic CLI to configure leaf-1 which causes the service to restart:
    
-   ```
-   sudo config hostname leaf-1
-   sudo config save -y
-   ```
-   
-10. Exit the sonic node and ssh back in to see the hostname change in effect
+8. Exit the sonic node and ssh back in to see the hostname change in effect
 
 ## Network Connectivity
 Next we'll validate that all of the links between nodes in the topology have been successfully brought up and IP addresses were assigned correctly.
@@ -299,15 +292,19 @@ To check on interface status and connectivity follow these steps on each router 
    ```
 
    ```
-   cisco@leaf-1:~$  show interface description
-    Interface    Oper    Admin    Alias    Description
+   cisco@sonic:~$ show interface description
+   Interface    Oper    Admin    Alias    Description
    -----------  ------  -------  -------  -------------
    Ethernet0      up       up     etp0
-   Ethernet8      up       up     etp1
-   Ethernet16     up       up     etp2
-   Ethernet24     up       up     etp3
-   Ethernet32     up       up     etp4
-   Ethernet40     up       up     etp5
+   Ethernet4      up       up     etp1
+   Ethernet8      up       up     etp2
+   Ethernet12     up       up     etp3
+   Ethernet16     up       up     etp4
+   Ethernet20     up       up     etp5
+   Ethernet24     up       up     etp6
+   Ethernet28     up       up     etp7
+   Ethernet32     up       up     etp8
+   ....
    ```
 - Show LLDP adjacency information to see interface remote neighbors
 
@@ -321,16 +318,20 @@ To check on interface status and connectivity follow these steps on each router 
   LocalPort    RemoteDevice    RemotePortID    Capability    RemotePortDescr
   -----------  --------------  --------------  ------------  -----------------
   Ethernet0    spine-1         etp0            BR            Ethernet0
-  Ethernet8    spine-1         etp1            BR            Ethernet8
-  Ethernet16   spine-2         etp2            BR            Ethernet16
-  Ethernet24   spine-2         etp3            BR            Ethernet24
+  Ethernet4    spine-1         etp1            BR            Ethernet4
+  Ethernet8    spine-2         etp2            BR            Ethernet8
+  Ethernet12   spine-2         etp3            BR            Ethernet12
   --------------------------------------------------
   Total entries displayed:  4
   cisco@leaf-1:~$ 
   ```
 
 **PORT CHANNELS**
-- Port Channel configuration in the running configuration has three parts. Example below is for *leaf-1*
+- Example below is for *leaf-1* and  shows the relevant section of the running configuration. Port Channel configuration in the running configuration has three parts.
+- 1. Port channel definitions
+  2. Port channel IP information
+  3. Port channel member links
+
   
   ```json
   "PORTCHANNEL": {                 <------ Port Channel Definition
