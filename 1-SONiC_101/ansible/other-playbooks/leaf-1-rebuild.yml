@@ -1,18 +1,19 @@
 ---
 
-# ansible-playbook -i hosts leaf-1-recover.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+# ansible-playbook -i hosts leaf-1-rebuild.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
 
-- name: Setup lab and deploy SONiC containerlab nodes
+- name: Rebuild leaf-1 on failure to come up
   hosts: vm-leaf-1
   become: true
   tasks:
-    - name: git pull to update repo on each VM
-      command: git pull
-      args:
-        chdir: /home/cisco/sonic-dcloud
-      ignore_errors: yes
       
-    - name: run containerlab deploy command to launch sonic vxr leaf-1
+    - name: run containerlab destroy command to destroy failed leaf-1
+      command: sudo containerlab destroy -t vm-leaf-1/clab.yml"
+      args:
+        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
+      ignore_errors: yes
+
+    - name: run containerlab deploy command to re-launch sonic vxr leaf-1
       command: sudo containerlab deploy -t vm-leaf-1/clab.yml"
       args:
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
@@ -48,9 +49,34 @@
       
     - name: Save grep output to a local log file
       lineinfile:
-        path: "/home/cisco/leaf-1-recover.log"
+        path: "/home/cisco/deploy.log"
         line: "{{inventory_hostname}} {{ grep_result.stdout }}"
         create: yes
       delegate_to: localhost
+
+    - name: Ping test leaf-1
+      shell: ping -c 1 -W 5 172.10.10.101
+      register: ping_result
+      ignore_errors: true
+
+    - name: Check if ping was successfull 
+      when: ( ping_result.failed == true)
+      debug:
+        msg: "Leaf 1 ping failed"
+
+    - name: Save grep output to a local log file
+      lineinfile:
+          path: "/home/cisco/deploy.log"
+          line: "SONiC router Leaf-1 deployment failed. Restarting build."
+          create: yes
+
+    - name: Test Ping Result Leaf 1
+      when: ( ping_result.failed == false)
+      debug:
+        msg: "Leaf 1 ping success"
+
+    - name: print debug
+      debug:
+        msg: "{{ ping_result.stdout }}"
       
 
