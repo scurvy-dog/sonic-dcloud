@@ -43,19 +43,20 @@ SONiC places each module in independent docker containers to keep high cohesion 
 
 As of today, SONiC breaks its main functional components into the following docker containers:
 
-| Service Container | Description                                                      |
-|:------------------|:-----------------------------------------------------------------|
-| BGP               | Runs Quagga or FRR. These stacks include other routing protocols |
-| Database          | Hosts the redis-database engine|
-| DHCP-Relay        | DHCP-Relay agent |
-| LLDP              | Hosts LLDP. Includes 3 process *llpd*, *LLDP-syncd*, *LLDPmgr* |
-| MGMT-Framework    | North Bound Interfaces (NBIs) for  managing configuration and status|
-| PMON              | Runs *sensord* daemon used to log and alert sensor data |
-| RADV              |
-| SNMP              | Hosts SNMP feature. *SNMPD* and *SNMP-Agent* |
-| SWSS              | Collection of tools to allow communication among all SONiC modules |
-| SYNCD             | synchronization of the switch's network state with the switch's actual hardware/ASIC |
-| TeamD             | Runs open-source implementation of LAG protocol |
+| Docker Container Name| Description                                                      |
+|:---------------------|:-----------------------------------------------------------------|
+| BGP                  | Runs Quagga or FRR. These stacks include other routing protocols |
+| Database             | Hosts the redis-database engine|
+| DHCP_Relay           | DHCP-Relay agent |
+| LLDP                 | Hosts LLDP. Includes 3 process *llpd*, *LLDP-syncd*, *LLDPmgr* |
+| MGMT-Framework       | North Bound Interfaces (NBIs) for  managing configuration and status|
+| PMON                 | Runs *sensord* daemon used to log and alert sensor data |
+| RADV                 |
+| SNMP                 | Hosts SNMP feature. *SNMPD* and *SNMP-Agent* |
+| SWSS                 | Collection of tools to allow communication among all SONiC modules |
+| SYNCD                | synchronization of the switch's network state with the switch's actual hardware/ASIC |
+| TeamD                | Runs open-source implementation of LAG protocol |
+| Telemetry            | Contains implementation for the sonic system telemetry service |
 
 You can see the list of the running containers with SONiC by running the below command once logged into a SONiC device.
 ```
