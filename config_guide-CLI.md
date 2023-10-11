@@ -52,7 +52,7 @@ exit
 
 3. BGP config:
 ```
-router bgp 65003
+router bgp 65000
  neighbor 10.1.1.2 remote-as 65001
  neighbor 10.1.1.4 remote-as 65002
  neighbor fc00::2 remote-as 65001

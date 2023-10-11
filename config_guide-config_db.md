@@ -9,7 +9,7 @@ Edit /etc/sonic/config_db.json
         "localhost": { 
             "hostname": "router-3",
             "deployment_id": "1", 
-            "bgp_asn": "65003",
+            "bgp_asn": "65000",
             "type": "ToR",
             "docker_routing_config_mode": "split"
         }

@@ -4,7 +4,7 @@
 In Exercise 3 the student will explore configuring the BGP routing protocol within SONiC
 
 ## Contents
-- [Exercise 3: Configure and Validate BGP \[40 Min\]](#lab-exercise-3-configure-and-validate-bgp-40-min)
+- [SONiC 101 - Exercise 3: Configure and Validate BGP \[40 Min\]](#sonic-101---exercise-3-configure-and-validate-bgp-40-min)
     - [Description:](#description)
   - [Contents](#contents)
   - [Lab Objectives](#lab-objectives)
@@ -18,7 +18,8 @@ In Exercise 3 the student will explore configuring the BGP routing protocol with
     - [IPv4 BGP Route Validation Walk Through](#ipv4-bgp-route-validation-walk-through)
     - [Validate the route was installed in the Linux forwarding table (SONiC's FIB)](#validate-the-route-was-installed-in-the-linux-forwarding-table-sonics-fib)
   - [Validate SONiC End to End Connectivity](#validate-sonic-end-to-end-connectivity)
-    - [Validate Endpoint VM reachability](#validate-endpoint-vm-reachability)
+    - [Validate Leaf-1 to Leaf-2 reachability](#validate-leaf-1-to-leaf-2-reachability)
+    - [Validate Endpoint-1 to Endpoint-2 reachability](#validate-endpoint-1-to-endpoint-2-reachability)
   - [End of Lab Exercise 3](#end-of-lab-exercise-3)
   
 ## Lab Objectives
@@ -167,7 +168,7 @@ There are several relevant files for our ansible playbook
      ```
      leaf-1# show bgp summary
      IPv4 Unicast Summary (VRF default)
-     BGP router identifier 10.0.0.4, local AS number 65004 vrf-id 0
+     BGP router identifier 10.0.0.4, local AS number 65001 vrf-id 0
      BGP table version 4
      RIB entries 7, using 1344 bytes of memory
      Peers 2, using 1449 KiB of memory
@@ -179,7 +180,7 @@ There are several relevant files for our ansible playbook
      Total number of neighbors 2
 
      IPv6 Unicast Summary (VRF default):
-     BGP router identifier 10.0.0.4, local AS number 65004 vrf-id 0
+     BGP router identifier 10.0.0.4, local AS number 65001 vrf-id 0
      BGP table version 11
      RIB entries 8, using 1536 bytes of memory
      Peers 2, using 1449 KiB of memory

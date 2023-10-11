@@ -6,7 +6,7 @@
             "mac": "52:54:00:74:c1:04",
             "hostname": "sonic04",
             "type": "LeafRouter",
-            "bgp_asn": "65005",
+            "bgp_asn": "65000",
             "docker_routing_config_mode": "split"
         }
     },
