@@ -187,8 +187,10 @@ show startupconfiguration bgp
  show run bgp
 ```
 **Save Running FRR Configuration to File**
+For direct FRR configuration you use the *vtysh* command which drops you into the FRR command shell. This shell has a more of a router CLI command feel with show commands, config terminal, and config save commands. The below command drops you into FRR and tells FRR to copy the running config and save it to file.
+
 ```
-vtsysh
+vtysh
 copy run start
 ```
 
