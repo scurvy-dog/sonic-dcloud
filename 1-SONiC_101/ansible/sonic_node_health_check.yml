@@ -20,11 +20,12 @@
       - name: Print debug output
         debug:
           msg: "vm-leaf-1 failed to start SONiC leaf-1 virtual router."
-      
-      - name: run leaf-1 playbook
-        import_playbook: other-playbooks/leaf-1-rebuild.yml
-        ignore_errors: yes
-          
+
+      - name: Add vm-leaf-1 to host group sonic_node_rebuild
+        add_host:
+          name: '198.18.128.101'
+          groups: sonic_node_rebuild
+
     when: (ping_result1.failed == true)
 
   - name: Conditional check if ping to leaf-1 success
@@ -58,6 +59,11 @@
       - name: Print debug output
         debug:
           msg: "vm-leaf-2 failed to start SONiC leaf-2 virtual router."
+
+      - name: Add vm-leaf-2 to host group sonic_node_rebuild
+        add_host:
+          name: '198.18.128.102'
+          groups: sonic_node_rebuild
           
     when: (ping_result2.failed == true)
 
@@ -92,7 +98,12 @@
       - name: Print debug output
         debug:
           msg: "vm-spine-1 failed to start SONiC spine-1 virtual router."
-          
+
+      - name: Add vm-spine-1 to host group sonic_node_rebuild
+        add_host:
+          name: '198.18.128.103'
+          groups: sonic_node_rebuild
+        
     when: (ping_result3.failed == true)
 
   - name: Conditional check if ping to spine-1 success
@@ -126,7 +137,12 @@
       - name: Print debug output
         debug:
           msg: "vm-spine-2 failed to start SONiC spine-2 virtual router."
-          
+
+      - name: Add vm-spine-2 to host group sonic_node_rebuild
+        add_host:
+          name: '198.18.128.104'
+          groups: sonic_node_rebuild
+      
     when: (ping_result4.failed == true)
 
   - name: Conditional check if ping to spine-2 success
@@ -142,3 +158,48 @@
           msg: "vm-spine-2 successfully started SONiC spine-2 virtual router."
 
     when: (ping_result4.failed == false)
+
+# Run the rebuild tasks for each failed node
+
+- name: Setup lab and deploy SONiC containerlab nodes
+  hosts: sonic_node_rebuild
+  become: true
+  tasks:
+      
+    - name: run containerlab destroy existing sonic container
+      command: sudo containerlab destroy -t "{{ inventory_hostname }}/clab.yml"
+      args:
+        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
+      ignore_errors: yes
+
+    - name: run containerlab deploy command to launch sonic vxr on remote host
+      command: sudo containerlab deploy -t "{{ inventory_hostname }}/clab.yml"
+      args:
+        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
+      ignore_errors: yes
+
+    - name: run vxlan shell script to interconnect containerlab nodes across VMs
+      command: "{{ inventory_hostname }}/vxlan.sh"
+      args:
+        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
+      ignore_errors: yes
+
+    - name: Pause for 5 minutes
+      pause:
+        minutes: 5
+
+    - name: Wait for 'Router' to appear in logs
+      shell: docker logs -t {{ hostvars[inventory_hostname]['container'] }} | grep Router
+      register: grep_result
+      until: grep_result.stdout_lines | length > 0
+      retries: 18  # Number of times to retry
+      delay: 30  # Delay between retries
+      timeout: 600  # Maximum time to wait (in seconds) 
+      
+    - name: Save grep output to a local log file
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{inventory_hostname}} {{ grep_result.stdout }}"
+        create: yes
+      delegate_to: localhost
+
