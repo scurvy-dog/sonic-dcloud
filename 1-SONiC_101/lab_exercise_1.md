@@ -44,17 +44,26 @@ Please see the management topology network diagram below. Table-1 below lists th
 
 ![Management Topology](./topo-drawings/management-network-medium.png)
 
-**Table 1**
-| Host name  | IP Address     | Description             |
-|:-----------|:---------------|:------------------------|
-| Jumpbox    | 198.18.128.100 | Hosts ansible scripts   |
-| VM-Leaf-1  | 198.18.128.101 | Hosts sonic node leaf-1 |
-| VM-Leaf-2  | 198.18.128.102 | Hosts sonic node leaf-1 |
-| VM-Spine-1 | 198.18.128.103 | Hosts sonic node leaf-1 |
-| VM-Spine-2 | 198.18.128.104 | Hosts sonic node leaf-1 |
-| Endpoint-1 | 198.18.128.105 | VM used for testing     |
-| Endpoint-2 | 198.18.128.106 | VM used for testing     |
+> [!NOTE]
+> In dCloud we have a a relationship of one Ubuntu VM hosting one SONiC router container.
+>
+> ![Management Topology](./topo-drawings/docker-container-view.png)
+> 
 
+**Table 1**
+| Host name  | IP Address     | Description               |
+|:-----------|:---------------|:--------------------------|
+| Jumpbox    | 198.18.128.100 | Hosts ansible scripts     |
+| vm-leaf-1  | 198.18.128.101 | Hosts sonic router leaf-1 |
+| vm-leaf-2  | 198.18.128.102 | Hosts sonic router leaf-1 |
+| vm-spine-1 | 198.18.128.103 | Hosts sonic router leaf-1 |
+| vm-spine-2 | 198.18.128.104 | Hosts sonic router leaf-1 |
+| Endpoint-1 | 198.18.128.105 | VM used for testing       |
+| Endpoint-2 | 198.18.128.106 | VM used for testing       |
+| leaf-1     | 172.10.10.101  | SONiC Router leaf-1       |
+| leaf-2     | 172.10.10.102  | SONiC Router leaf-2       |
+| spine-1    | 172.10.10.103  | SONiC Router spine-1      |
+| spine-2    | 172.10.10.104  | SONiC Router spine-2      |
 
 ### User Credentials
 For the host VMs use the following credentials:
