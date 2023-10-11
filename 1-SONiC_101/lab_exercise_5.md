@@ -88,32 +88,34 @@ In this example set of code we want to set the following parameters through CLI 
 **Adding ACL Table with CLI**
 
 Example command help output
-    ```
-    cisco@leaf-2:~$ sudo config acl add table --help
-    Usage: config acl add table [OPTIONS] <table_name> <table_type>
-    Add ACL table
+```
+cisco@leaf-2:~$ sudo config acl add table --help
+Usage: config acl add table [OPTIONS] <table_name> <table_type>
+Add ACL table
     
-    Options:
-    -d, --description TEXT
-    -p, --ports TEXT
-    -s, --stage [ingress|egress]
-    ```
+Options:
+-d, --description TEXT
+-p, --ports TEXT
+-s, --stage [ingress|egress]
+```
     
 We will now add in an ACL table using the above parameters using the CLI below.
-  ```
-  sudo config acl add table ICMP_DROP L3 -p Ethernet32 -d "BLock ICMP traffic from Endpoint2" -s ingress
-  ```
-  Run the following show command to see the new table
-  ```
-  sudo acl-loader show table
-  ```
-  Example output.
-  ```
-  cisco@leaf-2:~$ sudo acl-loader show table
-  Name       Type    Binding     Description                        Stage    Status
-  ---------  ------  ----------  ---------------------------------  -------  --------
-  ICMP_DROP  L3      Ethernet32  BLock ICMP traffic from Endpoint2  ingress  Active
-  ```
+```
+sudo config acl add table ICMP_DROP L3 -p Ethernet32 -d "BLock ICMP traffic from Endpoint2" -s ingress
+```
+
+Run the following show command to see the new table
+```
+sudo acl-loader show table
+```
+
+Example output.
+```
+cisco@leaf-2:~$ sudo acl-loader show table
+Name       Type    Binding     Description                        Stage    Status
+---------  ------  ----------  ---------------------------------  -------  --------
+ICMP_DROP  L3      Ethernet32  BLock ICMP traffic from Endpoint2  ingress  Active
+```
 
 **Adding ACL Table through JSON**
 To utilize JSON to create an ACL it is a two step process. First you must construct a valid JSON syntax file and store that on the SONiC router itself. The second step is to use the config load command to add the table into the running configuration. See steps below.
