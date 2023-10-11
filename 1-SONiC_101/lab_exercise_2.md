@@ -63,7 +63,7 @@ You can see the list of the running containers with SONiC by running the below c
 docker ps
 ```
 ```
-admin@leaf-1:~$ docker ps
+cisco@leaf-1:~$ docker ps
 CONTAINER ID   IMAGE                                COMMAND                  CREATED       STATUS       PORTS     NAMES
 d3dec180edf1   docker-sonic-telemetry:latest        "/usr/local/bin/supe…"   7 hours ago   Up 3 hours             telemetry
 73408f13ba26   docker-snmp:latest                   "/usr/local/bin/supe…"   7 hours ago   Up 3 hours             snmp
@@ -83,7 +83,7 @@ c002ab9b311f   docker-database:latest               "/usr/local/bin/dock…"   7
 >For greater detail on container services see this link [HERE](https://github.com/sonic-net/SONiC/wiki/Architecture)
 
 ### Managing Configurations
-Configuration state in SONiC is saved in two separate locations. For persistant configuratin between reloads configuration files are used. The main configuration is found at */etc/sonic/config_db.json*. The second configuration file in this lab is for the FRR routing stack and it's configuratin is found at */etc/sonic/frr/bgpd.conf*. However, BGP configuration when saved from the redis database is pushed to config_db and as such is the preferred location if you were to edit the *"saved configuraiont"*.  
+Configuration state in SONiC is saved in two separate locations. For persistant configuration between reloads configuration files are used. The main configuration is found at */etc/sonic/config_db.json*. The second configuration file in this lab is for the FRR routing stack and it's configuratin is found at */etc/sonic/frr/bgpd.conf*. However, BGP configuration when saved from the redis database is pushed to config_db and as such is the preferred location if you were to edit the *"saved configuration"*.  
 
 When the router boots it loads the configuration from these two files into the redis database. The redis database is the running configuration of the router where the various services read or write state information into the redis database.
 
