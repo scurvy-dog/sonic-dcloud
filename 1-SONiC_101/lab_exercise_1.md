@@ -53,7 +53,7 @@ Please see the management topology network diagram below. Table-1 below lists th
 | VM-Spine-1 | 198.18.128.103 | Hosts sonic node leaf-1 |
 | VM-Spine-2 | 198.18.128.104 | Hosts sonic node leaf-1 |
 | Endpoint-1 | 198.18.128.105 | VM used for testing     |
-| Endpoint-2 | 198.18.128.105 | VM used for testing     |
+| Endpoint-2 | 198.18.128.106 | VM used for testing     |
 
 
 ### User Credentials
@@ -112,25 +112,31 @@ If all routers came up, then we may proceed to ping and connectivity checks:
      | spine-2    | 172.10.10.104 |
 
      ```
-     cisco@vsonic:~$ ping leaf01
+     cisco@vsonic:~$ ping leaf-1
      PING leaf01 (172.10.10.101) 56(84) bytes of data.
-     64 bytes from leaf01 (172.10.10.101): icmp_seq=1 ttl=64 time=0.480 ms
-     64 bytes from leaf01 (172.10.10.101): icmp_seq=2 ttl=64 time=0.362 ms
+     64 bytes from leaf-1 (172.10.10.101): icmp_seq=1 ttl=64 time=0.480 ms
+     64 bytes from leaf-1 (172.10.10.101): icmp_seq=2 ttl=64 time=0.362 ms
      ```
 
 > [!NOTE]
 >  If SONiC router does not respond to ping. Follow these directions
 >
->1. SSH into the host-vm directly
->2.  Find docker instance running the Cisco 8000 emulator and lookup the container name.
+>1. SSH into the host-vm directly. That would be (vm-leaf-1,vm-leaf-2,vm-spine-1, vm-spine-2)
+>   Example below
+>   ```
+>   Last login: Tue Oct 10 16:15:30 2023 from 10.16.81.3
+>   cisco@vm-leaf-1:~$ 
+>   ```
+>3. Find docker instance running the Cisco 8000 emulator and lookup the container name.
+>   In the example below the Cisco 8000 Emulator container is named *clab-c8101-sonic-leaf-1*
 >   ```
 >   cisco@vm-leaf-1:~$ docker ps
 >   CONTAINER ID   IMAGE                 COMMAND                  CREATED      STATUS      PORTS     NAMES
->   d1861990e9a8   c8000-clab-sonic:31   "/etc/prepEnv.sh /no…"   16 hours ago  Up 16 hours          clab-c8101-sonic-leaf-2
+>   d1861990e9a8   c8000-clab-sonic:31   "/etc/prepEnv.sh /no…"   16 hours ago  Up 16 hours          clab-c8101-sonic-leaf-1
 >   ```
 >3. Session into the docker container
 >   ```
->   cisco@vm-leaf-1:~$ docker exec -it clab-c8201-sonic-leaf-1 bash
+>   cisco@vm-leaf-1:~$ docker exec -it clab-c8101-sonic-leaf-1 bash
 >   root@leaf-1:/#
 >   ``` 
 >4. Now access the SONiC console ( cisco / cisco123 )
@@ -156,10 +162,10 @@ If all routers came up, then we may proceed to ping and connectivity checks:
 
 Starting from the vsonic VM log into each router instance 1-4 per the management topology diagram above. Example:
 ```
-    ssh cisco@spine01
-    ssh cisco@spine02
-    ssh cisco@leaf01
-    ssh cisco@leaf02
+    ssh cisco@spine-1
+    ssh cisco@spine-2
+    ssh cisco@leaf-1
+    ssh cisco@leaf-2
     or
     ssh cisco@172.10.10.2
     ssh cisco@172.10.10.3
