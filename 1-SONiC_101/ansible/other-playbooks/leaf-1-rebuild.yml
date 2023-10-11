@@ -1,6 +1,6 @@
 ---
 
-# ansible-playbook -i hosts leaf-1-recover.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+# ansible-playbook -i hosts leaf-1-rebuild.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
 
 - name: Setup lab and deploy SONiC containerlab nodes
   hosts: vm-leaf-1
@@ -48,9 +48,34 @@
       
     - name: Save grep output to a local log file
       lineinfile:
-        path: "/home/cisco/leaf-1-recover.log"
+        path: "/home/cisco/deploy.log"
         line: "{{inventory_hostname}} {{ grep_result.stdout }}"
         create: yes
       delegate_to: localhost
+
+    - name: Ping test leaf-1
+      shell: ping -c 1 -W 5 172.10.10.101
+      register: ping_result
+      ignore_errors: true
+
+    - name: Check if ping was successfull 
+      when: ( ping_result.failed == true)
+      debug:
+        msg: "Leaf 1 ping failed"
+
+    - name: Save grep output to a local log file
+      lineinfile:
+          path: "/home/cisco/deploy.log"
+          line: "SONiC router Leaf-1 deployment failed. Restarting build."
+          create: yes
+
+    - name: Test Ping Result Leaf 1
+      when: ( ping_result.failed == false)
+      debug:
+        msg: "Leaf 1 ping success"
+
+    - name: print debug
+      debug:
+        msg: "{{ ping_result.stdout }}"
       
 
