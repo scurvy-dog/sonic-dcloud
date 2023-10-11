@@ -1,15 +1,21 @@
   gather_facts: false
   tasks:
 
-  - name: Ping leaf1
+  - name: Ping test leaf-1
     shell: ping -c 1 -W 5 172.10.10.101
     register: ping_result
     ignore_errors: true
 
-  - name: Test Ping Result Leaf 1
+  - name: Check if ping was successfull 
     when: ( ping_result.failed == true)
     debug:
       msg: "Leaf 1 ping failed"
+
+  - name: Save grep output to a local log file
+    lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "SONiC router Leaf-1 deployment failed. Restarting build."
+        create: yes
 
   - name: Test Ping Result Leaf 1
     when: ( ping_result.failed == false)
