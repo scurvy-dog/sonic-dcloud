@@ -32,6 +32,13 @@
       ignore_errors: yes
       delegate_to: localhost
       
+    - name: Start logging to deploy.log file
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}} Start Container Lab Deploy Script:"
+        create: yes
+      delegate_to: localhost
+    
     - name: run containerlab deploy to launch sonic vxr8000 nodes
       command: sudo containerlab deploy -t "{{ inventory_hostname }}/clab.yml"
       args:
@@ -69,7 +76,7 @@
     - name: Save grep output to a local log file
       lineinfile:
         path: "/home/cisco/deploy.log"
-        line: "{{inventory_hostname}} {{ grep_result.stdout }}"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: {{inventory_hostname}} {{ grep_result.stdout }}"
         create: yes
       delegate_to: localhost
       
