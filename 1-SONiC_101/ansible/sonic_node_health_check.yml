@@ -207,6 +207,7 @@
       ignore_errors: yes
       
     - name: Output to deploy log file
+      become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
         line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ sonic[inventory_hostname]['sonic_name'] }} rebuild started. "
