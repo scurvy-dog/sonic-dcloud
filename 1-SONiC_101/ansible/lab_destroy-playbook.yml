@@ -20,8 +20,8 @@
       ignore_errors: yes
   
     - name: delete deploy log 
-        command: rm /home/cisco/deploy.log
-        ignore_errors: yes
-        run_once: true
-        become: false
-        delegate_to: localhost
+      command: rm /home/cisco/deploy.log
+      ignore_errors: yes
+      run_once: true
+      become: false
+      delegate_to: localhost
