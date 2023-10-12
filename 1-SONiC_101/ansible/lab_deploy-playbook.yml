@@ -3,12 +3,15 @@
 # ansible-playbook -i hosts lab_deploy-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
       
 - name: Start logging to deploy.log file
-  become: false
-  lineinfile:
-    path: "/home/cisco/deploy.log"
-    line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}} :Start Container Lab Deploy Script"
-    create: yes
-  delegate_to: localhost
+  hosts: localhost
+  tasks:
+    - name: deploy.log
+      become: false
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}} :Start Container Lab Deploy Script"
+        create: yes
+      delegate_to: localhost
       
 - name: Setup lab and deploy SONiC containerlab nodes
   hosts: sonic_host_vms
@@ -25,14 +28,6 @@
         src: "motd"
         dest: "/etc/motd"
         mode: 0644 
-        
-    - name: remove old deploy.log file
-      become: false
-      command: rm deploy.log
-      args:
-        chdir: /home/cisco
-      ignore_errors: yes
-      delegate_to: localhost
 
     - name: Log SONiC Router Deploy Start
       become: false
