@@ -5,9 +5,9 @@
 - name: Start logging to deploy.log file
   become: false
   lineinfile:
-      path: "/home/cisco/deploy.log"
-      line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}} :Start Container Lab Deploy Script"
-      create: yes
+    path: "/home/cisco/deploy.log"
+    line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}} :Start Container Lab Deploy Script"
+    create: yes
   delegate_to: localhost
       
 - name: Setup lab and deploy SONiC containerlab nodes
