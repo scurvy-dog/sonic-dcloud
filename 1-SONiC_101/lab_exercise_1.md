@@ -12,6 +12,7 @@ In Exercise 1 we will explore the host-VM virtualization environment and log int
   - [Device Access](#device-access)
     - [User Credentials](#user-credentials)
     - [Validate Access](#validate-access)
+    - [Git repository location](#git-repository-location)
   - [Check Build Scripts](#check-build-scripts)
     - [Connect to SONiC Routers](#connect-to-sonic-routers)
   - [End of Lab 1](#end-of-lab-1)

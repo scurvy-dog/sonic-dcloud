@@ -83,6 +83,10 @@
         line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ hostvars[inventory_hostname]['container'] {{ grep_result.stdout }}"
         create: yes
       delegate_to: localhost
+
+    - name: run health check playbook
+      import_playbook: sonic_node_health_check.yml
+      ignore_errors: yes
       
 - name: Setup lab and deploy endpoint nodes
   hosts: endpoint_vms
