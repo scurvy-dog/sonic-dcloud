@@ -1,6 +1,6 @@
 - name: Setup lab and deploy SONiC containerlab nodes
   hosts: localhost
-  become: true
+  become: false
   tasks:
 
     - name: git pull to update repo on localhost
