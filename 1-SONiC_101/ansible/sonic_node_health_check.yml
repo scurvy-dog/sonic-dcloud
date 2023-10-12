@@ -211,6 +211,7 @@
         path: "/home/cisco/deploy.log"
         line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ sonic[inventory_hostname]['sonic_name'] }} rebuild started. "
         create: yes
+      delegate_to: localhost
         
     - name: run containerlab deploy command to launch sonic vxr on remote host
       command: sudo containerlab deploy -t "{{ sonic[inventory_hostname]['vm_name'] }}/clab.yml"
@@ -240,7 +241,7 @@
       become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: sonic[inventory_hostname]['vm_name'] {{ grep_result.stdo
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: sonic[inventory_hostname]['vm_name'] }} {{ grep_result.stdo
 ut }}"
         create: yes
       delegate_to: localhost
