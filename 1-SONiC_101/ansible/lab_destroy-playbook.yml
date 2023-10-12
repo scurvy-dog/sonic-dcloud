@@ -18,13 +18,10 @@
       args:
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
       ignore_errors: yes
-
-- name: delete deploy log
-  hosts: localhost
-  become: false
-  tasks:
   
     - name: delete deploy log 
-        command: sudo rm /home/cisco/deploy.log
+        command: rm /home/cisco/deploy.log
         ignore_errors: yes
         run_once: true
+        become: false
+        delegate_to: localhost
