@@ -19,6 +19,7 @@
         mode: 0644 
         
     - name: remove old deploy.log file
+      become: false
       command: rm deploy.log
       args:
         chdir: /home/cisco
@@ -26,6 +27,7 @@
       delegate_to: localhost
       
     - name: Start logging to deploy.log file
+      become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
         line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}} Start Container Lab Deploy Script:"
@@ -67,6 +69,7 @@
       timeout: 600  # Maximum time to wait (in seconds) 
       
     - name: Save grep output to a local log file
+      become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
         line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: {{inventory_hostname}} {{ grep_result.stdout }}"
