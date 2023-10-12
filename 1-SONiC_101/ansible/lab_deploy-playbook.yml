@@ -17,13 +17,6 @@
         src: "motd"
         dest: "/etc/motd"
         mode: 0644 
-       
-    - name: Copy motd file to local host
-      copy:
-        src: "motd"
-        dest: "/etc/motd"
-        mode: 0644 
-      delegate_to: localhost  
         
     - name: remove old deploy.log file
       command: rm deploy.log
