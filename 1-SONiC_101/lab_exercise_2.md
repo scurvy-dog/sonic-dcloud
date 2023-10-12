@@ -211,7 +211,7 @@ There are several relevant files for our ansible playbook
    ```
 2. Change to the ansible directory
    ```
-   cd ansible
+   cd  ~/sonic-dcloud/1-SONiC_101/ansible/ 
    ```
 3. Run the lab_exercise_2 Ansible playbook to copy global and interface configurations to leaf-2, spine-1, and spine-2 routers. Once copied the playbook will then load and save configurations. The playbook will load a subset of configuration to leaf-1.
 
