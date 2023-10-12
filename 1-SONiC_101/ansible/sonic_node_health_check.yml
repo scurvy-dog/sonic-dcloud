@@ -203,7 +203,7 @@
     - name: Output to deploy log file
       lineinfile:
         path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ {{ sonic[inventory_hostname]['sonic_name'] }} rebuild started. "
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ sonic[inventory_hostname]['sonic_name'] }} rebuild started. "
         create: yes
         
     - name: run containerlab deploy command to launch sonic vxr on remote host
