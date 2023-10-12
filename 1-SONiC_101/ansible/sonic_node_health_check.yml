@@ -181,7 +181,12 @@
                 '198.18.128.103': 'vm-spine-1',
                 '198.18.128.104': 'vm-spine-2'
                 }
-
+   - sonic_dict: {
+                '198.18.128.101': 'leaf-1',
+                '198.18.128.102': 'leaf-2',
+                '198.18.128.103': 'spine-1',
+                '198.18.128.104': 'spine-2'
+                }
   tasks:
       
   # START REBUILD TASKS. SEND TO DEPLOY.LOG FILE
@@ -192,16 +197,18 @@
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
       ignore_errors: yes
 
+    - name: Output to deploy log file
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ sonic_dict[inventory_hostname] }} rebuild started. "
+        create: yes
+        
     - name: run containerlab deploy command to launch sonic vxr on remote host
       command: sudo containerlab deploy -t "{{ node_dict[inventory_hostname]  }}/clab.yml"
       args:
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
       ignore_errors: yes
-    - name: Output to deploy log file
-      lineinfile:
-        path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router rebuild on {{ node_dict[inventory_hostname] }} started. "
-        create: yes
+
     - name: run vxlan shell script to interconnect containerlab nodes across VMs
       command: "{{ node_dict[inventory_hostname]  }}/vxlan.sh"
       args:
@@ -221,8 +228,10 @@
       timeout: 600  # Maximum time to wait (in seconds) 
 
     - name: Save grep output to a local log file
+      become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
-        line: "{{inventory_hostname}} {{ grep_result.stdout }}"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: {{inventory_hostname}} {{ grep_result.stdo
+ut }}"
         create: yes
       delegate_to: localhost
