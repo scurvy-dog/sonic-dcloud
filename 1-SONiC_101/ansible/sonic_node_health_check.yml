@@ -1,6 +1,9 @@
+# ansible-playbook sonic_node_health_check.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+
 - name: Check each SONiC Routers Health
   gather_facts: false
   hosts: localhost
+
   tasks:
 
   # CHECK SONiC ROUTER LEAF-1 STATUS
@@ -103,7 +106,7 @@
         add_host:
           name: '198.18.128.103'
           groups: sonic_node_rebuild
-        
+
     when: (ping_result3.failed == true)
 
   - name: Conditional check if ping to spine-1 success
@@ -142,7 +145,7 @@
         add_host:
           name: '198.18.128.104'
           groups: sonic_node_rebuild
-      
+
     when: (ping_result4.failed == true)
 
   - name: Conditional check if ping to spine-2 success
@@ -164,22 +167,35 @@
 - name: Setup lab and deploy SONiC containerlab nodes
   hosts: sonic_node_rebuild
   become: true
+  vars:
+
+   - node_dict: {
+                '198.18.128.101': 'vm-leaf-1',
+                '198.18.128.102': 'vm-leaf-2',
+                '198.18.128.103': 'vm-spine-1',
+                '198.18.128.104': 'vm-spine-2'
+                }
+
   tasks:
       
+    - name: Debug
+      debug:
+        msg: " {{ node_dict[inventory_hostname] }} "
+
     - name: run containerlab destroy existing sonic container
-      command: sudo containerlab destroy -t "{{ inventory_hostname }}/clab.yml"
+      command: sudo containerlab destroy -t "{{ node_dict[inventory_hostname]  }}/clab.yml"
       args:
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
       ignore_errors: yes
 
     - name: run containerlab deploy command to launch sonic vxr on remote host
-      command: sudo containerlab deploy -t "{{ inventory_hostname }}/clab.yml"
+      command: sudo containerlab deploy -t "{{ node_dict[inventory_hostname]  }}/clab.yml"
       args:
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
       ignore_errors: yes
 
     - name: run vxlan shell script to interconnect containerlab nodes across VMs
-      command: "{{ inventory_hostname }}/vxlan.sh"
+      command: "{{ node_dict[inventory_hostname]  }}/vxlan.sh"
       args:
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
       ignore_errors: yes
@@ -195,11 +211,10 @@
       retries: 18  # Number of times to retry
       delay: 30  # Delay between retries
       timeout: 600  # Maximum time to wait (in seconds) 
-      
+
     - name: Save grep output to a local log file
       lineinfile:
         path: "/home/cisco/deploy.log"
         line: "{{inventory_hostname}} {{ grep_result.stdout }}"
         create: yes
       delegate_to: localhost
-
