@@ -1,7 +1,15 @@
 ---
 
 # ansible-playbook -i hosts lab_deploy-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
-
+      
+- name: Start logging to deploy.log file
+  become: false
+  lineinfile:
+      path: "/home/cisco/deploy.log"
+      line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}} :Start Container Lab Deploy Script"
+      create: yes
+  delegate_to: localhost
+      
 - name: Setup lab and deploy SONiC containerlab nodes
   hosts: sonic_host_vms
   become: true
@@ -25,14 +33,7 @@
         chdir: /home/cisco
       ignore_errors: yes
       delegate_to: localhost
-      
-    - name: Start logging to deploy.log file
-      become: false
-      lineinfile:
-        path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}} Start Container Lab Deploy Script:"
-        create: yes
-      delegate_to: localhost
+
     
     - name: run containerlab deploy to launch sonic vxr8000 nodes
       command: sudo containerlab deploy -t "{{ inventory_hostname }}/clab.yml"
