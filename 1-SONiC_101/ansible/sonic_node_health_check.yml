@@ -223,7 +223,7 @@
         minutes: 5
 
     - name: Wait for 'Router' to appear in logs
-      shell: docker logs -t {{ sonic[inventory_hostname]['vm_name']['container_name'] }} | grep Router
+      shell: docker logs -t {{ sonic[inventory_hostname]['container_name'] }} | grep Router
       register: grep_result
       until: grep_result.stdout_lines | length > 0
       retries: 18  # Number of times to retry
