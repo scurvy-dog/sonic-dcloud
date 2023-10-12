@@ -59,7 +59,7 @@ There are several relevant files for our ansible playbook
 1. Log into the *Jumpbox* VM.
 2. Change to the ansible directory
    ```
-   cd /sonic-dcloud/1-SONiC_101/ansible
+   cd ~/sonic-dcloud/1-SONiC_101/ansible
    ```
    
 3. Run the Ansible playbook to copy configurations to SONiC routers and restart BGP/FRR docker containers
