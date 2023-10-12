@@ -200,6 +200,12 @@
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
       ignore_errors: yes
 
+    - name: delete vxlan tunnels on vm-host
+      command: sudo clab tools vxlan delete
+      args:
+        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
+      ignore_errors: yes
+      
     - name: Output to deploy log file
       lineinfile:
         path: "/home/cisco/deploy.log"
