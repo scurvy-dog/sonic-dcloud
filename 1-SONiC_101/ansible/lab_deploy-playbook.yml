@@ -4,6 +4,7 @@
       
 - name: Start logging to deploy.log file
   hosts: localhost
+  become: false
   tasks:
     - name: deploy.log
       become: false
