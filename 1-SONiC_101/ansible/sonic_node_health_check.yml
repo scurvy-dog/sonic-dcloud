@@ -5,7 +5,13 @@
   hosts: localhost
 
   tasks:
-
+  # START LOGGING TO DEPLOY.LOG FILE
+  - name: Output to deploy log file
+    lineinfile:
+      path: "/home/cisco/deploy.log"
+      line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router Health Check Script"
+      create: yes
+      
   # CHECK SONiC ROUTER LEAF-1 STATUS
   - name: Ping test leaf-1
     shell: ping -c 1 -W 5 172.10.10.101
@@ -17,12 +23,12 @@
       - name: Output to deploy log file
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "vm-leaf-1 failed to start SONiC leaf-1 virtual router."
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-1: Failed. Queued for rebuild."
           create: yes
 
       - name: Print debug output
         debug:
-          msg: "vm-leaf-1 failed to start SONiC leaf-1 virtual router."
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-1: Failed. Queued for rebuild."
 
       - name: Add vm-leaf-1 to host group sonic_node_rebuild
         add_host:
@@ -36,12 +42,12 @@
       - name: Output to deploy log file
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "vm-leaf-1 successfully started SONiC leaf-1 virtual router."
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-1: Health Check Passed"
           create: yes
 
       - name: print debug
         debug:
-          msg: "vm-leaf-1 successfully started SONiC leaf-1 virtual router."
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-1: Health Check Passed"
 
     when: (ping_result1.failed == false)
 
@@ -56,12 +62,12 @@
       - name: Output to deploy log file
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "vm-leaf-2 failed to start SONiC leaf-2 virtual router."
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-2: Failed. Queued for rebuild."
           create: yes
 
       - name: Print debug output
         debug:
-          msg: "vm-leaf-2 failed to start SONiC leaf-2 virtual router."
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-2: Failed. Queued for rebuild."
 
       - name: Add vm-leaf-2 to host group sonic_node_rebuild
         add_host:
@@ -75,12 +81,12 @@
       - name: Output to deploy log file
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "vm-leaf-2 successfully started SONiC leaf-2 virtual router."
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-2: Health Check Passed."
           create: yes
 
       - name: print debug
         debug:
-          msg: "vm-leaf-2 successfully started SONiC leaf-2 virtual router."
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-2: Health Check Passed."
 
     when: (ping_result2.failed == false)
 
@@ -95,12 +101,12 @@
       - name: Output to deploy log file
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "vm-spine-1 failed to start SONiC spine-1 virtual router."
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-1: Failed. Queued for rebuild."
           create: yes
 
       - name: Print debug output
         debug:
-          msg: "vm-spine-1 failed to start SONiC spine-1 virtual router."
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-1: Failed. Queued for rebuild."
 
       - name: Add vm-spine-1 to host group sonic_node_rebuild
         add_host:
@@ -114,12 +120,12 @@
       - name: Output to deploy log file
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "vm-spine-1 successfully started SONiC spine-1 virtual router."
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-1: Health Check Passed."
           create: yes
 
       - name: print debug
         debug:
-          msg: "vm-spine-1 successfully started SONiC spine-1 virtual router."
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-1: Health Check Passed."
 
     when: (ping_result3.failed == false)
 
@@ -134,12 +140,12 @@
       - name: Output to deploy log file
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "vm-spine-2 failed to start SONiC spine-2 virtual router."
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-2: Failed. Queued for rebuild."
           create: yes
 
       - name: Print debug output
         debug:
-          msg: "vm-spine-2 failed to start SONiC spine-2 virtual router."
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-2: Failed. Queued for rebuild."
 
       - name: Add vm-spine-2 to host group sonic_node_rebuild
         add_host:
@@ -153,12 +159,12 @@
       - name: Output to deploy log file
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "vm-spine-2 successfully started SONiC spine-2 virtual router."
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-2: Health Check Passed."
           create: yes
 
       - name: print debug
         debug:
-          msg: "vm-spine-2 successfully started SONiC spine-2 virtual router."
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-2: Health Check Passed."
 
     when: (ping_result4.failed == false)
 
@@ -178,9 +184,7 @@
 
   tasks:
       
-    - name: Debug
-      debug:
-        msg: " {{ node_dict[inventory_hostname] }} "
+  # START REBUILD TASKS. SEND TO DEPLOY.LOG FILE
 
     - name: run containerlab destroy existing sonic container
       command: sudo containerlab destroy -t "{{ node_dict[inventory_hostname]  }}/clab.yml"
@@ -193,7 +197,11 @@
       args:
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
       ignore_errors: yes
-
+    - name: Output to deploy log file
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router rebuild on {{ node_dict[inventory_hostname] }} started. "
+        create: yes
     - name: run vxlan shell script to interconnect containerlab nodes across VMs
       command: "{{ node_dict[inventory_hostname]  }}/vxlan.sh"
       args:
