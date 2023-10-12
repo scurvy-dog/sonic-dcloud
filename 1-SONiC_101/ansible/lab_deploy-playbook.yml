@@ -30,13 +30,13 @@
         dest: "/etc/motd"
         mode: 0644 
 
-    - name: Log SONiC Router Deploy Start
-      become: false
-      lineinfile:
-        path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router hostvars[inventory_hostname]['sonic_rtr'] build start "
-        create: yes
-      delegate_to: localhost
+    # - name: Log SONiC Router Deploy Start
+    #   become: false
+    #   lineinfile:
+    #     path: "/home/cisco/deploy.log"
+    #     line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router hostvars[inventory_hostname]['sonic_rtr'] build start "
+    #     create: yes
+    #   delegate_to: localhost
       
     - name: run containerlab deploy to launch sonic vxr8000 nodes
       command: sudo containerlab deploy -t "{{ inventory_hostname }}/clab.yml"
