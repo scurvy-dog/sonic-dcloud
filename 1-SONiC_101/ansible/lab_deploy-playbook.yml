@@ -6,6 +6,13 @@
   hosts: localhost
   become: false
   tasks:
+    - name: delete deploy log 
+      command: rm /home/cisco/deploy.log
+      ignore_errors: yes
+      run_once: true
+      become: false
+      delegate_to: localhost
+      
     - name: deploy.log start message
       become: false
       lineinfile:
@@ -13,6 +20,7 @@
         line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Start Container Lab Deploy Script"
         create: yes
       delegate_to: localhost
+      
     - name: deploy.log time to spin up
       become: false
       lineinfile:
