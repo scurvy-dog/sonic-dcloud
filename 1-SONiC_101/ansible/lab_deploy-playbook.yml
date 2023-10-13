@@ -85,8 +85,8 @@
   become: true
   tasks:
     - name: run health check playbook
-       import_playbook: sonic_node_health_check.yml
-       ignore_errors: yes
+      import_playbook: sonic_node_health_check.yml
+      ignore_errors: yes
 
 - name: Setup lab and deploy endpoint nodes
   hosts: endpoint_vms
