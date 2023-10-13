@@ -242,14 +242,14 @@
       become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: sonic[inventory_hostname]['vm_name'] }} {{ grep_result.stdout }}"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: {{ sonic[inventory_hostname]['sonic_name'] }} {{ grep_result.stdout }}"
         create: yes
       delegate_to: localhost
           
-    - name: Send to uotput file rebuild complete
+    - name: Send to output file rebuild complete
       become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: sonic[inventory_hostname]['sonic_name'] }} rebuild script complete"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: {{ sonic[inventory_hostname]['sonic_name'] }} rebuild script complete"
         create: yes
       delegate_to: localhost
