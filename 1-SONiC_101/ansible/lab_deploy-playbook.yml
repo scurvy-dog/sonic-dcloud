@@ -6,11 +6,18 @@
   hosts: localhost
   become: false
   tasks:
-    - name: deploy.log
+    - name: deploy.log start message
       become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
         line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Start Container Lab Deploy Script"
+        create: yes
+      delegate_to: localhost
+    - name: deploy.log time to spin up
+      become: false
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Expect 10+ minutes as containers are built."
         create: yes
       delegate_to: localhost
       
