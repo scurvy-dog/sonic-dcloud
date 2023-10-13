@@ -242,7 +242,6 @@
       become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: sonic[inventory_hostname]['vm_name'] }} {{ grep_result.stdo
-ut }}"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: sonic[inventory_hostname]['vm_name'] }} {{ grep_result.stdout }}"
         create: yes
       delegate_to: localhost
