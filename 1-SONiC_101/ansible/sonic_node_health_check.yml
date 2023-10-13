@@ -177,19 +177,19 @@
         198.18.128.101:
           vm_name: linux-host-1
           sonic_name: sonic-rtr-leaf-1
-          container_name: clab-c8101-sonic-sonic-rtr-leaf-1
+          container_name: clab-c8101-sonic-leaf-1
         198.18.128.102:
           vm_name: linux-host-2
           sonic_name: sonic-rtr-leaf-2
-          container_name: clab-c8101-sonic-sonic-rtr-leaf-2
+          container_name: clab-c8101-sonic-leaf-2
         198.18.128.103:
           vm_name: linux-host-3
           sonic_name: sonic-rtr-spine-1
-          container_name: clab-c8101-sonic-sonic-rtr-spine-1
+          container_name: clab-c8101-sonic-spine-1
         198.18.128.104:
           vm_name: linux-host-4
           sonic_name: sonic-rtr-spine-2
-          container_name: clab-c8101-sonic-sonic-rtr-spine-2
+          container_name: clab-c8101-sonic-spine-2
   tasks:
       
   # START REBUILD TASKS. SEND TO DEPLOY.LOG FILE
