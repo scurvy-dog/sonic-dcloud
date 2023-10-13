@@ -80,13 +80,17 @@
         create: yes
       delegate_to: localhost
 
-- name: Run health check playbook
-  hosts: sonic_host_vms
-  become: true
-  tasks:
-    - name: run health check playbook
-      import_playbook: sonic_node_health_check.yml
-      ignore_errors: yes
+# - name: Run health check playbook
+#   hosts: sonic_host_vms
+#   become: true
+#   tasks:
+#     - name: run health check playbook
+#       import_playbook: sonic_node_health_check.yml
+#       ignore_errors: yes
+
+- name: run health check playbook
+  import_playbook: sonic_node_health_check.yml
+  ignore_errors: yes
 
 - name: Setup lab and deploy endpoint nodes
   hosts: endpoint_vms
