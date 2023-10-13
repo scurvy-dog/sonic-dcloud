@@ -30,7 +30,7 @@
       delegate_to: localhost
       
 - name: Setup lab and deploy SONiC containerlab nodes
-  hosts: sonic_host_vms
+  hosts: linux_host_vms
   become: true
   tasks:
     - name: git pull to update repo on each VM

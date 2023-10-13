@@ -1,4 +1,4 @@
-[sonic_host_vms]
+[linux_host_vms]
 linux-host-1 ansible_host=172.10.10.201
 linux-host-2 ansible_host=172.10.10.202
 linux-host-3 ansible_host=172.10.10.203
