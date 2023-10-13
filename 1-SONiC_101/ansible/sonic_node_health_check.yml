@@ -5,7 +5,7 @@
 
   tasks:
   # START LOGGING TO DEPLOY.LOG FILE
-  - name: Output to deploy log file
+  - name: Post Start Health Check Script to Log
     lineinfile:
       path: "/home/cisco/deploy.log"
       line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router Health Check Script"
@@ -19,13 +19,13 @@
 
   - name: Conditional check if ping to leaf-1 failed
     block:
-      - name: Output to deploy log file
+      - name: Output to deploy log file leaf-1 status
         lineinfile:
           path: "/home/cisco/deploy.log"
           line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-1: Failed. Queued for rebuild."
           create: yes
 
-      - name: Print debug output
+      - name: Print debug output leaf-1 status
         debug:
           msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-1: Failed. Queued for rebuild."
 
@@ -38,7 +38,7 @@
 
   - name: Conditional check if ping to leaf-1 success
     block:
-      - name: Output to deploy log file
+      - name: Output to deploy log file leaf-1 status
         lineinfile:
           path: "/home/cisco/deploy.log"
           line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-1: Health Check Passed"
@@ -64,7 +64,7 @@
           line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-2: Failed. Queued for rebuild."
           create: yes
 
-      - name: Print debug output
+      - name: Print debug output leaf-2 status
         debug:
           msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-2: Failed. Queued for rebuild."
 
@@ -75,9 +75,9 @@
           
     when: (ping_result2.failed == true)
 
-  - name: Conditional check if ping to leaf-1 success
+  - name: Conditional check if ping to leaf-2 success
     block:
-      - name: Output to deploy log file
+      - name: Output to deploy log file  leaf-2 status
         lineinfile:
           path: "/home/cisco/deploy.log"
           line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-2: Health Check Passed."
