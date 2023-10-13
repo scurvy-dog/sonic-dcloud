@@ -1,23 +1,23 @@
-# ansible-playbook -i hosts vm-leaf-2-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+# ansible-playbook -i hosts linux-host-2-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
 
-- name: Try re-launching leaf-2
-  hosts: vm-leaf-2
+- name: Try re-launching sonic-rtr-leaf-2
+  hosts: linux-host-2
   become: true
   tasks:
     - name: run containerlab deploy to launch sonic vxr8000 nodes
-      command: sudo containerlab deploy -t vm-leaf-2/clab.yml"
+      command: sudo containerlab deploy -t linux-host-2/clab.yml"
       args:
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
       ignore_errors: yes
 
     - name: run vxlan shell script to interconnect containerlab nodes across VMs
-      command: "vm-leaf-2/vxlan.sh"
+      command: "linux-host-2/vxlan.sh"
       args:
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
       ignore_errors: yes
 
     - name: Wait for 'Router' to appear in logs
-      shell: docker logs -t {{ hostvars[vm-leaf-2]['container'] }} | grep Router
+      shell: docker logs -t {{ hostvars[linux-host-2]['container'] }} | grep Router
       register: grep_result
       until: grep_result.stdout_lines | length > 0
       retries: 18  # Number of times to retry
@@ -26,7 +26,7 @@
       
     - name: Save grep output to a local log file
       lineinfile:
-        path: "/home/cisco/leaf-2-deploy.log"
-        line: "vm-leaf-2 {{ grep_result.stdout }}"
+        path: "/home/cisco/sonic-rtr-leaf-2-deploy.log"
+        line: "linux-host-2 {{ grep_result.stdout }}"
         create: yes
       delegate_to: localhost

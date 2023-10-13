@@ -47,10 +47,10 @@ This lab is based on a simulated DC fabric design of four SONiC routers running 
 | VM Name        | Description                  | Device Type | Access Type |   IP Address    |
 |:---------------|:-----------------------------|:-----------:|:-----------:|:---------------:|
 | jumpbox        | File Staging                 | VM          | SSH         | 198.18.128.100  |
-| vm-leaf-1      | C8k Emulator + SONiC routers | VM          | SSH         | 198.18.128.101  |
-| vm-leaf-2      | C8k Emulator + SONiC routers | VM          | SSH         | 198.18.128.102  |
-| vm-spine-1     | C8k Emulator + SONiC routers | VM          | SSH         | 198.18.128.103  |
-| vm-spine-2     | C8k Emulator + SONiC routers | VM          | SSH         | 198.18.128.104  |
+| linux-host-1      | C8k Emulator + SONiC routers | VM          | SSH         | 198.18.128.101  |
+| linux-host-2      | C8k Emulator + SONiC routers | VM          | SSH         | 198.18.128.102  |
+| linux-host-3     | C8k Emulator + SONiC routers | VM          | SSH         | 198.18.128.103  |
+| linux-host-4     | C8k Emulator + SONiC routers | VM          | SSH         | 198.18.128.104  |
 | endpoint-1     | Ubuntu client                | VM          | SSH         | 198.18.128.105  |
 | endpoint-2     | Ubuntu client                | VM          | SSH         | 198.18.128.106  |
 
@@ -59,8 +59,8 @@ This lab is based on a simulated DC fabric design of four SONiC routers running 
 
 | Device Name    | Device Type | Access Type |   IP Address    |                                           
 |:---------------|:------------|:------------|:---------------:|                          
-| leaf-1         | router      | SSH         | 172.10.10.101   |
-| leaf-2         | router      | SSH         | 172.10.10.102   |
-| spine-1        | router      | SSH         | 172.10.10.103   |
-| spine-2        | router      | SSH         | 172.10.10.104   |
+| sonic-rtr-leaf-1         | router      | SSH         | 172.10.10.101   |
+| sonic-rtr-leaf-2         | router      | SSH         | 172.10.10.102   |
+| sonic-rtr-spine-1        | router      | SSH         | 172.10.10.103   |
+| sonic-rtr-spine-2        | router      | SSH         | 172.10.10.104   |
 

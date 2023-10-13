@@ -1,26 +1,26 @@
 ---
 
-# ansible-playbook -i hosts leaf-1-rebuild.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+# ansible-playbook -i hosts sonic-rtr-leaf-1-rebuild.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
 
-- name: Rebuild leaf-1 on failure to come up
-  hosts: vm-leaf-1
+- name: Rebuild sonic-rtr-leaf-1 on failure to come up
+  hosts: linux-host-1
   become: true
   tasks:
       
-    - name: run containerlab destroy command to destroy failed leaf-1
-      command: sudo containerlab destroy -t vm-leaf-1/clab.yml"
+    - name: run containerlab destroy command to destroy failed sonic-rtr-leaf-1
+      command: sudo containerlab destroy -t linux-host-1/clab.yml"
       args:
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
       ignore_errors: yes
 
-    - name: run containerlab deploy command to re-launch sonic vxr leaf-1
-      command: sudo containerlab deploy -t vm-leaf-1/clab.yml"
+    - name: run containerlab deploy command to re-launch sonic vxr sonic-rtr-leaf-1
+      command: sudo containerlab deploy -t linux-host-1/clab.yml"
       args:
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
       ignore_errors: yes
 
     - name: run vxlan shell script to interconnect containerlab nodes across VMs
-      command: "vm-leaf-1/vxlan.sh"
+      command: "linux-host-1/vxlan.sh"
       args:
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
       ignore_errors: yes
@@ -54,7 +54,7 @@
         create: yes
       delegate_to: localhost
 
-    - name: Ping test leaf-1
+    - name: Ping test sonic-rtr-leaf-1
       shell: ping -c 1 -W 5 172.10.10.101
       register: ping_result
       ignore_errors: true
@@ -67,7 +67,7 @@
     - name: Save grep output to a local log file
       lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "SONiC router Leaf-1 deployment failed. Restarting build."
+          line: "SONiC router sonic-rtr-leaf-1 deployment failed. Restarting build."
           create: yes
 
     - name: Test Ping Result Leaf 1

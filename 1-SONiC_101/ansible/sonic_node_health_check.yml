@@ -11,159 +11,159 @@
       line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router Health Check Script"
       create: yes
       
-  # CHECK SONiC ROUTER LEAF-1 STATUS
-  - name: Ping test leaf-1
+  # CHECK SONiC ROUTER sonic-rtr-leaf-1 STATUS
+  - name: Ping test sonic-rtr-leaf-1
     shell: ping -c 1 -W 5 172.10.10.101
     register: ping_result1
     ignore_errors: true
 
-  - name: Conditional check if ping to leaf-1 failed
+  - name: Conditional check if ping to sonic-rtr-leaf-1 failed
     block:
-      - name: Output to deploy log file leaf-1 status
+      - name: Output to deploy log file sonic-rtr-leaf-1 status
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-1: Failed. Queued for rebuild."
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-1: Failed. Queued for rebuild."
           create: yes
 
-      - name: Print debug output leaf-1 status
+      - name: Print debug output sonic-rtr-leaf-1 status
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-1: Failed. Queued for rebuild."
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-1: Failed. Queued for rebuild."
 
-      - name: Add vm-leaf-1 to host group sonic_node_rebuild
+      - name: Add linux-host-1 to host group sonic_node_rebuild
         add_host:
           name: '198.18.128.101'
           groups: sonic_node_rebuild
 
     when: (ping_result1.failed == true)
 
-  - name: Conditional check if ping to leaf-1 success
+  - name: Conditional check if ping to sonic-rtr-leaf-1 success
     block:
-      - name: Output to deploy log file leaf-1 status
+      - name: Output to deploy log file sonic-rtr-leaf-1 status
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-1: Health Check Passed"
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-1: Health Check Passed"
           create: yes
 
       - name: print debug
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-1: Health Check Passed"
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-1: Health Check Passed"
 
     when: (ping_result1.failed == false)
 
-  # CHECK SONiC ROUTER LEAF-2 STATUS
-  - name: Ping test leaf-2
+  # CHECK SONiC ROUTER sonic-rtr-leaf-2 STATUS
+  - name: Ping test sonic-rtr-leaf-2
     shell: ping -c 1 -W 5 172.10.10.102
     register: ping_result2
     ignore_errors: true
 
-  - name: Conditional check if ping to leaf-2 failed
+  - name: Conditional check if ping to sonic-rtr-leaf-2 failed
     block:
       - name: Output to deploy log file
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-2: Failed. Queued for rebuild."
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-2: Failed. Queued for rebuild."
           create: yes
 
-      - name: Print debug output leaf-2 status
+      - name: Print debug output sonic-rtr-leaf-2 status
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-2: Failed. Queued for rebuild."
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-2: Failed. Queued for rebuild."
 
-      - name: Add vm-leaf-2 to host group sonic_node_rebuild
+      - name: Add linux-host-2 to host group sonic_node_rebuild
         add_host:
           name: '198.18.128.102'
           groups: sonic_node_rebuild
           
     when: (ping_result2.failed == true)
 
-  - name: Conditional check if ping to leaf-2 success
+  - name: Conditional check if ping to sonic-rtr-leaf-2 success
     block:
-      - name: Output to deploy log file  leaf-2 status
+      - name: Output to deploy log file  sonic-rtr-leaf-2 status
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-2: Health Check Passed."
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-2: Health Check Passed."
           create: yes
 
       - name: print debug
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router leaf-2: Health Check Passed."
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-2: Health Check Passed."
 
     when: (ping_result2.failed == false)
 
-  # CHECK SONiC ROUTER SPINE-1 STATUS
-  - name: Ping test spine-1
+  # CHECK SONiC ROUTER sonic-rtr-spine-1 STATUS
+  - name: Ping test sonic-rtr-spine-1
     shell: ping -c 1 -W 5 172.10.10.103
     register: ping_result3
     ignore_errors: true
 
-  - name: Conditional check if ping to spine-1 failed
+  - name: Conditional check if ping to sonic-rtr-spine-1 failed
     block:
-      - name: Output to deploy log file spine-1 status
+      - name: Output to deploy log file sonic-rtr-spine-1 status
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-1: Failed. Queued for rebuild."
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-1: Failed. Queued for rebuild."
           create: yes
 
-      - name: Print debug output spine-1 status
+      - name: Print debug output sonic-rtr-spine-1 status
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-1: Failed. Queued for rebuild."
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-1: Failed. Queued for rebuild."
 
-      - name: Add vm-spine-1 to host group sonic_node_rebuild
+      - name: Add linux-host-3 to host group sonic_node_rebuild
         add_host:
           name: '198.18.128.103'
           groups: sonic_node_rebuild
 
     when: (ping_result3.failed == true)
 
-  - name: Conditional check if ping to spine-1 success
+  - name: Conditional check if ping to sonic-rtr-spine-1 success
     block:
-      - name: Output to deploy log file spine-1 status
+      - name: Output to deploy log file sonic-rtr-spine-1 status
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-1: Health Check Passed."
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-1: Health Check Passed."
           create: yes
 
       - name: print debug
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-1: Health Check Passed."
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-1: Health Check Passed."
 
     when: (ping_result3.failed == false)
 
-  # CHECK SONiC ROUTER SPINE-2 STATUS
-  - name: Ping test spine-2
+  # CHECK SONiC ROUTER sonic-rtr-spine-2 STATUS
+  - name: Ping test sonic-rtr-spine-2
     shell: ping -c 1 -W 5 172.10.10.104
     register: ping_result4
     ignore_errors: true
 
-  - name: Conditional check if ping to spine-2 failed
+  - name: Conditional check if ping to sonic-rtr-spine-2 failed
     block:
-      - name: Output to deploy log file spine-2 status
+      - name: Output to deploy log file sonic-rtr-spine-2 status
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-2: Failed. Queued for rebuild."
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-2: Failed. Queued for rebuild."
           create: yes
 
-      - name: Print debug output spine-2 status
+      - name: Print debug output sonic-rtr-spine-2 status
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-2: Failed. Queued for rebuild."
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-2: Failed. Queued for rebuild."
 
-      - name: Add vm-spine-2 to host group sonic_node_rebuild
+      - name: Add linux-host-4 to host group sonic_node_rebuild
         add_host:
           name: '198.18.128.104'
           groups: sonic_node_rebuild
 
     when: (ping_result4.failed == true)
 
-  - name: Conditional check if ping to spine-2 success
+  - name: Conditional check if ping to sonic-rtr-spine-2 success
     block:
-      - name: Output to deploy log file spine-2 status
+      - name: Output to deploy log file sonic-rtr-spine-2 status
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-2: Health Check Passed."
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-2: Health Check Passed."
           create: yes
 
       - name: print debug
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-2: Health Check Passed."
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-2: Health Check Passed."
 
     when: (ping_result4.failed == false)
 
@@ -175,21 +175,21 @@
   vars:
       sonic:
         198.18.128.101:
-          vm_name: vm-leaf-1
-          sonic_name: leaf-1
-          container_name: clab-c8101-sonic-leaf-1
+          vm_name: linux-host-1
+          sonic_name: sonic-rtr-leaf-1
+          container_name: clab-c8101-sonic-sonic-rtr-leaf-1
         198.18.128.102:
-          vm_name: vm-leaf-2
-          sonic_name: leaf-2
-          container_name: clab-c8101-sonic-leaf-2
+          vm_name: linux-host-2
+          sonic_name: sonic-rtr-leaf-2
+          container_name: clab-c8101-sonic-sonic-rtr-leaf-2
         198.18.128.103:
-          vm_name: vm-spine-1
-          sonic_name: spine-1
-          container_name: clab-c8101-sonic-spine-1
+          vm_name: linux-host-3
+          sonic_name: sonic-rtr-spine-1
+          container_name: clab-c8101-sonic-sonic-rtr-spine-1
         198.18.128.104:
-          vm_name: vm-spine-2
-          sonic_name: spine-2
-          container_name: clab-c8101-sonic-spine-2
+          vm_name: linux-host-4
+          sonic_name: sonic-rtr-spine-2
+          container_name: clab-c8101-sonic-sonic-rtr-spine-2
   tasks:
       
   # START REBUILD TASKS. SEND TO DEPLOY.LOG FILE

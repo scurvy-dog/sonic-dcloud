@@ -12,8 +12,8 @@
   import_playbook: lab_exercise_3-playbook.yml
   ignore_errors: yes
 
-- name: run leaf-1 playbook
-  import_playbook: other-playbooks/leaf-1-playbook.yml
+- name: run sonic-rtr-leaf-1 playbook
+  import_playbook: other-playbooks/sonic-rtr-leaf-1-playbook.yml
   ignore_errors: yes
 
 - name: run lab 5 "acl" playbook

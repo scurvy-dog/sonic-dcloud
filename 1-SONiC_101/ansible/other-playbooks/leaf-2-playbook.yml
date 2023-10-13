@@ -1,15 +1,15 @@
 ---
 
-# ansible-playbook -i hosts leaf-1-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+# ansible-playbook -i hosts sonic-rtr-leaf-1-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
 
-- name: Apply config_db.json and FRR config to leaf-2 and install nano
-  hosts: leaf-2
+- name: Apply config_db.json and FRR config to sonic-rtr-leaf-2 and install nano
+  hosts: sonic-rtr-leaf-2
   become: true
   tasks:
 
     - name: Copy config_db.json file
       copy:
-        src: "leaf-2/config_db.json"
+        src: "sonic-rtr-leaf-2/config_db.json"
         dest: "/etc/sonic/new_config_db.json"
         mode: 0644
 
@@ -28,7 +28,7 @@
 
     - name: Copy loopback shell script
       copy:
-        src: "leaf-2/loopback.sh"
+        src: "sonic-rtr-leaf-2/loopback.sh"
         dest: "/etc/sonic/loopback.sh"
         mode: 0755
 
@@ -69,7 +69,7 @@
 
     - name: Copy frr config files
       copy:
-        src: "leaf-2/frr.conf"
+        src: "sonic-rtr-leaf-2/frr.conf"
         dest: "/etc/sonic/frr/bgpd.conf"
         mode: 0644
 

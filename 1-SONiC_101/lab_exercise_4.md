@@ -23,12 +23,12 @@ The student upon completion of Lab Exercise 5 should have achieved the following
 
 ## Start BFD Daemon
 
-For the purposes of this lab we will enable BFD between *leaf-1* and *spine-1* on the port-channel interface connecting the two routers. See diagram below.
+For the purposes of this lab we will enable BFD between *sonic-rtr-leaf-1* and *sonic-rtr-spine-1* on the port-channel interface connecting the two routers. See diagram below.
 ![BFD diagram](./topo-drawings/bfd-overview.png)
 
-You will be manually configuring the BFD configurations on *leaf-1* and *spine-1*. 
+You will be manually configuring the BFD configurations on *sonic-rtr-leaf-1* and *sonic-rtr-spine-1*. 
 
-1.  SSH to leaf-1 and spine-1 and use docker exec to enable FRR's BFD daemon inside the 'bgp' container:
+1.  SSH to sonic-rtr-leaf-1 and sonic-rtr-spine-1 and use docker exec to enable FRR's BFD daemon inside the 'bgp' container:
 
 	```
 	docker exec -it bgp /usr/lib/frr/bfdd &
@@ -36,7 +36,7 @@ You will be manually configuring the BFD configurations on *leaf-1* and *spine-1
 
 	Example:
 	```
-	cisco@leaf-1:~$ docker exec -it bgp /usr/lib/frr/bfdd &
+	cisco@sonic-rtr-leaf-1:~$ docker exec -it bgp /usr/lib/frr/bfdd &
 	[1] 17877
 	```
 
@@ -47,7 +47,7 @@ You will be manually configuring the BFD configurations on *leaf-1* and *spine-1
 	```
 	Example output (don't worry about the "Stopped" message at the bottom, the daemon is running in the background):
 	```
-	cisco@leaf-1:~$ docker exec -it bgp ps -eaf
+	cisco@sonic-rtr-leaf-1:~$ docker exec -it bgp ps -eaf
 	UID          PID    PPID  C STIME TTY          TIME CMD
 	root           1       0  0 17:11 pts/0    00:00:01 /usr/bin/python3 /usr/local/bin/supervisord
 	root          26       1  0 17:11 pts/0    00:00:00 python3 /usr/bin/supervisor-proc-exit-listener --container-name bgp
@@ -65,12 +65,12 @@ You will be manually configuring the BFD configurations on *leaf-1* and *spine-1
 	```
 
 ### Configure BFD within FRR
-1. Login to *leaf-1* and then enter the FRR shell configuration mode
+1. Login to *sonic-rtr-leaf-1* and then enter the FRR shell configuration mode
    ```
    vtysh
    configure terminal
    ```
-2.  Configure BFD on *leaf-1*
+2.  Configure BFD on *sonic-rtr-leaf-1*
 	```
 	bfd
 	peer 10.1.1.1
@@ -79,12 +79,12 @@ You will be manually configuring the BFD configurations on *leaf-1* and *spine-1
 	router bgp 65001
 	neighbor 10.1.1.1 bfd
 	```
-3. Login to *spine-1* and then enter the FRR shell configuration mode
+3. Login to *sonic-rtr-spine-1* and then enter the FRR shell configuration mode
    ```
    vtysh
    configure terminal
    ```
-4.  Configure BFD on *spine-1*
+4.  Configure BFD on *sonic-rtr-spine-1*
 	```
 	bfd
 	peer 10.1.1.0
@@ -94,12 +94,12 @@ You will be manually configuring the BFD configurations on *leaf-1* and *spine-1
 	neighbor 10.1.1.0 bfd
 	```
  
-5.  Verify BFD sessions from *leaf-1* using the below command. Look for the peer status message "Status: up:
+5.  Verify BFD sessions from *sonic-rtr-leaf-1* using the below command. Look for the peer status message "Status: up:
 	```
 	show bfd peer 10.1.1.1
 	```
 	```
-	leaf-1# show bfd peer 10.1.1.1
+	sonic-rtr-leaf-1# show bfd peer 10.1.1.1
 	BFD Peers:
 		peer 10.1.1.1 vrf default
 			ID: 2118180714
@@ -124,13 +124,13 @@ You will be manually configuring the BFD configurations on *leaf-1* and *spine-1
 	```
 
 6. You can also run tcpdump on SONiC's Ethernet interfaces to see the BFD packets coming in and out. We will utilize tcpdump on the PortChannel1 that we configured early in the exercise. BFD is utilizing UDP port 3784 so we will add that to our tcpdump filter.
-   SSH into SONiC router *leaf-1*
+   SSH into SONiC router *sonic-rtr-leaf-1*
    ```
    sudo tcpdump -ni PortChannel1 -vv udp port 3784 -c 4
    ```
    Example output:
    ```
-   cisco@leaf-1:~$ sudo tcpdump -ni PortChannel1 -vv udp port 3784 -c 3
+   cisco@sonic-rtr-leaf-1:~$ sudo tcpdump -ni PortChannel1 -vv udp port 3784 -c 3
    tcpdump: listening on Ethernet4, link-type EN10MB (Ethernet), snapshot length 262144 bytes
    18:39:23.206477 IP (tos 0xc0, ttl 255, id 42139, offset 0, flags [DF], proto UDP (17), length 52)
    10.1.1.1.49152 > 10.1.1.0.3784: [udp sum ok]

@@ -1,23 +1,23 @@
 [sonic_host_vms]
-vm-leaf-1 ansible_host=172.10.10.201
-vm-leaf-2 ansible_host=172.10.10.202
-vm-spine-1 ansible_host=172.10.10.203
-vm-spine-2 ansible_host=172.10.10.204
+linux-host-1 ansible_host=172.10.10.201
+linux-host-2 ansible_host=172.10.10.202
+linux-host-3 ansible_host=172.10.10.203
+linux-host-4 ansible_host=172.10.10.204
 
 [endpoint_vms]
 endpoint-1 ansible_host=198.18.128.105
 endpoint-2 ansible_host=198.18.128.106
 
 [sonic_routers]
-leaf-1 ansible_host=172.10.10.101
-leaf-2 ansible_host=172.10.10.102
-spine-1 ansible_host=172.10.10.103
-spine-2 ansible_host=172.10.10.104
+sonic-rtr-leaf-1 ansible_host=172.10.10.101
+sonic-rtr-leaf-2 ansible_host=172.10.10.102
+sonic-rtr-spine-1 ansible_host=172.10.10.103
+sonic-rtr-spine-2 ansible_host=172.10.10.104
 
 [sonic_router_subset]
-leaf-2 ansible_host=172.10.10.102
-spine-1 ansible_host=172.10.10.103
-spine-2 ansible_host=172.10.10.104
+sonic-rtr-leaf-2 ansible_host=172.10.10.102
+sonic-rtr-spine-1 ansible_host=172.10.10.103
+sonic-rtr-spine-2 ansible_host=172.10.10.104
 
 [sonic_routers:vars]
 config_file_name=config_db.json
