@@ -86,6 +86,11 @@
       retries: 18  # Number of times to retry
       delay: 30  # Delay between retries
       timeout: 600  # Maximum time to wait (in seconds) 
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ hostvars[inventory_hostname]['container'] }} {{ grep_result.stdout }}"
+        create: yes
+      delegate_to: localhost
       
     - name: Save grep output to a local log file
       become: false
