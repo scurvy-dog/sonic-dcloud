@@ -80,10 +80,11 @@
         minutes: 5
 
     - name: GREP - Wait for 'Router' message to appear in logs
-      shell: docker logs -t {{ hostvars[inventory_hostname]['container'] }} | grep Router
+      shell: docker logs -t {{ hostvars[inventory_hostname]['container'] }} | grep Router || true
       register: grep_result
       async: 720
       poll: 0
+      ignore_errors: yes
 
     - name: Wait for GREP of docker logs to complete
       #become: false
@@ -99,11 +100,13 @@
       become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ inventory_hostname }} {{ item.stdout }}"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ inventory_hostname }} {{ grep_result.stdout }}"
         create: yes
       with_items: "{{ job_result.results }}"
       delegate_to: localhost
       when: grep_result.stdout | length > 0
+      when: item.rc == 0  # Check the return code to determine if 'Router' was found
+
 
     # - name: Wait for 'Router up' or 'Router failed' message to appear in logs
     #   shell: docker logs -t {{ hostvars[inventory_hostname]['container'] }} | grep Router
