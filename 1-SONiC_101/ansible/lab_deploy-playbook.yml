@@ -75,9 +75,9 @@
         chdir: /home/cisco/
       ignore_errors: yes
 
-    - name: Pause for 5 minutes
+    - name: Pause for 6 minutes then start checking docker logs for SONiC router build status
       pause:
-        minutes: 5
+        minutes: 6
 
     - name: Wait for 'Router' to appear in logs
       shell: docker logs -t {{ hostvars[inventory_hostname]['container'] }} | grep Router
@@ -85,7 +85,7 @@
       until: grep_result.stdout_lines | length > 0
       retries: 18  # Number of times to retry
       delay: 30  # Delay between retries
-      timeout: 600  # Maximum time to wait (in seconds) 
+      timeout: 540  # Maximum time to wait (in seconds) 
       
     - name: Save grep output to a local log file
       become: false
