@@ -10,7 +10,7 @@
       become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}} :Start Container Lab Deploy Script"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Start Container Lab Deploy Script"
         create: yes
       delegate_to: localhost
       
@@ -34,11 +34,11 @@
       become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router hostvars[inventory_hostname]['sonic_rtr'] build start "
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ hostvars[inventory_hostname]['sonic_rtr'] }} build start "
         create: yes
       delegate_to: localhost
       
-    - name: run containerlab deploy to launch sonic vxr8000 nodes
+    - name: run containerlab deploy to launch sonic 8000 emulator nodes
       command: sudo containerlab deploy -t "{{ inventory_hostname }}/clab.yml"
       args:
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
@@ -76,7 +76,7 @@
       become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ hostvars[inventory_hostname]['container'] {{ grep_result.stdout }}"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ hostvars[inventory_hostname]['container'] }} {{ grep_result.stdout }}"
         create: yes
       delegate_to: localhost
 

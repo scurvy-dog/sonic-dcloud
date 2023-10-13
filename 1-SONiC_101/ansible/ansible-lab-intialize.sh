@@ -9,6 +9,6 @@ ansible-playbook -i /home/cisco/sonic-dcloud/1-SONiC_101/ansible/hosts -e "ansib
 
 sleep 5
 
-ansible-playbook sonic_node_health_check.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+ansible-playbook sonic_node_health_check.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv >> /home/cisco/.startup.log
 
 echo "starting ansible health check playbook"
