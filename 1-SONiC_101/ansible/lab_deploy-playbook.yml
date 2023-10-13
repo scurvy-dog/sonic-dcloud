@@ -77,7 +77,7 @@
 
     - name: Pause for 5 minutes
       pause:
-        minutes: 5
+        minutes: 2
 
     - name: GREP - Wait for 'Router' message to appear in logs
       shell: docker logs -t {{ hostvars[inventory_hostname]['container'] }} | grep Router || true
@@ -104,8 +104,8 @@
         create: yes
       with_items: "{{ job_result.results }}"
       delegate_to: localhost
-      when: grep_result.stdout | length > 0
-      when: item.rc == 0  # Check the return code to determine if 'Router' was found
+      #when: grep_result.stdout | length > 0
+      when: grep_result.rc == 0  # Check the return code to determine if 'Router' was found
 
 
     # - name: Wait for 'Router up' or 'Router failed' message to appear in logs
