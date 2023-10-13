@@ -17,16 +17,16 @@ topology:
 
   nodes:
 
-    spine-2:
+    sonic-rtr-spine-2:
       kind: linux
       mgmt_ipv4: 172.10.10.104
 
   links:
 
-    - endpoints: ["spine-2:eth1", "host:spine-2-eth1"]
-    - endpoints: ["spine-2:eth2", "host:spine-2-eth2"]
+    - endpoints: ["sonic-rtr-spine-2:eth1", "host:sonic-rtr-spine-2-eth1"]
+    - endpoints: ["sonic-rtr-spine-2:eth2", "host:sonic-rtr-spine-2-eth2"]
 
-    - endpoints: ["spine-2:eth3", "host:spine-2-eth3"]
-    - endpoints: ["spine-2:eth4", "host:spine-2-eth4"]
+    - endpoints: ["sonic-rtr-spine-2:eth3", "host:sonic-rtr-spine-2-eth3"]
+    - endpoints: ["sonic-rtr-spine-2:eth4", "host:sonic-rtr-spine-2-eth4"]
 
 

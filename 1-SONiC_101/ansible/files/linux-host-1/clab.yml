@@ -17,7 +17,7 @@ topology:
 
   nodes:
 
-    leaf-1:
+    sonic-rtr-leaf-1:
       kind: linux
       mgmt_ipv4: 172.10.10.101
 
@@ -26,11 +26,11 @@ topology:
 
   links:
 
-    - endpoints: ["leaf-1:eth1", "host:leaf-1-eth1"]
-    - endpoints: ["leaf-1:eth2", "host:leaf-1-eth2"]
+    - endpoints: ["sonic-rtr-leaf-1:eth1", "host:sonic-rtr-leaf-1-eth1"]
+    - endpoints: ["sonic-rtr-leaf-1:eth2", "host:sonic-rtr-leaf-1-eth2"]
 
-    - endpoints: ["leaf-1:eth3", "host:leaf-1-eth3"]
-    - endpoints: ["leaf-1:eth4", "host:leaf-1-eth4"]
+    - endpoints: ["sonic-rtr-leaf-1:eth3", "host:sonic-rtr-leaf-1-eth3"]
+    - endpoints: ["sonic-rtr-leaf-1:eth4", "host:sonic-rtr-leaf-1-eth4"]
 
-    - endpoints: ["leaf-1:eth9", "sonic_e32:leaf-1-eth9"]
+    - endpoints: ["sonic-rtr-leaf-1:eth9", "sonic_e32:sonic-rtr-leaf-1-eth9"]
 
