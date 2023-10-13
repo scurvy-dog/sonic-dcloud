@@ -97,13 +97,13 @@
 
   - name: Conditional check if ping to spine-1 failed
     block:
-      - name: Output to deploy log file
+      - name: Output to deploy log file spine-1 status
         lineinfile:
           path: "/home/cisco/deploy.log"
           line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-1: Failed. Queued for rebuild."
           create: yes
 
-      - name: Print debug output
+      - name: Print debug output spine-1 status
         debug:
           msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-1: Failed. Queued for rebuild."
 
@@ -116,7 +116,7 @@
 
   - name: Conditional check if ping to spine-1 success
     block:
-      - name: Output to deploy log file
+      - name: Output to deploy log file spine-1 status
         lineinfile:
           path: "/home/cisco/deploy.log"
           line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-1: Health Check Passed."
@@ -136,13 +136,13 @@
 
   - name: Conditional check if ping to spine-2 failed
     block:
-      - name: Output to deploy log file
+      - name: Output to deploy log file spine-2 status
         lineinfile:
           path: "/home/cisco/deploy.log"
           line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-2: Failed. Queued for rebuild."
           create: yes
 
-      - name: Print debug output
+      - name: Print debug output spine-2 status
         debug:
           msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-2: Failed. Queued for rebuild."
 
@@ -155,7 +155,7 @@
 
   - name: Conditional check if ping to spine-2 success
     block:
-      - name: Output to deploy log file
+      - name: Output to deploy log file spine-2 status
         lineinfile:
           path: "/home/cisco/deploy.log"
           line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router spine-2: Health Check Passed."
