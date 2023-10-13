@@ -82,7 +82,7 @@
     - name: Wait for 'Router up' or 'Router failed' message to appear in logs
       shell: docker logs -t {{ hostvars[inventory_hostname]['container'] }} | grep Router
       register: grep_result
-      until: grep_result.stdout_lines | length > 0
+      #until: grep_result.stdout_lines | length > 0
       async: 720
       poll: 0
       
