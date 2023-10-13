@@ -77,7 +77,7 @@
 
     - name: Pause for 5 minutes
       pause:
-        minutes: 5
+        minutes: 1
 
     - name: Wait for 'Router up' or 'Router failed' message to appear in logs
       shell: docker logs -t {{ hostvars[inventory_hostname]['container'] }} | grep Router
