@@ -80,12 +80,12 @@
       - name: Output to deploy log file  sonic-rtr-leaf-2 status
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-2: Health Check Passed."
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-2: Health Check Passed"
           create: yes
 
       - name: print debug
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-2: Health Check Passed."
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-2: Health Check Passed"
 
     when: (ping_result2.failed == false)
 
