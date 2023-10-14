@@ -95,3 +95,4 @@ cisco@jumpbox:~$ cat deploy.log
 If all 4 SONiC nodes have come up and passed health check you may proceed to [lab_exercise_1](lab_exercise_1.md)
 
 In some cases a SONiC node fails to successfully build. When this happens the deploy playbook triggers a rebuild process on the failed node. The rebuild will take another 10-12 minutes, so you may begin exercise 1 while also monitoring the rebuilding node in the deploy logs.
+
