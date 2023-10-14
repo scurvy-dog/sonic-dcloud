@@ -93,9 +93,9 @@
       become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ inventory_hostname }} {{ item.stdout }}"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ inventory_hostname }} {{ grep_result.stdout }}"
         create: yes
-      with_items: "{{ job_result.results }}"
+      #with_items: "{{ job_result.results }}"
       delegate_to: localhost
 
 - name: run health check playbook
