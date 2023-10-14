@@ -15,7 +15,7 @@ In Exercise 2 the student will explore the SONiC network operating system, its c
       - [Edit Configuration Through CLI](#edit-configuration-through-cli)
       - [FRR Configuration Management](#frr-configuration-management)
   - [Ansible Automation](#ansible-automation)
-  - [Configure Leaf-1 with SONiC CLI](#configure-leaf-1-with-sonic-cli)
+  - [Configure sonic-rtr-leaf-1 with SONiC CLI](#configure-sonic-rtr-leaf-1-with-sonic-cli)
   - [Network Connectivity](#network-connectivity)
   - [End of Lab Exercise 2](#end-of-lab-exercise-2)
   
@@ -63,7 +63,7 @@ You can see the list of the running containers with SONiC by running the below c
 docker ps
 ```
 ```
-cisco@leaf-1:~$ docker ps
+cisco@sonic-rtr-leaf-1:~$ docker ps
 CONTAINER ID   IMAGE                                COMMAND                  CREATED       STATUS       PORTS     NAMES
 d3dec180edf1   docker-sonic-telemetry:latest        "/usr/local/bin/supe…"   7 hours ago   Up 3 hours             telemetry
 73408f13ba26   docker-snmp:latest                   "/usr/local/bin/supe…"   7 hours ago   Up 3 hours             snmp
@@ -99,7 +99,7 @@ config load [-y|--yes] [<filename>]
 ```
 - Example:
 ```
-cisco@spine-1:~$ sudo config load
+cisco@sonic-rtr-spine-1:~$ sudo config load
 Load config from the file /etc/sonic/config_db.json? [y/N]: y
 Running command: /usr/local/bin/sonic-cfggen -j /etc/sonic/config_db.json --write-to-db
 ```
@@ -118,7 +118,7 @@ config reload [-y|--yes] [-l|--load-sysinfo] [<filename>] [-n|--no-service-resta
 ```
 - Example:
 ```
-cisco@spine-1~$ sudo config reload
+cisco@sonic-rtr-spine-1~$ sudo config reload
 Clear current config and reload config from the file /etc/sonic/config_db.json? [y/N]: y
 Running command: systemctl stop dhcp_relay
 Running command: systemctl stop swss
@@ -149,19 +149,19 @@ config save [-y|--yes] [<filename>]
 - Example (Save configuration to /etc/sonic/config_db.json):
 
 ```
-cisco@spine-1:~$ sudo config save -y
+cisco@sonic-rtr-spine-1:~$ sudo config save -y
 ```
 
 - Example (Save configuration to a specified file):
 ```
-cisco@spine-1:~$ sudo config save -y /etc/sonic/config2.json
+cisco@sonic-rtr-spine-1:~$ sudo config save -y /etc/sonic/config2.json
 ```
 
 #### Edit Configuration Through CLI
 
 Configuration management is also possible through the SONiC CLI. From the SONiC command prompt enter *config* and the command syntax needed. 
 ```
-cisco@leaf-1:~$ config -?
+cisco@sonic-rtr-leaf-1:~$ config -?
 Usage: config [OPTIONS] COMMAND [ARGS]...
 
   SONiC command line - 'config' command
@@ -213,43 +213,43 @@ There are several relevant files for our ansible playbook
    ```
    cd  ~/sonic-dcloud/1-SONiC_101/ansible/ 
    ```
-3. Run the lab_exercise_2 Ansible playbook to copy global and interface configurations to leaf-2, spine-1, and spine-2 routers. Once copied the playbook will then load and save configurations. The playbook will load a subset of configuration to leaf-1.
+3. Run the lab_exercise_2 Ansible playbook to copy global and interface configurations to sonic-rtr-leaf-2, sonic-rtr-spine-1, and sonic-rtr-spine-2 routers. Once copied the playbook will then load and save configurations. The playbook will load a subset of configuration to sonic-rtr-leaf-1.
 
    ```
    ansible-playbook -i hosts lab_exercise_2-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
    ```
    
    > [!IMPORTANT]
-   > Ansible playbook configured router *spine-1*, *spine-2*, and *leaf-2*. You will manually configure router *leaf-1* later in this lab.
+   > Ansible playbook configured router *sonic-rtr-spine-1*, *sonic-rtr-spine-2*, and *sonic-rtr-leaf-2*. You will manually configure router *sonic-rtr-leaf-1* later in this lab.
    >
 
    You should expect a large amount of output from ansible but, at the end of logs look for the following output
    ```
    PLAY RECAP
    ***************************************************************************************************************************************
-   leaf-1               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-   leaf-2               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-   spine-1              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-   spine-2              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+   sonic-rtr-leaf-1               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+   sonic-rtr-leaf-2               : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+   sonic-rtr-spine-1              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+   sonic-rtr-spine-2              : ok=7    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
    ```
 
-## Configure Leaf-1 with SONiC CLI
+## Configure sonic-rtr-leaf-1 with SONiC CLI
 
-1. Log into SONiC router *leaf-1*
+1. Log into SONiC router *sonic-rtr-leaf-1*
    ```
    ssh cisco@172.10.10.101
-   ssh cisco@leaf-1
+   ssh cisco@sonic-rtr-leaf-1
    ```
 2. Configure *Loopback0* and add IPv4 and IPv6
    ```
    sudo config interface ip add Loopback0 10.0.0.1/32
    sudo config interface ip add Loopback0 fc00:0:1::1/128
    ```
-3. Configure Ethernet interface from *leaf-1* to *endpoint01*
+3. Configure Ethernet interface from *sonic-rtr-leaf-1* to *endpoint01*
    ```
    sudo config interface ip add Ethernet32 198.18.11.1/24
    ```
-4. Create Port Channels to *spine-1* and *spine-2*
+4. Create Port Channels to *sonic-rtr-spine-1* and *sonic-rtr-spine-2*
    ```
    sudo config portchannel add PortChannel1
    sudo config portchannel add PortChannel2
@@ -313,21 +313,21 @@ To check on interface status and connectivity follow these steps on each router 
   ```
 
   ```
-  cisco@leaf-1:~$  show lldp table
+  cisco@sonic-rtr-leaf-1:~$  show lldp table
   Capability codes: (R) Router, (B) Bridge, (O) Other
   LocalPort    RemoteDevice    RemotePortID    Capability    RemotePortDescr
   -----------  --------------  --------------  ------------  -----------------
-  Ethernet0    spine-1         etp0            BR            Ethernet0
-  Ethernet4    spine-1         etp1            BR            Ethernet4
-  Ethernet8    spine-2         etp2            BR            Ethernet8
-  Ethernet12   spine-2         etp3            BR            Ethernet12
+  Ethernet0    sonic-rtr-spine-1         etp0            BR            Ethernet0
+  Ethernet4    sonic-rtr-spine-1         etp1            BR            Ethernet4
+  Ethernet8    sonic-rtr-spine-2         etp2            BR            Ethernet8
+  Ethernet12   sonic-rtr-spine-2         etp3            BR            Ethernet12
   --------------------------------------------------
   Total entries displayed:  4
-  cisco@leaf-1:~$ 
+  cisco@sonic-rtr-leaf-1:~$ 
   ```
 
 **PORT CHANNELS**
-- Example below is for *leaf-1* and  shows the relevant section of the running configuration. Port Channel configuration in the running configuration has three parts.
+- Example below is for *sonic-rtr-leaf-1* and  shows the relevant section of the running configuration. Port Channel configuration in the running configuration has three parts.
 - 1. Port channel definitions
   2. Port channel IP information
   3. Port channel member links
@@ -369,14 +369,14 @@ To check on interface status and connectivity follow these steps on each router 
    ```
    
    ```
-   cisco@leaf-1:~$ show interface portchannel
+   cisco@sonic-rtr-leaf-1:~$ show interface portchannel
    Flags: A - active, I - inactive, Up - up, Dw - Down, N/A - not available,
           S - selected, D - deselected, * - not synced
    No.  Team Dev      Protocol     Ports
    -----  ------------  -----------  ---------------------------
       1  PortChannel1  LACP(A)(Up)  Ethernet0(S) Ethernet4(S)   <------ See LADP status Active
       2  PortChannel2  LACP(A)(Up)  Ethernet8(S) Ethernet12(S)
-   cisco@leaf-1:~$     
+   cisco@sonic-rtr-leaf-1:~$     
    ```
 
 **IP Adjaceny**
@@ -389,7 +389,7 @@ To check on interface status and connectivity follow these steps on each router 
   show ip interfaces
   ```
   ```
-  cisco@leaf-1:~$ show ip interfaces
+  cisco@sonic-rtr-leaf-1:~$ show ip interfaces
   Interface     Master    IPv4 address/mask    Admin/Oper    BGP Neighbor    Neighbor IP
   ------------  --------  -------------------  ------------  --------------  -------------
   Ethernet32              198.18.11.1/24       up/up         N/A             N/A
@@ -400,12 +400,12 @@ To check on interface status and connectivity follow these steps on each router 
   eth0                    172.10.10.201/24     up/up         N/A             N/A
   eth4                    192.168.123.188/24   up/up         N/A             N/A
   lo                      127.0.0.1/16         up/up         N/A             N/A
-  cisco@leaf-1:~$ 
+  cisco@sonic-rtr-leaf-1:~$ 
   ```
 
 - Ping the adjacent IP for the routed linnks
   ```
-  cisco@leaf-1:~$ ping 10.1.1.1
+  cisco@sonic-rtr-leaf-1:~$ ping 10.1.1.1
   PING 10.1.1.1 (10.1.1.1) 56(84) bytes of data.
   64 bytes from 10.1.1.1: icmp_seq=1 ttl=64 time=280 ms
   64 bytes from 10.1.1.1: icmp_seq=2 ttl=64 time=144 ms
@@ -413,7 +413,7 @@ To check on interface status and connectivity follow these steps on each router 
   --- 10.1.1.1 ping statistics ---
   2 packets transmitted, 2 received, 0% packet loss, time 1001ms
   rtt min/avg/max/mdev = 143.566/211.937/280.309/68.371 ms
-  cisco@leaf-1:~$ ping 10.1.1.3
+  cisco@sonic-rtr-leaf-1:~$ ping 10.1.1.3
   PING 10.1.1.3 (10.1.1.3) 56(84) bytes of data.
   64 bytes from 10.1.1.3: icmp_seq=1 ttl=64 time=100 ms
   64 bytes from 10.1.1.3: icmp_seq=2 ttl=64 time=249 ms
@@ -421,7 +421,7 @@ To check on interface status and connectivity follow these steps on each router 
   --- 10.1.1.3 ping statistics ---
   3 packets transmitted, 3 received, 0% packet loss, time 2003ms
   rtt min/avg/max/mdev = 100.222/156.657/249.050/65.864 ms
-  cisco@leaf-1:~$ 
+  cisco@sonic-rtr-leaf-1:~$ 
   ```
 **Congratulations you have successfully completed Lab Exercise 2. We are now ready to configure routing protocols.**
 

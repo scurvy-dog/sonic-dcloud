@@ -4,7 +4,7 @@
             "hwsku": "32x100Gb",
             "platform": "x86_64-8201_32fh_o-r0",
             "mac": "52:54:00:74:c1:04",
-            "hostname": "spine-2",
+            "hostname": "sonic-rtr-spine-2",
             "type": "LeafRouter",
             "docker_routing_config_mode": "split"
         }

@@ -13,10 +13,10 @@ There are two potential scenarioes where trouble may happen with the SONiC node.
 
      | Host name  | IP Address     |
      |:-----------|:---------------|
-     | vm-leaf-1  | 198.18.128.101 |
-     | vm-leaf-2  | 198.18.128.102 |
-     | vm-spine-1 | 198.18.128.103 |
-     | vm-spine-2 | 198.18.128.104 |
+     | linux-host-1  | 198.18.128.101 |
+     | linux-host-2  | 198.18.128.102 |
+     | linux-host-3 | 198.18.128.103 |
+     | linux-host-4 | 198.18.128.104 |
 
 2. Determine the local SONiC/8000 container's name:
    ```
@@ -24,10 +24,10 @@ There are two potential scenarioes where trouble may happen with the SONiC node.
    ```
    Example output:
    ```
-   cisco@vm-spine-2:~$ docker ps
+   cisco@linux-host-4:~$ docker ps
    CONTAINER ID   IMAGE                 COMMAND                  CREATED          STATUS          PORTS     NAMES
-   d1861990e9a8   c8000-clab-sonic:31   "/etc/prepEnv.sh /no…"   21 minutes ago   Up 21 minutes             clab-c8101-sonic-spine-2
-   cisco@vm-spine-2:~$
+   d1861990e9a8   c8000-clab-sonic:31   "/etc/prepEnv.sh /no…"   21 minutes ago   Up 21 minutes             clab-c8101-sonic-sonic-rtr-spine-2
+   cisco@linux-host-4:~$
    ```
 
 3. Access the docker container through an exec shell:
@@ -36,7 +36,7 @@ There are two potential scenarioes where trouble may happen with the SONiC node.
    ```
    Example:
    ```
-   docker exec -it clab-c8101-sonic-spine-2 bash
+   docker exec -it clab-c8101-sonic-sonic-rtr-spine-2 bash
    ```
 
 4. change directory into 'nobackup'
@@ -46,12 +46,12 @@ There are two potential scenarioes where trouble may happen with the SONiC node.
 
 5. Run the startup.sh shell script as follows:
 
-   If *leaf-1* or *leaf-2* failed:
+   If *sonic-rtr-leaf-1* or *sonic-rtr-leaf-2* failed:
    ```
    ./startup.sh 8000.yaml 5
    ```
 
-   if *spine-1* or *spine-2* failed:
+   if *sonic-rtr-spine-1* or *sonic-rtr-spine-2* failed:
    ```
    ./startup.sh 8000.yaml 4
    ```
@@ -60,9 +60,9 @@ There are two potential scenarioes where trouble may happen with the SONiC node.
 
    Truncated example output:
    ```
-   cisco@spine-2:~$ docker exec -it  clab-c8101-sonic-spine-2 bash
-   root@spine-2:/# cd nobackup/
-   root@spine-2:/nobackup# ./startup.sh 8000.yaml 4
+   cisco@sonic-rtr-spine-2:~$ docker exec -it  clab-c8101-sonic-sonic-rtr-spine-2 bash
+   root@sonic-rtr-spine-2:/# cd nobackup/
+   root@sonic-rtr-spine-2:/nobackup# ./startup.sh 8000.yaml 4
    Invoking /nobackup/startup.py 8000.yaml 4 4
    ['/nobackup/startup.py', '8000.yaml', '4', '4']
    MGMT_IP: 172.10.10.104  MASK: 255.255.255.0  GATEWAY: 172.10.10.1

@@ -1,8 +1,8 @@
 [sonic_nodes]
-spine-1 ansible_host=172.10.10.203
-spine-2 ansible_host=172.10.10.204
-leaf-1 ansible_host=172.10.10.201
-leaf-2 ansible_host=172.10.10.202
+sonic-rtr-spine-1 ansible_host=172.10.10.203
+sonic-rtr-spine-2 ansible_host=172.10.10.204
+sonic-rtr-leaf-1 ansible_host=172.10.10.201
+sonic-rtr-leaf-2 ansible_host=172.10.10.202
 
 [sonic_nodes:vars]
 config_file_name=config_db.json

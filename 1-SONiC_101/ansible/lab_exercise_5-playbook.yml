@@ -2,20 +2,20 @@
 
 # ansible-playbook -i hosts lab_exercise_5-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
 
-- name: Apply config_db.json and FRR config to leaf-1 and install nano
-  hosts: leaf-1
+- name: Apply config_db.json and FRR config to sonic-rtr-leaf-1 and install nano
+  hosts: sonic-rtr-leaf-1
   become: true
   tasks:
 
     - name: Copy acl json files
       copy:
-        src: "leaf-1/eth32_acl_table.json"
+        src: "sonic-rtr-leaf-1/eth32_acl_table.json"
         dest: "/home/cisco/eth32_acl_table.json"
         mode: 0644
         
     - name: Copy acl json files
       copy:
-        src: "leaf-1/acl_ep1_ingress.json"
+        src: "sonic-rtr-leaf-1/acl_ep1_ingress.json"
         dest: "/home/cisco/acl_ep1_ingress.json"
         mode: 0644
 

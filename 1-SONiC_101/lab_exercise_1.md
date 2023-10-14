@@ -1,7 +1,7 @@
 # SONiC 101 - Exercise 1: SONiC Topology Setup and Validation [30 Min]
 
 ### Description: 
-In Exercise 1 we will explore the host-VM virtualization environment and log into the SONiC router nodes and perform some system validation. The 4-node setup in Lab 1 will be used in all subsequent lab exercises. 
+In Exercise 1 we will explore the linux-host VM virtualization environment and log into the SONiC router nodes and perform some system validation. The 4-node setup in Lab 1 will be used in all subsequent lab exercises. 
 
 ## Contents
 - [SONiC 101 - Exercise 1: SONiC Topology Setup and Validation \[30 Min\]](#sonic-101---exercise-1-sonic-topology-setup-and-validation-30-min)
@@ -54,16 +54,16 @@ Please see the management topology network diagram below. Table-1 below lists th
 | Host name  | IP Address     | Description               |
 |:-----------|:---------------|:--------------------------|
 | jumpbox    | 198.18.128.100 | Hosts ansible scripts     |
-| vm-leaf-1  | 198.18.128.101 | Hosts sonic router leaf-1 |
-| vm-leaf-2  | 198.18.128.102 | Hosts sonic router leaf-1 |
-| vm-spine-1 | 198.18.128.103 | Hosts sonic router leaf-1 |
-| vm-spine-2 | 198.18.128.104 | Hosts sonic router leaf-1 |
+| linux-host-1  | 198.18.128.101 | Hosts sonic router sonic-rtr-leaf-1 |
+| linux-host-2  | 198.18.128.102 | Hosts sonic router sonic-rtr-leaf-1 |
+| linux-host-3 | 198.18.128.103 | Hosts sonic router sonic-rtr-leaf-1 |
+| linux-host-4 | 198.18.128.104 | Hosts sonic router sonic-rtr-leaf-1 |
 | endpoint-1 | 198.18.128.105 | VM used for testing       |
 | endpoint-2 | 198.18.128.106 | VM used for testing       |
-| leaf-1     | 172.10.10.101  | SONiC Router leaf-1       |
-| leaf-2     | 172.10.10.102  | SONiC Router leaf-2       |
-| spine-1    | 172.10.10.103  | SONiC Router spine-1      |
-| spine-2    | 172.10.10.104  | SONiC Router spine-2      |
+| sonic-rtr-leaf-1     | 172.10.10.101  | SONiC Router sonic-rtr-leaf-1       |
+| sonic-rtr-leaf-2     | 172.10.10.102  | SONiC Router sonic-rtr-leaf-2       |
+| sonic-rtr-spine-1    | 172.10.10.103  | SONiC Router sonic-rtr-spine-1      |
+| sonic-rtr-spine-2    | 172.10.10.104  | SONiC Router sonic-rtr-spine-2      |
 
 ### User Credentials
 For the host VMs use the following credentials:
@@ -86,7 +86,7 @@ All documentation and scripts used in this lab are cloned to the cisco user home
 ```
 
 ## Check Build Scripts
-This lab uses Ansible as the automation tool once the host vms have spun up. There is an Ansible script that runs at dCloud Lab startup that kicks off the Containerlab build process on each of the SONiC host-vms (vm-leaf-1, vm-leaf-2, vm-spine-1, vm-spine-2). The Containerlab/SONiC build script takes about 12-15 minutes to run after dCloud startup, so grab a cup of coffee and check in around 15 minutes after dCloud says your lab is up. 
+This lab uses Ansible as the automation tool once the host vms have spun up. There is an Ansible script that runs at dCloud Lab startup that kicks off the Containerlab build process on each of the SONiC host-vms (linux-host-1, linux-host-2, linux-host-3, linux-host-4). The Containerlab/SONiC build script takes about 12-15 minutes to run after dCloud startup, so grab a cup of coffee and check in around 15 minutes after dCloud says your lab is up. 
 
 To validate that the build script completed successfully.
 
@@ -100,63 +100,63 @@ To validate that the build script completed successfully.
   	You should see output similar to
     ```
     cisco@jumpbox:~$ cat deploy.log 
-    vm-leaf-1 Router up
-    vm-spine-2 Router up
-    vm-spine-1 Router up
-    vm-leaf-2 Router up
+    linux-host-1 Router up
+    linux-host-4 Router up
+    linux-host-3 Router up
+    linux-host-2 Router up
     ```
 
 > [!IMPORTANT]
 If the output of deploy.log shows any of the nodes failing to come up, example:
 
 ```
-vm-leaf-2 2023-10-09T18:57:38.829294188Z Router failed to come up
+linux-host-2 2023-10-09T18:57:38.829294188Z Router failed to come up
 ```
 Then we'll need to manually launch the build script. Instructions to do so are:
 
-> [HERE](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/if_sonic_fails_to_launch.md)
+> [HERE](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/sonic_failed_to_launch.md)
 
 If all routers came up, then we may proceed to ping and connectivity checks:
 
   1. Ping each SONiC router management interface to see if the router has finished booting
      | Host name  | IP Address    |
      |:-----------|:--------------|
-     | leaf-1     | 172.10.10.101 |
-     | leaf-2     | 172.10.10.102 |
-     | spine-1    | 172.10.10.103 |
-     | spine-2    | 172.10.10.104 |
+     | sonic-rtr-leaf-1     | 172.10.10.101 |
+     | sonic-rtr-leaf-2     | 172.10.10.102 |
+     | sonic-rtr-spine-1    | 172.10.10.103 |
+     | sonic-rtr-spine-2    | 172.10.10.104 |
 
      ```
-     cisco@vsonic:~$ ping leaf-1
+     cisco@vsonic:~$ ping sonic-rtr-leaf-1
      PING leaf01 (172.10.10.101) 56(84) bytes of data.
-     64 bytes from leaf-1 (172.10.10.101): icmp_seq=1 ttl=64 time=0.480 ms
-     64 bytes from leaf-1 (172.10.10.101): icmp_seq=2 ttl=64 time=0.362 ms
+     64 bytes from sonic-rtr-leaf-1 (172.10.10.101): icmp_seq=1 ttl=64 time=0.480 ms
+     64 bytes from sonic-rtr-leaf-1 (172.10.10.101): icmp_seq=2 ttl=64 time=0.362 ms
      ```
 
 > [!NOTE]
 >  If SONiC router does not respond to ping. Follow these directions
 >
->1. SSH into the host-vm directly. That would be (vm-leaf-1,vm-leaf-2,vm-spine-1, vm-spine-2)
+>1. SSH into the host-vm directly. That would be (linux-host-1,linux-host-2,linux-host-3, linux-host-4)
 >   Example below
 >   ```
 >   Last login: Tue Oct 10 16:15:30 2023 from 10.16.81.3
->   cisco@vm-leaf-1:~$ 
+>   cisco@linux-host-1:~$ 
 >   ```
 >3. Find docker instance running the Cisco 8000 emulator and lookup the container name.
->   In the example below the Cisco 8000 Emulator container is named *clab-c8101-sonic-leaf-1*
+>   In the example below the Cisco 8000 Emulator container is named *clab-c8101-sonic-sonic-rtr-leaf-1*
 >   ```
->   cisco@vm-leaf-1:~$ docker ps
+>   cisco@linux-host-1:~$ docker ps
 >   CONTAINER ID   IMAGE                 COMMAND                  CREATED      STATUS      PORTS     NAMES
->   d1861990e9a8   c8000-clab-sonic:31   "/etc/prepEnv.sh /no…"   16 hours ago  Up 16 hours          clab-c8101-sonic-leaf-1
+>   d1861990e9a8   c8000-clab-sonic:31   "/etc/prepEnv.sh /no…"   16 hours ago  Up 16 hours          clab-c8101-sonic-sonic-rtr-leaf-1
 >   ```
 >3. Session into the docker container
 >   ```
->   cisco@vm-leaf-1:~$ docker exec -it clab-c8101-sonic-leaf-1 bash
->   root@leaf-1:/#
+>   cisco@linux-host-1:~$ docker exec -it clab-c8101-sonic-sonic-rtr-leaf-1 bash
+>   root@sonic-rtr-leaf-1:/#
 >   ``` 
 >4. Now access the SONiC console ( cisco / cisco123 )
 >   ```
->   root@leaf-1:~# telnet 0 60000
+>   root@sonic-rtr-leaf-1:~# telnet 0 60000
 >   Trying 0.0.0.0...
 >   Connected to 0.
 >   Escape character is '^]'.
@@ -177,10 +177,10 @@ If all routers came up, then we may proceed to ping and connectivity checks:
 
 Starting from the vsonic VM log into each router instance 1-4 per the management topology diagram above. Example:
 ```
-    ssh cisco@spine-1
-    ssh cisco@spine-2
-    ssh cisco@leaf-1
-    ssh cisco@leaf-2
+    ssh cisco@sonic-rtr-spine-1
+    ssh cisco@sonic-rtr-spine-2
+    ssh cisco@sonic-rtr-leaf-1
+    ssh cisco@sonic-rtr-leaf-2
     or
     ssh cisco@172.10.10.2
     ssh cisco@172.10.10.3

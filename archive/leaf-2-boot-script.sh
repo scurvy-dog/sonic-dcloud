@@ -28,4 +28,4 @@ ip route >> /home/cisco/util/boot-service.log
 # Start ContainerLab Environment
 
 
-# Create VXLAN Tunnels to Leaf-1 and Leaf-2
+# Create VXLAN Tunnels to sonic-rtr-leaf-1 and sonic-rtr-leaf-2

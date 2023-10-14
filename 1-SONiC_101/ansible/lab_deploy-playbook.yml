@@ -30,7 +30,7 @@
       delegate_to: localhost
       
 - name: Setup lab and deploy SONiC containerlab nodes
-  hosts: sonic_host_vms
+  hosts: linux_host_vms
   become: true
   tasks:
     - name: git pull to update repo on each VM
@@ -75,27 +75,21 @@
         chdir: /home/cisco/
       ignore_errors: yes
 
-    - name: Pause for 5 minutes
+    - name: Pause for 6 minutes then start checking docker logs for SONiC router build status
       pause:
-        minutes: 2
+        minutes: 6
+      become: false
+      delegate_to: localhost
 
     - name: GREP - Wait for 'Router' message to appear in logs
       shell: docker logs -t {{ hostvars[inventory_hostname]['container'] }} | grep Router || true
       register: grep_result
-      async: 720
-      poll: 0
-      ignore_errors: yes
-
-    - name: Wait for GREP of docker logs to complete
-      async_status:
-        jid: "{{ grep_result.ansible_job_id }}"
-      register: job_result
-      until: job_result.finished
-      retries: 24
-      delay: 30
-      delegate_to: localhost
-
-    - name: Save docker logs GREP output to jumpbox deploy.log file
+      until: grep_result.stdout_lines | length > 0
+      retries: 18  # Number of times to retry
+      delay: 30  # Delay between retries
+      timeout: 540  # Maximum time to wait (in seconds) 
+      
+    - name: Save grep output to a local log file
       become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
@@ -103,25 +97,6 @@
         create: yes
       with_items: "{{ job_result.results }}"
       delegate_to: localhost
-      when: item.rc == 0  # Check the return code to determine if 'Router' was found
-
-
-    # - name: Wait for 'Router up' or 'Router failed' message to appear in logs
-    #   shell: docker logs -t {{ hostvars[inventory_hostname]['container'] }} | grep Router
-    #   register: grep_result
-    #   until: grep_result.stdout_lines | length > 0
-    #   retries: 18  # Number of times to retry
-    #   delay: 30  # Delay between retries
-    #   timeout: 600  # Maximum time to wait (in seconds) 
-    #   delegate_to: localhost
-      
-    # - name: Save grep output to a local log file
-    #   become: false
-    #   lineinfile:
-    #     path: "/home/cisco/deploy.log"
-    #     line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ hostvars[inventory_hostname]['container'] }} {{ grep_result.stdout }}"
-    #     create: yes
-    #   delegate_to: localhost
 
 - name: run health check playbook
   import_playbook: sonic_node_health_check.yml

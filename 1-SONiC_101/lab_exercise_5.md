@@ -89,7 +89,7 @@ In this example set of code we want to set the following parameters through CLI 
 
 Example command help output
 ```
-cisco@leaf-2:~$ sudo config acl add table --help
+cisco@sonic-rtr-leaf-2:~$ sudo config acl add table --help
 Usage: config acl add table [OPTIONS] <table_name> <table_type>
 Add ACL table
     
@@ -111,7 +111,7 @@ sudo acl-loader show table
 
 Example output.
 ```
-cisco@leaf-2:~$ sudo acl-loader show table
+cisco@sonic-rtr-leaf-2:~$ sudo acl-loader show table
 Name       Type    Binding     Description                        Stage    Status
 ---------  ------  ----------  ---------------------------------  -------  --------
 ICMP_DROP  L3      Ethernet32  BLock ICMP traffic from Endpoint2  ingress  Active
@@ -150,7 +150,7 @@ sudo config acl remove table ICMP_DROP
 ```
 
 ## ACL Rules
-ACL Rules contain the detail step by step policy that is implemented by the tables. ACL Rule structure will identify which ACL Table they should be joined to. ACL Rules can only be defined using JSON and have no CLI option. We will show a basic ACL Rule used to block ICMP traffic coming from Endpoint-2 to *Loopback 0* on Leaf-2
+ACL Rules contain the detail step by step policy that is implemented by the tables. ACL Rule structure will identify which ACL Table they should be joined to. ACL Rules can only be defined using JSON and have no CLI option. We will show a basic ACL Rule used to block ICMP traffic coming from Endpoint-2 to *Loopback 0* on sonic-rtr-leaf-2
 
 ### ACL Rule Parameters
 ACL rule sets have a much larger parameter set than tables due to the complex nature of the ACL match option combinations. There are over 30 plus parameters list in the table below. In this lab we will use 2-3 as examples.
@@ -267,12 +267,12 @@ sudo config acl update full acl-wipe.json
 Below are two basic ACLs to show how to apply and check ACL effectivness 
 
 ### Example 1 - Match IP Protocol and DROP ICMP
-In this example we will block ICMP traffic sourced from *endpoint-1* to SONiC router *leaf-1* *loopback 0* interface.
-We will need to apply the ACL to the *Ethernet 32* interface of *leaf-1*.
+In this example we will block ICMP traffic sourced from *endpoint-1* to SONiC router *sonic-rtr-leaf-1* *loopback 0* interface.
+We will need to apply the ACL to the *Ethernet 32* interface of *sonic-rtr-leaf-1*.
 Lets create an ACL table that we will link to the interface.
 
 1. SSH to *endpoint-1*
-2. Ping *leaf-1 loopback 0* interface
+2. Ping *sonic-rtr-leaf-1 loopback 0* interface
    ```
    ping 10.0.0.1
    ```
@@ -285,7 +285,7 @@ Lets create an ACL table that we will link to the interface.
    64 bytes from 10.0.0.1: icmp_seq=3 ttl=64 time=10.5 ms
    ```
    
-3. Login to SONiC router *leaf-1*
+3. Login to SONiC router *sonic-rtr-leaf-1*
 4. In the home directory create a json definition file for the ACL table we will create.
    ```
    nano eth32_acl_table.json
@@ -314,7 +314,7 @@ Lets create an ACL table that we will link to the interface.
    show acl table
    ```
    ```
-   cisco@leaf-1:~$ show acl table
+   cisco@sonic-rtr-leaf-1:~$ show acl table
    Name       Type    Binding     Description                         Stage    Status
    ---------  ------  ----------  ----------------------------------  -------  --------
    EP1_DROP   L3      Ethernet32  Block IMCP traffic from endpoint 1  ingress  Active
@@ -324,7 +324,7 @@ Lets create an ACL table that we will link to the interface.
    show acl rule
    ```
    ```
-    cisco@leaf-1:~$ show acl rule
+    cisco@sonic-rtr-leaf-1:~$ show acl rule
     Table    Rule    Priority    Action    Match    Status
     -------  ------  ----------  --------  -------  --------
     ```
@@ -354,18 +354,18 @@ Lets create an ACL table that we will link to the interface.
 
 11. Verify the ACL rule set was installed
     ```
-    cisco@leaf-1:~$ sudo config load acl_ep1_ingress.json
+    cisco@sonic-rtr-leaf-1:~$ sudo config load acl_ep1_ingress.json
     Load config from the file(s) acl_ep1_ingress.json ? [y/N]: y
     Running command: /usr/local/bin/sonic-cfggen -j acl_ep1_ingress.json --write-to-db
     
-    cisco@leaf-1:~$ show acl rule
+    cisco@sonic-rtr-leaf-1:~$ show acl rule
     Table      Rule     Priority    Action    Match                   Status
     ---------  -------  ----------  --------  ----------------------  --------
     EP1_DROP   RULE_20  20          FORWARD   SRC_IP: 198.18.11.2/32  Active
     EP1_DROP   RULE_10  10          DROP      IP_PROTOCOL: 1          Active  
                                               SRC_IP: 198.18.11.2/32
     ```
-12. Repeat ping test from *endpoint-1* to *leaf-1 loopback 0* interface. You should see 100% packet loss
+12. Repeat ping test from *endpoint-1* to *sonic-rtr-leaf-1 loopback 0* interface. You should see 100% packet loss
     ```
     ping 10.0.0.1
     ```
@@ -379,7 +379,7 @@ Lets create an ACL table that we will link to the interface.
 
 ### Example 2 - MATCH TCP Port and DROP
 In this example we will block iPerf3 traffic sourced from *endpoint-1* (client) to  *endpoint-2* (server). iPerf3 will utilize TPC port 5201 for the data flow.
-Utilizing the same table *EP1_DROP* we will update the ACL rule set on interface *Ethernet 32* on *leaf-1*
+Utilizing the same table *EP1_DROP* we will update the ACL rule set on interface *Ethernet 32* on *sonic-rtr-leaf-1*
 
 1. SSH to *endpoint-2*
 2. Start the iPerf3 server process
@@ -413,7 +413,7 @@ Utilizing the same table *EP1_DROP* we will update the ACL rule set on interface
 
    iperf Done.
    ```
-4. SSH into *leaf-1*. Now lets update the ACL rule set applied to ACL table *EP1_DROP*.
+4. SSH into *sonic-rtr-leaf-1*. Now lets update the ACL rule set applied to ACL table *EP1_DROP*.
 5. In the home directory create a json definition file for the ACL rule for iPerf3
    ```
    nano iperf3_rule_update.json
@@ -436,7 +436,7 @@ Utilizing the same table *EP1_DROP* we will update the ACL rule set on interface
    ```
 8. Verify the ACL table was installed.
    ```
-   cisco@leaf-1:~$ show acl rule
+   cisco@sonic-rtr-leaf-1:~$ show acl rule
    Table     Rule     Priority    Action    Match                   Status
    --------  -------  ----------  --------  ----------------------  --------
    EP1_DROP  RULE_30  30          DROP      L4_DST_PORT: 5201       Active
