@@ -1,7 +1,7 @@
 # SONiC 101 - Exercise 1: SONiC Topology Setup and Validation [30 Min]
 
 ### Description: 
-In Exercise 1 we will explore the host-VM virtualization environment and log into the SONiC router nodes and perform some system validation. The 4-node setup in Lab 1 will be used in all subsequent lab exercises. 
+In Exercise 1 we will explore the linux-host VM virtualization environment and log into the SONiC router nodes and perform some system validation. The 4-node setup in Lab 1 will be used in all subsequent lab exercises. 
 
 ## Contents
 - [SONiC 101 - Exercise 1: SONiC Topology Setup and Validation \[30 Min\]](#sonic-101---exercise-1-sonic-topology-setup-and-validation-30-min)
@@ -114,7 +114,7 @@ linux-host-2 2023-10-09T18:57:38.829294188Z Router failed to come up
 ```
 Then we'll need to manually launch the build script. Instructions to do so are:
 
-> [HERE](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/if_sonic_fails_to_launch.md)
+> [HERE](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/sonic_failed_to_launch.md)
 
 If all routers came up, then we may proceed to ping and connectivity checks:
 
