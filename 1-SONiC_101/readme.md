@@ -1,12 +1,8 @@
-# Welcome to the SONiC on Cisco 8000 Emulator Lab
+# SONiC-101 Cisco 8000 Emulator Lab
 
-### Description: This repository contains lab guide, router configs, setup scripts, and other code for the SONIC-101 lab
+### Description: 
 
-SONiC is an open source network operating system based on Linux that runs on switches/routers from multiple vendors and ASICs. SONiC offers a full-suite of network functionality, like BGP, that has been production-hardened in the data centers of some of the largest cloud-service providers. That said, of this writing (October 2023) SONiC may not be the best choice for all network operators. One of the purposes of this lab series is to give network engineers and operators hands on exposure to SONiC so they may get a sense for what's available today, and what challenges they might face should they pursue a real SONiC deployment.
-
-Though it is easy to run SONiC in a virtualized lab environment, this lab brings the ability to run SONiC on a platform that emulates the Cisco 8000 hardware. This allows us to test data-plane features such as ACLs, hardware counters, and debug tools. 
-
-The lab software stack is built off the SONiC master build with Cisco specific platform drivers for the Cisco 8000 hardware.
+In the SONIC-101 lab we'll review the dCloud hosted topology, get to know the SONiC operating environment, apply interface, IP, and ACL configuration via SONiC's config_db, and setup BGP peering among our 4 fabric members via SONiC's FRR/BGP container.
 
 ## Contents
 * Repository Overview [LINK](#git-repository-overview)

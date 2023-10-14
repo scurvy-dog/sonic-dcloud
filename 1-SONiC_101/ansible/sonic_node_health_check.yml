@@ -226,9 +226,9 @@
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
       ignore_errors: yes
 
-    - name: Pause for 5 minutes
+    - name: Pause for 6 minutes then start checking docker logs for SONiC build status
       pause:
-        minutes: 5
+        minutes: 6
 
     - name: Wait for 'Router' to appear in logs
       shell: docker logs -t {{ sonic[inventory_hostname]['container_name'] }} | grep Router
