@@ -79,10 +79,6 @@
       pause:
         minutes: 6
       become: false
-      lineinfile:
-        path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Pausing for 6 minutes while VXR builds SONiC routers. Check deploy.log.detail for status"
-        create: yes
       delegate_to: localhost
 
     - name: Wait for 'Router' to appear in logs
