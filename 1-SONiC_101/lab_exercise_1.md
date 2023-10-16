@@ -125,35 +125,34 @@ To validate that the build script completed successfully.
     ```
     If all 4 SONiC nodes have come up and passed health check you may proceed to [Connect to SONiC Routers](#connect-to-sonic-routers)
 
+    > [!IMPORTANT]
     In some cases a SONiC node fails to successfully build. When this happens the deploy playbook triggers a rebuild process on the failed node. The rebuild will take another 10-12 minutes, so you may begin exercise 1 while also monitoring the rebuilding node in the deploy logs.
 
     Example deploy.log output showing three routers successfully launched, and one failure, which is queued for rebuild:
     ```
-    cisco@jumpbox:~/sonic-dcloud$ more ../deploy.log
-    2023-10-15 20:07:14 PDT: Start Containerlab Deploy Script
-    2023-10-15 20:07:14 PDT: Expect to wait 10+ minutes as VXR scripts build out SONiC routers
-    2023-10-15 20:07:17 PDT: SONiC Router sonic-rtr-leaf-1 build start 
-    2023-10-15 20:07:17 PDT: SONiC Router sonic-rtr-leaf-2 build start 
-    2023-10-15 20:07:18 PDT: SONiC Router sonic-rtr-spine-2 build start 
-    2023-10-15 20:07:18 PDT: SONiC Router sonic-rtr-spine-1 build start 
-    2023-10-15 20:07:18 PDT: SONiC Router linux-host-3 2023-10-16T03:15:24.694370265Z Router up
-    2023-10-15 20:07:17 PDT: SONiC Router linux-host-2 2023-10-16T03:14:55.413067230Z Router up
-    2023-10-15 20:07:18 PDT: SONiC Router linux-host-4 2023-10-16T03:15:16.214696717Z Router up
-    2023-10-15 20:22:50 PDT: Running SONiC Router Health Check Script
-    2023-10-15 20:22:50 PDT: SONiC Router sonic-rtr-leaf-1: Failed. Queued for rebuild.    <---------
-    2023-10-15 20:22:50 PDT: SONiC Router sonic-rtr-leaf-2: Health Check Passed
-    2023-10-15 20:22:50 PDT: SONiC Router sonic-rtr-spine-1: Health Check Passed.
-    2023-10-15 20:22:50 PDT: SONiC Router sonic-rtr-spine-2: Health Check Passed.
-    2023-10-15 20:22:58 PDT: SONiC Router sonic-rtr-leaf-1 rebuild started.            <---------
+    cisco@jumpbox:~$ cat deploy.log
+    2023-10-16 12:26:55 PDT: Start Containerlab Deploy Script
+    2023-10-16 12:26:55 PDT: Expect to wait 10+ minutes as VXR scripts build out SONiC routers
+    2023-10-16 12:26:58 PDT: SONiC Router sonic-rtr-leaf-1 build start 
+    2023-10-16 12:26:57 PDT: SONiC Router sonic-rtr-spine-2 build start 
+    2023-10-16 12:26:57 PDT: SONiC Router sonic-rtr-spine-1 build start 
+    2023-10-16 12:27:03 PDT: SONiC Router sonic-rtr-leaf-2 build start 
+    2023-10-16 12:26:57 PDT: SONiC Router sonic-rtr-spine-1 2023-10-16T19:35:28.701491348Z Router failed to come up   <-------
+    2023-10-16 12:26:58 PDT: SONiC Router sonic-rtr-leaf-1 2023-10-16T19:33:55.027861619Z Router up
+    2023-10-16 12:27:03 PDT: SONiC Router sonic-rtr-leaf-2 2023-10-16T19:34:28.829917638Z Router up
+    2023-10-16 12:26:57 PDT: SONiC Router sonic-rtr-spine-2 2023-10-16T19:34:27.286082895Z Router up
+    2023-10-16 12:35:51 PDT: Running SONiC Router Health Check Script
+    2023-10-16 12:35:51 PDT: SONiC Router sonic-rtr-leaf-1: Health Check Passed
+    2023-10-16 12:35:51 PDT: SONiC Router sonic-rtr-leaf-2: Health Check Passed
+    2023-10-16 12:35:51 PDT: SONiC Router sonic-rtr-spine-1: Failed. Queued for rebuild.      <-------
+    2023-10-16 12:35:51 PDT: SONiC Router sonic-rtr-spine-2: Health Check Passed.
+    2023-10-16 12:36:01 PDT: SONiC Router sonic-rtr-spine-1 rebuild started. 
+    2023-10-16 12:36:01 PDT: sonic-rtr-spine-1 2023-10-16T19:43:15.485235137Z Router up     <-------
+    2023-10-16 12:36:01 PDT: sonic-rtr-spine-1 rebuild script complete
+    2023-10-16 12:36:01 PDT: Deploy script complete. Check SONiC 101 troubleshooting.md instructions if any nodes have not come back with 'Router up' message
     ```
 
-> [!IMPORTANT]
-If the output of deploy.log shows any of the nodes failing to come up, example:
-
-```
-linux-host-2 2023-10-09T18:57:38.829294188Z Router failed to come up
-```
-Then we'll need to manually launch the build script. Instructions to do so are:
+ Note the last message in deploy.log. If any routers fail to come up after the rebuild we'll need to manually launch the build script. Instructions to do so are here:
 
 > [HERE](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/troubleshooting.md)
 
@@ -176,44 +175,8 @@ For convenience we've put shortened hostname entries for the SONiC nodes in the 
      ```
 
 > [!NOTE]
->  If SONiC router does not respond to ping. Follow these directions
+>  If SONiC router does not respond to ping. Follow the "Can't Ping" instructions in [Can't Ping Mgt](troubleshooting.md/#cant-ping-sonic-managment-interface)
 >
->1. SSH into the host-vm directly. That would be (linux-host-1,linux-host-2,linux-host-3, linux-host-4)
->   Example below
->   ```
->   Last login: Tue Oct 10 16:15:30 2023 from 10.16.81.3
->   cisco@linux-host-1:~$ 
->   ```
->3. Find docker instance running the Cisco 8000 emulator and lookup the container name.
->   In the example below the Cisco 8000 Emulator container is named *clab-c8101-sonic-sonic-rtr-leaf-1*
->   ```
->   cisco@linux-host-1:~$ docker ps
->   CONTAINER ID   IMAGE                 COMMAND                  CREATED      STATUS      PORTS     NAMES
->   d1861990e9a8   c8000-clab-sonic:31   "/etc/prepEnv.sh /no…"   16 hours ago  Up 16 hours          clab-c8101-sonic-sonic-rtr-leaf-1
->   ```
->3. Session into the docker container
->   ```
->   cisco@linux-host-1:~$ docker exec -it clab-c8101-sonic-sonic-rtr-leaf-1 bash
->   root@sonic-rtr-leaf-1:/#
->   ``` 
->4. Now access the SONiC console ( cisco / cisco123 )
->   ```
->   root@sonic-rtr-leaf-1:~# telnet 0 60000
->   Trying 0.0.0.0...
->   Connected to 0.
->   Escape character is '^]'.
->
->   sonic login:
->   ```
->5. Check to see if management interface was created
->   ```
->   cisco@sonic:~$ show ip interface
->   Interface    Master    IPv4 address/mask    Admin/Oper    BGP Neighbor    Neighbor IP
->   -----------  --------  -------------------  ------------  --------------  -------------
->   docker0                240.127.1.1/24       up/down       N/A             N/A
->   eth0                   172.10.10.101/24     up/up         N/A             N/A           <--- MGMT INTERFACE
->   eth4                   192.168.123.246/24   up/up         N/A             N/A 
->   lo                     127.0.0.1/16         up/up         N/A             N/A  
 
 ### Connect to SONiC Routers
 

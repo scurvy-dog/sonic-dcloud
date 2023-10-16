@@ -6,6 +6,7 @@
   - [Typical Issues](#typical-issues)
     - [Manual VXR Rebuild](#manual-vxr-rebuild)
     - [No Data Interfaces](#no-data-interfaces)
+    - [Can't Ping SONiC Managment Interface](#cant-ping-sonic-managment-interface)
   
 ## Typical Issues
 There are two potential scenarioes where trouble may happen with the SONiC node. In both cases the fastest remediation is to have the container torn down and rebuilt. Be aware that once the container is back up and running configuration would need to be reapplied.
@@ -134,3 +135,42 @@ cisco@sonic:~$
 ```
 
 4. If the Ethernet interfaces are still not displaying after 3-4 minutes, please trigger a [Manual VXR Rebuild](#manual-vxr-rebuild)
+
+### Can't Ping SONiC Managment Interface 
+
+>1. SSH into the host-vm directly. That would be (linux-host-1,linux-host-2,linux-host-3, linux-host-4)
+>   Example below
+>   ```
+>   Last login: Tue Oct 10 16:15:30 2023 from 10.16.81.3
+>   cisco@linux-host-1:~$ 
+>   ```
+>3. Find docker instance running the Cisco 8000 emulator and lookup the container name.
+>   In the example below the Cisco 8000 Emulator container is named *clab-c8101-sonic-sonic-rtr-leaf-1*
+>   ```
+>   cisco@linux-host-1:~$ docker ps
+>   CONTAINER ID   IMAGE                 COMMAND                  CREATED      STATUS      PORTS     NAMES
+>   d1861990e9a8   c8000-clab-sonic:31   "/etc/prepEnv.sh /no…"   16 hours ago  Up 16 hours          clab-c8101-sonic-sonic-rtr-leaf-1
+>   ```
+>3. Session into the docker container
+>   ```
+>   cisco@linux-host-1:~$ docker exec -it clab-c8101-sonic-sonic-rtr-leaf-1 bash
+>   root@sonic-rtr-leaf-1:/#
+>   ``` 
+>4. Now access the SONiC console ( cisco / cisco123 )
+>   ```
+>   root@sonic-rtr-leaf-1:~# telnet 0 60000
+>   Trying 0.0.0.0...
+>   Connected to 0.
+>   Escape character is '^]'.
+>
+>   sonic login:
+>   ```
+>5. Check to see if management interface was created
+>   ```
+>   cisco@sonic:~$ show ip interface
+>   Interface    Master    IPv4 address/mask    Admin/Oper    BGP Neighbor    Neighbor IP
+>   -----------  --------  -------------------  ------------  --------------  -------------
+>   docker0                240.127.1.1/24       up/down       N/A             N/A
+>   eth0                   172.10.10.101/24     up/up         N/A             N/A           <--- MGMT INTERFACE
+>   eth4                   192.168.123.246/24   up/up         N/A             N/A 
+>   lo                     127.0.0.1/16         up/up         N/A             N/A  
