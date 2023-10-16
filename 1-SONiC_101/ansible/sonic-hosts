@@ -1,7 +1,0 @@
-## is this file needed?
-
-[sonic_routers]
-sonic-rtr-leaf-1 ansible_host=172.10.10.101
-sonic-rtr-leaf-2 ansible_host=172.10.10.102
-sonic-rtr-spine-1 ansible_host=172.10.10.103
-sonic-rtr-spine-2 ansible_host=172.10.10.104

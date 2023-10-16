@@ -23,13 +23,13 @@ The student upon completion of Lab 1 should have achieved the following objectiv
 * Access to all devices in the lab
 * Understand the Docker virtualization environment and Cisco 8000 Emulator
 * Understanding of the lab topology and components
-* Access the SONiC nodes   
+* Access the SONiC nodes and verified their operational state   
 
 ## Virtualization Stack
 
 The software virtualization stack used in this lab consists of several layers. At the base Linux OS level it is possible to run this lab either on bare metal or in a virtualized environment. In our dCloud lab we're running the 4-router topology inside 4 host Ubuntu VMs.  The scale requirements for Cisco 8000 can be found at the link [HERE}(https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000-emulator/cisco8000-hardware-emulator-datasheet.html)
 
-To create the SONiC environment we are using Containerlab to orchestrate and manage our container-based network topology. Containerlab allows us to use a yaml definition file to spin up a Dockerized Cisco 8000 hardware emulator (C8k emulator). The C8k emulator itself utilizes qemu/kvm to create a nested virtual machine which contains the simulated hardware environment. Within that simulated environment VXR will boot the SONiC operating system. 
+To create the SONiC environment we are using Containerlab (https://containerlab.dev/) to orchestrate and manage our container-based network topology. Containerlab allows us to use a yaml definition file to spin up a Dockerized Cisco 8000 hardware emulator (C8k emulator). The C8k emulator itself utilizes qemu/kvm to create a nested virtual machine which contains the simulated hardware environment. Within that simulated environment VXR will boot the SONiC operating system. 
 
 For connectivity between virtual SONiC routers we use point-to-point VXLAN tunnels between the host-VMs. For connecitivty between the SONiC VMs and external test VM clients are using linux bridges.
 
@@ -80,7 +80,7 @@ User: cisco, Password: cisco123
 Now log into each of the Ubuntu host-vms listed in Table 1 and ensure you have access to the devices.
 
 ### Git repository location
-All documentation and scripts used in this lab are cloned to the cisco user home directory. To start look for the 
+All documentation and scripts used in this lab are cloned to the cisco user home directory. To start look for the README.md file.
 ```
 /home/cisco/sonic-dcloud/1-SONiC_101
 ```
@@ -95,6 +95,10 @@ To validate that the build script completed successfully.
     
     ```
     cat /home/cisco/deploy.log
+    ```
+    
+    You may also monitor more detailed ansible output tracking the build process using tail -f on the detailed logfile:
+    ```
     tail -f /home/cisco/deploy.log.detail
     ```
 
@@ -117,7 +121,7 @@ To validate that the build script completed successfully.
     2023-10-14 10:27:55 PDT: SONiC Router sonic-rtr-leaf-2: Health Check Passed
     2023-10-14 10:27:55 PDT: SONiC Router sonic-rtr-spine-1: Health Check Passed
     2023-10-14 10:27:55 PDT: SONiC Router sonic-rtr-spine-2: Health Check Passed
-    2023-10-14 10:28:06 PDT: sonic-rtr-spine-2 rebuild script complete
+
     ```
     If all 4 SONiC nodes have come up and passed health check you may proceed to [Connect to SONiC Routers](#connect-to-sonic-routers)
 
@@ -142,7 +146,6 @@ To validate that the build script completed successfully.
     2023-10-15 20:22:50 PDT: SONiC Router sonic-rtr-spine-2: Health Check Passed.
     2023-10-15 20:22:58 PDT: SONiC Router sonic-rtr-leaf-1 rebuild started.            <---------
     ```
-
 
 > [!IMPORTANT]
 If the output of deploy.log shows any of the nodes failing to come up, example:

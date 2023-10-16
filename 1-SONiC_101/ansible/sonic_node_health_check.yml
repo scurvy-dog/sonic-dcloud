@@ -254,7 +254,7 @@
         create: yes
       delegate_to: localhost
 
-    - name: Deploy script End message to deploy.log
+    - name: Deploy Script End message to deploy.log
       become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
