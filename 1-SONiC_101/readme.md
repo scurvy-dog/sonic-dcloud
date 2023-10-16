@@ -115,3 +115,7 @@ cisco@jumpbox:~/sonic-dcloud$ more ../deploy.log
 2023-10-15 20:22:50 PDT: SONiC Router sonic-rtr-spine-2: Health Check Passed.
 2023-10-15 20:22:58 PDT: SONiC Router sonic-rtr-leaf-1 rebuild started.            <---------
 ```
+
+
+
+Proceed to [lab_exercise_1](lab_exercise_1.md)

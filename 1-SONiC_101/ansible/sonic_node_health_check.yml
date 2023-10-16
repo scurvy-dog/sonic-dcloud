@@ -253,3 +253,11 @@
         line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: {{ sonic[inventory_hostname]['sonic_name'] }} rebuild script complete"
         create: yes
       delegate_to: localhost
+
+    - name: Deploy script End message to deploy.log
+      become: false
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Deploy script complete. Check SONiC 101 README.md instructions if any nodes have not come back with 'Router up' message"
+        create: yes
+      delegate_to: localhost
