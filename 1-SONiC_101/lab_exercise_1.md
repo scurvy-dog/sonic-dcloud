@@ -128,7 +128,7 @@ To validate that the build script completed successfully.
     > [!IMPORTANT]
     In some cases a SONiC node fails to successfully build. When this happens the deploy playbook triggers a rebuild process on the failed node. The rebuild will take another 10-12 minutes, so you may continue exercise 1 on the routers that are up while also monitoring the rebuilding node in the deploy logs.
 
-    Example deploy.log output showing three routers successfully launched, and one failure, which is queued for rebuild:
+    Example *deploy.log* output showing three routers successfully launched, and one failure (spine-1), which was then run through the rebuild process:
     ```
     cisco@jumpbox:~$ cat deploy.log
     2023-10-16 12:26:55 PDT: Start Containerlab Deploy Script
