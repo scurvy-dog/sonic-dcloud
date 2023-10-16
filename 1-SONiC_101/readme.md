@@ -58,7 +58,7 @@ We primarily use SSH to interact with all VMs and SONiC routers, however, dCloud
 | sonic-rtr-spine-2 | router      | SSH         | 172.10.10.104   |
 
 ## dCloud Session Overview
-When a Cisco dCloud session is launched the scheduler will set a start time at the next quarter-hour mark (top of the hour, 15 after, etc.). Upon reaching the start time dCloud builds out the virtual machine environment and its usually available in just a few minutes.  
+When a Cisco dCloud session is launched the scheduler will set a start time at the next quarter-hour mark (top of the hour, 15 after, etc.). Upon reaching the start time dCloud builds out the virtual machine environment, which usually becomes available in just a few minutes.  
 
 In the case of the SONiC 8000 Emulator lab the SONiC routers are not immediately available as they need to go through a VXR build process inside the Linux host VMs. This step is taken care of automatically by an Ansible 'deploy' playbook which is triggered at lab startup. This playbook will launch the dockerized VXR instances that build a SONiC router on each of the Linux host VMs. The SONiC build process takes 10-15 minutes to run and your lab won't truly be ready until it completes. You may monitor the deploy process as the playbook outputs log entries to two logfiles in /home/cisco on the Jumpbox:
 
@@ -96,3 +96,22 @@ If all 4 SONiC nodes have come up and passed health check you may proceed to [la
 
 In some cases a SONiC node fails to successfully build. When this happens the deploy playbook triggers a rebuild process on the failed node. The rebuild will take another 10-12 minutes, so you may begin exercise 1 while also monitoring the rebuilding node in the deploy logs.
 
+Example deploy.log output showing three routers successfully launched, and one failure, which is queued for rebuild:
+```
+cisco@jumpbox:~/sonic-dcloud$ more ../deploy.log
+2023-10-15 20:07:14 PDT: Start Containerlab Deploy Script
+2023-10-15 20:07:14 PDT: Expect to wait 10+ minutes as VXR scripts build out SONiC routers
+2023-10-15 20:07:17 PDT: SONiC Router sonic-rtr-leaf-1 build start 
+2023-10-15 20:07:17 PDT: SONiC Router sonic-rtr-leaf-2 build start 
+2023-10-15 20:07:18 PDT: SONiC Router sonic-rtr-spine-2 build start 
+2023-10-15 20:07:18 PDT: SONiC Router sonic-rtr-spine-1 build start 
+2023-10-15 20:07:18 PDT: SONiC Router linux-host-3 2023-10-16T03:15:24.694370265Z Router up
+2023-10-15 20:07:17 PDT: SONiC Router linux-host-2 2023-10-16T03:14:55.413067230Z Router up
+2023-10-15 20:07:18 PDT: SONiC Router linux-host-4 2023-10-16T03:15:16.214696717Z Router up
+2023-10-15 20:22:50 PDT: Running SONiC Router Health Check Script
+2023-10-15 20:22:50 PDT: SONiC Router sonic-rtr-leaf-1: Failed. Queued for rebuild.    <---------
+2023-10-15 20:22:50 PDT: SONiC Router sonic-rtr-leaf-2: Health Check Passed
+2023-10-15 20:22:50 PDT: SONiC Router sonic-rtr-spine-1: Health Check Passed.
+2023-10-15 20:22:50 PDT: SONiC Router sonic-rtr-spine-2: Health Check Passed.
+2023-10-15 20:22:58 PDT: SONiC Router sonic-rtr-leaf-1 rebuild started.            <---------
+```

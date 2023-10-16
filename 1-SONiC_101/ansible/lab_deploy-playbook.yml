@@ -81,7 +81,7 @@
       become: false
       delegate_to: localhost
 
-    - name: GREP - Wait for 'Router' message to appear in logs
+    - name: GREP - Wait for 'Router up' or 'Router failed' message to appear in logs
       shell: docker logs -t {{ hostvars[inventory_hostname]['container'] }} | grep Router || true
       register: grep_result
       until: grep_result.stdout_lines | length > 0
