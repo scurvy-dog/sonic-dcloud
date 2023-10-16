@@ -102,7 +102,7 @@ To validate that the build script completed successfully.
     tail -f /home/cisco/deploy.log.detail
     ```
 
-    Once the  VXR/SONiC build process completes the summary deploy.log file should look something like this:
+    Once the  VXR/SONiC build process completes the summary *deploy.log* file should look something like this:
 
     ```
     cisco@jumpbox:~$ cat deploy.log
@@ -126,7 +126,7 @@ To validate that the build script completed successfully.
     If all 4 SONiC nodes have come up and passed health check you may proceed to [Connect to SONiC Routers](#connect-to-sonic-routers)
 
     > [!IMPORTANT]
-    In some cases a SONiC node fails to successfully build. When this happens the deploy playbook triggers a rebuild process on the failed node. The rebuild will take another 10-12 minutes, so you may begin exercise 1 while also monitoring the rebuilding node in the deploy logs.
+    In some cases a SONiC node fails to successfully build. When this happens the deploy playbook triggers a rebuild process on the failed node. The rebuild will take another 10-12 minutes, so you may continue exercise 1 on the routers that are up while also monitoring the rebuilding node in the deploy logs.
 
     Example deploy.log output showing three routers successfully launched, and one failure, which is queued for rebuild:
     ```
@@ -152,7 +152,7 @@ To validate that the build script completed successfully.
     2023-10-16 12:36:01 PDT: Deploy script complete. Check SONiC 101 troubleshooting.md instructions if any nodes have not come back with 'Router up' message
     ```
 
- Note the last message in deploy.log. If any routers fail to come up after the rebuild we'll need to manually launch the build script. Instructions to do so are here:
+ Note the last message in *deploy.log*. If any routers fail to come up after the rebuild we'll need to manually launch the build script. Instructions to do so are here:
 
 > [HERE](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/troubleshooting.md)
 
