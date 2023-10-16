@@ -95,16 +95,54 @@ To validate that the build script completed successfully.
     
     ```
     cat /home/cisco/deploy.log
+    tail -f /home/cisco/deploy.log.detail
     ```
 
-  	You should see output similar to
+    Once the  VXR/SONiC build process completes the summary deploy.log file should look something like this:
+
     ```
-    cisco@jumpbox:~$ cat deploy.log 
-    linux-host-1 Router up
-    linux-host-4 Router up
-    linux-host-3 Router up
-    linux-host-2 Router up
+    cisco@jumpbox:~$ cat deploy.log
+    2023-10-14 10:12:34 PDT: Start Container Lab Deploy Script
+    2023-10-14 10:12:34 PDT: Expect to wait 10+ minutes as containers are built.
+    2023-10-14 10:12:37 PDT: SONiC Router sonic-rtr-leaf-1 build start 
+    2023-10-14 10:12:38 PDT: SONiC Router sonic-rtr-spine-2 build start 
+    2023-10-14 10:12:38 PDT: SONiC Router sonic-rtr-spine-1 build start 
+    2023-10-14 10:12:37 PDT: SONiC Router sonic-rtr-leaf-2 build start 
+    2023-10-14 10:12:37 PDT: SONiC Router clab-c8101-sonic-leaf-2 2023-10-14T17:19:13.907514268Z Router up
+    2023-10-14 10:12:37 PDT: SONiC Router clab-c8101-sonic-leaf-1 2023-10-14T17:18:50.082588335Z Router up
+    2023-10-14 10:12:38 PDT: SONiC Router clab-c8101-sonic-spine-1 2023-10-14T17:19:47.451838674Z Router up
+    2023-10-14 10:12:39 PDT: SONiC Router clab-c8101-sonic-spine-2 2023-10-14T17:19:48.751145006Z Router up
+    2023-10-14 10:27:55 PDT: SONiC Router Health Check Script
+    2023-10-14 10:27:55 PDT: SONiC Router sonic-rtr-leaf-1: Health Check Passed
+    2023-10-14 10:27:55 PDT: SONiC Router sonic-rtr-leaf-2: Health Check Passed
+    2023-10-14 10:27:55 PDT: SONiC Router sonic-rtr-spine-1: Health Check Passed
+    2023-10-14 10:27:55 PDT: SONiC Router sonic-rtr-spine-2: Health Check Passed
+    2023-10-14 10:28:06 PDT: sonic-rtr-spine-2 rebuild script complete
     ```
+    If all 4 SONiC nodes have come up and passed health check you may proceed to [Connect to SONiC Routers](#connect-to-sonic-routers)
+
+    In some cases a SONiC node fails to successfully build. When this happens the deploy playbook triggers a rebuild process on the failed node. The rebuild will take another 10-12 minutes, so you may begin exercise 1 while also monitoring the rebuilding node in the deploy logs.
+
+    Example deploy.log output showing three routers successfully launched, and one failure, which is queued for rebuild:
+    ```
+    cisco@jumpbox:~/sonic-dcloud$ more ../deploy.log
+    2023-10-15 20:07:14 PDT: Start Containerlab Deploy Script
+    2023-10-15 20:07:14 PDT: Expect to wait 10+ minutes as VXR scripts build out SONiC routers
+    2023-10-15 20:07:17 PDT: SONiC Router sonic-rtr-leaf-1 build start 
+    2023-10-15 20:07:17 PDT: SONiC Router sonic-rtr-leaf-2 build start 
+    2023-10-15 20:07:18 PDT: SONiC Router sonic-rtr-spine-2 build start 
+    2023-10-15 20:07:18 PDT: SONiC Router sonic-rtr-spine-1 build start 
+    2023-10-15 20:07:18 PDT: SONiC Router linux-host-3 2023-10-16T03:15:24.694370265Z Router up
+    2023-10-15 20:07:17 PDT: SONiC Router linux-host-2 2023-10-16T03:14:55.413067230Z Router up
+    2023-10-15 20:07:18 PDT: SONiC Router linux-host-4 2023-10-16T03:15:16.214696717Z Router up
+    2023-10-15 20:22:50 PDT: Running SONiC Router Health Check Script
+    2023-10-15 20:22:50 PDT: SONiC Router sonic-rtr-leaf-1: Failed. Queued for rebuild.    <---------
+    2023-10-15 20:22:50 PDT: SONiC Router sonic-rtr-leaf-2: Health Check Passed
+    2023-10-15 20:22:50 PDT: SONiC Router sonic-rtr-spine-1: Health Check Passed.
+    2023-10-15 20:22:50 PDT: SONiC Router sonic-rtr-spine-2: Health Check Passed.
+    2023-10-15 20:22:58 PDT: SONiC Router sonic-rtr-leaf-1 rebuild started.            <---------
+    ```
+
 
 > [!IMPORTANT]
 If the output of deploy.log shows any of the nodes failing to come up, example:
@@ -117,20 +155,21 @@ Then we'll need to manually launch the build script. Instructions to do so are:
 > [HERE](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/sonic_failed_to_launch.md)
 
 If all routers came up, then we may proceed to ping and connectivity checks:
+For convenience we've put shortened hostname entries for the SONiC nodes in the /etc/hosts file on the jumpbox and linux host VMs:
 
   1. Ping each SONiC router management interface to see if the router has finished booting
      | Host name  | IP Address    |
      |:-----------|:--------------|
-     | sonic-rtr-leaf-1     | 172.10.10.101 |
-     | sonic-rtr-leaf-2     | 172.10.10.102 |
-     | sonic-rtr-spine-1    | 172.10.10.103 |
-     | sonic-rtr-spine-2    | 172.10.10.104 |
+     | leaf-1     | 172.10.10.101 |
+     | leaf-2     | 172.10.10.102 |
+     | spine-1    | 172.10.10.103 |
+     | spine-2    | 172.10.10.104 |
 
      ```
-     cisco@vsonic:~$ ping sonic-rtr-leaf-1
-     PING leaf01 (172.10.10.101) 56(84) bytes of data.
-     64 bytes from sonic-rtr-leaf-1 (172.10.10.101): icmp_seq=1 ttl=64 time=0.480 ms
-     64 bytes from sonic-rtr-leaf-1 (172.10.10.101): icmp_seq=2 ttl=64 time=0.362 ms
+    cisco@jumpbox:~$ ping leaf-1
+    PING leaf-1 (172.10.10.101) 56(84) bytes of data.
+    64 bytes from leaf-1 (172.10.10.101): icmp_seq=1 ttl=64 time=0.947 ms
+    64 bytes from leaf-1 (172.10.10.101): icmp_seq=2 ttl=64 time=0.386 ms
      ```
 
 > [!NOTE]
@@ -177,24 +216,24 @@ If all routers came up, then we may proceed to ping and connectivity checks:
 
 Starting from the vsonic VM log into each router instance 1-4 per the management topology diagram above. Example:
 ```
-    ssh cisco@sonic-rtr-spine-1
-    ssh cisco@sonic-rtr-spine-2
-    ssh cisco@sonic-rtr-leaf-1
-    ssh cisco@sonic-rtr-leaf-2
-    or
-    ssh cisco@172.10.10.2
-    ssh cisco@172.10.10.3
-    ssh cisco@172.10.10.4
-    ssh cisco@172.10.10.5
+ssh cisco@leaf-1
+ssh cisco@leaf-2
+ssh cisco@spine-1
+ssh cisco@spine-2
+
+or
+ssh cisco@172.10.10.101
+ssh cisco@172.10.10.102
+ssh cisco@172.10.10.103
+ssh cisco@172.10.10.104
 ```
 > **NOTE**
 > Password for SONiC instances is cisco123
 > 
 Example:
 ```
-cisco@vsonic:~$ ssh cisco@172.10.10.2
-Warning: Permanently added '172.10.10.2' (RSA) to the list of known hosts.
-cisco@172.10.10.2's password: 
+cisco@jumpbox:~$ ssh cisco@leaf-1
+cisco@leaf-1's password: 
 Linux sonic 5.10.0-18-2-amd64 #1 SMP Debian 5.10.140-1 (2022-09-02) x86_64
 You are on
   ____   ___  _   _ _  ____
@@ -210,9 +249,8 @@ All access and/or use are subject to monitoring.
 
 Help:    https://sonic-net.github.io/SONiC/
 
-Last login: Wed Aug 16 04:02:54 2023
+Last login: Mon Oct 16 03:59:53 2023 from 172.10.10.1
 cisco@sonic:~$ 
-```
 
 ## End of Lab 1
 Please proceed to [Lab 2](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/lab_exercise_2.md)
