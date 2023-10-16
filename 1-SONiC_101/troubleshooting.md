@@ -9,10 +9,12 @@
     - [Can't Ping SONiC Managment Interface](#cant-ping-sonic-managment-interface)
   
 ## Typical Issues
-There are two potential scenarioes where trouble may happen with the SONiC node. In both cases the fastest remediation is to have the container torn down and rebuilt. Be aware that once the container is back up and running configuration would need to be reapplied.
+There are a few potential scenarioes where trouble may happen with the SONiC node. Often the fastest remediation is to have the container torn down and rebuilt. Be aware that once the container is back up and running configuration would need to be reapplied.
+The most common trouble scenarios we've seen are:
 
-1. Initial SONiC node fails to populate interfaces from the Cisco 8000 Emulator
-2. The SONiC node has general container instability which can happen in the virtual environment
+1. Initial SONiC node fails to populate interfaces from the Cisco 8000 Emulator - [Manual VXR Rebuild](#manual-vxr-rebuild)
+2. The SONiC node has general container instability which can happen in the virtual environment - [No Data Interfaces](#no-data-interfaces)
+3. SONiC node fails to get a management IP - [Can't Ping SONiC Managment Interface](#cant-ping-sonic-managment-interface)
 
 ### Manual VXR Rebuild
 
