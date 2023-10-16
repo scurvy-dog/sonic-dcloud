@@ -154,7 +154,7 @@ To validate that the build script completed successfully.
 
  Note the last message in *deploy.log*. If any routers fail to come up after the rebuild we'll need to manually launch the build script. Instructions to do so are here:
 
-> [HERE](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/troubleshooting.md)
+> [Troubleshooting Guide](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/troubleshooting.md)
 
 If all routers came up, then we may proceed to ping and connectivity checks:
 For convenience we've put shortened hostname entries for the SONiC nodes in the /etc/hosts file on the jumpbox and linux host VMs:
@@ -217,6 +217,7 @@ Help:    https://sonic-net.github.io/SONiC/
 
 Last login: Mon Oct 16 03:59:53 2023 from 172.10.10.1
 cisco@sonic:~$ 
+```
 
 ## End of Lab 1
 Please proceed to [Lab 2](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/lab_exercise_2.md)
