@@ -155,7 +155,7 @@ linux-host-2 2023-10-09T18:57:38.829294188Z Router failed to come up
 ```
 Then we'll need to manually launch the build script. Instructions to do so are:
 
-> [HERE](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/sonic_failed_to_launch.md)
+> [HERE](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/troubleshooting.md)
 
 If all routers came up, then we may proceed to ping and connectivity checks:
 For convenience we've put shortened hostname entries for the SONiC nodes in the /etc/hosts file on the jumpbox and linux host VMs:
