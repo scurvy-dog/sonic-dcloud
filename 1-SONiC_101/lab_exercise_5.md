@@ -5,7 +5,7 @@
 In Exercise 5 the student will explore how SONiC utilizes ACLs in data-plane and control plane application. An overview of where and how SONiC applies ACLs will be provided and configuration examples.
 
 ## Contents
-- [Exercise 5: ACL Overview and Config \[30 Min\]](#lab-exercise-5-acl-overview-and-config-35-min)
+- [SONiC 101 - Exercise 5: ACL Overview and Config \[35 Min\]](#sonic-101---exercise-5-acl-overview-and-config-35-min)
     - [Description:](#description)
   - [Contents](#contents)
   - [Lab Objectives](#lab-objectives)
@@ -13,17 +13,16 @@ In Exercise 5 the student will explore how SONiC utilizes ACLs in data-plane and
   - [ACL Tables](#acl-tables)
     - [ACL Table Parameters](#acl-table-parameters)
     - [ACL Table Syntax](#acl-table-syntax)
-    - [ACL Table Add](#acl-tables-add)
+      - [ACL Table Add](#acl-table-add)
     - [ACL Table Delete](#acl-table-delete)
   - [ACL Rules](#acl-rules)
-    - [ACL Rule parameters](#acl-rule-parameters)
+    - [ACL Rule Parameters](#acl-rule-parameters)
     - [ACL Rule Syntax](#acl-rule-syntax)
     - [ACL Rule Add](#acl-rule-add)
     - [ACL Rule Delete](#acl-rule-delete)
   - [ACL Examples](#acl-examples)
-    - [Example 1 - Match ICMP](#example-1---match-ip-protocol-and-drop-icmp)
-    - [Example 2 - Match TCP Port](#example-2---match-tcp-port-and-drop) 
-  - [End of Lab 5](#end-of-lab-5)
+    - [Example 1 - Match IP Protocol and DROP ICMP](#example-1---match-ip-protocol-and-drop-icmp)
+  - [End of Intro to SONiC Lab](#end-of-intro-to-sonic-lab)
   
 ## Lab Objectives
 The student upon completion of Lab Exercise 5 should have achieved the following objectives:
@@ -121,8 +120,14 @@ ICMP_DROP  L3      Ethernet32  BLock ICMP traffic from Endpoint2  ingress  Activ
 To utilize JSON to create an ACL it is a two step process. First you must construct a valid JSON syntax file and store that on the SONiC router itself. The second step is to use the config load command to add the table into the running configuration. See steps below.
 
 **Example of ACL Table JSON**
-Save this json acl table definition to a file on the SONiC device as acl_table_icmp.json
 
+1. Use nano to copy this json acl table definition to a file on the SONiC device as acl_table_icmp.json
+
+```
+nano acl_table_icmp.json
+```
+
+2. Copy/paste json object:
 ```
 {
 "ACL_TABLE": {
@@ -137,6 +142,8 @@ Save this json acl table definition to a file on the SONiC device as acl_table_i
         }
 }
 ```
+3. ctrl-x to exit nano, *y* to save
+
 **Loading the ACL table JSON file into the running config**
 ```
 sudo config load acl_table_icmp.json
@@ -217,7 +224,7 @@ The remaining <key>:<value> pairs would be matching conditions found in the abov
 > The *PRIORITY* value is processed by **highest numerical value first**. So in the below rule set RULE_20 with *PRIORITY 20* will be processed before RULE_10 *PRIORITY 10*.
 
 ### ACL Rule Add
-**Example JSON file that should be saved as acl_rule_icmp.json** 
+1. Use nano to copy this JSON object to a file named acl_rule_icmp.json 
 
 ```
 {
@@ -235,6 +242,7 @@ The remaining <key>:<value> pairs would be matching conditions found in the abov
     }
 }
 ```
+2. Again ctrl-x to exit and *y* to save
 
 **Loading the ACL rule JSON file into the running config**
 ```
@@ -286,7 +294,7 @@ Lets create an ACL table that we will link to the interface.
    ```
    
 3. Login to SONiC router *sonic-rtr-leaf-1*
-4. In the home directory create a json definition file for the ACL table we will create.
+4. In the home directory use nano to create a json definition file for the ACL table we will create.
    ```
    nano eth32_acl_table.json
    ```
@@ -353,6 +361,9 @@ Lets create an ACL table that we will link to the interface.
     ```
 
 11. Verify the ACL rule set was installed
+    ```
+    sudo config load acl_ep1_ingress.json
+    ```
     ```
     cisco@sonic-rtr-leaf-1:~$ sudo config load acl_ep1_ingress.json
     Load config from the file(s) acl_ep1_ingress.json ? [y/N]: y
@@ -436,6 +447,9 @@ Utilizing the same table *EP1_DROP* we will update the ACL rule set on interface
    ```
 8. Verify the ACL table was installed.
    ```
+   show acl rule
+   ```
+   ```
    cisco@sonic-rtr-leaf-1:~$ show acl rule
    Table     Rule     Priority    Action    Match                   Status
    --------  -------  ----------  --------  ----------------------  --------
@@ -444,7 +458,7 @@ Utilizing the same table *EP1_DROP* we will update the ACL rule set on interface
                                             SRC_IP: 198.18.11.2/32
    EP1_DROP  RULE_10  10          FORWARD   SRC_IP: 198.18.11.2/32  Active
    ```
-9. Now switch back to *endpoint-1* and rerun the iPerf3 test.
+9.  Now switch back to *endpoint-1* and rerun the iPerf3 test.
    ```
    iperf3 -c 198.18.12.2
    ```
@@ -455,5 +469,5 @@ Utilizing the same table *EP1_DROP* we will update the ACL rule set on interface
    ```
 
 ## End of Intro to SONiC Lab
-Please proceed to [SONiC 102 Lab](https://github.com/scurvy-dog/sonic-dcloud/blob/main/2-SONiC_102/readme.md)
+Please proceed to [SONiC 102 Lab](https://github.com/scurvy-dog/sonic-dcloud/blob/main/2-SONiC_102/README.md)
 

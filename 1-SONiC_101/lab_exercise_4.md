@@ -90,7 +90,7 @@ You will be manually configuring the BFD configurations on *sonic-rtr-leaf-1* an
 	peer 10.1.1.0
 	exit
 	
-	router bgp 65001
+	router bgp 65000
 	neighbor 10.1.1.0 bfd
 	```
  

@@ -154,6 +154,19 @@ There are several relevant files for our ansible playbook
    exit
    !
    ```
+7. Write the config to memory:
+   ```
+   write
+   ```
+   ```
+   sonic-rtr-leaf-1# write
+   Note: this version of vtysh never writes vtysh.conf
+   Building Configuration...
+   Configuration saved to /etc/frr/zebra.conf
+   Configuration saved to /etc/frr/bgpd.conf
+   Configuration saved to /etc/frr/staticd.conf
+   ```
+
 ## Validate BGP Peering
 
 ### Verify BGP Peering Sessions
