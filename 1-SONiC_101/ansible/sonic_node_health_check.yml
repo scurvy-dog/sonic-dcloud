@@ -4,6 +4,11 @@
   hosts: localhost
 
   tasks:
+  # Clear sonic router ssh keys from jumpbox
+  - name: clear old ssh keys on jumpbox
+    command: "rm /home/cisco/.ssh/known_hosts"
+    ignore_errors: true
+
   # START LOGGING TO DEPLOY.LOG FILE
   - name: Post Start Health Check Script to Log
     lineinfile:
@@ -262,9 +267,3 @@
         create: yes
       delegate_to: localhost
 
-    - name: clear old ssh keys on jumphost
-      command: "rm .ssh/known_hosts"
-      args:
-        chdir: /home/cisco/
-      ignore_errors: yes
-      delegate_to: localhost
