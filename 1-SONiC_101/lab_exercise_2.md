@@ -240,7 +240,7 @@ There are several relevant files for our ansible playbook
 1. Log into SONiC router *sonic-rtr-leaf-1*
    ```
    ssh cisco@172.10.10.101
-   ssh cisco@sonic-rtr-leaf-1
+   ssh cisco@leaf-1
    ```
 2. Configure *Loopback0* and add IPv4 and IPv6
    ```

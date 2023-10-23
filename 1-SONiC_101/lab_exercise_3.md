@@ -81,7 +81,7 @@ There are several relevant files for our ansible playbook
 > Ansible playbook configured router *sonic-rtr-spine-1*, *sonic-rtr-spine-2*, and *sonic-rtr-leaf-2*. Next we'll manually configure BGP for router *sonic-rtr-leaf-1*.
    
 ## Configure BGP sonic-rtr-leaf-1 with FRR CLI
-1. From the jumpbox or from linux-host-1 SSH to SONiC router *sonic-rtr-leaf-1* (ssh cisco@sonic-rtr-leaf-1) and invoke the FRR CLI shell
+1. From the jumpbox or from linux-host-1 SSH to SONiC router *sonic-rtr-leaf-1* (ssh cisco@leaf-1) and invoke the FRR CLI shell
    ```
    vtysh
    ```
