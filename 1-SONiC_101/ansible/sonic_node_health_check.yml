@@ -261,3 +261,10 @@
         line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Deploy script complete. Check SONiC 101 troubleshooting.md instructions if any nodes have not come back with 'Router up' message"
         create: yes
       delegate_to: localhost
+
+    - name: clear old ssh keys on jumphost
+      command: "rm .ssh/known_hosts"
+      args:
+        chdir: /home/cisco/
+      ignore_errors: yes
+      delegate_to: localhost
