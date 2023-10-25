@@ -7,7 +7,7 @@ devices:
     image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.iso
     onie-install: /home/cisco/images/vxr-sonic-cisco-8000.bin
     platform: spitfire_f
-    linecard_types: [matilda32]
+    linecard_types: [8101-32H]
     linux_username: cisco
     linux_password: cisco123
     vxr_sim_config:
