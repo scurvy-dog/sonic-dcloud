@@ -30,10 +30,10 @@ for l in dl:
     ip = up[1]
 
     #r = os.popen('grep -r ' + up[3] ).read().strip()
-    lf = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/leaf*/ConfigVector.txt').read().strip()
-    print("leaf " + lf + " has ip " + up[1])
-    sp = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/spine*/ConfigVector.txt').read().strip()
-    print("spine " + sp + " has ip " + up[1])
+    # lf = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/leaf*/ConfigVector.txt').read().strip()
+    # print("leaf " + lf + " has ip " + up[1])
+    sp = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/p*lcc0lc0/ConfigVector.txt').read().strip()
+    print("node " + sp + " has ip " + up[1])
     rl =[]
 
     # convert to dict
