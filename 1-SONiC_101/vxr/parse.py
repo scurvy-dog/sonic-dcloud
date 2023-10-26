@@ -42,8 +42,8 @@ for l in dl:
     cl = (Convert(clst))
     #print(cl)
 
-lf = os.popen('ls -la /nobackup/root/pyvxr/leaf-*')
-sp = os.popen('ls -la /nobackup/root/pyvxr/spine-*')
+lf = os.popen('ls -la /nobackup/root/pyvxr/leaf-*').read().strip()
+sp = os.popen('ls -la /nobackup/root/pyvxr/spine-*').read().strip()
 print(lf)
 print(sp)
 
