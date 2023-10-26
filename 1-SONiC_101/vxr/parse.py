@@ -7,7 +7,8 @@ import json
 # comment out these two lines unless running script on dcloud linux host
 d = os.popen('arp -an | grep virbr0').read().strip()
 print("grep arp table")
-print(d)
+print(d + """
+      """)
 
 # Test data: uncomment the next 4 lines to have local test data
 
@@ -18,7 +19,7 @@ print(d)
 
 dl = d.split("\n")
 
-# function used later in code to convert list to dict
+# function used later in code to convert list to dict - may not be needed
 
 # def Convert(lst):
 #     res_dct = map(lambda i: (lst[i], lst[i+1]), range(len(lst)-1)[::2])
