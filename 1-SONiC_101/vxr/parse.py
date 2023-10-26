@@ -31,13 +31,13 @@ for l in dl:
 
     #r = os.popen('grep -r ' + up[3] ).read().strip()
     lf = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/leaf*/ConfigVector.txt').read().strip()
-    print("leaf with " + up[1] + "is " + lf)
+    print("leaf " + lf + " has ip " + up[1])
     sp = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/spine*/ConfigVector.txt').read().strip()
-    print("spine with " + up[1] + "is " + sp)
+    print("leaf " + sp + " has ip " + up[1])
     rl =[]
     #ql = r.split(" ")
-    print(lf)
-    print(sp)
+    # print(lf)
+    # print(sp)
 
     # Driver code
     lst = pl
