@@ -7,10 +7,11 @@ import json
 print("""
 symlink correlation: """)
 lf1 = os.popen('ls -la /nobackup/root/pyvxr/leaf-1').read().strip()
+leaf1 = lf1[-9:]
 sp1 = os.popen('ls -la /nobackup/root/pyvxr/spine-1').read().strip()
+spine1 = sp1[-9:]
 print(lf1[-9:] + " is leaf-1")
 print(sp1[-9:] + " is spine-1")
-
 
 # grep arp entries for virbr0
 # comment out these two lines unless running script on dcloud linux host
@@ -28,12 +29,6 @@ print(d + """
 
 dl = d.split("\n")
 
-# function used later in code to convert list to dict - may not be needed
-
-# def Convert(lst):
-#     res_dct = map(lambda i: (lst[i], lst[i+1]), range(len(lst)-1)[::2])
-#     return dict(res_dct)
-
 # for loop parses arp output, identifies IP and MAC
 for l in dl:
     pl = l.split(" ")
@@ -50,13 +45,9 @@ for l in dl:
 
     # correlate parsed arp with pyvxr directory/id
     corr = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/p*lcc0lc0/ConfigVector.txt').read().strip()
+    
     print("node " + corr[21:29] + " has ip " + up[1])
 
-    # convert to dict - probably not needed
-    # lst = pl
-    # clst = [x.upper() for x in lst]
-    # cl = (Convert(clst))
-    #print(cl)
 
 
 
