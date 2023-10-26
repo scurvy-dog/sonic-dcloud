@@ -40,8 +40,7 @@ for l in dl:
 
     # correlate parsed arp with pyvxr directory/id
     corr = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/p*lcc0lc0/ConfigVector.txt').read().strip()
-    print("node correlation " + corr[21:29])
-    print("node " + corr + " has ip " + up[1])
+    print("node " + corr[21:29] + " has ip " + up[1])
 
     # convert to dict - probably not needed
     # lst = pl
