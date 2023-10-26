@@ -3,6 +3,15 @@
 import os
 import json
 
+# correlate symlynk name to pyvxr directory 
+print("""
+symlink correlation: """)
+lf1 = os.popen('ls -la /nobackup/root/pyvxr/leaf-1').read().strip()
+sp1 = os.popen('ls -la /nobackup/root/pyvxr/spine-1').read().strip()
+print(lf1[-9] + " is leaf-1")
+print(sp1[-9] + " is spine-1")
+
+
 # grep arp entries for virbr0
 # comment out these two lines unless running script on dcloud linux host
 d = os.popen('arp -an | grep virbr0').read().strip()
@@ -49,13 +58,6 @@ for l in dl:
     # cl = (Convert(clst))
     #print(cl)
 
-# correlate symlynk name to pyvxr directory 
-print("""
-symlink correlation: """)
-lf = os.popen('ls -la /nobackup/root/pyvxr/leaf-*').read().strip()
-sp = os.popen('ls -la /nobackup/root/pyvxr/spine-*').read().strip()
-print(lf)
-print(sp)
 
 
  
