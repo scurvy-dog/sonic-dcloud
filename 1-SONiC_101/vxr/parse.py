@@ -8,10 +8,16 @@ print("""
 symlink correlation: """)
 lf1 = os.popen('ls -la /nobackup/root/pyvxr/leaf-1').read().strip()
 leaf1 = lf1[-9:]
+lf2 = os.popen('ls -la /nobackup/root/pyvxr/leaf-2').read().strip()
+leaf2 = lf2[-9:]
 sp1 = os.popen('ls -la /nobackup/root/pyvxr/spine-1').read().strip()
 spine1 = sp1[-9:]
+sp2 = os.popen('ls -la /nobackup/root/pyvxr/spine-2').read().strip()
+spine2 = sp2[-9:]
 print(lf1[-9:] + " is leaf-1")
+print(lf2[-9:] + " is leaf-2")
 print(sp1[-9:] + " is spine-1")
+print(sp2[-9:] + " is spine-2")
 
 # grep arp entries for virbr0
 # comment out these two lines unless running script on dcloud linux host
@@ -46,7 +52,15 @@ for l in dl:
     # correlate parsed arp with pyvxr directory/id
     corr = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/p*lcc0lc0/ConfigVector.txt').read().strip()
     
-    print("node " + corr[21:29] + " has ip " + up[1])
+    if corr[21:29] == leaf1:
+        print("leaf-1 has ip " + up[1])
+    if corr[21:29] == leaf2:
+        print("leaf-2 has ip " + up[1])
+    if corr[21:29] == spine1:
+        print("spine-1 has ip " + up[1])
+    if corr[21:29] == spine2:
+        print("spine-2 has ip " + up[1])
+    #print("node " + corr[21:29] + " has ip " + up[1])
 
 
 
