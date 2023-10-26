@@ -6,6 +6,7 @@ import json
 # grep arp entries for virbr0
 # comment out these two lines unless running script on dcloud linux host
 d = os.popen('arp -an | grep virbr0').read().strip()
+print("grep arp table")
 print(d)
 
 # Test data: uncomment the next 4 lines to have local test data
@@ -39,6 +40,7 @@ for l in dl:
 
     # correlate parsed arp with pyvxr directory/id
     corr = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/p*lcc0lc0/ConfigVector.txt').read().strip()
+    print("node correlation " + corr[21:29])
     print("node " + corr + " has ip " + up[1])
 
     # convert to dict - probably not needed
