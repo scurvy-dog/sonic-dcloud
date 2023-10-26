@@ -33,19 +33,14 @@ for l in dl:
     lf = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/leaf*/ConfigVector.txt').read().strip()
     print("leaf " + lf + " has ip " + up[1])
     sp = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/spine*/ConfigVector.txt').read().strip()
-    print("leaf " + sp + " has ip " + up[1])
+    print("spine " + sp + " has ip " + up[1])
     rl =[]
-    #ql = r.split(" ")
-    # print(lf)
-    # print(sp)
 
-    # Driver code
+    # convert to dict
     lst = pl
     clst = [x.upper() for x in lst]
     cl = (Convert(clst))
     #print(cl)
 
-    #r = os.popen('grep -r ' + pl[3]).read().strip()
-    # print(d)  
 
  
