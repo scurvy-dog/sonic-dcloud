@@ -24,7 +24,13 @@ for l in dl:
     pl = ' '.join(pl).replace('(','').split()
     pl = ' '.join(pl).replace(')','').split()
 
-    r = os.popen('grep -r ' + pl[3]).read().strip()
+    up = [x.upper() for x in pl]
+    #print(up)
+
+    #r = os.popen('grep -r ' + up[3] ).read().strip()
+    r = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/p*0lc0/ConfigVector.txt').read().strip()
+    rl =[]
+    #ql = r.split(" ")
     print(r)
 
     # Driver code
