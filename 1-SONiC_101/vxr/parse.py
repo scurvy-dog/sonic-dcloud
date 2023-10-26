@@ -14,7 +14,7 @@ sp1 = os.popen('ls -la /nobackup/root/pyvxr/spine-1').read().strip()
 spine1 = sp1[-9:]
 sp2 = os.popen('ls -la /nobackup/root/pyvxr/spine-2').read().strip()
 spine2 = sp2[-9:]
-print(lf1[-9:] + " is leaf-1")
+print(leaf1 + " is leaf-1")
 print(lf2[-9:] + " is leaf-2")
 print(sp1[-9:] + " is spine-1")
 print(sp2[-9:] + " is spine-2")
