@@ -57,13 +57,13 @@ for l in tlist:
     dir = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/p*lcc0lc0/ConfigVector.txt').read().strip()
     
     if dir[21:30] == leaf1:
-        print("leaf-1 has ip " + ipaddr[1])
+        print("leaf-1 has ip " + ipaddr)
     if dir[21:30] == leaf2:
-        print("leaf-2 has ip " + ipaddr[1])
+        print("leaf-2 has ip " + ipaddr)
     if dir[21:30] == spine1:
-        print("spine-1 has ip " + ipaddr[1])
+        print("spine-1 has ip " + ipaddr)
     if dir[21:30] == spine2:
-        print("spine-2 has ip " + ipaddr[1])
+        print("spine-2 has ip " + ipaddr)
     
 
 
