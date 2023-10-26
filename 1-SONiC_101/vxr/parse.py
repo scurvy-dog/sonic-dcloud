@@ -52,15 +52,15 @@ for l in dl:
     # correlate parsed arp with pyvxr directory/id
     corr = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/p*lcc0lc0/ConfigVector.txt').read().strip()
     
-    print("node " + corr[21:29] + " has ip " + up[1])
-    print(corr[21:30], leaf1)
+    # print("node " + corr[21:29] + " has ip " + up[1])
+    # print(corr[21:30], leaf1)
     if corr[21:30] == leaf1:
         print("leaf-1 has ip " + up[1])
-    if corr[21:29] == leaf2:
+    if corr[21:30] == leaf2:
         print("leaf-2 has ip " + up[1])
-    if corr[21:29] == spine1:
+    if corr[21:30] == spine1:
         print("spine-1 has ip " + up[1])
-    if corr[21:29] == spine2:
+    if corr[21:30] == spine2:
         print("spine-2 has ip " + up[1])
     
 
