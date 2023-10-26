@@ -27,9 +27,13 @@ for l in dl:
     up = [x.upper() for x in pl]
     #print(up)
 
+    ip = up[1]
+
     #r = os.popen('grep -r ' + up[3] ).read().strip()
     lf = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/leaf*/ConfigVector.txt').read().strip()
+    print("leaf with " + up[1] + "is " + lf)
     sp = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/spine*/ConfigVector.txt').read().strip()
+    print("spine with " + up[1] + "is " + sp)
     rl =[]
     #ql = r.split(" ")
     print(lf)
