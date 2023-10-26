@@ -51,7 +51,6 @@ for l in tlist:
     up = [x.upper() for x in pl]
 
     ipaddr = up[1]
-    print(ipaddr)
 
     # correlate parsed arp with pyvxr directory/id
     dir = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/p*lcc0lc0/ConfigVector.txt').read().strip()
