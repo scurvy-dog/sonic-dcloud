@@ -8,8 +8,8 @@ print("""
 symlink correlation: """)
 lf1 = os.popen('ls -la /nobackup/root/pyvxr/leaf-1').read().strip()
 sp1 = os.popen('ls -la /nobackup/root/pyvxr/spine-1').read().strip()
-print(lf1[-0:-9] + " is leaf-1")
-print(sp1[-9:-0] + " is spine-1")
+print(lf1[-9:] + " is leaf-1")
+print(sp1[-9:] + " is spine-1")
 
 
 # grep arp entries for virbr0
