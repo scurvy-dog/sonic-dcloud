@@ -22,7 +22,8 @@ print(sp2[-9:] + " is spine-2")
 # grep arp entries for virbr0
 # comment out these two lines unless running script on dcloud linux host
 d = os.popen('arp -an | grep virbr0').read().strip()
-print("grep arp table")
+print("""
+      grep arp table""")
 print(d + """
       """)
 
