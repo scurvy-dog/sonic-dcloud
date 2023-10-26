@@ -28,11 +28,12 @@ for l in dl:
     #print(up)
 
     #r = os.popen('grep -r ' + up[3] ).read().strip()
-    r = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/leaf*/ConfigVector.txt').read().strip()
-    r = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/spine*/ConfigVector.txt').read().strip()
+    lf = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/leaf*/ConfigVector.txt').read().strip()
+    sp = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/spine*/ConfigVector.txt').read().strip()
     rl =[]
     #ql = r.split(" ")
-    print(r)
+    print(lf)
+    print(sp)
 
     # Driver code
     lst = pl
