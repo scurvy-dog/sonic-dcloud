@@ -28,7 +28,8 @@ for l in dl:
     #print(up)
 
     #r = os.popen('grep -r ' + up[3] ).read().strip()
-    r = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/p*0lc0/ConfigVector.txt').read().strip()
+    r = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/leaf*/ConfigVector.txt').read().strip()
+    r = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/spine*/ConfigVector.txt').read().strip()
     rl =[]
     #ql = r.split(" ")
     print(r)
