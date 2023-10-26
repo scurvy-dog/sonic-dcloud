@@ -39,6 +39,8 @@ for l in dl:
     ip = up[1]
 
     # correlate parsed arp with pyvxr directory/id
+    print("""
+          node correlation:""")
     corr = os.popen('grep -r ' + up[3] + ' /nobackup/root/pyvxr/p*lcc0lc0/ConfigVector.txt').read().strip()
     print("node " + corr[21:29] + " has ip " + up[1])
 
@@ -49,6 +51,8 @@ for l in dl:
     #print(cl)
 
 # correlate symlynk name to pyvxr directory 
+print("""
+      symlink correlation: """)
 lf = os.popen('ls -la /nobackup/root/pyvxr/leaf-*').read().strip()
 sp = os.popen('ls -la /nobackup/root/pyvxr/spine-*').read().strip()
 print(lf)
