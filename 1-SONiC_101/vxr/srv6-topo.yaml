@@ -1,0 +1,101 @@
+devices:
+  Spine-01: &spine
+    platform: spitfire_f-baked
+    linecard_types: ['8201-32FH']
+    image: /opt/cisco/images/8000/xr7/7.10.1/8201-x64-7.10.1.qcow2
+    vxr_sim_config:
+      shelf:
+        ConfigS1NpsuiteVer:  '1.77.0'
+        ConfigS1SdkVer: '1.63.1.10'
+    cvac: configs/Spine-01.cfg
+
+  Spine-02:
+    <<: *spine
+    cvac: configs/Spine-02.cfg
+
+  Leaf-01: &leaf
+    platform: spitfire_f-baked
+    linecard_types: ['8102-64H']
+    image: /opt/cisco/images/8000/xr7/7.10.1/8102-x64-7.10.1.qcow2
+    vxr_sim_config:
+      shelf:
+        ConfigS1NpsuiteVer:  '1.124.0'
+        ConfigS1SdkVer: '1.63.1.10'
+    cvac: configs/Leaf-01.cfg
+
+  Leaf-02:
+    <<: *leaf
+    cvac: configs/Leaf-02.cfg
+
+  Leaf-03:
+    <<: *leaf
+    cvac: configs/Leaf-03.cfg
+
+  Core-AS200:
+    <<: *spine
+    cvac: configs/Core-AS200.cfg
+
+  Core-AS300:
+    <<: *spine
+    cvac: configs/Core-AS300.cfg
+
+  Site-2:
+    <<: *spine
+    cvac: configs/Site-2.cfg
+
+connections:
+  hubs:
+    Fab1:
+      - Leaf-01.HundredGigE0/0/0/63
+      - Spine-01.FourHundredGigE0/0/0/0
+    Fab2:
+      - Leaf-01.HundredGigE0/0/0/62
+      - Spine-02.FourHundredGigE0/0/0/0
+    Fab3:
+      - Leaf-02.HundredGigE0/0/0/63
+      - Spine-01.FourHundredGigE0/0/0/1
+    Fab4:
+      - Leaf-02.HundredGigE0/0/0/62
+      - Spine-02.FourHundredGigE0/0/0/1
+    Fab5:
+      - Leaf-03.HundredGigE0/0/0/63
+      - Spine-01.FourHundredGigE0/0/0/2
+    Fab6:
+      - Leaf-03.HundredGigE0/0/0/62
+      - Spine-02.FourHundredGigE0/0/0/2
+    Core1:
+      - Spine-01.FourHundredGigE0/0/0/31
+      - Core-AS200.FourHundredGigE0/0/0/0
+    Core2:
+      - Spine-02.FourHundredGigE0/0/0/31
+      - Core-AS300.FourHundredGigE0/0/0/0
+    S21:
+      - Site-2.FourHundredGigE0/0/0/31
+      - Core-AS200.FourHundredGigE0/0/0/1
+    S22:
+      - Site-2.FourHundredGigE0/0/0/30
+      - Core-AS300.FourHundredGigE0/0/0/1
+    backbone:
+      - Spine-02.FourHundredGigE0/0/0/30
+      - Site-2.FourHundredGigE0/0/0/29
+  custom:
+    lnx_br1:
+      ports:
+        - Leaf-01.HundredGigE0/0/0/0
+#        - Host-1.eth1
+      linux_bridge: br1
+    lnx_br2:
+      ports:
+        - Leaf-02.HundredGigE0/0/0/0
+#        - Host-2.eth1
+      linux_bridge: br2
+    lnx_br3:
+      ports:
+        - Leaf-03.HundredGigE0/0/0/0
+#        - Host-3.eth1
+      linux_bridge: br3
+    lnx_br4:
+      ports:
+        - Site-2.FourHundredGigE0/0/0/0
+#        - Host-4.eth1
+      linux_bridge: br4
