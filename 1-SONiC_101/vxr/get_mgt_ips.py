@@ -1,6 +1,4 @@
-#/usr/bin/python3
-
-# from 1-SONiC_101/vxr/ directory run "python3 parse.py"
+# from 1-SONiC_101/vxr/ directory run "python3 get_mgt_ips.py"
 
 import os
 import json
