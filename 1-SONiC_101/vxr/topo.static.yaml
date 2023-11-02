@@ -1,0 +1,96 @@
+simulation:
+   no_image_copy: true
+   #skip_auto_bringup: True
+
+devices:
+  leaf-1:
+    os_type: sonic
+    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.iso
+    onie-install: /home/cisco/images/vxr-sonic-cisco-8000.bin
+    platform: spitfire_f
+    linecard_types: [8101-32H]
+    linux_username: cisco
+    linux_password: cisco123
+    custom_mgmt_inf: True
+    mgmt_gateway_ip: 172.10.10.201
+    vxr_sim_config:
+      shelf:
+        ConfigS1SdkVer: '1.57.11.41'
+        ConfigS1NpsuiteVer: '1.105.0'
+    cli_commands: |
+                sudo config hostname sonic-rtr-leaf-1
+                sudo config interface ip add eth0 172.10.10.101/24
+
+  leaf-2:
+    os_type: sonic
+    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.iso
+    onie-install: /home/cisco/images/vxr-sonic-cisco-8000.bin
+    platform: spitfire_f
+    linecard_types: [8101-32H]
+    linux_username: cisco
+    linux_password: cisco123
+    custom_mgmt_inf: True
+    mgmt_gateway_ip: 172.10.10.201
+    vxr_sim_config:
+      shelf:
+        ConfigS1SdkVer: '1.57.11.41'
+    cli_commands: |
+                sudo config hostname sonic-rtr-leaf-2
+                sudo config interface ip add eth0 172.10.10.102/24
+
+  spine-1:
+    os_type: sonic
+    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.iso
+    onie-install: /home/cisco/images/vxr-sonic-cisco-8000.bin
+    platform: spitfire_f
+    linecard_types: [8101-32H]
+    linux_username: cisco
+    linux_password: cisco123
+    custom_mgmt_inf: True
+    mgmt_gateway_ip: 172.10.10.201
+    vxr_sim_config:
+      shelf:
+        ConfigS1SdkVer: '1.57.11.41'
+    cli_commands: |
+                sudo config hostname sonic-rtr-spine-1
+                sudo config interface ip add eth0 172.10.10.103/24
+
+  spine-2:
+    os_type: sonic
+    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.iso
+    onie-install: /home/cisco/images/vxr-sonic-cisco-8000.bin
+    platform: spitfire_f
+    linecard_types: [8101-32H]
+    linux_username: cisco
+    linux_password: cisco123
+    custom_mgmt_inf: True
+    mgmt_gateway_ip: 172.10.10.201
+    vxr_sim_config:
+      shelf:
+        ConfigS1SdkVer: '1.57.11.41'
+    cli_commands: |
+                sudo config hostname sonic-rtr-spine-2
+                sudo config interface ip add eth0 172.10.10.104/24
+
+connections:
+  hubs:
+    l1s1:         
+      - leaf-1.Ethernet[0..1]
+      - spine-1.Ethernet[0..1]
+
+    l1s2:         
+      - leaf-1.Ethernet[2..3]
+      - spine-2.Ethernet[2..3]
+
+    l2s1:         
+      - leaf-2.Ethernet[2..3]
+      - spine-1.Ethernet[2..3]
+
+    l2s2:         
+      - leaf-2.Ethernet[0..1]
+      - spine-2.Ethernet[0..1]
+  custom:
+    mgmt_con:
+      ports: [leaf-1.eth0,leaf-2.eth0,spine-1.eth0,spine-2.eth0]
+      linux_bridge: sonic_mgt_br
+      connection_type: tap

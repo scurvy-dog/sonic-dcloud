@@ -14,10 +14,6 @@ devices:
       shelf:
         ConfigS1SdkVer: '1.57.11.41'
         ConfigS1NpsuiteVer: '1.105.0'
-        # ConfigS1NpsuiteVer:  '1.77.0'
-        # ConfigS1SdkVer: '1.63.1.10'
-        #ConfigS1NplPath: /auto/vxr1/sonic-images/SDK1.41.1_NPS1.77.0/npl
-        #ConfigS1NpsuiteVer: 1.77.0
 
   leaf-2:
     <<: *sonic-rtr
