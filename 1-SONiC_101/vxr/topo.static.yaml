@@ -126,12 +126,10 @@ connections:
     endpoint_1:
       ports: [leaf-1.Ethernet8]
       linux_bridge: leaf1_e32
-      connection_type: tap
 
     endpoint_2:
       ports: [leaf-2.Ethernet8]
       linux_bridge: leaf2_e32
-      connection_type: tap
 
     mgmt_con:
       ports: [leaf-1.eth0,leaf-2.eth0,spine-1.eth0,spine-2.eth0]
