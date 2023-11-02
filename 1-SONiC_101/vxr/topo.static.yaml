@@ -74,22 +74,65 @@ devices:
 
 connections:
   hubs:
-    l1s1:         
-      - leaf-1.Ethernet[0..1]
-      - spine-1.Ethernet[0..1]
+    # l1s1:         
+    #   - leaf-1.Ethernet[0..1]
+    #   - spine-1.Ethernet[0..1]
 
-    l1s2:         
-      - leaf-1.Ethernet[2..3]
-      - spine-2.Ethernet[2..3]
+    # l1s2:         
+    #   - leaf-1.Ethernet[2..3]
+    #   - spine-2.Ethernet[2..3]
 
-    l2s1:         
-      - leaf-2.Ethernet[2..3]
-      - spine-1.Ethernet[2..3]
+    # l2s1:         
+    #   - leaf-2.Ethernet[2..3]
+    #   - spine-1.Ethernet[2..3]
 
-    l2s2:         
-      - leaf-2.Ethernet[0..1]
-      - spine-2.Ethernet[0..1]
+    # l2s2:         
+    #   - leaf-2.Ethernet[0..1]
+    #   - spine-2.Ethernet[0..1]
+    l1s1a:         
+      - leaf-1.Ethernet0
+      - spine-1.Ethernet0
+
+    l1s1b:         
+      - leaf-1.Ethernet1
+      - spine-1.Ethernet1
+
+    l1s2a:         
+      - leaf-1.Ethernet2
+      - spine-2.Ethernet2
+
+    l1s2b:         
+      - leaf-1.Ethernet3
+      - spine-2.Ethernet3
+
+    l2s1a:         
+      - leaf-2.Ethernet2
+      - spine-1.Ethernet2
+
+    l2s1b:         
+      - leaf-2.Ethernet3
+      - spine-1.Ethernet3
+
+    l2s2a:         
+      - leaf-2.Ethernet0
+      - spine-2.Ethernet0
+
+    l2s2b:         
+      - leaf-2.Ethernet1
+      - spine-2.Ethernet1
+
   custom:
+
+    endpoint_1:
+      ports: leaf-1.Ethernet8
+      linux_bridge: leaf-1-e32
+      connection_type: tap
+
+    endpoint_1:
+      ports: leaf-2.Ethernet8
+      linux_bridge: leaf-2-e32
+      connection_type: tap
+      
     mgmt_con:
       ports: [leaf-1.eth0,leaf-2.eth0,spine-1.eth0,spine-2.eth0]
       linux_bridge: sonic_mgt_br
