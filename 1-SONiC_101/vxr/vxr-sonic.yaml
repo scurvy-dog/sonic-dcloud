@@ -1,0 +1,80 @@
+simulation:
+    wait_for_interfaces: True
+
+devices:
+
+  R0:
+    platform: spitfire_f
+    os_type: sonic
+    image: /opt/cisco/images/onie-recovery-x86_64-cisco_8000-r0.qcow2
+    onie-install: /images/sonic-cisco-8000.bin
+    memory: "20GB"
+    
+    linecard_types: ['8101-32H']
+    num_fabcards: 1
+    console_ports: [60000,60001]
+    custom_mgmt_inf: True
+    # after booting onie, we will download sonic image via eth4
+    mgmt_gateway_ip: "192.168.123.1"
+    linux_config: |
+        ip addr add dev eth4 192.168.123.2/24
+        ip link set dev eth4 up
+    xr_config: |
+        sudo config interface ip add eth0 172.10.10.101/255.255.255.0 172.10.10.1
+        sudo config save -y
+    data_ports:
+    - eth1
+    - eth2
+    - eth3
+    - eth4
+    - eth5
+    - eth6
+    - eth7
+    - eth8
+    - eth9
+    - eth10
+    - eth11
+    - eth12
+    - eth13
+    - eth14
+    - eth15
+    - eth16
+    - eth17
+    - eth18
+    - eth19
+    - eth20
+    - eth21
+    - eth22
+    - eth23
+    - eth24
+    - eth25
+    - eth26
+    - eth27
+    - eth28
+    - eth29
+    - eth30
+    - eth31
+    - eth32
+
+connections:
+    custom:
+        mgmt:
+            ports: [R0.eth0]
+            ovs_bridge: mgmt_br
+            connection_type: tap   
+
+        eth1:
+            ports: [R0.eth1]
+            ovs_bridge: br-Port0
+        
+        eth2:
+            ports: [R0.eth2]
+            ovs_bridge: br-Port1
+        
+        eth3:
+            ports: [R0.eth3]
+            ovs_bridge: br-Port2
+        
+        eth4:
+            ports: [R0.eth4]
+            ovs_bridge: br-Port3

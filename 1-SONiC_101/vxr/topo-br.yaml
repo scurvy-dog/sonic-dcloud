@@ -73,59 +73,31 @@ devices:
                 sudo config interface ip add eth0 172.10.10.104/24
 
 connections:
-  hubs:
-    # l1s1:         
-    #   - leaf-1.Ethernet[0..1]
-    #   - spine-1.Ethernet[0..1]
-
-    # l1s2:         
-    #   - leaf-1.Ethernet[2..3]
-    #   - spine-2.Ethernet[2..3]
-
-    # l2s1:         
-    #   - leaf-2.Ethernet[2..3]
-    #   - spine-1.Ethernet[2..3]
-
-    # l2s2:         
-    #   - leaf-2.Ethernet[0..1]
-    #   - spine-2.Ethernet[0..1]
-
-    l1s1a:         
-      - leaf-1.Ethernet0
-      - spine-1.Ethernet0
-
-    l1s1b:         
-      - leaf-1.Ethernet4
-      - spine-1.Ethernet4
-
-    l1s2a:         
-      - leaf-1.Ethernet8
-      - spine-2.Ethernet8
-
-    l1s2b:         
-      - leaf-1.Ethernet12
-      - spine-2.Ethernet12
-
-    l2s1a:         
-      - leaf-2.Ethernet8
-      - spine-1.Ethernet8
-
-    l2s1b:         
-      - leaf-2.Ethernet12
-      - spine-1.Ethernet12
-
-    l2s2a:         
-      - leaf-2.Ethernet0
-      - spine-2.Ethernet0
-
-    l2s2b:         
-      - leaf-2.Ethernet4
-      - spine-2.Ethernet4
 
   custom:
 
+    l1s1a:
+      ports:
+      ports: [leaf-1.Ethernet0,spine-1.Ethernet0]
+      linux_bridge: l1s1a
+
+    l1s1b:
+      ports:
+      ports: [leaf-1.Ethernet4,spine-1.Ethernet4]
+      linux_bridge: l1s1b
+
+    l1s2a:
+      ports:
+      ports: [leaf-1.Ethernet8,spine-2.Ethernet8]
+      linux_bridge: l1s2a
+
+    l1s2b:
+      ports:
+      ports: [leaf-1.Ethernet12,spine-2.Ethernet12]
+      linux_bridge: l1s2b
+
     endpoint_1:
-      ports: [leaf-1.Ethernet5]
+      ports: [leaf-1.Ethernet32]
       linux_bridge: leaf1_e32
 
     endpoint_2:
