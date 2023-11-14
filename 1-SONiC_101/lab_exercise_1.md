@@ -60,10 +60,10 @@ Please see the management topology network diagram below. Table-1 below lists th
 | linux-host-4 | 198.18.128.104 | Hosts sonic router sonic-rtr-leaf-1 |
 | endpoint-1 | 198.18.128.105 | VM used for testing       |
 | endpoint-2 | 198.18.128.106 | VM used for testing       |
-| sonic-rtr-leaf-1     | 172.10.10.101  | SONiC Router sonic-rtr-leaf-1       |
-| sonic-rtr-leaf-2     | 172.10.10.102  | SONiC Router sonic-rtr-leaf-2       |
-| sonic-rtr-spine-1    | 172.10.10.103  | SONiC Router sonic-rtr-spine-1      |
-| sonic-rtr-spine-2    | 172.10.10.104  | SONiC Router sonic-rtr-spine-2      |
+| sonic-rtr-leaf-1     | 192.168.122.101  | SONiC Router sonic-rtr-leaf-1       |
+| sonic-rtr-leaf-2     | 192.168.122.102  | SONiC Router sonic-rtr-leaf-2       |
+| sonic-rtr-spine-1    | 192.168.122.103  | SONiC Router sonic-rtr-spine-1      |
+| sonic-rtr-spine-2    | 192.168.122.104  | SONiC Router sonic-rtr-spine-2      |
 
 ### User Credentials
 For the host VMs use the following credentials:
@@ -162,16 +162,16 @@ For convenience we've put shortened hostname entries for the SONiC nodes in the 
   1. Ping each SONiC router management interface to see if the router has finished booting
      | Host name  | IP Address    |
      |:-----------|:--------------|
-     | leaf-1     | 172.10.10.101 |
-     | leaf-2     | 172.10.10.102 |
-     | spine-1    | 172.10.10.103 |
-     | spine-2    | 172.10.10.104 |
+     | leaf-1     | 192.168.122.101 |
+     | leaf-2     | 192.168.122.102 |
+     | spine-1    | 192.168.122.103 |
+     | spine-2    | 192.168.122.104 |
 
      ```
     cisco@jumpbox:~$ ping leaf-1
-    PING leaf-1 (172.10.10.101) 56(84) bytes of data.
-    64 bytes from leaf-1 (172.10.10.101): icmp_seq=1 ttl=64 time=0.947 ms
-    64 bytes from leaf-1 (172.10.10.101): icmp_seq=2 ttl=64 time=0.386 ms
+    PING leaf-1 (192.168.122.101) 56(84) bytes of data.
+    64 bytes from leaf-1 (192.168.122.101): icmp_seq=1 ttl=64 time=0.947 ms
+    64 bytes from leaf-1 (192.168.122.101): icmp_seq=2 ttl=64 time=0.386 ms
      ```
 
 > [!NOTE]
@@ -188,10 +188,10 @@ ssh cisco@spine-1
 ssh cisco@spine-2
 
 or
-ssh cisco@172.10.10.101
-ssh cisco@172.10.10.102
-ssh cisco@172.10.10.103
-ssh cisco@172.10.10.104
+ssh cisco@192.168.122.101
+ssh cisco@192.168.122.102
+ssh cisco@192.168.122.103
+ssh cisco@192.168.122.104
 ```
 > **NOTE**
 > Password for SONiC instances is cisco123
@@ -215,7 +215,7 @@ All access and/or use are subject to monitoring.
 
 Help:    https://sonic-net.github.io/SONiC/
 
-Last login: Mon Oct 16 03:59:53 2023 from 172.10.10.1
+Last login: Mon Oct 16 03:59:53 2023 from 192.168.122.1
 cisco@sonic:~$ 
 ```
 
