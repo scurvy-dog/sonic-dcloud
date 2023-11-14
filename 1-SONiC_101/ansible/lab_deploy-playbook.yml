@@ -41,7 +41,7 @@
         mode: 0644 
       
     - name: run VXR start on linux-host-1 to launch sonic 8000 emulator nodes
-      command: sudo vxr.py start 4-node-topo.yaml"
+      command: "sudo vxr.py start 4-node-topo.yaml"
       args:
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
       ignore_errors: yes
