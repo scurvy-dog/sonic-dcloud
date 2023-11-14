@@ -43,7 +43,7 @@
     - name: run VXR start on linux-host-1 to launch sonic 8000 emulator nodes - this will take about 6 minutes
       command: "sudo vxr.py start 4-node-topo.yaml"
       args:
-        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
+        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/
       ignore_errors: yes
 
     - name: reset user/group permissions on repo folders 
