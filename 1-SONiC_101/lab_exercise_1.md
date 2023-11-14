@@ -43,7 +43,7 @@ Device access for this lab is primarly through SSH. All of the VMs within this t
 
 Please see the management topology network diagram below. Table-1 below lists the IP address of each of the individual VMs for quick access to the lab. Alternatively you can access the Jumpbox VM which has access to all host-vms and the sonic router instance. 
 
-![Management Topology](./topo-drawings/management-network-medium.png)
+![Management Topology](./topo-drawings/management-network.png)
 
 > [!NOTE]
 > In dCloud we have a a relationship of one Ubuntu VM hosting one SONiC router container.
