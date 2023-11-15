@@ -13,14 +13,18 @@
         dest: "/etc/sonic/config_baseline.json"
         mode: 0644
 
-    - name: Load configuration
-      expect:
-        command: sudo config load /etc/sonic/config_baseline.json
-        responses:
-          (.*)y/N(.*): "y"
-        timeout: 90
+    - name: sonic config load
+      command: "sudo config load /etc/sonic/config_baseline.json -y"
       ignore_errors: yes
-      register: load_result
+
+    # - name: Load configuration
+    #   expect:
+    #     command: sudo config load /etc/sonic/config_baseline.json
+    #     responses:
+    #       (.*)y/N(.*): "y"
+    #     timeout: 90
+    #   ignore_errors: yes
+    #   register: load_result
 
     - name: restart hostname service
       command: sudo systemctl restart hostname-config
@@ -37,13 +41,17 @@
       ignore_errors: yes
 
     - name: Save sonic configuration
-      expect:
-        command: sudo config save
-        responses:
-          (.*)y/N(.*): "y"
-        timeout: 90
+      command: "sudo config save -y"
       ignore_errors: yes
-      register: save_result
+
+    # - name: Save sonic configuration
+    #   expect:
+    #     command: sudo config save
+    #     responses:
+    #       (.*)y/N(.*): "y"
+    #     timeout: 90
+    #   ignore_errors: yes
+    #   register: save_result
 
     - name: Copy nano-tiny debian package to VMs
       copy:
