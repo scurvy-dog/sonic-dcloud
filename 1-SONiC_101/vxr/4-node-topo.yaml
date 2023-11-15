@@ -94,8 +94,8 @@ connections:
 
     endpoint_1:
       ports: [leaf-1.Ethernet5]
-      linux_bridge: leaf1_e32
+      linux_bridge: leaf1_e16
 
     endpoint_2:
       ports: [leaf-2.Ethernet5]
-      linux_bridge: leaf2_e32
+      linux_bridge: leaf2_e16
