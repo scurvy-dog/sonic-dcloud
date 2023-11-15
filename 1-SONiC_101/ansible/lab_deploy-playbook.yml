@@ -45,6 +45,11 @@
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/vxr/
       ignore_errors: yes
 
+    - name: pause for 15 seconds
+      pause:
+        seconds: 15
+      become: false
+
     - name: reset user/group permissions on repo folders 
       command: "chown -R cisco:cisco /home/cisco/sonic-dcloud"
       ignore_errors: yes
@@ -65,10 +70,7 @@
       command: "ping 192.168.122.104 -c 2"
       ignore_errors: yes
 
-- name: Pause for 4 minutes then check sonic VMs interface status
-  hosts: localhost
-  tasks:
-    - name: pause  
+    - name: pause for 4 minutes while sonic nodes complete their build and interface assignments
       pause:
         minutes: 4
       become: false
