@@ -54,22 +54,6 @@
       command: "chown -R cisco:cisco /home/cisco/sonic-dcloud"
       ignore_errors: yes
 
-    - name: ping sonic leaf-1 management IP
-      command: "ping 192.168.122.101 -c 2"
-      ignore_errors: yes
-
-    - name: ping sonic leaf-2 management IP
-      command: "ping 192.168.122.102 -c 2"
-      ignore_errors: yes
-
-    - name: ping sonic spine-1 management IP
-      command: "ping 192.168.122.103 -c 2"
-      ignore_errors: yes
-
-    - name: ping sonic spine-2 management IP
-      command: "ping 192.168.122.104 -c 2"
-      ignore_errors: yes
-
     - name: pause for 4 minutes while sonic nodes complete their build and interface assignments
       pause:
         minutes: 4
@@ -86,7 +70,7 @@
     - name: Save interfaces status to local log file
       become: false
       lineinfile:
-        path: "/home/cisco/sonic-dcloud/1-SONiC_101/vxr/deploy.log"
+        path: "/home/cisco/deploy.log"
         line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ inventory_hostname }} {{ show_int_status.stdout }}"
         create: yes
       delegate_to: localhost
