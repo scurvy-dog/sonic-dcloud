@@ -46,9 +46,8 @@ Please see the management topology network diagram below. Table-1 below lists th
 ![Management Topology](./topo-drawings/management-network.png)
 
 > [!NOTE]
-> In dCloud we have a a relationship of one Ubuntu VM hosting one SONiC router container.
+> In dCloud we have a a relationship of one Ubuntu VM hosting four SONiC router instances.
 >
-![Container Topology](./topo-drawings/dcloud-container-view-small.png)
 
 **Table 1**
 | Host name  | IP Address     | Description               |
