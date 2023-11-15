@@ -8,7 +8,7 @@
   tasks:
 
     - name: run vxr clean
-      command: sudo vxr.py clean"
+      command: "sudo vxr.py clean"
       args:
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/vxr/
       ignore_errors: yes
