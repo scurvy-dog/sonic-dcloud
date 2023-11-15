@@ -29,7 +29,7 @@
         create: yes
       delegate_to: localhost
       
-- name: Setup lab and deploy SONiC containerlab nodes
+- name: Setup lab using vxr.py to deploy SONiC nodes
   hosts: localhost
   become: true
   tasks: 
@@ -85,7 +85,7 @@
       become: false
       lineinfile:
         path: "/home/cisco/sonic-dcloud/1-SONiC_101/vxr/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ hostvars[inventory_hostname]['sonic_rtr'] }} {{ grep_result.stdout }}"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ hostvars[inventory_hostname]['sonic_rtr'] }} {{ show_int_status.stdout }}"
         create: yes
       delegate_to: localhost
 
