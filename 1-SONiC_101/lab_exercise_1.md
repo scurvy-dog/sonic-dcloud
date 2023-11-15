@@ -33,7 +33,7 @@ To create the SONiC environment we are using Containerlab (https://containerlab.
 
 For connectivity between virtual SONiC routers we use point-to-point VXLAN tunnels between the host-VMs. For connecitivty between the SONiC VMs and external test VM clients are using linux bridges.
 
-![Software Stack](./topo-drawings/software-stack-c8k.png)
+![Software Stack](./topo-drawings/software-stack.png)
 
 ## Device Access
 
