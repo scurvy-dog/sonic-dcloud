@@ -27,11 +27,11 @@ The student upon completion of Lab 1 should have achieved the following objectiv
 
 ## Virtualization Stack
 
-The software virtualization stack used in this lab consists of several layers. At the base Linux OS level it is possible to run this lab either on bare metal or in a virtualized environment. In our dCloud lab we're running the 4-router topology inside 4 host Ubuntu VMs.  The scale requirements for Cisco 8000 can be found at the link [HERE}(https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000-emulator/cisco8000-hardware-emulator-datasheet.html)
+The software virtualization stack used in this lab consists of several layers. At the base Linux OS level it is possible to run this lab either on bare metal or in a virtualized environment. In our dCloud lab we're running the 4-router topology inside one host Ubuntu VM named *linux-host-1*.  The scale requirements for Cisco 8000 emumlator can be found at the link [HERE](https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000-emulator/cisco8000-hardware-emulator-datasheet.html)
 
-To create the SONiC environment we are using Containerlab (https://containerlab.dev/) to orchestrate and manage our container-based network topology. Containerlab allows us to use a yaml definition file to spin up a Dockerized Cisco 8000 hardware emulator (C8k emulator). The C8k emulator itself utilizes qemu/kvm to create a nested virtual machine which contains the simulated hardware environment. Within that simulated environment VXR will boot the SONiC operating system. 
+To create the SONiC environment we are using Ansible to orchestrate and manage our container-based network topology. Cisco VXR allows us to use a yaml definition file to spin up a Cisco 8000 hardware emulator (C8k emulator). The C8k emulator itself utilizes QEMU/kvm to create a nested virtual machine which contains the simulated hardware environment. Within that simulated environment we will boot ONIE to boot the SONiC operating system. 
 
-For connectivity between virtual SONiC routers we use point-to-point VXLAN tunnels between the host-VMs. For connecitivty between the SONiC VMs and external test VM clients are using linux bridges.
+For connectivity between virtual SONiC routers we use bridges built by VXR Emulator. For connecitivty between the SONiC VMs and external test VM clients are using linux bridges.
 
 ![Software Stack](./topo-drawings/software-stack.png)
 
