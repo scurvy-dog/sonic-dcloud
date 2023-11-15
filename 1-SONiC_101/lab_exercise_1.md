@@ -53,11 +53,7 @@ Please see the management topology network diagram below. Table-1 below lists th
 **Table 1**
 | Host name  | IP Address     | Description               |
 |:-----------|:---------------|:--------------------------|
-| jumpbox    | 198.18.128.100 | Hosts ansible scripts     |
 | linux-host-1  | 198.18.128.101 | Hosts sonic router sonic-rtr-leaf-1 |
-| linux-host-2  | 198.18.128.102 | Hosts sonic router sonic-rtr-leaf-1 |
-| linux-host-3 | 198.18.128.103 | Hosts sonic router sonic-rtr-leaf-1 |
-| linux-host-4 | 198.18.128.104 | Hosts sonic router sonic-rtr-leaf-1 |
 | endpoint-1 | 198.18.128.105 | VM used for testing       |
 | endpoint-2 | 198.18.128.106 | VM used for testing       |
 | sonic-rtr-leaf-1     | 192.168.122.101  | SONiC Router sonic-rtr-leaf-1       |
