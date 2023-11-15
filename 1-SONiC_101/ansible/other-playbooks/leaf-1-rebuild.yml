@@ -55,7 +55,7 @@
       delegate_to: localhost
 
     - name: Ping test sonic-rtr-leaf-1
-      shell: ping -c 1 -W 5 172.10.10.101
+      shell: ping -c 1 -W 5 192.168.122.101
       register: ping_result
       ignore_errors: true
 

@@ -3,7 +3,7 @@ name: c8201-sonic-3-node
 mgmt:
   #network: fixedips
   network: mgt_net
-  ipv4_subnet: 172.10.10.0/24
+  ipv4_subnet: 192.168.122.0/24
   ipv6_subnet: 2001:172:10:10::/80
 
 topology:
@@ -19,19 +19,19 @@ topology:
   nodes:
     spine01:
       kind: linux
-      mgmt_ipv4: 172.10.10.2
+      mgmt_ipv4: 192.168.122.2
       mgmt_ipv6: 2001:172:10:10::2
 
     spine02:
       kind: linux
-      mgmt_ipv4: 172.10.10.3
+      mgmt_ipv4: 192.168.122.3
       mgmt_ipv6: 2001:172:10:10::3
 
     leaf01:
       kind: linux
       wait-for:
         - spine01
-      mgmt_ipv4: 172.10.10.4
+      mgmt_ipv4: 192.168.122.4
       mgmt_ipv6: 2001:172:10:10::4
 
     leaf01e32-host1:

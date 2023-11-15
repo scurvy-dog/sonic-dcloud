@@ -27,13 +27,13 @@ The student upon completion of Lab 1 should have achieved the following objectiv
 
 ## Virtualization Stack
 
-The software virtualization stack used in this lab consists of several layers. At the base Linux OS level it is possible to run this lab either on bare metal or in a virtualized environment. In our dCloud lab we're running the 4-router topology inside 4 host Ubuntu VMs.  The scale requirements for Cisco 8000 can be found at the link [HERE}(https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000-emulator/cisco8000-hardware-emulator-datasheet.html)
+The software virtualization stack used in this lab consists of several layers. At the base Linux OS level it is possible to run this lab either on bare metal or in a virtualized environment. In our dCloud lab we're running the 4-router topology inside one host Ubuntu VM named *linux-host-1*.  The scale requirements for Cisco 8000 emumlator can be found at the link [HERE](https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000-emulator/cisco8000-hardware-emulator-datasheet.html)
 
-To create the SONiC environment we are using Containerlab (https://containerlab.dev/) to orchestrate and manage our container-based network topology. Containerlab allows us to use a yaml definition file to spin up a Dockerized Cisco 8000 hardware emulator (C8k emulator). The C8k emulator itself utilizes qemu/kvm to create a nested virtual machine which contains the simulated hardware environment. Within that simulated environment VXR will boot the SONiC operating system. 
+To create the SONiC environment we are using Ansible to orchestrate and manage our container-based network topology. Cisco VXR allows us to use a yaml definition file to spin up a Cisco 8000 hardware emulator (C8k emulator). The C8k emulator itself utilizes QEMU/kvm to create a nested virtual machine which contains the simulated hardware environment. Within that simulated environment we will boot ONIE to boot the SONiC operating system. 
 
-For connectivity between virtual SONiC routers we use point-to-point VXLAN tunnels between the host-VMs. For connecitivty between the SONiC VMs and external test VM clients are using linux bridges.
+For connectivity between virtual SONiC routers we use bridges built by VXR Emulator. For connecitivty between the SONiC VMs and external test VM clients are using linux bridges.
 
-![Software Stack](./topo-drawings/software-stack-c8k.png)
+![Software Stack](./topo-drawings/software-stack.png)
 
 ## Device Access
 
@@ -43,27 +43,22 @@ Device access for this lab is primarly through SSH. All of the VMs within this t
 
 Please see the management topology network diagram below. Table-1 below lists the IP address of each of the individual VMs for quick access to the lab. Alternatively you can access the Jumpbox VM which has access to all host-vms and the sonic router instance. 
 
-![Management Topology](./topo-drawings/management-network-medium.png)
+![Management Topology](./topo-drawings/management-network.png)
 
 > [!NOTE]
-> In dCloud we have a a relationship of one Ubuntu VM hosting one SONiC router container.
+> In dCloud we have a a relationship of one Ubuntu VM hosting four SONiC router instances.
 >
-![Container Topology](./topo-drawings/dcloud-container-view-small.png)
 
 **Table 1**
 | Host name  | IP Address     | Description               |
 |:-----------|:---------------|:--------------------------|
-| jumpbox    | 198.18.128.100 | Hosts ansible scripts     |
 | linux-host-1  | 198.18.128.101 | Hosts sonic router sonic-rtr-leaf-1 |
-| linux-host-2  | 198.18.128.102 | Hosts sonic router sonic-rtr-leaf-1 |
-| linux-host-3 | 198.18.128.103 | Hosts sonic router sonic-rtr-leaf-1 |
-| linux-host-4 | 198.18.128.104 | Hosts sonic router sonic-rtr-leaf-1 |
 | endpoint-1 | 198.18.128.105 | VM used for testing       |
 | endpoint-2 | 198.18.128.106 | VM used for testing       |
-| sonic-rtr-leaf-1     | 172.10.10.101  | SONiC Router sonic-rtr-leaf-1       |
-| sonic-rtr-leaf-2     | 172.10.10.102  | SONiC Router sonic-rtr-leaf-2       |
-| sonic-rtr-spine-1    | 172.10.10.103  | SONiC Router sonic-rtr-spine-1      |
-| sonic-rtr-spine-2    | 172.10.10.104  | SONiC Router sonic-rtr-spine-2      |
+| sonic-rtr-leaf-1     | 192.168.122.101  | SONiC Router sonic-rtr-leaf-1       |
+| sonic-rtr-leaf-2     | 192.168.122.102  | SONiC Router sonic-rtr-leaf-2       |
+| sonic-rtr-spine-1    | 192.168.122.103  | SONiC Router sonic-rtr-spine-1      |
+| sonic-rtr-spine-2    | 192.168.122.104  | SONiC Router sonic-rtr-spine-2      |
 
 ### User Credentials
 For the host VMs use the following credentials:
@@ -162,16 +157,16 @@ For convenience we've put shortened hostname entries for the SONiC nodes in the 
   1. Ping each SONiC router management interface to see if the router has finished booting
      | Host name  | IP Address    |
      |:-----------|:--------------|
-     | leaf-1     | 172.10.10.101 |
-     | leaf-2     | 172.10.10.102 |
-     | spine-1    | 172.10.10.103 |
-     | spine-2    | 172.10.10.104 |
+     | leaf-1     | 192.168.122.101 |
+     | leaf-2     | 192.168.122.102 |
+     | spine-1    | 192.168.122.103 |
+     | spine-2    | 192.168.122.104 |
 
      ```
     cisco@jumpbox:~$ ping leaf-1
-    PING leaf-1 (172.10.10.101) 56(84) bytes of data.
-    64 bytes from leaf-1 (172.10.10.101): icmp_seq=1 ttl=64 time=0.947 ms
-    64 bytes from leaf-1 (172.10.10.101): icmp_seq=2 ttl=64 time=0.386 ms
+    PING leaf-1 (192.168.122.101) 56(84) bytes of data.
+    64 bytes from leaf-1 (192.168.122.101): icmp_seq=1 ttl=64 time=0.947 ms
+    64 bytes from leaf-1 (192.168.122.101): icmp_seq=2 ttl=64 time=0.386 ms
      ```
 
 > [!NOTE]
@@ -188,10 +183,10 @@ ssh cisco@spine-1
 ssh cisco@spine-2
 
 or
-ssh cisco@172.10.10.101
-ssh cisco@172.10.10.102
-ssh cisco@172.10.10.103
-ssh cisco@172.10.10.104
+ssh cisco@192.168.122.101
+ssh cisco@192.168.122.102
+ssh cisco@192.168.122.103
+ssh cisco@192.168.122.104
 ```
 > **NOTE**
 > Password for SONiC instances is cisco123
@@ -215,7 +210,7 @@ All access and/or use are subject to monitoring.
 
 Help:    https://sonic-net.github.io/SONiC/
 
-Last login: Mon Oct 16 03:59:53 2023 from 172.10.10.1
+Last login: Mon Oct 16 03:59:53 2023 from 192.168.122.1
 cisco@sonic:~$ 
 ```
 

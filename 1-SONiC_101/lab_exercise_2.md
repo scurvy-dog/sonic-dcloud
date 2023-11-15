@@ -239,7 +239,7 @@ There are several relevant files for our ansible playbook
 
 1. Log into SONiC router *sonic-rtr-leaf-1*
    ```
-   ssh cisco@172.10.10.101
+   ssh cisco@192.168.122.101
    ssh cisco@leaf-1
    ```
 2. Configure *Loopback0* and add IPv4 and IPv6
@@ -399,7 +399,7 @@ To check on interface status and connectivity follow these steps on each router 
   PortChannel1            10.1.1.0/31          up/up         N/A             N/A
   PortChannel2            10.1.1.2/31          up/up         N/A             N/A
   docker0                 240.127.1.1/24       up/down       N/A             N/A
-  eth0                    172.10.10.201/24     up/up         N/A             N/A
+  eth0                    192.168.122.201/24     up/up         N/A             N/A
   eth4                    192.168.123.188/24   up/up         N/A             N/A
   lo                      127.0.0.1/16         up/up         N/A             N/A
   cisco@sonic-rtr-leaf-1:~$ 

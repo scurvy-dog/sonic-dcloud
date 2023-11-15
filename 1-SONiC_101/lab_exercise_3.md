@@ -394,7 +394,7 @@ Validate IPv4 BGP route received from peer. We will examine *10.0.0.2/32* origin
      10.0.0.4 nhid 112 via 10.1.1.3 dev PortChannel2 proto bgp src 10.0.0.1 metric 20 
      10.1.1.0/31 dev PortChannel1 proto kernel scope link src 10.1.1.0 
      10.1.1.2/31 dev PortChannel2 proto kernel scope link src 10.1.1.2 
-     172.10.10.0/24 dev eth0 proto kernel scope link src 172.10.10.101 
+     192.168.122.0/24 dev eth0 proto kernel scope link src 192.168.122.101 
      192.168.123.0/24 dev eth4 proto kernel scope link src 192.168.123.4 
      198.18.11.0/24 dev Ethernet32 proto kernel scope link src 198.18.11.1 
      198.18.12.0/24 nhid 121 proto bgp src 10.0.0.1 metric 20 

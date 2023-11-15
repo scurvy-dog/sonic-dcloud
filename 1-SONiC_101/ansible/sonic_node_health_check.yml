@@ -18,7 +18,7 @@
       
   # CHECK SONiC ROUTER sonic-rtr-leaf-1 STATUS
   - name: Ping test sonic-rtr-leaf-1
-    shell: ping -c 1 -W 5 172.10.10.101
+    shell: ping -c 1 -W 5 192.168.122.101
     register: ping_result1
     ignore_errors: true
 
@@ -57,7 +57,7 @@
 
   # CHECK SONiC ROUTER sonic-rtr-leaf-2 STATUS
   - name: Ping test sonic-rtr-leaf-2
-    shell: ping -c 1 -W 5 172.10.10.102
+    shell: ping -c 1 -W 5 192.168.122.102
     register: ping_result2
     ignore_errors: true
 
@@ -96,7 +96,7 @@
 
   # CHECK SONiC ROUTER sonic-rtr-spine-1 STATUS
   - name: Ping test sonic-rtr-spine-1
-    shell: ping -c 1 -W 5 172.10.10.103
+    shell: ping -c 1 -W 5 192.168.122.103
     register: ping_result3
     ignore_errors: true
 
@@ -135,7 +135,7 @@
 
   # CHECK SONiC ROUTER sonic-rtr-spine-2 STATUS
   - name: Ping test sonic-rtr-spine-2
-    shell: ping -c 1 -W 5 172.10.10.104
+    shell: ping -c 1 -W 5 192.168.122.104
     register: ping_result4
     ignore_errors: true
 

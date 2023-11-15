@@ -74,7 +74,7 @@ The most common trouble scenarios we've seen are:
    root@sonic-rtr-spine-2:/nobackup# ./startup.sh 8000.yaml 4
    Invoking /nobackup/startup.py 8000.yaml 4 4
    ['/nobackup/startup.py', '8000.yaml', '4', '4']
-   MGMT_IP: 172.10.10.104  MASK: 255.255.255.0  GATEWAY: 172.10.10.1
+   MGMT_IP: 192.168.122.104  MASK: 255.255.255.0  GATEWAY: 192.168.122.1
    Found 4 data interfaces (expected 4)
    ...
    ...
@@ -173,6 +173,6 @@ cisco@sonic:~$
 >   Interface    Master    IPv4 address/mask    Admin/Oper    BGP Neighbor    Neighbor IP
 >   -----------  --------  -------------------  ------------  --------------  -------------
 >   docker0                240.127.1.1/24       up/down       N/A             N/A
->   eth0                   172.10.10.101/24     up/up         N/A             N/A           <--- MGMT INTERFACE
+>   eth0                   192.168.122.101/24     up/up         N/A             N/A           <--- MGMT INTERFACE
 >   eth4                   192.168.123.246/24   up/up         N/A             N/A 
 >   lo                     127.0.0.1/16         up/up         N/A             N/A  
