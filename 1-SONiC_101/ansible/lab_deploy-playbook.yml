@@ -33,7 +33,7 @@
   hosts: localhost
   become: true
   tasks: 
-    - name: Copy motd file to remote vm
+    - name: Copy motd file to linux-host-1
       copy:
         src: "motd"
         dest: "/etc/motd"
@@ -85,7 +85,7 @@
       become: false
       lineinfile:
         path: "/home/cisco/sonic-dcloud/1-SONiC_101/vxr/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ hostvars[inventory_hostname]['sonic_rtr'] }} {{ show_int_status.stdout }}"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ inventory_hostname }} {{ show_int_status.stdout }}"
         create: yes
       delegate_to: localhost
 
