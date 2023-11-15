@@ -49,11 +49,20 @@
       command: "chown -R cisco:cisco /home/cisco/sonic-dcloud"
       ignore_errors: yes
 
-- name: ping sonic management IPs
-  hosts: sonic_routers
-  tasks:
-    - name: ping
-      command: "ping {{ inventory_hostname }}"
+    - name: ping sonic leaf-1 management IP
+      command: "ping 192.168.122.101 -c 2"
+      ignore_errors: yes
+
+    - name: ping sonic leaf-2 management IP
+      command: "ping 192.168.122.102 -c 2"
+      ignore_errors: yes
+
+    - name: ping sonic spine-1 management IP
+      command: "ping 192.168.122.103 -c 2"
+      ignore_errors: yes
+
+    - name: ping sonic spine-2 management IP
+      command: "ping 192.168.122.104 -c 2"
       ignore_errors: yes
 
 - name: Pause for 4 minutes then check sonic VMs interface status
@@ -64,20 +73,18 @@
         minutes: 4
       become: false
 
-    - name: GREP - Wait for 'Sim up' or 'Sim failed' message to appear in logs
-      shell: cat pyvxr.log | grep Sim || true
-      args:
-        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/vxr/
-      register: grep_result
-      until: grep_result.stdout_lines | length > 0
-      retries: 6  # Number of times to retry
-      delay: 30  # Delay between retries
-      timeout: 180  # Maximum time to wait (in seconds) 
+- name: verify sonic routers' health status
+  hosts: sonic_routers
+  tasks:
+    - name: show interfaces status
+      command: show interfaces status
+      ignore_errors: yes
+      register: show_int_status
       
-    - name: Save grep output to a local log file
+    - name: Save interfaces status to local log file
       become: false
       lineinfile:
-        path: "/home/cisco/deploy.log"
+        path: "/home/cisco/sonic-dcloud/1-SONiC_101/vxr/deploy.log"
         line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ hostvars[inventory_hostname]['sonic_rtr'] }} {{ grep_result.stdout }}"
         create: yes
       delegate_to: localhost
