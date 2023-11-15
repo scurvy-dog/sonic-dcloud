@@ -32,8 +32,7 @@
 - name: Setup lab and deploy SONiC containerlab nodes
   hosts: localhost
   become: true
-  tasks:
-      
+  tasks: 
     - name: Copy motd file to remote vm
       copy:
         src: "motd"
@@ -43,37 +42,45 @@
     - name: run VXR start on linux-host-1 to launch sonic 8000 emulator nodes - this will take about 6 minutes
       command: "sudo vxr.py start 4-node-topo.yaml"
       args:
-        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/
+        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/vxr/
       ignore_errors: yes
 
     - name: reset user/group permissions on repo folders 
       command: "chown -R cisco:cisco /home/cisco/sonic-dcloud"
       ignore_errors: yes
 
-    - name: ping sonic management IPs
-      command: "ping "
+- name: ping sonic management IPs
+  hosts: sonic_routers
+  tasks:
+    - name: ping
+      command: "ping {{ inventory_hostname }}"
       ignore_errors: yes
 
-    - name: Pause for 4 minutes then check sonic VMs interface status
+- name: Pause for 4 minutes then check sonic VMs interface status
+  hosts: localhost
+  tasks:
+    - name: pause  
       pause:
         minutes: 4
       become: false
 
-    # - name: GREP - Wait for 'Router up' or 'Router failed' message to appear in logs
-    #   shell: docker logs -t {{ hostvars[inventory_hostname]['container'] }} | grep Router || true
-    #   register: grep_result
-    #   until: grep_result.stdout_lines | length > 0
-    #   retries: 18  # Number of times to retry
-    #   delay: 30  # Delay between retries
-    #   timeout: 540  # Maximum time to wait (in seconds) 
+    - name: GREP - Wait for 'Sim up' or 'Sim failed' message to appear in logs
+      shell: cat pyvxr.log | grep Sim || true
+      args:
+        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/vxr/
+      register: grep_result
+      until: grep_result.stdout_lines | length > 0
+      retries: 6  # Number of times to retry
+      delay: 30  # Delay between retries
+      timeout: 180  # Maximum time to wait (in seconds) 
       
-    # - name: Save grep output to a local log file
-    #   become: false
-    #   lineinfile:
-    #     path: "/home/cisco/deploy.log"
-    #     line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ hostvars[inventory_hostname]['sonic_rtr'] }} {{ grep_result.stdout }}"
-    #     create: yes
-    #   delegate_to: localhost
+    - name: Save grep output to a local log file
+      become: false
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ hostvars[inventory_hostname]['sonic_rtr'] }} {{ grep_result.stdout }}"
+        create: yes
+      delegate_to: localhost
 
 # - name: run health check playbook
 #   import_playbook: sonic_node_health_check.yml
