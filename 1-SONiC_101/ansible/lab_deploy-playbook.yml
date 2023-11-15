@@ -40,27 +40,24 @@
         dest: "/etc/motd"
         mode: 0644 
       
-    - name: run VXR start on linux-host-1 to launch sonic 8000 emulator nodes
-      command: sudo vxr.py start 4-node-topo.yaml"
+    - name: run VXR start on linux-host-1 to launch sonic 8000 emulator nodes - this will take about 6 minutes
+      command: "sudo vxr.py start 4-node-topo.yaml"
       args:
-        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
+        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/
       ignore_errors: yes
 
-    # - name: reset user/group permissions on repo folders 
-    #   command: "chown -R cisco:cisco /home/cisco/sonic-dcloud"
-    #   ignore_errors: yes
+    - name: reset user/group permissions on repo folders 
+      command: "chown -R cisco:cisco /home/cisco/sonic-dcloud"
+      ignore_errors: yes
 
-    # - name: clear old ssh keys 
-    #   command: "rm .ssh/known_hosts"
-    #   args:
-    #     chdir: /home/cisco/
-    #   ignore_errors: yes
+    - name: ping sonic management IPs
+      command: "ping "
+      ignore_errors: yes
 
-    - name: Pause for 6 minutes then start checking docker logs for SONiC router build status
+    - name: Pause for 4 minutes then check sonic VMs interface status
       pause:
-        minutes: 6
+        minutes: 4
       become: false
-      delegate_to: localhost
 
     # - name: GREP - Wait for 'Router up' or 'Router failed' message to appear in logs
     #   shell: docker logs -t {{ hostvars[inventory_hostname]['container'] }} | grep Router || true
