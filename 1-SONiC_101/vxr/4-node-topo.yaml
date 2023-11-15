@@ -93,9 +93,9 @@ connections:
   custom:
 
     endpoint_1:
-      ports: [leaf-1.Ethernet5]
+      ports: [leaf-1.Ethernet4]
       linux_bridge: leaf1_e16
 
     endpoint_2:
-      ports: [leaf-2.Ethernet5]
+      ports: [leaf-2.Ethernet4]
       linux_bridge: leaf2_e16
