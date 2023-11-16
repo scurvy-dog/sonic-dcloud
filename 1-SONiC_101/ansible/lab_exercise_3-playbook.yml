@@ -20,12 +20,9 @@
         dest: "/etc/sonic/frr/bgpd.conf"
         mode: 0644
 
-    - name: Stop BGP container
-      command: docker stop bgp
-      timeout: 20
-
-    - name: Start BGP container
-      command: docker start bgp
-      timeout: 10
+    - name: Load the FRR config through vtysh
+      command: vtysh -f /etc/sonic/frr/bgpd.conf
+      ignore_errors: yes
+      register: frr_load_result
 
 
