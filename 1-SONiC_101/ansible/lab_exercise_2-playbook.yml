@@ -53,17 +53,20 @@
     #   ignore_errors: yes
     #   register: save_result
 
-    - name: Copy nano-tiny debian package to VMs
+    - name: backup old debian apt sources.list
+      command: "sudo mv /etc/atp/sources.list /etc/atp/sources.list.bak"
+      ignore_errors: yes
+
+    - name: Copy debian apt sources.list file
       copy:
-        src: "/home/cisco/packages/nano-tiny_3.2-3_amd64.deb"
-        dest: "/var/cache/apt/archives/nano-tiny_3.2-3_amd64.deb"
+        src: "{{ inventory_hostname }}/sources.list"
+        dest: "/etc/apt/sources.list"
         mode: 0644
 
-    - name: apt install nano-tiny
-      command: sudo apt-get install /var/cache/apt/archives/nano-tiny_3.2-3_amd64.deb -y
+    - name: run apt update
+      command: "sudo apt update"
       ignore_errors: yes
-      register: save_result
 
-    - name: create nano binary from nano-tiny
-      command: "sudo cp /usr/bin/nano-tiny /usr/local/bin/nano"
+    - name: apt install nano
+      command: "sudo apt install nano -y"
       ignore_errors: yes
