@@ -39,11 +39,7 @@ We primarily use SSH to interact with all VMs and SONiC routers, however, dCloud
 ### Virtual Machine Access Table
 | VM Name        | Description                    | Device Type | Access Type |   IP Address    |
 |:---------------|:-------------------------------|:-----------:|:-----------:|:---------------:|
-| jumpbox        | File Staging, Ansible Playbooks| VM          | SSH         | 198.18.128.100  |
 | linux-host-1   | C8k Emulator + SONiC routers   | VM          | SSH         | 198.18.128.101  |
-| linux-host-2   | C8k Emulator + SONiC routers   | VM          | SSH         | 198.18.128.102  |
-| linux-host-3   | C8k Emulator + SONiC routers   | VM          | SSH         | 198.18.128.103  |
-| linux-host-4   | C8k Emulator + SONiC routers   | VM          | SSH         | 198.18.128.104  |
 | endpoint-1     | Ubuntu client                  | VM          | SSH         | 198.18.128.105  |
 | endpoint-2     | Ubuntu client                  | VM          | SSH         | 198.18.128.106  |
 
@@ -52,10 +48,10 @@ We primarily use SSH to interact with all VMs and SONiC routers, however, dCloud
 
 | Device Name       | Device Type | Access Type |   IP Address    |                                           
 |:------------------|:------------|:------------|:---------------:|                          
-| sonic-rtr-leaf-1  | router      | SSH         | 192.168.122.101   |
-| sonic-rtr-leaf-2  | router      | SSH         | 192.168.122.102   |
-| sonic-rtr-spine-1 | router      | SSH         | 192.168.122.103   |
-| sonic-rtr-spine-2 | router      | SSH         | 192.168.122.104   |
+| sonic-rtr-leaf-1  | router      | SSH         | 192.168.122.101 |
+| sonic-rtr-leaf-2  | router      | SSH         | 192.168.122.102 |
+| sonic-rtr-spine-1 | router      | SSH         | 192.168.122.103 |
+| sonic-rtr-spine-2 | router      | SSH         | 192.168.122.104 |
 
 ## dCloud Session Overview
 When a Cisco dCloud session is launched the scheduler will set a start time at the next quarter-hour mark (top of the hour, 15 after, etc.). Upon reaching the start time dCloud builds out the virtual machine environment, which usually becomes available in just a few minutes.  
