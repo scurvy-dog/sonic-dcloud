@@ -17,15 +17,6 @@
       command: "sudo config load /etc/sonic/config_baseline.json -y"
       ignore_errors: yes
 
-    # - name: Load configuration
-    #   expect:
-    #     command: sudo config load /etc/sonic/config_baseline.json
-    #     responses:
-    #       (.*)y/N(.*): "y"
-    #     timeout: 90
-    #   ignore_errors: yes
-    #   register: load_result
-
     - name: restart hostname service
       command: sudo systemctl restart hostname-config
       ignore_errors: yes
@@ -44,17 +35,8 @@
       command: "sudo config save -y"
       ignore_errors: yes
 
-    # - name: Save sonic configuration
-    #   expect:
-    #     command: sudo config save
-    #     responses:
-    #       (.*)y/N(.*): "y"
-    #     timeout: 90
-    #   ignore_errors: yes
-    #   register: save_result
-
     - name: backup old debian apt sources.list
-      command: "sudo mv /etc/atp/sources.list /etc/atp/sources.list.bak"
+      command: "sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak"
       ignore_errors: yes
 
     - name: Copy debian apt sources.list file
