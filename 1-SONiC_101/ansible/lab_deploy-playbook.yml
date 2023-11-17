@@ -80,7 +80,7 @@
       line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Running SONiC Router Health Check Script"
       create: yes
       
-  # CHECK SONiC ROUTER sonic-rtr-leaf-1 mgt interface
+  # Check sonic-rtr-leaf-1 mgt interface
   - name: Ping test sonic-rtr-leaf-1
     shell: ping -c 1 -W 5 192.168.122.101
     register: ping_result1
@@ -97,12 +97,6 @@
       - name: Print debug output sonic-rtr-leaf-1 interface
         debug:
           msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-leaf-1 mgt interface"
-
-      # - name: Add linux-host-1 to host group sonic_node_rebuild
-      #   add_host:
-      #     name: '198.18.128.101'
-      #     groups: sonic_node_rebuild
-
     when: (ping_result1.failed == true)
 
   - name: Conditional check if ping to sonic-rtr-leaf-1 success
@@ -119,7 +113,7 @@
 
     when: (ping_result1.failed == false)
 
-  # CHECK SONiC ROUTER sonic-rtr-leaf-2 STATUS
+  # Check sonic-rtr-leaf-2 mgt interface
   - name: Ping test sonic-rtr-leaf-2
     shell: ping -c 1 -W 5 192.168.122.102
     register: ping_result2
@@ -135,13 +129,7 @@
 
       - name: Print debug output sonic-rtr-leaf-2 status
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-leaf-2 mgt interface"
-
-      # - name: Add linux-host-2 to host group sonic_node_rebuild
-      #   add_host:
-      #     name: '198.18.128.102'
-      #     groups: sonic_node_rebuild
-          
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-leaf-2 mgt interface"   
     when: (ping_result2.failed == true)
 
   - name: Conditional check if ping to sonic-rtr-leaf-2 success
@@ -158,7 +146,7 @@
 
     when: (ping_result2.failed == false)
 
-  # CHECK SONiC ROUTER sonic-rtr-spine-1 STATUS
+  # Check sonic-rtr-spine-1 mgt interface
   - name: Ping test sonic-rtr-spine-1
     shell: ping -c 1 -W 5 192.168.122.103
     register: ping_result3
@@ -175,12 +163,6 @@
       - name: Print debug output sonic-rtr-spine-1 status
         debug:
           msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-spine-1 mgt interface"
-
-      # - name: Add linux-host-3 to host group sonic_node_rebuild
-      #   add_host:
-      #     name: '198.18.128.103'
-      #     groups: sonic_node_rebuild
-
     when: (ping_result3.failed == true)
 
   - name: Conditional check if ping to sonic-rtr-spine-1 success
@@ -197,7 +179,7 @@
 
     when: (ping_result3.failed == false)
 
-  # CHECK SONiC ROUTER sonic-rtr-spine-2 STATUS
+  # Check sonic-rtr-spine-2 mgt interface
   - name: Ping test sonic-rtr-spine-2
     shell: ping -c 1 -W 5 192.168.122.104
     register: ping_result4
@@ -214,12 +196,6 @@
       - name: Print debug output sonic-rtr-spine-2 status
         debug:
           msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-spine-2 mgt interface"
-
-      # - name: Add linux-host-4 to host group sonic_node_rebuild
-      #   add_host:
-      #     name: '198.18.128.104'
-      #     groups: sonic_node_rebuild
-
     when: (ping_result4.failed == true)
 
   - name: Conditional check if ping to sonic-rtr-spine-2 success
@@ -249,6 +225,7 @@
       lineinfile:
         path: "/home/cisco/deploy.log"
         line: "
+        
         {{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ inventory_hostname }} {{ show_int_status.stdout }}"
         create: yes
       delegate_to: localhost
@@ -257,7 +234,9 @@
       become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Deploy script complete"
+        line: "
+        
+        {{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Deploy script complete"
         create: yes
       delegate_to: localhost
 
