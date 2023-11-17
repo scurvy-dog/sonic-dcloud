@@ -17,7 +17,7 @@
       become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Start Containerlab Deploy Script"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Start sonic 8000e VXR deploy script"
         create: yes
       delegate_to: localhost
       

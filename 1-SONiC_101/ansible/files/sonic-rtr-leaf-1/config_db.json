@@ -21,8 +21,8 @@
     },
 
     "INTERFACE": {
-        "Ethernet32": {},
-        "Ethernet32|198.18.11.1/24": {}
+        "Ethernet16": {},
+        "Ethernet16|198.18.11.1/24": {}
     },
 
     "PORTCHANNEL": {

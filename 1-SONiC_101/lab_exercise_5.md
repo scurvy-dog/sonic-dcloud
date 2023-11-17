@@ -296,7 +296,7 @@ Lets create an ACL table that we will link to the interface.
 3. Login to SONiC router *sonic-rtr-leaf-1*
 4. In the home directory use nano to create a json definition file for the ACL table we will create.
    ```
-   nano eth32_acl_table.json
+   nano eth16_acl_table.json
    ```
 5. Paste in the following code and save and exit.
    ```
@@ -307,7 +307,7 @@ Lets create an ACL table that we will link to the interface.
                     "type" : "L3",
                     "stage": "ingress",
                     "ports" : [
-                        "Ethernet32"
+                        "Ethernet16"
                     ] 
                     }
            }
@@ -315,7 +315,7 @@ Lets create an ACL table that we will link to the interface.
    ```
 6. Load the json definition file into the running config
    ```
-   sudo config load eth32_acl_table.json
+   sudo config load eth16_acl_table.json -y
    ```
 7. Verify the ACL table was installed.
    ```
@@ -362,7 +362,7 @@ Lets create an ACL table that we will link to the interface.
 
 11. Verify the ACL rule set was installed
     ```
-    sudo config load acl_ep1_ingress.json
+    sudo config load acl_ep1_ingress.json -y
     ```
     ```
     cisco@sonic-rtr-leaf-1:~$ sudo config load acl_ep1_ingress.json
@@ -443,7 +443,7 @@ Utilizing the same table *EP1_DROP* we will update the ACL rule set on interface
    ```
 7. Load the json definition file into the running config
    ```
-   sudo config load iperf3_rule_update.json
+   sudo config load iperf3_rule_update.json -y
    ```
 8. Verify the ACL table was installed.
    ```
