@@ -77,7 +77,7 @@ All documentation and scripts used in this lab are cloned to the cisco user home
 ```
 
 ## Check Build Scripts
-SONiC is fundamentally a Debian Linux OS running a containerized routing application suite. And this Linux-centric nature makes tools such as Ansible a natural fit for deployment and configuration operations. In our environment an Ansible script executes at dCloud Lab startup and kicks off the VXR/SONiC build process on the host VM. The deploy script takes about 12-15 minutes to run after dCloud startup, so grab a cup of coffee and check in around 15 minutes after dCloud says your lab is up. 
+SONiC is fundamentally a Debian Linux OS running a containerized routing application suite. And this Linux-centric nature makes tools such as Ansible a natural fit for deployment and configuration operations. In our environment an Ansible script executes at dCloud Lab startup and kicks off the VXR/SONiC build process on the host VM. The deploy script takes about 10 minutes to run after dCloud startup, so grab a cup of coffee and check in around 10-12 minutes after dCloud says your lab is up. 
 
 To validate that the deploy script completed successfully.
 
@@ -90,18 +90,18 @@ To validate that the deploy script completed successfully.
     
     You may also monitor more detailed ansible output tracking the build process using tail -f on the detailed logfile:
     ```
-    tail -f /home/cisco/deploy.log.detail
+    tail -f /home/cisco/ansible.log
     ```
 
-    Once the  VXR/SONiC build process completes the summary *deploy.log* file should contain output from 4 sets of SONiC interfaces, example:
+    Once the  VXR/SONiC build process completes the summary *deploy.log* file should contain output from pinging SONiC node management interfaces and 4 sets of interfaces, example:
 
     ```
     2023-11-16 20:58:07 UTC: SONiC Router sonic-rtr-spine-2   Interface                Lanes    Speed    MTU    FEC    Alias    Vlan    Oper    Admin        
         Type    Asym PFC
     -----------  -------------------  -------  -----  -----  -------  ------  ------  -------  ---------------  ----------
-      Ethernet0  1296,1297,1298,1299     100G   9100    N/A     etp1  routed      up       up  QSFP28 or later         N/A
-      Ethernet4  1300,1301,1302,1303     100G   9100    N/A     etp2  routed      up       up  QSFP28 or later         N/A
-      Ethernet8  1288,1289,1290,1291     100G   9100    N/A     etp3  routed      up       up  QSFP28 or later         N/A
+    Ethernet0  1296,1297,1298,1299     100G   9100    N/A     etp1  routed      up       up  QSFP28 or later         N/A
+    Ethernet4  1300,1301,1302,1303     100G   9100    N/A     etp2  routed      up       up  QSFP28 or later         N/A
+    Ethernet8  1288,1289,1290,1291     100G   9100    N/A     etp3  routed      up       up  QSFP28 or later         N/A
     Ethernet12  1292,1293,1294,1295     100G   9100    N/A     etp4  routed      up       up  QSFP28 or later         N/A
     Ethernet16  1280,1281,1282,1283     100G   9100    N/A     etp5  routed      up       up  QSFP28 or later         N/A
     Ethernet20  1284,1285,1286,1287     100G   9100    N/A     etp6  routed      up       up  QSFP28 or later         N/A
@@ -136,36 +136,17 @@ To validate that the deploy script completed successfully.
     If all 4 SONiC nodes have come up with interfaces detected you may proceed to [Connect to SONiC Routers](#connect-to-sonic-routers)
 
     > [!IMPORTANT]
-    In rare instances a SONiC node fails to successfully build and detect its interfaces. When this happens the deploy playbook triggers a rebuild process on the failed node. The rebuild will take another 10-12 minutes, 
-
-
+    In rare instances a SONiC node or nodes might:
     
+    1. Fail to ping or acquire the correct management IP (this generally isn't very bad)
+    2. Fail to successfully build and detect its interfaces (this is more of a bummer)
+    
+    If the deploy log indicates either ping failure or empty interface status output please proceed to the:
 
- Note the last message in *deploy.log*. If any routers fail to come up after the rebuild we'll need to manually launch the build script. Instructions to do so are here:
+    > [Troubleshooting Guide](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/troubleshooting.md)
 
-> [Troubleshooting Guide](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/troubleshooting.md)
 
-If all routers came up, then we may proceed to ping and connectivity checks:
-For convenience we've put shortened hostname entries for the SONiC nodes in the /etc/hosts file on the jumpbox and linux host VMs:
-
-  1. Ping each SONiC router management interface to see if the router has finished booting
-     | Host name  | IP Address    |
-     |:-----------|:--------------|
-     | leaf-1     | 192.168.122.101 |
-     | leaf-2     | 192.168.122.102 |
-     | spine-1    | 192.168.122.103 |
-     | spine-2    | 192.168.122.104 |
-
-     ```
-    cisco@jumpbox:~$ ping leaf-1
-    PING leaf-1 (192.168.122.101) 56(84) bytes of data.
-    64 bytes from leaf-1 (192.168.122.101): icmp_seq=1 ttl=64 time=0.947 ms
-    64 bytes from leaf-1 (192.168.122.101): icmp_seq=2 ttl=64 time=0.386 ms
-     ```
-
-> [!NOTE]
->  If SONiC router does not respond to ping. Follow the "Can't Ping" instructions in [Can't Ping Mgt](troubleshooting.md/#cant-ping-sonic-managment-interface)
->
+If all routers came up and mgt interfaces are pinging, then we may proceed to:
 
 ### Connect to SONiC Routers
 
@@ -187,9 +168,14 @@ ssh cisco@192.168.122.104
 > 
 Example:
 ```
-cisco@jumpbox:~$ ssh cisco@leaf-1
+cisco@linux-host-1:~$ ssh leaf-1
+The authenticity of host 'leaf-1 (192.168.122.101)' can't be established.
+RSA key fingerprint is SHA256:FW4ZBS7zybVdb+oH4x+xj5vf7Fb+ClJyBZoMCb6uI6k.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'leaf-1' (RSA) to the list of known hosts.
 cisco@leaf-1's password: 
-Linux sonic 5.10.0-18-2-amd64 #1 SMP Debian 5.10.140-1 (2022-09-02) x86_64
+Linux sonic-rtr-leaf-1 4.19.0-12-2-amd64 #1 SMP Debian 4.19.152-1 (2020-10-18) x86_64
 You are on
   ____   ___  _   _ _  ____
  / ___| / _ \| \ | (_)/ ___|
@@ -204,8 +190,8 @@ All access and/or use are subject to monitoring.
 
 Help:    https://sonic-net.github.io/SONiC/
 
-Last login: Mon Oct 16 03:59:53 2023 from 192.168.122.1
-cisco@sonic:~$ 
+Last login: Fri Nov 17 23:01:54 2023
+cisco@sonic-rtr-leaf-1:~$ 
 ```
 
 ## End of Lab 1

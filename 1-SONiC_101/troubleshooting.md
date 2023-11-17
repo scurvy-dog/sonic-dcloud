@@ -4,91 +4,15 @@
 - [Troubleshooting the lab](#troubleshooting-the-lab)
   - [Contents](#contents)
   - [Typical Issues](#typical-issues)
-    - [Manual VXR Rebuild](#manual-vxr-rebuild)
     - [No Data Interfaces](#no-data-interfaces)
+    - [Manual VXR Rebuild](#manual-vxr-rebuild)
     - [Can't Ping SONiC Managment Interface](#cant-ping-sonic-managment-interface)
   
 ## Typical Issues
-There are a few potential scenarioes where trouble may happen with the SONiC node. Often the fastest remediation is to have the container torn down and rebuilt. Be aware that once the container is back up and running configuration would need to be reapplied.
-The most common trouble scenarios we've seen are:
+The most common scenarioes where trouble may happen with the SONiC nodes are:
 
-1. Initial SONiC node fails to populate interfaces from the Cisco 8000 Emulator - [Manual VXR Rebuild](#manual-vxr-rebuild)
-2. The SONiC node has general container instability which can happen in the virtual environment - [No Data Interfaces](#no-data-interfaces)
-3. SONiC node fails to get a management IP - [Can't Ping SONiC Managment Interface](#cant-ping-sonic-managment-interface)
-
-### Manual VXR Rebuild
-
-1. ssh to the sonic node's host VM:
-
-     | Host name  | IP Address     |
-     |:-----------|:---------------|
-     | linux-host-1  | 198.18.128.101 |
-     | linux-host-2  | 198.18.128.102 |
-     | linux-host-3 | 198.18.128.103 |
-     | linux-host-4 | 198.18.128.104 |
-
-2. Determine the local SONiC/8000 container's name:
-   ```
-   docker ps
-   ```
-   Example output:
-   ```
-   cisco@linux-host-4:~$ docker ps
-   CONTAINER ID   IMAGE                 COMMAND                  CREATED          STATUS          PORTS     NAMES
-   d1861990e9a8   c8000-clab-sonic:31   "/etc/prepEnv.sh /no…"   21 minutes ago   Up 21 minutes             clab-c8101-sonic-sonic-rtr-spine-2
-   cisco@linux-host-4:~$
-   ```
-
-3. Access the docker container through an exec shell:
-   ```
-   docker exec -it <container name or ID> bash
-   ```
-   Example:
-   ```
-   docker exec -it clab-c8101-sonic-sonic-rtr-spine-2 bash
-   ```
-
-4. change directory into 'nobackup'
-   ```
-   cd nobackup
-   ```
-
-5. Run the startup.sh shell script as follows:
-
-   If *sonic-rtr-leaf-1* or *sonic-rtr-leaf-2* failed:
-   ```
-   ./startup.sh 8000.yaml 5
-   ```
-
-   if *sonic-rtr-spine-1* or *sonic-rtr-spine-2* failed:
-   ```
-   ./startup.sh 8000.yaml 4
-   ```
-
-6. The script will output log info very similar to the docker logs info. The script will monitor the SONiC node and test to see if the Cisco 8000 emulator has created interfaces for the SONiC node. Expect about 10-12 minutes to see a 'Router up' message. 
-
-   Truncated example output:
-   ```
-   cisco@sonic-rtr-spine-2:~$ docker exec -it  clab-c8101-sonic-sonic-rtr-spine-2 bash
-   root@sonic-rtr-spine-2:/# cd nobackup/
-   root@sonic-rtr-spine-2:/nobackup# ./startup.sh 8000.yaml 4
-   Invoking /nobackup/startup.py 8000.yaml 4 4
-   ['/nobackup/startup.py', '8000.yaml', '4', '4']
-   MGMT_IP: 192.168.122.104  MASK: 255.255.255.0  GATEWAY: 192.168.122.1
-   Found 4 data interfaces (expected 4)
-   ...
-   ...
-   22:40:57 INFO R0:onie sonic login cisco/cisco123
-   22:40:57 INFO R0:reached sonic prompt
-   22:40:57 INFO R0:checking interfaces
-   22:41:01 INFO R0:found 0 interfaces (expected 32)
-   22:41:32 INFO R0:found 0 interfaces (expected 32)
-   22:42:04 INFO R0:found 32 interfaces (expected 32)     <---------- Key Log Message
-   22:42:04 INFO R0:applying XR config
-   22:42:12 INFO Sim up
-   Router up                                              <---------- Key Log Message
-   ```
-
+1. SONiC node fails to populate interfaces from the Cisco 8000 Emulator - [No Data Interfaces](#no-data-interfaces)
+2. SONiC node fails to get a management IP - [Can't Ping SONiC Managment Interface](#cant-ping-sonic-managment-interface)
 
 ### No Data Interfaces
 
@@ -138,41 +62,83 @@ cisco@sonic:~$
 
 4. If the Ethernet interfaces are still not displaying after 3-4 minutes, please trigger a [Manual VXR Rebuild](#manual-vxr-rebuild)
 
-### Can't Ping SONiC Managment Interface 
+### Manual VXR Rebuild
+Time to destroy and re-deploy the topology:
 
->1. SSH into the host-vm directly. That would be (linux-host-1,linux-host-2,linux-host-3, linux-host-4)
->   Example below
->   ```
->   Last login: Tue Oct 10 16:15:30 2023 from 10.16.81.3
->   cisco@linux-host-1:~$ 
->   ```
->3. Find docker instance running the Cisco 8000 emulator and lookup the container name.
->   In the example below the Cisco 8000 Emulator container is named *clab-c8101-sonic-sonic-rtr-leaf-1*
->   ```
->   cisco@linux-host-1:~$ docker ps
->   CONTAINER ID   IMAGE                 COMMAND                  CREATED      STATUS      PORTS     NAMES
->   d1861990e9a8   c8000-clab-sonic:31   "/etc/prepEnv.sh /no…"   16 hours ago  Up 16 hours          clab-c8101-sonic-sonic-rtr-leaf-1
->   ```
->3. Session into the docker container
->   ```
->   cisco@linux-host-1:~$ docker exec -it clab-c8101-sonic-sonic-rtr-leaf-1 bash
->   root@sonic-rtr-leaf-1:/#
->   ``` 
->4. Now access the SONiC console ( cisco / cisco123 )
->   ```
->   root@sonic-rtr-leaf-1:~# telnet 0 60000
->   Trying 0.0.0.0...
->   Connected to 0.
->   Escape character is '^]'.
->
->   sonic login:
->   ```
->5. Check to see if management interface was created
->   ```
->   cisco@sonic:~$ show ip interface
->   Interface    Master    IPv4 address/mask    Admin/Oper    BGP Neighbor    Neighbor IP
->   -----------  --------  -------------------  ------------  --------------  -------------
->   docker0                240.127.1.1/24       up/down       N/A             N/A
->   eth0                   192.168.122.101/24     up/up         N/A             N/A           <--- MGMT INTERFACE
->   eth4                   192.168.123.246/24   up/up         N/A             N/A 
->   lo                     127.0.0.1/16         up/up         N/A             N/A  
+1. cd into the ansible directory and run the 'destroy' playbook:
+```
+cd ~/sonic-dcloud/1-SONiC_101/ansible
+
+ansible-playbook -i hosts lab_destroy-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+```
+2. After the destroy playbook completes run the 'deploy' playbook:
+```
+ansible-playbook -i hosts lab_deploy-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+```
+The deployment will take another ~10 minutes, please follow the same process of monitoring logs, etc.
+
+
+### Can't Ping SONiC Managment Interface 
+By default the SONiC nodes' mgt interfaces get a DHCP address to begin with. We've then re-assigned them as static IPs. However, on occasion the re-assignment will fail and thus the ping test will fail. To address this we'll console into the node and re-assign its mgt IP.
+
+1. Each node's console port can be found in its "Portvector.txt" file which can be found in the vxr-out/*node-name*/ directory. In this example we'll 'cat' leaf-1's Portvector.txt file:
+```
+cat sonic-dcloud/1-SONiC_101/vxr/vxr.out/leaf-1/PortVector.txt 
+```
+Output:
+```
+cisco@linux-host-1:~$ cat sonic-dcloud/1-SONiC_101/vxr/vxr.out/leaf-1/PortVector.txt 
+HostAgent 198.18.128.101
+HostRoot 198.18.128.101
+HostSubmit 198.18.128.101
+SimulationPath /nobackup/root/pyvxr/p0lcc0lc0
+SimulationPid 8101-32H
+SimulationPlugin matilda32
+monitor0 45889
+redir0 0
+serial0 46357     <-------------------------- Console Port
+serial1 43835
+simID f30ff037-c6cf-4a4d-9a98-04e7f228447f
+```
+
+2. Telnet to console port and login using cisco/cisco123:
+```
+telnet localhost 46357
+```
+Example output:
+```
+cisco@linux-host-1:~$ telnet localhost 46357
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+
+sonic-rtr-leaf-1 login: cisco
+Password: 
+<output truncated>
+
+cisco@sonic-rtr-leaf-1:~$ 
+```
+
+3. Check to see if management interface eth0 has its static 192.168.10x address or some DHCP address.
+```
+show ip interfaces
+```
+Example output where eth0 has the old DHCP address
+```
+cisco@sonic-rtr-leaf-1:~$ show ip interfaces
+Interface    Master    IPv4 address/mask    Admin/Oper    BGP Neighbor    Neighbor IP
+-----------  --------  -------------------  ------------  --------------  -------------
+docker0                240.127.1.1/24       up/down       N/A             N/A
+eth0               ->  192.168.122.45/24 <- up/up         N/A             N/A     
+eth4                   192.168.123.92/24    up/up         N/A             N/A
+lo                     127.0.0.1/16         up/up         N/A             N/A
+```
+
+4. Use SONiC CLI to replace the IP and save config:
+```
+sudo config interface ip remove eth0 192.168.122.45/24
+sudo config interface ip add eth0 192.168.122.101/24
+sudo config save -y
+```
+
+5. Use "ctrl ]" and type "quit" at the telnet> prompt to exit the console. You should now be able to ping and ssh to the newly assigned mgt IP
