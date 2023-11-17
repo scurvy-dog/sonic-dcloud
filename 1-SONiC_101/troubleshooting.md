@@ -129,9 +129,7 @@ cisco@sonic-rtr-leaf-1:~$ show ip interfaces
 Interface    Master    IPv4 address/mask    Admin/Oper    BGP Neighbor    Neighbor IP
 -----------  --------  -------------------  ------------  --------------  -------------
 docker0                240.127.1.1/24       up/down       N/A             N/A
-eth0               ->  192.168.122.45/24 <- up/up         N/A             N/A     
-eth4                   192.168.123.92/24    up/up         N/A             N/A
-lo                     127.0.0.1/16         up/up         N/A             N/A
+eth0                   192.168.122.45/24 <-------- WRONG ADDRESS    
 ```
 
 4. Use SONiC CLI to replace the IP and save config:
