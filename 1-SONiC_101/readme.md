@@ -61,7 +61,7 @@ cisco/cisco123
 ## dCloud Session Overview
 When a Cisco dCloud session is launched the scheduler will set a start time at the next quarter-hour mark (top of the hour, 15 after, etc.). Upon reaching the start time dCloud builds out the virtual machine environment, which usually becomes available in just a few minutes.  
 
-In the case of the SONiC 8000 Emulator lab the SONiC routers are not immediately available as they need to go through a VXR build process inside the Linux host VMs. This step is taken care of automatically by an Ansible 'deploy' playbook which is triggered at lab startup. This playbook will launch the dockerized VXR instances that build a SONiC router on each of the Linux host VMs. The SONiC build process takes 10-15 minutes to run and your lab won't truly be ready until it completes. You may monitor the deploy process as the playbook outputs log entries to two logfiles in /home/cisco on the Jumpbox:
+In the case of the SONiC 8000 Emulator lab the SONiC routers are not immediately available as they need to go through a VXR build process inside the Linux host VMs. This step is taken care of automatically by an Ansible 'deploy' playbook which is triggered at lab startup. This playbook will launch the four router VMs and trigger the SONiC build process. The build process takes 10-15 minutes to run and your lab won't truly be ready until it completes. You may monitor the deploy/build process as the playbook outputs log entries to two logfiles in /home/cisco on the Jumpbox:
 
 deploy.log - summary deployment info
 deploy.log.detail - more detailed Ansible output

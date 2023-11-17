@@ -12,6 +12,7 @@ In Exercise 1 we will explore the linux-host VM virtualization environment and l
   - [Device Access](#device-access)
     - [User Credentials](#user-credentials)
     - [Validate Access](#validate-access)
+      - [Note: to long into the sonic nodes you will first need to ssh into the linux-host-1 VM](#note-to-long-into-the-sonic-nodes-you-will-first-need-to-ssh-into-the-linux-host-1-vm)
     - [Git repository location](#git-repository-location)
   - [Check Build Scripts](#check-build-scripts)
     - [Connect to SONiC Routers](#connect-to-sonic-routers)
@@ -58,18 +59,16 @@ Please see the management topology network diagram below. Table-1 below lists th
 | sonic-rtr-spine-2    | 192.168.122.104  | SONiC Router sonic-rtr-spine-2      |
 
 ### User Credentials
-For the host VMs use the following credentials:
-```
-User: cisco, Password: cisco123
-```
 
-For all SONiC router instances you will use the same user credentials:
+For all VM and SONiC router instances you will use the same user credentials:
 ```
 User: cisco, Password: cisco123
 ```
 
 ### Validate Access
-Now log into each of the Ubuntu host-vms listed in Table 1 and ensure you have access to the devices.
+Now log into each of the nodes listed in Table 1 and ensure you have access to the devices.
+
+#### Note: to long into the sonic nodes you will first need to ssh into the linux-host-1 VM
 
 ### Git repository location
 All documentation and scripts used in this lab are cloned to the cisco user home directory. To start look for the README.md file.
