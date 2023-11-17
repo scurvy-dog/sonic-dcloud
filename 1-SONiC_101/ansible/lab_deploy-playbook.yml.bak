@@ -1,0 +1,99 @@
+---
+
+# ansible-playbook -i hosts lab_deploy-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+      
+- name: Copy motd to endpoint VMs
+  hosts: endpoint_vms
+  become: true
+  tasks:
+    - name: Copy motd file to remote vm
+      copy:
+        src: "motd"
+        dest: "/etc/motd"
+        mode: 0644 
+
+- name: Start logging VXR and sonic build status to deploy.log file
+  hosts: localhost
+  become: false
+  tasks:
+    - name: delete old deploy logs 
+      command: rm /home/cisco/deploy.log /home/cisco/deploy.log.detail
+      ignore_errors: yes
+      run_once: true
+      become: false
+      delegate_to: localhost
+      
+    - name: deploy.log start message
+      become: false
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Start sonic 8000e VXR deploy script"
+        create: yes
+      delegate_to: localhost
+      
+    - name: deploy.log time to spin up
+      become: false
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Expect to wait 10+ minutes as VXR scripts build out SONiC routers"
+        create: yes
+      delegate_to: localhost
+      
+- name: Setup lab using vxr.py to deploy SONiC nodes
+  hosts: localhost
+  become: true
+  tasks: 
+    - name: Copy motd file to linux-host-1
+      copy:
+        src: "motd"
+        dest: "/etc/motd"
+        mode: 0644 
+      
+    - name: run VXR start on linux-host-1 to launch sonic 8000 emulator nodes - this will take about 6 minutes
+      command: "sudo vxr.py start 4-node-topo.yaml"
+      args:
+        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/vxr/
+      ignore_errors: yes
+
+    - name: pause for 15 seconds
+      pause:
+        seconds: 15
+      become: false
+    - name: reset user/group permissions on repo folders 
+      command: "chown -R cisco:cisco /home/cisco/sonic-dcloud"
+      ignore_errors: yes
+
+    - name: pause for 4 minutes while sonic nodes complete their build and interface assignments
+      pause:
+        minutes: 4
+      become: false
+
+
+- name: verify sonic routers have loaded 8000e interfaces
+  hosts: sonic_routers
+  tasks:
+    - name: show interfaces status
+      command: show interfaces status
+      ignore_errors: yes
+      register: show_int_status
+      
+    - name: Save interfaces status to local log file
+      become: false
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ inventory_hostname }} {{ show_int_status.stdout }}"
+        create: yes
+      delegate_to: localhost
+
+    - name: VXR deploy complete
+      become: false
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Deploy script complete"
+        create: yes
+      delegate_to: localhost
+
+# - name: run health check playbook
+#   import_playbook: sonic_node_health_check.yml
+#   ignore_errors: yes
+
