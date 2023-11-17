@@ -59,9 +59,8 @@
     - name: copy vxr_out to deploy.log
       lineinfile:
         path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: 
-          
-        {{ vxr_out.stdout }}"
+        line: "
+        {{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: {{ vxr_out.stdout }}"
         create: yes
 
     - name: pause for 15 seconds
