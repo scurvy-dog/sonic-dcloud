@@ -132,8 +132,11 @@ docker0                240.127.1.1/24       up/down       N/A             N/A
 eth0                   192.168.122.45/24 <-------- WRONG ADDRESS    
 ```
 
-4. Use SONiC CLI to replace the IP per the table and save config:
+4. Use SONiC CLI to replace the IP per Table 1 and save config:
 
+**Table 1**
+| Host name  | IP Address     | 
+|:-----------|:---------------|
 | sonic-rtr-leaf-1     | 192.168.122.101/24  | 
 | sonic-rtr-leaf-2     | 192.168.122.102/24  | 
 | sonic-rtr-spine-1    | 192.168.122.103/24  |
