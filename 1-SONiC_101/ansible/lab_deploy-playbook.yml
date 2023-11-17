@@ -91,12 +91,12 @@
       - name: Output to deploy log file sonic-rtr-leaf-1 mgt interface
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-leaf-1 mgt interface"
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-leaf-1 mgt interface {{ping_result4.stdout}}"
           create: yes
 
       - name: Print debug output sonic-rtr-leaf-1 interface
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-leaf-1 mgt interface"
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-leaf-1 mgt interface {{ping_result4.stdout}}"
     when: (ping_result1.failed == true)
 
   - name: Conditional check if ping to sonic-rtr-leaf-1 success
@@ -104,12 +104,12 @@
       - name: Output to deploy log file sonic-rtr-leaf-1 ping status
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-1 has correct mgt interface"
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-1 has correct mgt interface{{ping_result4.stdout}}"
           create: yes
 
       - name: print debug
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-1 has correct mgt interface"
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-1 has correct mgt interface {{ping_result4.stdout}}"
 
     when: (ping_result1.failed == false)
 
@@ -124,12 +124,12 @@
       - name: Output to deploy log file
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-leaf-2 mgt interface"
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-leaf-2 mgt interface {{ping_result4.stdout}}"
           create: yes
 
       - name: Print debug output sonic-rtr-leaf-2 status
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-leaf-2 mgt interface"   
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-leaf-2 mgt interface {{ping_result4.stdout}}"   
     when: (ping_result2.failed == true)
 
   - name: Conditional check if ping to sonic-rtr-leaf-2 success
@@ -137,12 +137,12 @@
       - name: Output to deploy log file  sonic-rtr-leaf-2 status
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-2 has correct mgt interface"
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-2 has correct mgt interface {{ping_result4.stdout}}"
           create: yes
 
       - name: print debug
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-2 has correct mgt interface"
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-2 has correct mgt interface {{ping_result4.stdout}}"
 
     when: (ping_result2.failed == false)
 
@@ -157,12 +157,12 @@
       - name: Output to deploy log file sonic-rtr-spine-1 status
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-spine-1 mgt interface"
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-spine-1 mgt interface {{ping_result4.stdout}}"
           create: yes
 
       - name: Print debug output sonic-rtr-spine-1 status
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-spine-1 mgt interface"
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-spine-1 mgt interface {{ping_result4.stdout}}"
     when: (ping_result3.failed == true)
 
   - name: Conditional check if ping to sonic-rtr-spine-1 success
@@ -170,12 +170,12 @@
       - name: Output to deploy log file sonic-rtr-spine-1 status
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-1 has correct mgt interface"
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-1 has correct mgt interface {{ping_result4.stdout}}"
           create: yes
 
       - name: print debug
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-1 has correct mgt interface"
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-1 has correct mgt interface {{ping_result4.stdout}}"
 
     when: (ping_result3.failed == false)
 
@@ -190,12 +190,12 @@
       - name: Output to deploy log file sonic-rtr-spine-2 status
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-spine-2 mgt interface"
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-spine-2 mgt interface {{ping_result4.stdout}}"
           create: yes
 
       - name: Print debug output sonic-rtr-spine-2 status
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-spine-2 mgt interface"
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-spine-2 mgt interface {{ping_result4.stdout}}"
     when: (ping_result4.failed == true)
 
   - name: Conditional check if ping to sonic-rtr-spine-2 success
@@ -203,42 +203,14 @@
       - name: Output to deploy log file sonic-rtr-spine-2 status
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-2 has correct mgt interface"
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-2 has correct mgt interface {{ping_result4.stdout}}"
           create: yes
 
       - name: print debug
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-2 has correct mgt interface"
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-2 has correct mgt interface {{ping_result4.stdout}}"
 
     when: (ping_result4.failed == false)
-
-- name: verify sonic routers have loaded 8000e interfaces
-  hosts: sonic_routers
-  tasks:
-    - name: show interfaces status
-      command: show interfaces status
-      ignore_errors: yes
-      register: show_int_status
-      
-    - name: Save interfaces status to local log file
-      become: false
-      lineinfile:
-        path: "/home/cisco/deploy.log"
-        line: "
-        
-        {{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ inventory_hostname }} {{ show_int_status.stdout }}"
-        create: yes
-      delegate_to: localhost
-
-    - name: VXR deploy complete
-      become: false
-      lineinfile:
-        path: "/home/cisco/deploy.log"
-        line: "
-        
-        {{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Deploy script complete"
-        create: yes
-      delegate_to: localhost
 
 - name: verify sonic routers have loaded 8000e interfaces
   hosts: sonic_routers
