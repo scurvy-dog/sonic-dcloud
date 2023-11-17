@@ -68,6 +68,9 @@
         minutes: 4
       become: false
 
+- name: Check each SONiC Router's Management Interface
+  hosts: localhost
+
   # STATUS LOGGING TO DEPLOY.LOG FILE
   - name: Post Start Health Check Script to Log
     lineinfile:
