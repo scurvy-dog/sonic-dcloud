@@ -68,8 +68,6 @@
         minutes: 4
       become: false
 
-    - name: ping sonic routers' mgt interfaces
-
 
 - name: verify sonic routers have loaded 8000e interfaces
   hosts: sonic_routers
