@@ -12,7 +12,7 @@ In Exercise 1 we will explore the linux-host VM virtualization environment and l
   - [Device Access](#device-access)
     - [User Credentials](#user-credentials)
     - [Validate Access](#validate-access)
-      - [Note: to long into the sonic nodes you will first need to ssh into the linux-host-1 VM](#note-to-long-into-the-sonic-nodes-you-will-first-need-to-ssh-into-the-linux-host-1-vm)
+      - [*Note: to log into the sonic nodes you will first need to ssh into the linux-host-1 VM*](#note-to-log-into-the-sonic-nodes-you-will-first-need-to-ssh-into-the-linux-host-1-vm)
     - [Git repository location](#git-repository-location)
   - [Check Build Scripts](#check-build-scripts)
     - [Connect to SONiC Routers](#connect-to-sonic-routers)
@@ -68,7 +68,7 @@ User: cisco, Password: cisco123
 ### Validate Access
 Now log into each of the nodes listed in Table 1 and ensure you have access to the devices.
 
-#### Note: to long into the sonic nodes you will first need to ssh into the linux-host-1 VM
+  #### *Note: to log into the sonic nodes you will first need to ssh into the linux-host-1 VM*
 
 ### Git repository location
 All documentation and scripts used in this lab are cloned to the cisco user home directory. To start look for the README.md file.
@@ -77,11 +77,11 @@ All documentation and scripts used in this lab are cloned to the cisco user home
 ```
 
 ## Check Build Scripts
-This lab uses Ansible as the automation tool once the host vms have spun up. There is an Ansible script that runs at dCloud Lab startup that kicks off the Containerlab build process on each of the SONiC host-vms (linux-host-1, linux-host-2, linux-host-3, linux-host-4). The Containerlab/SONiC build script takes about 12-15 minutes to run after dCloud startup, so grab a cup of coffee and check in around 15 minutes after dCloud says your lab is up. 
+SONiC is fundamentally a Debian Linux OS running a containerized routing application suite. And this Linux-centric nature makes tools such as Ansible a natural fit for deployment and configuration operations. In our environment an Ansible script executes at dCloud Lab startup and kicks off the VXR/SONiC build process on the host VM. The deploy script takes about 12-15 minutes to run after dCloud startup, so grab a cup of coffee and check in around 15 minutes after dCloud says your lab is up. 
 
-To validate that the build script completed successfully.
+To validate that the deploy script completed successfully.
 
- 1. Log into the Jumpbox VM
+ 1. Log into the linux-host-1 VM (ssh cisco@198.18.128.101)
  2. View the following file in the home directory.
     
     ```
@@ -93,55 +93,53 @@ To validate that the build script completed successfully.
     tail -f /home/cisco/deploy.log.detail
     ```
 
-    Once the  VXR/SONiC build process completes the summary *deploy.log* file should look something like this:
+    Once the  VXR/SONiC build process completes the summary *deploy.log* file should contain output from 4 sets of SONiC interfaces, example:
 
     ```
-    cisco@jumpbox:~$ cat deploy.log
-    2023-10-14 10:12:34 PDT: Start Container Lab Deploy Script
-    2023-10-14 10:12:34 PDT: Expect to wait 10+ minutes as containers are built.
-    2023-10-14 10:12:37 PDT: SONiC Router sonic-rtr-leaf-1 build start 
-    2023-10-14 10:12:38 PDT: SONiC Router sonic-rtr-spine-2 build start 
-    2023-10-14 10:12:38 PDT: SONiC Router sonic-rtr-spine-1 build start 
-    2023-10-14 10:12:37 PDT: SONiC Router sonic-rtr-leaf-2 build start 
-    2023-10-14 10:12:37 PDT: SONiC Router clab-c8101-sonic-leaf-2 2023-10-14T17:19:13.907514268Z Router up
-    2023-10-14 10:12:37 PDT: SONiC Router clab-c8101-sonic-leaf-1 2023-10-14T17:18:50.082588335Z Router up
-    2023-10-14 10:12:38 PDT: SONiC Router clab-c8101-sonic-spine-1 2023-10-14T17:19:47.451838674Z Router up
-    2023-10-14 10:12:39 PDT: SONiC Router clab-c8101-sonic-spine-2 2023-10-14T17:19:48.751145006Z Router up
-    2023-10-14 10:27:55 PDT: SONiC Router Health Check Script
-    2023-10-14 10:27:55 PDT: SONiC Router sonic-rtr-leaf-1: Health Check Passed
-    2023-10-14 10:27:55 PDT: SONiC Router sonic-rtr-leaf-2: Health Check Passed
-    2023-10-14 10:27:55 PDT: SONiC Router sonic-rtr-spine-1: Health Check Passed
-    2023-10-14 10:27:55 PDT: SONiC Router sonic-rtr-spine-2: Health Check Passed
+    2023-11-16 20:58:07 UTC: SONiC Router sonic-rtr-spine-2   Interface                Lanes    Speed    MTU    FEC    Alias    Vlan    Oper    Admin        
+        Type    Asym PFC
+    -----------  -------------------  -------  -----  -----  -------  ------  ------  -------  ---------------  ----------
+      Ethernet0  1296,1297,1298,1299     100G   9100    N/A     etp1  routed      up       up  QSFP28 or later         N/A
+      Ethernet4  1300,1301,1302,1303     100G   9100    N/A     etp2  routed      up       up  QSFP28 or later         N/A
+      Ethernet8  1288,1289,1290,1291     100G   9100    N/A     etp3  routed      up       up  QSFP28 or later         N/A
+    Ethernet12  1292,1293,1294,1295     100G   9100    N/A     etp4  routed      up       up  QSFP28 or later         N/A
+    Ethernet16  1280,1281,1282,1283     100G   9100    N/A     etp5  routed      up       up  QSFP28 or later         N/A
+    Ethernet20  1284,1285,1286,1287     100G   9100    N/A     etp6  routed      up       up  QSFP28 or later         N/A
+    Ethernet24  1032,1033,1034,1035     100G   9100    N/A     etp7  routed      up       up  QSFP28 or later         N/A
+    Ethernet28  1036,1037,1038,1039     100G   9100    N/A     etp8  routed      up       up  QSFP28 or later         N/A
+    Ethernet32  1024,1025,1026,1027     100G   9100    N/A     etp9  routed      up       up  QSFP28 or later         N/A
+    Ethernet36  1028,1029,1030,1031     100G   9100    N/A    etp10  routed      up       up  QSFP28 or later         N/A
+    Ethernet40      772,773,774,775     100G   9100    N/A    etp11  routed      up       up  QSFP28 or later         N/A
+    Ethernet44      768,769,770,771     100G   9100    N/A    etp12  routed      up       up  QSFP28 or later         N/A
+    Ethernet48      780,781,782,783     100G   9100    N/A    etp13  routed      up       up  QSFP28 or later         N/A
+    Ethernet52      776,777,778,779     100G   9100    N/A    etp14  routed      up       up  QSFP28 or later         N/A
+    Ethernet56      528,529,530,531     100G   9100    N/A    etp15  routed      up       up  QSFP28 or later         N/A
+    Ethernet60      532,533,534,535     100G   9100    N/A    etp16  routed      up       up  QSFP28 or later         N/A
+    Ethernet64      520,521,522,523     100G   9100    N/A    etp17  routed      up       up  QSFP28 or later         N/A
+    Ethernet68      524,525,526,527     100G   9100    N/A    etp18  routed      up       up  QSFP28 or later         N/A
+    Ethernet72      512,513,514,515     100G   9100    N/A    etp19  routed      up       up  QSFP28 or later         N/A
+    Ethernet76      516,517,518,519     100G   9100    N/A    etp20  routed      up       up  QSFP28 or later         N/A
+    Ethernet80      272,273,274,275     100G   9100    N/A    etp21  routed      up       up  QSFP28 or later         N/A
+    Ethernet84      276,277,278,279     100G   9100    N/A    etp22  routed      up       up  QSFP28 or later         N/A
+    Ethernet88      264,265,266,267     100G   9100    N/A    etp23  routed      up       up  QSFP28 or later         N/A
+    Ethernet92      268,269,270,271     100G   9100    N/A    etp24  routed      up       up  QSFP28 or later         N/A
+    Ethernet96      256,257,258,259     100G   9100    N/A    etp25  routed      up       up  QSFP28 or later         N/A
+    Ethernet100      260,261,262,263     100G   9100    N/A    etp26  routed      up       up  QSFP28 or later         N/A
+    Ethernet104          16,17,18,19     100G   9100    N/A    etp27  routed      up       up  QSFP28 or later         N/A
+    Ethernet108          20,21,22,23     100G   9100    N/A    etp28  routed      up       up  QSFP28 or later         N/A
+    Ethernet112            8,9,10,11     100G   9100    N/A    etp29  routed      up       up  QSFP28 or later         N/A
+    Ethernet116          12,13,14,15     100G   9100    N/A    etp30  routed      up       up  QSFP28 or later         N/A
+    Ethernet120              0,1,2,3     100G   9100    N/A    etp31  routed      up       up  QSFP28 or later         N/A
+    Ethernet124              4,5,6,7     100G   9100    N/A    etp32  routed      up       up  QSFP28 or later         N/A
 
     ```
-    If all 4 SONiC nodes have come up and passed health check you may proceed to [Connect to SONiC Routers](#connect-to-sonic-routers)
+    If all 4 SONiC nodes have come up with interfaces detected you may proceed to [Connect to SONiC Routers](#connect-to-sonic-routers)
 
     > [!IMPORTANT]
-    In some cases a SONiC node fails to successfully build. When this happens the deploy playbook triggers a rebuild process on the failed node. The rebuild will take another 10-12 minutes, so you may continue exercise 1 on the routers that are up while also monitoring the rebuilding node in the deploy logs.
+    In rare instances a SONiC node fails to successfully build and detect its interfaces. When this happens the deploy playbook triggers a rebuild process on the failed node. The rebuild will take another 10-12 minutes, 
 
-    Example *deploy.log* output showing three routers successfully launched, and one failure (spine-1), which was then run through the rebuild process:
-    ```
-    cisco@jumpbox:~$ cat deploy.log
-    2023-10-16 12:26:55 PDT: Start Containerlab Deploy Script
-    2023-10-16 12:26:55 PDT: Expect to wait 10+ minutes as VXR scripts build out SONiC routers
-    2023-10-16 12:26:58 PDT: SONiC Router sonic-rtr-leaf-1 build start 
-    2023-10-16 12:26:57 PDT: SONiC Router sonic-rtr-spine-2 build start 
-    2023-10-16 12:26:57 PDT: SONiC Router sonic-rtr-spine-1 build start 
-    2023-10-16 12:27:03 PDT: SONiC Router sonic-rtr-leaf-2 build start 
-    2023-10-16 12:26:57 PDT: SONiC Router sonic-rtr-spine-1 2023-10-16T19:35:28.701491348Z Router failed to come up   <-------
-    2023-10-16 12:26:58 PDT: SONiC Router sonic-rtr-leaf-1 2023-10-16T19:33:55.027861619Z Router up
-    2023-10-16 12:27:03 PDT: SONiC Router sonic-rtr-leaf-2 2023-10-16T19:34:28.829917638Z Router up
-    2023-10-16 12:26:57 PDT: SONiC Router sonic-rtr-spine-2 2023-10-16T19:34:27.286082895Z Router up
-    2023-10-16 12:35:51 PDT: Running SONiC Router Health Check Script
-    2023-10-16 12:35:51 PDT: SONiC Router sonic-rtr-leaf-1: Health Check Passed
-    2023-10-16 12:35:51 PDT: SONiC Router sonic-rtr-leaf-2: Health Check Passed
-    2023-10-16 12:35:51 PDT: SONiC Router sonic-rtr-spine-1: Failed. Queued for rebuild.      <-------
-    2023-10-16 12:35:51 PDT: SONiC Router sonic-rtr-spine-2: Health Check Passed.
-    2023-10-16 12:36:01 PDT: SONiC Router sonic-rtr-spine-1 rebuild started. 
-    2023-10-16 12:36:01 PDT: sonic-rtr-spine-1 2023-10-16T19:43:15.485235137Z Router up     <-------
-    2023-10-16 12:36:01 PDT: sonic-rtr-spine-1 rebuild script complete
-    2023-10-16 12:36:01 PDT: Deploy script complete. Check SONiC 101 troubleshooting.md instructions if any nodes have not come back with 'Router up' message
-    ```
+
+    
 
  Note the last message in *deploy.log*. If any routers fail to come up after the rebuild we'll need to manually launch the build script. Instructions to do so are here:
 

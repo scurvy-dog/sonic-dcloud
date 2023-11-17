@@ -1,0 +1,285 @@
+---
+
+# ansible-playbook -i hosts lab_deploy-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+      
+- name: Copy motd to endpoint VMs
+  hosts: endpoint_vms
+  become: true
+  tasks:
+    - name: Copy motd file to remote vm
+      copy:
+        src: "motd"
+        dest: "/etc/motd"
+        mode: 0644 
+
+- name: Start logging VXR and sonic build status to deploy.log file
+  hosts: localhost
+  become: false
+  tasks:
+    - name: delete old deploy logs 
+      command: rm /home/cisco/deploy.log /home/cisco/deploy.log.detail
+      ignore_errors: yes
+      run_once: true
+      become: false
+      delegate_to: localhost
+      
+    - name: deploy.log start message
+      become: false
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Start sonic 8000e VXR deploy script"
+        create: yes
+      delegate_to: localhost
+      
+    - name: deploy.log time to spin up
+      become: false
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Expect to wait 10+ minutes as VXR scripts build out SONiC routers"
+        create: yes
+      delegate_to: localhost
+      
+- name: Setup lab using vxr.py to deploy SONiC nodes
+  hosts: localhost
+  become: true
+  tasks: 
+    - name: Copy motd file to linux-host-1
+      copy:
+        src: "motd"
+        dest: "/etc/motd"
+        mode: 0644 
+      
+    - name: run VXR start on linux-host-1 to launch sonic 8000 emulator nodes - this will take about 6 minutes
+      command: "sudo vxr.py start 4-node-topo.yaml"
+      args:
+        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/vxr/
+      ignore_errors: yes
+
+    - name: pause for 15 seconds
+      pause:
+        seconds: 15
+      become: false
+    - name: reset user/group permissions on repo folders 
+      command: "chown -R cisco:cisco /home/cisco/sonic-dcloud"
+      ignore_errors: yes
+
+    - name: pause for 4 minutes while sonic nodes complete their build and interface assignments
+      pause:
+        minutes: 4
+      become: false
+
+  # STATUS LOGGING TO DEPLOY.LOG FILE
+  - name: Post Start Health Check Script to Log
+    lineinfile:
+      path: "/home/cisco/deploy.log"
+      line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Running SONiC Router Health Check Script"
+      create: yes
+      
+  # CHECK SONiC ROUTER sonic-rtr-leaf-1 mgt interface
+  - name: Ping test sonic-rtr-leaf-1
+    shell: ping -c 1 -W 5 192.168.122.101
+    register: ping_result1
+    ignore_errors: true
+
+  - name: Conditional check if ping to sonic-rtr-leaf-1 failed
+    block:
+      - name: Output to deploy log file sonic-rtr-leaf-1 mgt interface
+        lineinfile:
+          path: "/home/cisco/deploy.log"
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-leaf-1 mgt interface"
+          create: yes
+
+      - name: Print debug output sonic-rtr-leaf-1 interface
+        debug:
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-leaf-1 mgt interface"
+
+      # - name: Add linux-host-1 to host group sonic_node_rebuild
+      #   add_host:
+      #     name: '198.18.128.101'
+      #     groups: sonic_node_rebuild
+
+    when: (ping_result1.failed == true)
+
+  - name: Conditional check if ping to sonic-rtr-leaf-1 success
+    block:
+      - name: Output to deploy log file sonic-rtr-leaf-1 ping status
+        lineinfile:
+          path: "/home/cisco/deploy.log"
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-1 has correct mgt interface"
+          create: yes
+
+      - name: print debug
+        debug:
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-1 has correct mgt interface"
+
+    when: (ping_result1.failed == false)
+
+  # CHECK SONiC ROUTER sonic-rtr-leaf-2 STATUS
+  - name: Ping test sonic-rtr-leaf-2
+    shell: ping -c 1 -W 5 192.168.122.102
+    register: ping_result2
+    ignore_errors: true
+
+  - name: Conditional check if ping to sonic-rtr-leaf-2 failed
+    block:
+      - name: Output to deploy log file
+        lineinfile:
+          path: "/home/cisco/deploy.log"
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-leaf-2 mgt interface"
+          create: yes
+
+      - name: Print debug output sonic-rtr-leaf-2 status
+        debug:
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-leaf-2 mgt interface"
+
+      # - name: Add linux-host-2 to host group sonic_node_rebuild
+      #   add_host:
+      #     name: '198.18.128.102'
+      #     groups: sonic_node_rebuild
+          
+    when: (ping_result2.failed == true)
+
+  - name: Conditional check if ping to sonic-rtr-leaf-2 success
+    block:
+      - name: Output to deploy log file  sonic-rtr-leaf-2 status
+        lineinfile:
+          path: "/home/cisco/deploy.log"
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-2 has correct mgt interface"
+          create: yes
+
+      - name: print debug
+        debug:
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-leaf-2 has correct mgt interface"
+
+    when: (ping_result2.failed == false)
+
+  # CHECK SONiC ROUTER sonic-rtr-spine-1 STATUS
+  - name: Ping test sonic-rtr-spine-1
+    shell: ping -c 1 -W 5 192.168.122.103
+    register: ping_result3
+    ignore_errors: true
+
+  - name: Conditional check if ping to sonic-rtr-spine-1 failed
+    block:
+      - name: Output to deploy log file sonic-rtr-spine-1 status
+        lineinfile:
+          path: "/home/cisco/deploy.log"
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-spine-1 mgt interface"
+          create: yes
+
+      - name: Print debug output sonic-rtr-spine-1 status
+        debug:
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-spine-1 mgt interface"
+
+      # - name: Add linux-host-3 to host group sonic_node_rebuild
+      #   add_host:
+      #     name: '198.18.128.103'
+      #     groups: sonic_node_rebuild
+
+    when: (ping_result3.failed == true)
+
+  - name: Conditional check if ping to sonic-rtr-spine-1 success
+    block:
+      - name: Output to deploy log file sonic-rtr-spine-1 status
+        lineinfile:
+          path: "/home/cisco/deploy.log"
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-1 has correct mgt interface"
+          create: yes
+
+      - name: print debug
+        debug:
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-1 has correct mgt interface"
+
+    when: (ping_result3.failed == false)
+
+  # CHECK SONiC ROUTER sonic-rtr-spine-2 STATUS
+  - name: Ping test sonic-rtr-spine-2
+    shell: ping -c 1 -W 5 192.168.122.104
+    register: ping_result4
+    ignore_errors: true
+
+  - name: Conditional check if ping to sonic-rtr-spine-2 failed
+    block:
+      - name: Output to deploy log file sonic-rtr-spine-2 status
+        lineinfile:
+          path: "/home/cisco/deploy.log"
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-spine-2 mgt interface"
+          create: yes
+
+      - name: Print debug output sonic-rtr-spine-2 status
+        debug:
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Unable to ping sonic-rtr-spine-2 mgt interface"
+
+      # - name: Add linux-host-4 to host group sonic_node_rebuild
+      #   add_host:
+      #     name: '198.18.128.104'
+      #     groups: sonic_node_rebuild
+
+    when: (ping_result4.failed == true)
+
+  - name: Conditional check if ping to sonic-rtr-spine-2 success
+    block:
+      - name: Output to deploy log file sonic-rtr-spine-2 status
+        lineinfile:
+          path: "/home/cisco/deploy.log"
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-1 has correct mgt interface"
+          create: yes
+
+      - name: print debug
+        debug:
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-1 has correct mgt interface"
+
+    when: (ping_result4.failed == false)
+
+- name: verify sonic routers have loaded 8000e interfaces
+  hosts: sonic_routers
+  tasks:
+    - name: show interfaces status
+      command: show interfaces status
+      ignore_errors: yes
+      register: show_int_status
+      
+    - name: Save interfaces status to local log file
+      become: false
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ inventory_hostname }} {{ show_int_status.stdout }}"
+        create: yes
+      delegate_to: localhost
+
+    - name: VXR deploy complete
+      become: false
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Deploy script complete"
+        create: yes
+      delegate_to: localhost
+
+- name: verify sonic routers have loaded 8000e interfaces
+  hosts: sonic_routers
+  tasks:
+    - name: show interfaces status
+      command: show interfaces status
+      ignore_errors: yes
+      register: show_int_status
+      
+    - name: Save interfaces status to local log file
+      become: false
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ inventory_hostname }} {{ show_int_status.stdout }}"
+        create: yes
+      delegate_to: localhost
+
+    - name: VXR deploy complete
+      become: false
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Deploy script complete"
+        create: yes
+      delegate_to: localhost
+
+# - name: run health check playbook
+#   import_playbook: sonic_node_health_check.yml
+#   ignore_errors: yes
+
