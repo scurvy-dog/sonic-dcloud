@@ -54,6 +54,15 @@
       args:
         chdir: /home/cisco/sonic-dcloud/1-SONiC_101/vxr/
       ignore_errors: yes
+      register: vxr_out
+
+    - name: copy vxr_out to deploy.log
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: 
+          
+        {{ vxr_out.stdout }}"
+        create: yes
 
     - name: pause for 15 seconds
       pause:
@@ -226,12 +235,12 @@
       - name: Output to deploy log file sonic-rtr-spine-2 status
         lineinfile:
           path: "/home/cisco/deploy.log"
-          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-1 has correct mgt interface"
+          line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-2 has correct mgt interface"
           create: yes
 
       - name: print debug
         debug:
-          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-1 has correct mgt interface"
+          msg: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router sonic-rtr-spine-2 has correct mgt interface"
 
     when: (ping_result4.failed == false)
 
@@ -279,7 +288,7 @@
       become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Deploy script complete"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Deploy script complete for {{ inventory_hostname }}"
         create: yes
       delegate_to: localhost
 
