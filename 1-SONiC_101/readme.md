@@ -34,16 +34,17 @@ This lab is based on a simulated DC fabric design of four dockerized SONiC route
 
 ## Remote Access
 We primarily use SSH to interact with all VMs and SONiC routers, however, dCloud does offer SSH through its UI.
-*Note*: username and password for all elements in the lab is cisco/cisco123
+*Note*: username and password for all elements in the lab is:
+
+```
+cisco/cisco123
+```
 
 ### Virtual Machine Access Table
 | VM Name        | Description                    | Device Type | Access Type |   IP Address    |
 |:---------------|:-------------------------------|:-----------:|:-----------:|:---------------:|
 | jumpbox        | File Staging, Ansible Playbooks| VM          | SSH         | 198.18.128.100  |
 | linux-host-1   | C8k Emulator + SONiC routers   | VM          | SSH         | 198.18.128.101  |
-| linux-host-2   | C8k Emulator + SONiC routers   | VM          | SSH         | 198.18.128.102  |
-| linux-host-3   | C8k Emulator + SONiC routers   | VM          | SSH         | 198.18.128.103  |
-| linux-host-4   | C8k Emulator + SONiC routers   | VM          | SSH         | 198.18.128.104  |
 | endpoint-1     | Ubuntu client                  | VM          | SSH         | 198.18.128.105  |
 | endpoint-2     | Ubuntu client                  | VM          | SSH         | 198.18.128.106  |
 

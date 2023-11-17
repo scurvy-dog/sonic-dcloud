@@ -29,7 +29,7 @@ The student upon completion of Lab 1 should have achieved the following objectiv
 
 The software virtualization stack used in this lab consists of several layers. At the base Linux OS level it is possible to run this lab either on bare metal or in a virtualized environment. In our dCloud lab we're running the 4-router topology inside one host Ubuntu VM named *linux-host-1*.  The scale requirements for Cisco 8000 emumlator can be found at the link [HERE](https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000-emulator/cisco8000-hardware-emulator-datasheet.html)
 
-To create the SONiC environment we are using Ansible to orchestrate and manage our container-based network topology. Cisco VXR allows us to use a yaml definition file to spin up a Cisco 8000 hardware emulator (C8k emulator). The C8k emulator itself utilizes QEMU/kvm to create a nested virtual machine which contains the simulated hardware environment. Within that simulated environment we will boot ONIE to boot the SONiC operating system. 
+To create the SONiC environment we are using Ansible to orchestrate and manage our container-based network topology. The Python based Cisco VXR tool allows us to use a yaml definition file to spin up a Cisco 8000 hardware emulator (C8k emulator). The C8k emulator itself utilizes QEMU/kvm to create a nested virtual machine which contains the simulated hardware router. Within that simulated environment we will boot ONIE to boot the SONiC operating system. 
 
 For connectivity between virtual SONiC routers we use bridges built by VXR Emulator. For connecitivty between the SONiC VMs and external test VM clients are using linux bridges.
 
@@ -37,7 +37,7 @@ For connectivity between virtual SONiC routers we use bridges built by VXR Emula
 
 ## Device Access
 
-Device access for this lab is primarly through SSH. All of the VMs within this toplogy can be accessed once you connect through Cisco AnyConnect VPN to the dCloud environment. As an alternative to AnyConnect it is possible to launch ssh sessions through the dCloud web interface. Click on the *View* button in the session section. That will launch the Topology Viewer. Within Topology Viewer you can click each node and then initiate an SSH session which will open in a new browser tab. See image below
+Device access for this lab is primarly through SSH. All of the VMs within this toplogy can be accessed once you connect through Cisco AnyConnect VPN to the dCloud environment. As an alternative to AnyConnect it is possible to launch ssh sessions through the dCloud web interface. Click on the *View* button in the session section. That will launch the Topology Viewer. Within Topology Viewer you can click each node and then initiate an SSH session which will open in a new browser tab. See image below:
 
 ![dCloud Topology Viewer](./topo-drawings/dcloud-ssh.png)
 
@@ -45,9 +45,6 @@ Please see the management topology network diagram below. Table-1 below lists th
 
 ![Management Topology](./topo-drawings/management-network.png)
 
-> [!NOTE]
-> In dCloud we have a a relationship of one Ubuntu VM hosting four SONiC router instances.
->
 
 **Table 1**
 | Host name  | IP Address     | Description               |
