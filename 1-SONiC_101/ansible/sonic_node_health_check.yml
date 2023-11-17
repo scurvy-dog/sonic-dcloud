@@ -2,8 +2,8 @@
 
 - name: Check each SONiC Router's Health
   hosts: localhost
-
   tasks:
+  
   # Clear sonic router ssh keys from jumpbox
   - name: clear old ssh keys on jumpbox
     command: "rm /home/cisco/.ssh/known_hosts"
