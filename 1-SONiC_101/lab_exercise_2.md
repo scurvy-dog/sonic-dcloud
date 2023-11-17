@@ -1,7 +1,7 @@
 # SONiC 101 - Exercise 2: Explore SONiC NOS [40 Min]
 
 ### Description: 
-In Exercise 2 the student will explore the SONiC network operating system, its components, services, config management, and CLI. Second, they will run an Ansible script to apply global and interface configurations to three of the nodes in our topology, and will use SONiC CLI for the fourth. And finally we will validate connectivity between SONiC nodes and from SONiC nodes to our endpoint VMs.
+In Exercise 2 we will explore the SONiC network operating system, its components, services, config management, and CLI. Second, we will run an Ansible script to apply global and interface configurations to three of the nodes in our topology. We will use SONiC CLI to configure the fourth. And finally we will validate connectivity between SONiC nodes and from SONiC nodes to our endpoint VMs.
 
 ## Contents
 - [SONiC 101 - Exercise 2: Explore SONiC NOS \[40 Min\]](#sonic-101---exercise-2-explore-sonic-nos-40-min)
@@ -22,7 +22,7 @@ In Exercise 2 the student will explore the SONiC network operating system, its c
   - [End of Lab Exercise 2](#end-of-lab-exercise-2)
   
 ## Lab Objectives
-The student upon completion of Lab 2 should have achieved the following objectives:
+Upon completion of Lab 2 the student should have achieved the following objectives:
 
 * Understanding of the software components within SONiC
 * Ability to see status of various services
@@ -33,7 +33,7 @@ The student upon completion of Lab 2 should have achieved the following objectiv
 
 ## Tour of SONiC
 ### SONiC Software Architecture
-SONiC leverages a microservices-style architecture comprised of various modules running as Docker containers. The containers interact and communicate with each other through the Switch State Service (swss) container. The infrastructure also relies on the use of a redis-database engine: a key-value database to provide a language independent interface, a method for data persistence, replication and multi-process communication among all SONiC subsystems.
+SONiC is Linux plus a microservices-style architecture comprised of various modules running as Docker containers. The containers interact and communicate with each other through the Switch State Service (swss) container. The infrastructure also relies on the use of a redis-database engine: a key-value database to provide a language independent interface, a method for data persistence, replication and multi-process communication among all SONiC subsystems.
 
 Further reading: https://developer.cisco.com/docs/sonic/#!sonic-architecture
     
@@ -85,7 +85,7 @@ c002ab9b311f   docker-database:latest               "/usr/local/bin/dock…"   7
 >For greater detail on container services see this link [HERE](https://github.com/sonic-net/SONiC/wiki/Architecture)
 
 ### Managing Configurations
-Configuration state in SONiC is saved in two separate locations. For persistant configuration between reloads configuration files are used. The main configuration is found at */etc/sonic/config_db.json*. The second configuration file in this lab is for the FRR routing stack and it's configuration is found at */etc/sonic/frr/bgpd.conf*. However, BGP configuration when saved from the redis database is pushed to config_db and as such is the preferred location if you were to edit the *"saved configuration"*.  
+Configuration state in SONiC is saved in two separate locations. For persistant configuration between reloads configuration files are used. The main configuration is found at */etc/sonic/config_db.json*. The second configuration file in this lab is for the FRR routing stack and it's configuration is found at */etc/sonic/frr/bgpd.conf*. 
 
 When the router boots it loads the configuration from these two files into the redis database. The redis database is the running configuration of the router where the various services read or write state information into the redis database.
 
@@ -93,7 +93,7 @@ When the router boots it loads the configuration from these two files into the r
 
 #### Loading configuration from JSON file
 
-The command *config load* is used to load a configuration following the JSON schema. This command loads the configuration from the input file (if user specifies this optional filename, it will use that input file. Otherwise, it will use the default */etc/sonic/config_db.json* file as the input file) into CONFIG_DB. The configuration present in the input file is applied on top of the already running configuration. This command does not flush the config DB before loading the new configuration (i.e., If the configuration present in the input file is same as the current running configuration, nothing happens) If the config present in the input file is not present in running configuration, it will be added. If the config present in the input file differs (when key matches) from that of the running configuration, it will be modified as per the new values for those keys.
+The command *config load* is used to load a configuration following the JSON schema. This command loads the configuration from the input file (if user specifies this optional filename, it will use that input file. Otherwise, it will use the default */etc/sonic/config_db.json* file as the input file) into CONFIG_DB. The configuration present in the input file overwrites the already running configuration. This command does not flush the config DB before loading the new configuration (i.e., if the configuration present in the input file is same as the current running configuration, nothing happens) If the config present in the input file is not present in running configuration, it will be added. If the config present in the input file differs (when key matches) from that of the running configuration, it will be modified as per the new values for those keys.
 
 - Usage:
 ```
@@ -178,6 +178,7 @@ First FRR stores it's configuration in a separate file located at */etc/sonic/fr
 
 ![FRR Configuration Overview](./topo-drawings/frr-bgp-framework.png)
 
+We can view FRR's BGP configuration from the SONiC CLI itself
 
 **View Startup FRR BGP Configuration**
 ```
@@ -186,7 +187,7 @@ show startupconfiguration bgp
 
 **View Running FRR Configuration**
 ```
- show run bgp
+show run bgp
 ```
 **Save Running FRR Configuration to File**
 For direct FRR configuration you use the *vtysh* command which drops you into the FRR command shell. This shell has a more of a router CLI command feel with show commands, config terminal, and config save commands. The below command drops you into FRR and tells FRR to copy the running config and save it to file.
@@ -207,9 +208,9 @@ There are several relevant files for our ansible playbook
 | hosts                       | ~/sonic-dcloud/1-SONiC_101/ansible/              | Contains device list and IPs        |
 | config_db.json              | ~/sonic-dcloud/1-SONiC_101/ansible/files/{host}/ | Global configuration file for lab-2 |
 
-1. Log into host-vm *jumpbox*
+1. Log into *linux-host-1*
    ```
-   ssh cisco@198.18.128.100
+   ssh cisco@198.18.128.101
    ```
 2. Change to the ansible directory
    ```
@@ -329,7 +330,7 @@ To check on interface status and connectivity follow these steps on each router 
   ```
 
 **PORT CHANNELS**
-- Example below is for *sonic-rtr-leaf-1* and  shows the relevant section of the running configuration. Port Channel configuration in the running configuration has three parts.
+- Example below is for *sonic-rtr-leaf-1* and shows the relevant section of the running configuration. Port Channel configuration in the running configuration has three parts.
 - 1. Port channel definitions
   2. Port channel IP information
   3. Port channel member links
@@ -382,7 +383,7 @@ To check on interface status and connectivity follow these steps on each router 
    ```
 
 **IP Adjaceny**
--    View the configured IP address as listed in the below diagram.
+- View the configured IP address as listed in the below diagram.
 
 ![Lab Topology](./topo-drawings/sonic-101-topology.png)
 
@@ -425,7 +426,7 @@ To check on interface status and connectivity follow these steps on each router 
   rtt min/avg/max/mdev = 100.222/156.657/249.050/65.864 ms
   cisco@sonic-rtr-leaf-1:~$ 
   ```
-**Congratulations you have successfully completed Lab Exercise 2. We are now ready to configure routing protocols.**
+**Congratulations you have successfully completed Lab Exercise 2. We are now ready to configure FRR BGP!**
 
 ## End of Lab Exercise 2
 Please proceed to [Lab 3](https://github.com/scurvy-dog/sonic-dcloud/blob/main/1-SONiC_101/lab_exercise_3.md)

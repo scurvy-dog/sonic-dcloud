@@ -16,7 +16,6 @@ This page is to help those new to SONiC have a quick reference guide for CLI com
     - [Fast Reboot](#fast-reboot)
   - [Interface Commands](#interface-commands)
     - [Show Interface status](#show-interface-status)
-    - [](#)
   - [Routing Protocols](#routing-protocols)
     - [BGP Commands](#bgp-commands)
   
@@ -127,10 +126,11 @@ Show lldp neighbor adjacency
 show lldp table
 ```
 
-### 
-
-* Access to all devices in
-
 ## Routing Protocols
 
 ### BGP Commands
+
+Show BGP configuration
+```
+show runningconfiguration bgp
+```

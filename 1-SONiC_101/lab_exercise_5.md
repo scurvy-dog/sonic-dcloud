@@ -1,6 +1,5 @@
 # SONiC 101 - Exercise 5: ACL Overview and Config [35 Min]
 
-
 ### Description: 
 In Exercise 5 the student will explore how SONiC utilizes ACLs in data-plane and control plane application. An overview of where and how SONiC applies ACLs will be provided and configuration examples.
 
@@ -25,7 +24,7 @@ In Exercise 5 the student will explore how SONiC utilizes ACLs in data-plane and
   - [End of Intro to SONiC Lab](#end-of-intro-to-sonic-lab)
   
 ## Lab Objectives
-The student upon completion of Lab Exercise 5 should have achieved the following objectives:
+Upon completion of Lab Exercise 5 the student should have achieved the following objectives:
 
 * Understand types of ACLs SONiC Supports
 * Basic ACL syntax construction
@@ -40,10 +39,11 @@ ACLs can be grouped into three general categories:
     1. Data-plane ACLs applied against physical interfaces
     2. Control plane ACLs
     3. Mirror ACLs for capturing and replicating traffic
+   
 In this lab we will focus on the first type - Data-plane ACLs.
 
 ## ACL Tables
-In this lab we are focusing specifically on data-plane ACLs. The purpose of data-plane ACL tables is to link a set of rules that can be applied to data-plane traffic to a group of defined interfaces. 
+The purpose of data-plane ACL tables is to link a set of rules that can be applied to data-plane traffic to a group of defined interfaces. 
 
 ACL tables can be created or deleted using either CLI or through a JSON definition which is loaded into the running config. We will show both options in this lab. 
 
@@ -157,7 +157,7 @@ sudo config acl remove table ICMP_DROP
 ```
 
 ## ACL Rules
-ACL Rules contain the detail step by step policy that is implemented by the tables. ACL Rule structure will identify which ACL Table they should be joined to. ACL Rules can only be defined using JSON and have no CLI option. We will show a basic ACL Rule used to block ICMP traffic coming from Endpoint-2 to *Loopback 0* on sonic-rtr-leaf-2
+ACL Rules contain the detailed step by step policy that is implemented by the tables. ACL Rule structure will identify which ACL Table they should be joined to. ACL Rules can only be defined using JSON and currently have no CLI option. We will show a basic ACL Rule used to block ICMP traffic coming from Endpoint-2 to *Loopback 0* on sonic-rtr-leaf-2
 
 ### ACL Rule Parameters
 ACL rule sets have a much larger parameter set than tables due to the complex nature of the ACL match option combinations. There are over 30 plus parameters list in the table below. In this lab we will use 2-3 as examples.
@@ -205,7 +205,7 @@ ACL rule sets have a much larger parameter set than tables due to the complex na
 
 
 ### ACL Rule Syntax
-ACL rules are defined using the JSON syntax for purposes of importing into the runnging configuration (redis database). The syntax follows a strict heirarchy of objects and then defining key:value pairs. 
+ACL rules are defined using the JSON syntax for purposes of importing into the running configuration (redis database). The syntax follows a strict heirarchy of objects and then defining key:value pairs. 
 
 The top level of the heirarchy is defined by the "ACL_RULE" object. Within the objects that data set are individual rules.
 Individual rules follows the below syntax
@@ -246,7 +246,7 @@ The remaining <key>:<value> pairs would be matching conditions found in the abov
 
 **Loading the ACL rule JSON file into the running config**
 ```
-sudo config load acl_rule_icmp.json
+sudo config load acl_rule_icmp.json -y
 ```
 
 ### ACL Rule Delete

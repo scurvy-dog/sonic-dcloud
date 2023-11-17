@@ -1,4 +1,4 @@
-# ansible-playbook -i hosts lab_final-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+# ansible-playbook -i hosts lab_exercise_all-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
 
 - name: Run deploy playbook
   import_playbook: lab_deploy-playbook.yml
@@ -14,8 +14,4 @@
 
 - name: run sonic-rtr-leaf-1 playbook
   import_playbook: other-playbooks/sonic-rtr-leaf-1-playbook.yml
-  ignore_errors: yes
-
-- name: run lab 5 "acl" playbook
-  import_playbook: lab_exercise_5-playbook.yml
   ignore_errors: yes
