@@ -132,11 +132,17 @@ docker0                240.127.1.1/24       up/down       N/A             N/A
 eth0                   192.168.122.45/24 <-------- WRONG ADDRESS    
 ```
 
-4. Use SONiC CLI to replace the IP and save config:
+4. Use SONiC CLI to replace the IP per the table and save config:
+
+| sonic-rtr-leaf-1     | 192.168.122.101/24  | 
+| sonic-rtr-leaf-2     | 192.168.122.102/24  | 
+| sonic-rtr-spine-1    | 192.168.122.103/24  |
+| sonic-rtr-spine-2    | 192.168.122.104/24  | 
+
 ```
 sudo config interface ip remove eth0 192.168.122.45/24
 sudo config interface ip add eth0 192.168.122.101/24
 sudo config save -y
 ```
 
-5. Use "ctrl ]" and type "quit" at the telnet> prompt to exit the console. You should now be able to ping and ssh to the newly assigned mgt IP
+1. Use "ctrl ]" and type "quit" at the telnet> prompt to exit the console. You should now be able to ping and ssh to the newly assigned mgt IP
