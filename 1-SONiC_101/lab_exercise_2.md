@@ -250,7 +250,7 @@ There are several relevant files for our ansible playbook
    ```
 3. Configure Ethernet interface from *sonic-rtr-leaf-1* to *endpoint01*
    ```
-   sudo config interface ip add Ethernet32 198.18.11.1/24
+   sudo config interface ip add Ethernet16 198.18.11.1/24
    ```
 4. Create Port Channels to *sonic-rtr-spine-1* and *sonic-rtr-spine-2*
    ```
@@ -303,10 +303,6 @@ To check on interface status and connectivity follow these steps on each router 
    Ethernet8      up       up     etp2
    Ethernet12     up       up     etp3
    Ethernet16     up       up     etp4
-   Ethernet20     up       up     etp5
-   Ethernet24     up       up     etp6
-   Ethernet28     up       up     etp7
-   Ethernet32     up       up     etp8
    ....
    ```
 - Show LLDP adjacency information to see interface remote neighbors
@@ -395,7 +391,7 @@ To check on interface status and connectivity follow these steps on each router 
   cisco@sonic-rtr-leaf-1:~$ show ip interfaces
   Interface     Master    IPv4 address/mask    Admin/Oper    BGP Neighbor    Neighbor IP
   ------------  --------  -------------------  ------------  --------------  -------------
-  Ethernet32              198.18.11.1/24       up/up         N/A             N/A
+  Ethernet16              198.18.11.1/24       up/up         N/A             N/A
   Loopback0               10.0.0.1/32          up/up         N/A             N/A
   PortChannel1            10.1.1.0/31          up/up         N/A             N/A
   PortChannel2            10.1.1.2/31          up/up         N/A             N/A
