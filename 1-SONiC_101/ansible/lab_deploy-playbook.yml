@@ -16,12 +16,12 @@
   hosts: localhost
   become: false
   tasks:
-    - name: delete old deploy logs 
-      command: rm /home/cisco/deploy.log /home/cisco/deploy.log.detail
-      ignore_errors: yes
-      run_once: true
-      become: false
-      delegate_to: localhost
+    # - name: delete old deploy logs 
+    #   command: rm /home/cisco/deploy.log /home/cisco/deploy.log.detail
+    #   ignore_errors: yes
+    #   run_once: true
+    #   become: false
+    #   delegate_to: localhost
       
     - name: deploy.log start message
       become: false
@@ -64,10 +64,11 @@
         create: yes
       delegate_to: localhost
 
-    - name: pause for 15 seconds
+    - name: pause for 15 seconds to let vxr start script change sonic nodes' mgt IPs from dhcp to static
       pause:
         seconds: 15
       become: false
+
     - name: reset user/group permissions on repo folders 
       command: "chown -R cisco:cisco /home/cisco/sonic-dcloud"
       ignore_errors: yes
