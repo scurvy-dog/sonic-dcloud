@@ -16,12 +16,6 @@
   hosts: localhost
   become: false
   tasks:
-    # - name: delete old deploy logs 
-    #   command: rm /home/cisco/deploy.log /home/cisco/deploy.log.detail
-    #   ignore_errors: yes
-    #   run_once: true
-    #   become: false
-    #   delegate_to: localhost
       
     - name: deploy.log start message
       become: false
