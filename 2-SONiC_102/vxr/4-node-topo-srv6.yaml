@@ -13,8 +13,9 @@ devices:
     linux_password: cisco123
     vxr_sim_config:
       shelf:
-        ConfigS1SdkVer: '1.70.0.4'
+        #ConfigS1SdkVer: '1.70.0.4'
         ConfigS1NpsuiteVer: '1.96.2.1'
+        ConfigS1NplPath: /home/cisco/images/gibraltar-sdk-1.54.0.ph3ea5.core.24/npl
     cli_commands: |
                 sudo config hostname sonic-rtr-leaf-1
                 sudo config interface ip add eth0 192.168.122.101/24
@@ -29,8 +30,9 @@ devices:
     linux_password: cisco123
     vxr_sim_config:
       shelf:
-        ConfigS1SdkVer: '1.70.0.4'
+        #ConfigS1SdkVer: '1.70.0.4'
         ConfigS1NpsuiteVer: '1.96.2.1'
+        ConfigS1NplPath: /home/cisco/images/gibraltar-sdk-1.54.0.ph3ea5.core.24/npl
     cli_commands: |
                 sudo config hostname sonic-rtr-leaf-2
                 sudo config interface ip add eth0 192.168.122.102/24
@@ -45,8 +47,9 @@ devices:
     linux_password: cisco123
     vxr_sim_config:
       shelf:
-        ConfigS1SdkVer: '1.70.0.4'
+        #ConfigS1SdkVer: '1.70.0.4'
         ConfigS1NpsuiteVer: '1.96.2.1'
+        ConfigS1NplPath: /home/cisco/images/gibraltar-sdk-1.54.0.ph3ea5.core.24/npl
     cli_commands: |
                 sudo config hostname sonic-rtr-spine-1
                 sudo config interface ip add eth0 192.168.122.103/24
@@ -61,8 +64,9 @@ devices:
     linux_password: cisco123
     vxr_sim_config:
       shelf:
-        ConfigS1SdkVer: '1.70.0.4'
+        #ConfigS1SdkVer: '1.70.0.4'
         ConfigS1NpsuiteVer: '1.96.2.1'
+        ConfigS1NplPath: /home/cisco/images/gibraltar-sdk-1.54.0.ph3ea5.core.24/npl
     cli_commands: |
                 sudo config hostname sonic-rtr-spine-2
                 sudo config interface ip add eth0 192.168.122.104/24
