@@ -6,7 +6,7 @@ devices:
   leaf-1:
     os_type: sonic
     image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.iso
-    onie-install: /home/brmcdoug/vxr-img/sonic-mig-202205-srv6-v6.bin
+    onie-install: /home/cisco/images/sonic-mig-202205-srv6-v6.bin
     platform: spitfire_f
     linecard_types: [8201-32FH]
     linux_username: cisco
@@ -22,7 +22,7 @@ devices:
   leaf-2:
     os_type: sonic
     image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.iso
-    onie-install: /home/brmcdoug/vxr-img/sonic-mig-202205-srv6-v6.bin
+    onie-install: /home/cisco/images/sonic-mig-202205-srv6-v6.bin
     platform: spitfire_f
     linecard_types: [8201-32FH]
     linux_username: cisco
@@ -38,7 +38,7 @@ devices:
   spine-1:
     os_type: sonic
     image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.iso
-    onie-install: /home/brmcdoug/vxr-img/sonic-mig-202205-srv6-v6.bin
+    onie-install: /home/cisco/images/sonic-mig-202205-srv6-v6.bin
     platform: spitfire_f
     linecard_types: [8201-32FH]
     linux_username: cisco
@@ -54,7 +54,7 @@ devices:
   spine-2:
     os_type: sonic
     image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.iso
-    onie-install: /home/brmcdoug/vxr-img/sonic-mig-202205-srv6-v6.bin
+    onie-install: /home/cisco/images/sonic-mig-202205-srv6-v6.bin
     platform: spitfire_f
     linecard_types: [8201-32FH]
     linux_username: cisco
