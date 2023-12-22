@@ -1,6 +1,6 @@
 simulation:
    no_image_copy: true
-   #skip_auto_bringup: True
+   sim_host: localhost                                                                                                                                                                     
 
 devices:
   leaf-1:
