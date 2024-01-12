@@ -32,7 +32,7 @@ Each of the labs is designed to be completed in the order presented. Within each
 
 This lab is based on a simulated DC fabric design of four dockerized SONiC routers each running inside a Linux host VM. In addition there is the jumpbox VM, from which we'll trigger Ansible playbooks. Finally there are two client VMs named Endpoint-1 and Endpoint-2, from which we'll source test traffic. All VMs are running Ubuntu 22.04.
 
-![Lab Topology](topo-drawings/sonic-101-topology.png)
+![Lab Topology](../1-SONiC_101/topo-drawings/sonic-101-topology.png)
 
 ## Remote Access
 We primarily use SSH to interact with all VMs and SONiC routers, however, dCloud does offer SSH through its UI.
