@@ -1,19 +1,21 @@
-# SONiC-101 Cisco 8000 Emulator Lab
+# SONiC-102 Cisco 8000 Emulator - Advanced Lab
 
 ### Description: 
 
-In the SONIC-101 lab we'll review the dCloud hosted topology, get to know the SONiC operating environment, apply interface, IP, and ACL configuration via SONiC's config_db, and setup BGP peering among our 4 fabric members via SONiC's FRR/BGP container.
+In the SONIC-102 lab we'll review the topics of  warm & fast boot, QoS configuration and counters, advanced ACLs, ISIS routing protocol, and advanced BGP.
 
 ## Contents
 * Repository Overview [LINK](#git-repository-overview)
 * Lab Topology [LINK](#lab-topology)
 * Remote Access [LINK](#remote-access)
 * dCloud Session Overview [LINK](#dcloud-session-overview)
-* Exercise 1 - Launching Topology [LINK](lab_exercise_1.md)
-* Exercise 2 - Explore SONiC OS [LINK](lab_exercise_2.md)
-* Exercise 3 - BGP Configuration [LINK](lab_exercise_3.md)
-* Exercise 4 - BFD Configuration [LINK](lab_exercise_4.md)
-* Exercise 5 - ACL Configuration [LINK](lab_exercise_5.md)
+* Exercise 1 - Launch Topology with Base Configuration [LINK](lab_exercise_1.md)
+* Exercise 2 - Warm/Fast Boot [LINK](lab_exercise_2.md)
+* Exercise 3 - QoS Configuration [LINK](lab_exercise_3.md)
+* Exercise 4 - ACL Advanced Configuration [LINK](lab_exercise_4.md)
+* Exercise 5 - ISIS Configuration [LINK](lab_exercise_5.md)
+* Exercise 6 - BGP Advanced Configuration [LINK](lab_exercise_6.md)
+
 
 ## Github Repository Overview
 Each of the labs is designed to be completed in the order presented. Within each lab directory you should see several files of importance:
