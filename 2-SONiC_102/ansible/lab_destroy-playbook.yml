@@ -1,0 +1,21 @@
+---
+
+# ansible-playbook -i hosts lab_destroy-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+
+- name: Destroy containerlab sonic instances
+  hosts: localhost
+  become: true
+  tasks:
+
+    - name: run vxr clean
+      command: "sudo vxr.py clean"
+      args:
+        chdir: /home/cisco/sonic-dcloud/2-SONiC_102/vxr/
+      ignore_errors: yes
+  
+    - name: delete deploy log 
+      command: rm /home/cisco/deploy.log
+      ignore_errors: yes
+      run_once: true
+      become: false
+      delegate_to: localhost
