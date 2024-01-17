@@ -269,5 +269,5 @@
       delegate_to: localhost
 
 - name: Run deploy all playbook and import base configuration
-    import_playbook: lab_base_config-playbook.yml
-    ignore_errors: yes
+  import_playbook: lab_base_config-playbook.yml
+  ignore_errors: yes
