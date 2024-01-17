@@ -1,23 +1,8 @@
 # The configuration is generated for the SONiC dCloud lab
 # Please add additional sources in /etc/apt/sources.list.d
+# Updated source code repositories to load NANO
 
 deb [arch=amd64] http://deb.debian.org/debian/ buster main contrib non-free
-# deb-src [arch=amd64] http://deb.debian.org/debian/ buster main contrib non-free
 deb [arch=amd64] http://deb.debian.org/debian/ buster-updates main contrib non-free
-# deb-src [arch=amd64] http://deb.debian.org/debian/ buster-updates main contrib non-free
 deb [arch=amd64] http://deb.debian.org/debian/ buster-backports main contrib non-free
-
-#deb [arch=amd64] http://packages.trafficmanager.net/snapshot/debian/20230623T000204Z/ buster main contrib non-free
-#deb-src [arch=amd64] http://packages.trafficmanager.net/snapshot/debian/20230623T000204Z/ buster main contrib non-free
-#deb [arch=amd64] http://packages.trafficmanager.net/snapshot/debian/20230623T000204Z/ buster-updates main contrib non-free
-#deb-src [arch=amd64] http://packages.trafficmanager.net/snapshot/debian/20230623T000204Z/ buster-updates main contrib non-free
-#deb [arch=amd64] http://packages.trafficmanager.net/snapshot/debian/20230623T000204Z/ buster-backports main contrib non-free
-
-# deb [arch=amd64] http://deb.debian.org/debian-security/ buster/updates main contrib non-free
-# deb-src [arch=amd64] http://deb.debian.org/debian-security/ buster/updates main contrib non-free
-
-#deb [arch=amd64] http://packages.trafficmanager.net/snapshot/debian-security/20230623T000208Z/ buster/updates main contrib non-free
-#deb-src [arch=amd64] http://packages.trafficmanager.net/snapshot/debian-security/20230623T000208Z/ buster/updates main contrib non-free
-
 deb [arch=amd64] https://download.docker.com/linux/debian buster stable
-# deb-src [arch=amd64] https://download.docker.com/linux/debian buster stable
