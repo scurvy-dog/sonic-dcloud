@@ -1,0 +1,20 @@
+{
+  "ACL_RULE": {
+      "EP1_DROP|RULE_10": {
+          "PACKET_ACTION": "FORWARD",
+          "PRIORITY": "10",
+          "SRC_IP": "198.18.11.2/32"
+      },
+      "EP1_DROP|RULE_20": {
+          "PACKET_ACTION": "DROP",
+          "PRIORITY": "20",
+          "SRC_IP": "198.18.11.2/32",
+          "IP_PROTOCOL":1
+      },
+      "EP1_DROP|RULE_30": {
+         "PACKET_ACTION": "DROP",
+         "PRIORITY": "30",
+         "L4_DST_PORT": "5201"
+     }
+  }
+}
