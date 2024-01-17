@@ -241,6 +241,11 @@
 
 - name: verify sonic routers have loaded 8000e interfaces
   hosts: sonic_routers
+  vars:
+      time_date:
+        tz: ansible_date_time.tz
+        date: ansible_date_time.date
+        time: ansible_date_time.time
   tasks:
     - name: show interfaces status
       command: show interfaces status
@@ -251,10 +256,8 @@
       become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
-        line: "
-        
-        {{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ inventory_hostname }} {{ show_int_status.stdout }}
-        "
+        #line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ inventory_hostname }} {{ show_int_status.stdout }}"
+        line: "{{ time_date[date] }} {{ time_date[time] }} {{ time_date[tz] }}: SONiC Router {{ inventory_hostname }} {{ show_int_status.stdout }}"
         create: yes
       delegate_to: localhost
 
