@@ -263,8 +263,7 @@
       become: false
       lineinfile:
         path: "/home/cisco/deploy.log"
-        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Deploy script complete for {{ inventory_hostname }}
-        "
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Deploy script complete for {{ inventory_hostname }}"
         create: yes
       delegate_to: localhost
 

@@ -14,6 +14,11 @@
     - name: sonic config load
       command: "sudo config load /etc/sonic/config_baseline.json -y"
       ignore_errors: yes
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Loading baseline config for {{ inventory_hostname }}"
+        create: yes
+      delegate_to: localhost
 
     - name: restart hostname service
       command: sudo systemctl restart hostname-config
@@ -55,6 +60,11 @@
       command: vtysh -f /etc/sonic/frr/bgpd.conf
       ignore_errors: yes
       register: frr_load_result
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Load FRR BGP config for {{ inventory_hostname }}"
+        create: yes
+      delegate_to: localhost
       
 # Below section used to load nano app into SONiC router
     - name: backup old debian apt sources.list
@@ -74,3 +84,8 @@
     - name: apt install nano
       command: "sudo apt install nano -y"
       ignore_errors: yes
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Installing nano on {{ inventory_hostname }}"
+        create: yes
+      delegate_to: localhost
