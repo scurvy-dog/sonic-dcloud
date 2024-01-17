@@ -8,11 +8,11 @@
     - name: Copy config_baseline.json files
       copy:
         src: "{{ inventory_hostname }}/config_baseline.json"
-        dest: "/etc/sonic/config_baseline.json"
+        dest: "/etc/sonic/config_db.json"
         mode: 0644
 
     - name: sonic config load
-      command: "sudo config load /etc/sonic/config_baseline.json -y"
+      command: "sudo config load /etc/sonic/config_db.json -y"
       ignore_errors: yes
     
     - name: log sonic config load
@@ -77,7 +77,7 @@
         line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: Installing nano on {{ inventory_hostname }}"
         create: yes
       delegate_to: localhost
-      
+
     - name: backup old debian apt sources.list
       command: "sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak"
       ignore_errors: yes
