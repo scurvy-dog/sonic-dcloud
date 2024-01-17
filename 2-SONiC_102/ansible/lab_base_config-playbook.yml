@@ -34,7 +34,7 @@
     #  ignore_errors: yes
 
 - name: Load FRR BGP config on spine-1, spine-2, and leaf-2
-  hosts: sonic_router_subset
+  hosts: sonic_routers
   become: true
   tasks:
 
