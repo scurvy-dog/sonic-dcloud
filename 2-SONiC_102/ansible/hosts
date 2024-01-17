@@ -1,0 +1,22 @@
+[endpoint_vms]
+endpoint-1 ansible_host=198.18.128.105
+endpoint-2 ansible_host=198.18.128.106
+
+[sonic_routers]
+sonic-rtr-leaf-1 ansible_host=192.168.122.101
+sonic-rtr-leaf-2 ansible_host=192.168.122.102
+sonic-rtr-spine-1 ansible_host=192.168.122.103
+sonic-rtr-spine-2 ansible_host=192.168.122.104
+
+[sonic_router_subset]
+sonic-rtr-leaf-2 ansible_host=192.168.122.102
+sonic-rtr-spine-1 ansible_host=192.168.122.103
+sonic-rtr-spine-2 ansible_host=192.168.122.104
+
+[sonic_routers:vars]
+config_file_name=config_db.json
+
+[jumpbox]
+localhost ansible_connection=local
+
+ansible_ssh_common_args="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
