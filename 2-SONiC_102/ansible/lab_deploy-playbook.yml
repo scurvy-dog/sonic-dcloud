@@ -1,5 +1,3 @@
----
-
 # ansible-playbook -i hosts lab_deploy-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
       
 - name: Copy motd to endpoint VMs
@@ -257,7 +255,7 @@
       lineinfile:
         path: "/home/cisco/deploy.log"
         #line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: SONiC Router {{ inventory_hostname }} {{ show_int_status.stdout }}"
-        #line: "{{ time_date[date] }} {{ time_date[time] }} {{ time_date[tz] }}: SONiC Router {{ inventory_hostname }} {{ show_int_status.stdout }}"
+        line: "{{ time_date[date] }} {{ time_date[time] }} {{ time_date[tz] }}: SONiC Router {{ inventory_hostname }} {{ show_int_status.stdout }}"
         create: yes
       delegate_to: localhost
 
@@ -271,7 +269,7 @@
       delegate_to: localhost
 
     - name: Run deploy all playbook and import base configuration
-    import_playbook: lab_base_config-playbook.yml
-    ignore_errors: yes
+      import_playbook: lab_base_config-playbook.yml
+      ignore_errors: yes
 
 
