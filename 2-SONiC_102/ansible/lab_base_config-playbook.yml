@@ -33,6 +33,29 @@
     #  command: "sudo config save -y"
     #  ignore_errors: yes
 
+- name: Load FRR BGP config on spine-1, spine-2, and leaf-2
+  hosts: sonic_router_subset
+  become: true
+  tasks:
+
+    - name: Create a backup of the existing FRR file
+      command: mv /etc/sonic/frr/bgpd.conf /etc/sonic/frr/bgpd.conf.bak
+      args:
+        creates: /etc/sonic/frr/bgpd.conf.bak
+      ignore_errors: yes
+      register: backup_result
+
+    - name: Copy frr config files
+      copy:
+        src: "{{ inventory_hostname }}/frr.conf"
+        dest: "/etc/sonic/frr/bgpd.conf"
+        mode: 0644
+
+    - name: Load the FRR config through vtysh
+      command: vtysh -f /etc/sonic/frr/bgpd.conf
+      ignore_errors: yes
+      register: frr_load_result
+      
 # Below section used to load nano app into SONiC router
     - name: backup old debian apt sources.list
       command: "sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak"
