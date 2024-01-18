@@ -26,15 +26,15 @@
       command: sudo systemctl restart hostname-config
       ignore_errors: yes
 
-    #- name: Copy loopback shell script
-    #  copy:
-    #    src: "{{ inventory_hostname }}/loopback.sh"
-    #    dest: "/etc/sonic/loopback.sh"
-    #   mode: 0755
+    - name: Copy loopback shell script
+     copy:
+       src: "{{ inventory_hostname }}/loopback.sh"
+       dest: "/etc/sonic/loopback.sh"
+      mode: 0755
 
-    #- name: run loopback shell script
-    #  command: "/etc/sonic/loopback.sh"
-    #  ignore_errors: yes
+    - name: run loopback shell script
+     command: "/etc/sonic/loopback.sh"
+     ignore_errors: yes
 
     - name: Save sonic configuration from redis to config_db
       command: "sudo config save -y"
