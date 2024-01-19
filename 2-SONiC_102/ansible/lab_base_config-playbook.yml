@@ -28,9 +28,9 @@
 
     - name: Copy loopback shell script
       copy:
-      src: "{{ inventory_hostname }}/loopback.sh"
-      dest: "/etc/sonic/loopback.sh"
-      mode: 0755
+        src: "{{ inventory_hostname }}/loopback.sh"
+        dest: "/etc/sonic/loopback.sh"
+        mode: 0755
 
     - name: run loopback shell script
       command: "/etc/sonic/loopback.sh"
