@@ -6,7 +6,7 @@
   tasks:
 
     - name: Copy config_baseline.json files
-      copy:
+        copy:
         src: "{{ inventory_hostname }}/config_baseline.json"
         dest: "/etc/sonic/config_db.json"
         mode: 0644
