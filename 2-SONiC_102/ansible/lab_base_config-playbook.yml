@@ -33,8 +33,8 @@
         mode: 0755
 
     - name: run loopback shell script
-     command: "/etc/sonic/loopback.sh"
-     ignore_errors: yes
+      command: "/etc/sonic/loopback.sh"
+      ignore_errors: yes
 
     - name: Save sonic configuration from redis to config_db
       command: "sudo config save -y"
