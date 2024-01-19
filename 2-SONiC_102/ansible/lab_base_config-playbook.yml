@@ -6,10 +6,10 @@
   tasks:
 
     - name: Copy config_baseline.json files
-        copy:
-        src: "{{ inventory_hostname }}/config_baseline.json"
-        dest: "/etc/sonic/config_db.json"
-        mode: 0644
+      copy:
+      src: "{{ inventory_hostname }}/config_baseline.json"
+      dest: "/etc/sonic/config_db.json"
+      mode: 0644
 
     - name: sonic config load
       command: "sudo config load /etc/sonic/config_db.json -y"
@@ -27,10 +27,10 @@
       ignore_errors: yes
 
     - name: Copy loopback shell script
-        copy:
-        src: "{{ inventory_hostname }}/loopback.sh"
-        dest: "/etc/sonic/loopback.sh"
-        mode: 0755
+      copy:
+      src: "{{ inventory_hostname }}/loopback.sh"
+      dest: "/etc/sonic/loopback.sh"
+      mode: 0755
 
     - name: run loopback shell script
       command: "/etc/sonic/loopback.sh"
