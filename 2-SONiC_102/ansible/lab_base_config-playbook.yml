@@ -7,9 +7,9 @@
 
     - name: Copy config_baseline.json files
       copy:
-      src: "{{ inventory_hostname }}/config_baseline.json"
-      dest: "/etc/sonic/config_db.json"
-      mode: 0644
+        src: "{{ inventory_hostname }}/config_baseline.json"
+        dest: "/etc/sonic/config_db.json"
+        mode: 0644
 
     - name: sonic config load
       command: "sudo config load /etc/sonic/config_db.json -y"
