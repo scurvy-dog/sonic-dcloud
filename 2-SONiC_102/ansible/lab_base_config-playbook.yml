@@ -27,10 +27,10 @@
       ignore_errors: yes
 
     - name: Copy loopback shell script
-     copy:
-       src: "{{ inventory_hostname }}/loopback.sh"
-       dest: "/etc/sonic/loopback.sh"
-      mode: 0755
+        copy:
+        src: "{{ inventory_hostname }}/loopback.sh"
+        dest: "/etc/sonic/loopback.sh"
+        mode: 0755
 
     - name: run loopback shell script
      command: "/etc/sonic/loopback.sh"
