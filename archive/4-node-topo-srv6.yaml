@@ -5,68 +5,64 @@ simulation:
 devices:
   leaf-1:
     os_type: sonic
-    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.iso
-    onie-install: /home/cisco/images/sonic-mig-202205-srv6-v6.bin
+    image: /home/brmcdoug/vxr-img/onie-recovery-x86_64-cisco_8000-r0.iso
+    onie-install: /home/brmcdoug/vxr-img/sonic-mig-202205-srv6-v6.bin
     platform: spitfire_f
     linecard_types: [8201-32FH]
-    linux_username: cisco
-    linux_password: cisco123
+    linux_username: admin
+    linux_password: YourPaSsWoRd
     vxr_sim_config:
       shelf:
-        #ConfigS1SdkVer: '1.70.0.4'
         ConfigS1NpsuiteVer: '1.96.2.1'
-        ConfigS1NplPath: /home/cisco/images/gibraltar-sdk-1.54.0.ph3ea5.core.24/npl
+        ConfigS1NplPath: /home/brmcdoug/vxr-img/gibraltar-sdk-1.54.0.ph3ea5.core.24/npl
     cli_commands: |
                 sudo config hostname sonic-rtr-leaf-1
                 sudo config interface ip add eth0 192.168.122.101/24
 
   leaf-2:
     os_type: sonic
-    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.iso
-    onie-install: /home/cisco/images/sonic-mig-202205-srv6-v6.bin
+    image: /home/brmcdoug/vxr-img/onie-recovery-x86_64-cisco_8000-r0.iso
+    onie-install: /home/brmcdoug/vxr-img/sonic-mig-202205-srv6-v6.bin
     platform: spitfire_f
     linecard_types: [8201-32FH]
-    linux_username: cisco
-    linux_password: cisco123
+    linux_username: admin
+    linux_password: YourPaSsWoRd
     vxr_sim_config:
       shelf:
-        #ConfigS1SdkVer: '1.70.0.4'
         ConfigS1NpsuiteVer: '1.96.2.1'
-        ConfigS1NplPath: /home/cisco/images/gibraltar-sdk-1.54.0.ph3ea5.core.24/npl
+        ConfigS1NplPath: /home/brmcdoug/vxr-img/gibraltar-sdk-1.54.0.ph3ea5.core.24/npl
     cli_commands: |
                 sudo config hostname sonic-rtr-leaf-2
                 sudo config interface ip add eth0 192.168.122.102/24
 
   spine-1:
     os_type: sonic
-    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.iso
-    onie-install: /home/cisco/images/sonic-mig-202205-srv6-v6.bin
+    image: /home/brmcdoug/vxr-img/onie-recovery-x86_64-cisco_8000-r0.iso
+    onie-install: /home/brmcdoug/vxr-img/sonic-mig-202205-srv6-v6.bin
     platform: spitfire_f
     linecard_types: [8201-32FH]
-    linux_username: cisco
-    linux_password: cisco123
+    linux_username: admin
+    linux_password: YourPaSsWoRd
     vxr_sim_config:
       shelf:
-        #ConfigS1SdkVer: '1.70.0.4'
         ConfigS1NpsuiteVer: '1.96.2.1'
-        ConfigS1NplPath: /home/cisco/images/gibraltar-sdk-1.54.0.ph3ea5.core.24/npl
+        ConfigS1NplPath: /home/brmcdoug/vxr-img/gibraltar-sdk-1.54.0.ph3ea5.core.24/npl
     cli_commands: |
                 sudo config hostname sonic-rtr-spine-1
                 sudo config interface ip add eth0 192.168.122.103/24
 
   spine-2:
     os_type: sonic
-    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.iso
-    onie-install: /home/cisco/images/sonic-mig-202205-srv6-v6.bin
+    image: /home/brmcdoug/vxr-img/onie-recovery-x86_64-cisco_8000-r0.iso
+    onie-install: /home/brmcdoug/vxr-img/sonic-mig-202205-srv6-v6.bin
     platform: spitfire_f
     linecard_types: [8201-32FH]
-    linux_username: cisco
-    linux_password: cisco123
+    linux_username: admin
+    linux_password: YourPaSsWoRd
     vxr_sim_config:
       shelf:
-        #ConfigS1SdkVer: '1.70.0.4'
         ConfigS1NpsuiteVer: '1.96.2.1'
-        ConfigS1NplPath: /home/cisco/images/gibraltar-sdk-1.54.0.ph3ea5.core.24/npl
+        ConfigS1NplPath: /home/brmcdoug/vxr-img/gibraltar-sdk-1.54.0.ph3ea5.core.24/npl
     cli_commands: |
                 sudo config hostname sonic-rtr-spine-2
                 sudo config interface ip add eth0 192.168.122.104/24
