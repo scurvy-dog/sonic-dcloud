@@ -96,3 +96,9 @@
       command: "sudo apt install nano -y"
       ignore_errors: yes
 
+    - name: log base config complete
+      lineinfile:
+        path: "/home/cisco/deploy.log"
+        line: "{{ ansible_date_time.date }} {{ansible_date_time.time}} {{ansible_date_time.tz}}: base config complete for {{ inventory_hostname }}"
+        create: yes
+      delegate_to: localhost
