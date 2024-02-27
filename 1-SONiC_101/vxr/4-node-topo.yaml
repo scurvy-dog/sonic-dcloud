@@ -5,69 +5,64 @@ simulation:
 devices:
   leaf-1:
     os_type: sonic
-    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.iso
-    onie-install: /home/cisco/images/vxr-sonic-cisco-8000.bin
+    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.efi64.pxe.unsigned.2020.11br
+    onie-install: /home/cisco/images/sonic-cisco-8000.202305.1.1.bin
     platform: spitfire_f
-    linecard_types: [8101-32H]
+    linecard_types: [8201-32FH]
     linux_username: cisco
     linux_password: cisco123
-    #custom_mgmt_inf: True
-    #mgmt_gateway_ip: 172.10.10.201
     vxr_sim_config:
       shelf:
-        ConfigS1SdkVer: '1.57.11.41'
-        ConfigS1NpsuiteVer: '1.105.0'
+        ConfigS1SdkVer: '1.66.11.80'
+        ConfigS1NpsuiteVer: '1.137.1'
     cli_commands: |
                 sudo config hostname sonic-rtr-leaf-1
                 sudo config interface ip add eth0 192.168.122.101/24
 
   leaf-2:
     os_type: sonic
-    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.iso
-    onie-install: /home/cisco/images/vxr-sonic-cisco-8000.bin
+    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.efi64.pxe.unsigned.2020.11br
+    onie-install: /home/cisco/images/sonic-cisco-8000.202305.1.1.bin
     platform: spitfire_f
-    linecard_types: [8101-32H]
+    linecard_types: [8201-32FH]
     linux_username: cisco
     linux_password: cisco123
-    #custom_mgmt_inf: True
-    #mgmt_gateway_ip: 172.10.10.201
     vxr_sim_config:
       shelf:
-        ConfigS1SdkVer: '1.57.11.41'
+        ConfigS1SdkVer: '1.66.11.80'
+        ConfigS1NpsuiteVer: '1.137.1'
     cli_commands: |
                 sudo config hostname sonic-rtr-leaf-2
                 sudo config interface ip add eth0 192.168.122.102/24
 
   spine-1:
     os_type: sonic
-    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.iso
-    onie-install: /home/cisco/images/vxr-sonic-cisco-8000.bin
+    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.efi64.pxe.unsigned.2020.11br
+    onie-install: /home/cisco/images/sonic-cisco-8000.202305.1.1.bin
     platform: spitfire_f
-    linecard_types: [8101-32H]
+    linecard_types: [8201-32FH]
     linux_username: cisco
     linux_password: cisco123
-    #custom_mgmt_inf: True
-    #mgmt_gateway_ip: 172.10.10.201
     vxr_sim_config:
       shelf:
-        ConfigS1SdkVer: '1.57.11.41'
+        ConfigS1SdkVer: '1.66.11.80'
+        ConfigS1NpsuiteVer: '1.137.1'
     cli_commands: |
                 sudo config hostname sonic-rtr-spine-1
                 sudo config interface ip add eth0 192.168.122.103/24
 
   spine-2:
     os_type: sonic
-    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.iso
-    onie-install: /home/cisco/images/vxr-sonic-cisco-8000.bin
+    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.efi64.pxe.unsigned.2020.11br
+    onie-install: /home/cisco/images/sonic-cisco-8000.202305.1.1.bin
     platform: spitfire_f
-    linecard_types: [8101-32H]
+    linecard_types: [8201-32FH]
     linux_username: cisco
     linux_password: cisco123
-    #custom_mgmt_inf: True
-    #mgmt_gateway_ip: 172.10.10.201
     vxr_sim_config:
       shelf:
-        ConfigS1SdkVer: '1.57.11.41'
+        ConfigS1SdkVer: '1.66.11.80'
+        ConfigS1NpsuiteVer: '1.137.1'
     cli_commands: |
                 sudo config hostname sonic-rtr-spine-2
                 sudo config interface ip add eth0 192.168.122.104/24
