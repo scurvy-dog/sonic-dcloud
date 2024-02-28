@@ -8,7 +8,7 @@ devices:
     image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0-eft11.iso
     onie-install: /home/cisco/images/sonic-cisco-8000-eft11.bin
     platform: spitfire_f
-    linecard_types: [8201-32FH]
+    linecard_types: [8101-32FH]
     linux_username: cisco
     linux_password: cisco123
     vxr_sim_config:
@@ -24,7 +24,7 @@ devices:
     image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0-eft11.iso
     onie-install: /home/cisco/images/sonic-cisco-8000-eft11.bin
     platform: spitfire_f
-    linecard_types: [8201-32FH]
+    linecard_types: [8101-32FH]
     linux_username: cisco
     linux_password: cisco123
     vxr_sim_config:
@@ -40,7 +40,7 @@ devices:
     image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0-eft11.iso
     onie-install: /home/cisco/images/sonic-cisco-8000-eft11.bin
     platform: spitfire_f
-    linecard_types: [8201-32FH]
+    linecard_types: [8101-32FH]
     linux_username: cisco
     linux_password: cisco123
     vxr_sim_config:
@@ -56,7 +56,7 @@ devices:
     image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0-eft11.iso
     onie-install: /home/cisco/images/sonic-cisco-8000-eft11.bin
     platform: spitfire_f
-    linecard_types: [8201-32FH]
+    linecard_types: [8101-32FH]
     linux_username: cisco
     linux_password: cisco123
     vxr_sim_config:
