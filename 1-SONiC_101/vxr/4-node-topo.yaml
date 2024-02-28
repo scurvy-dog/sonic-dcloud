@@ -12,8 +12,8 @@ devices:
     linux_username: cisco
     linux_password: cisco123
     vxr_sim_config:
-      #shelf:
-        #ConfigS1SdkVer: '1.67.1.21'
+      shelf:
+        ConfigS1SdkVer: '1.71.10.2'
         #ConfigS1NpsuiteVer: '1.137.1'
     cli_commands: |
                 sudo config hostname sonic-rtr-leaf-1
@@ -28,8 +28,8 @@ devices:
     linux_username: cisco
     linux_password: cisco123
     vxr_sim_config:
-      #shelf:
-        #ConfigS1SdkVer: '1.67.1.21'
+      shelf:
+        ConfigS1SdkVer: '1.71.10.2'
         #ConfigS1NpsuiteVer: '1.137.1'
     cli_commands: |
                 sudo config hostname sonic-rtr-leaf-2
@@ -44,8 +44,8 @@ devices:
     linux_username: cisco
     linux_password: cisco123
     vxr_sim_config:
-      #shelf:
-        #ConfigS1SdkVer: '1.67.1.21'
+      shelf:
+        ConfigS1SdkVer: '1.71.10.2'
         #ConfigS1NpsuiteVer: '1.137.1'
     cli_commands: |
                 sudo config hostname sonic-rtr-spine-1
@@ -60,8 +60,8 @@ devices:
     linux_username: cisco
     linux_password: cisco123
     vxr_sim_config:
-      #shelf:
-        #ConfigS1SdkVer: '1.67.1.21'
+      shelf:
+        ConfigS1SdkVer: '1.71.10.2'
         #ConfigS1NpsuiteVer: '1.137.1'
     cli_commands: |
                 sudo config hostname sonic-rtr-spine-2
