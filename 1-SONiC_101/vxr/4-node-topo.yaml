@@ -15,9 +15,9 @@ devices:
     #   shelf:
     #     ConfigS1SdkVer: '1.71.10.2'
     #     #ConfigS1NpsuiteVer: '1.137.1'
-    cli_commands: |
-                sudo config hostname sonic-rtr-leaf-1
-                sudo config interface ip add eth0 192.168.122.101/24
+    # cli_commands: |
+    #             sudo config hostname sonic-rtr-leaf-1
+    #             sudo config interface ip add eth0 192.168.122.101/24
 
   leaf-2:
     os_type: sonic
@@ -31,9 +31,9 @@ devices:
     #   shelf:
     #     ConfigS1SdkVer: '1.71.10.2'
     #     #ConfigS1NpsuiteVer: '1.137.1'
-    cli_commands: |
-                sudo config hostname sonic-rtr-leaf-2
-                sudo config interface ip add eth0 192.168.122.102/24
+    # cli_commands: |
+    #             sudo config hostname sonic-rtr-leaf-2
+    #             sudo config interface ip add eth0 192.168.122.102/24
 
   spine-1:
     os_type: sonic
@@ -47,9 +47,9 @@ devices:
     #   shelf:
     #     ConfigS1SdkVer: '1.71.10.2'
     #     #ConfigS1NpsuiteVer: '1.137.1'
-    cli_commands: |
-                sudo config hostname sonic-rtr-spine-1
-                sudo config interface ip add eth0 192.168.122.103/24
+    # cli_commands: |
+    #             sudo config hostname sonic-rtr-spine-1
+    #             sudo config interface ip add eth0 192.168.122.103/24
 
   spine-2:
     os_type: sonic
@@ -63,9 +63,9 @@ devices:
     #   shelf:
     #     ConfigS1SdkVer: '1.71.10.2'
     #     #ConfigS1NpsuiteVer: '1.137.1'
-    cli_commands: |
-                sudo config hostname sonic-rtr-spine-2
-                sudo config interface ip add eth0 192.168.122.104/24
+    # cli_commands: |
+    #             sudo config hostname sonic-rtr-spine-2
+    #             sudo config interface ip add eth0 192.168.122.104/24
 
 connections:
   hubs:
