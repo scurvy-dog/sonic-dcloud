@@ -1,5 +1,5 @@
 simulation:
-   no_image_copy: true
+   #no_image_copy: true
    #skip_auto_bringup: True
 
 devices:
