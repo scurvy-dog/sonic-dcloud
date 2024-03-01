@@ -5,8 +5,10 @@ simulation:
 devices:
   leaf-1:
     os_type: sonic
-    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.qcow2
-    onie-install: /home/cisco/images/sonic-cisco-8000.bin
+    # image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.qcow2
+    # onie-install: /home/cisco/images/sonic-cisco-8000.bin
+    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0-eft11.iso 
+    onie-install: /home/cisco/images/sonic-cisco-8000-eft11.bin
     platform: spitfire_f
     linecard_types: [8101-32H]
     linux_username: cisco
@@ -21,8 +23,10 @@ devices:
 
   leaf-2:
     os_type: sonic
-    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.qcow2
-    onie-install: /home/cisco/images/sonic-cisco-8000.bin
+    # image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.qcow2
+    # onie-install: /home/cisco/images/sonic-cisco-8000.bin
+    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0-eft11.iso 
+    onie-install: /home/cisco/images/sonic-cisco-8000-eft11.bin
     platform: spitfire_f
     linecard_types: [8101-32H]
     linux_username: cisco
@@ -37,8 +41,10 @@ devices:
 
   spine-1:
     os_type: sonic
-    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.qcow2
-    onie-install: /home/cisco/images/sonic-cisco-8000.bin
+    # image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.qcow2
+    # onie-install: /home/cisco/images/sonic-cisco-8000.bin
+    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0-eft11.iso 
+    onie-install: /home/cisco/images/sonic-cisco-8000-eft11.bin
     platform: spitfire_f
     linecard_types: [8101-32H]
     linux_username: cisco
@@ -53,8 +59,10 @@ devices:
 
   spine-2:
     os_type: sonic
-    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.qcow2
-    onie-install: /home/cisco/images/sonic-cisco-8000.bin
+    # image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0.qcow2
+    # onie-install: /home/cisco/images/sonic-cisco-8000.bin
+    image: /home/cisco/images/onie-recovery-x86_64-cisco_8000-r0-eft11.iso 
+    onie-install: /home/cisco/images/sonic-cisco-8000-eft11.bin
     platform: spitfire_f
     linecard_types: [8101-32H]
     linux_username: cisco
