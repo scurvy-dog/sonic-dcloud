@@ -28,7 +28,7 @@ Each of the labs is designed to be completed in the order presented. Within each
 
 ## Lab Topology
 
-This lab is based on a simulated DC fabric design of four dockerized Cisco 8000 emulators running the SONiC network operating system. The topology itself resides inside a Linux host VM. In addition there is the jumpbox VM, from which we'll trigger Ansible playbooks. Finally there are two client VMs named Endpoint-1 and Endpoint-2, from which we'll source test traffic. All VMs are running Ubuntu 22.04.
+This lab is based on a simulated DC fabric design of four dockerized Cisco 8000 emulators running the SONiC network operating system. The topology itself resides inside a Linux host VM. The lab also includes two client VMs named Endpoint-1 and Endpoint-2, from which we'll source test traffic. All VMs are running Ubuntu 22.04.
 
 ![Lab Topology](topo-drawings/sonic-101-topology.png)
 
@@ -43,13 +43,16 @@ cisco/cisco123
 ### Virtual Machine Access Table
 | VM Name        | Description                    | Device Type | Access Type |   IP Address    |
 |:---------------|:-------------------------------|:-----------:|:-----------:|:---------------:|
-| jumpbox        | File Staging, Ansible Playbooks| VM          | SSH         | 198.18.128.100  |
-| linux-host-1   | C8k Emulator + SONiC routers   | VM          | SSH         | 198.18.128.101  |
+| linux-host-1   | C8k Emulator / SONiC routers   | VM          | SSH         | 198.18.128.101  |
 | endpoint-1     | Ubuntu client                  | VM          | SSH         | 198.18.128.105  |
 | endpoint-2     | Ubuntu client                  | VM          | SSH         | 198.18.128.106  |
 
 
-* Once the SONiC routers have completed their deployment (see dCloud Session Overview) they may be access from the Jumpbox VM as follows:
+* Once the SONiC routers have completed their deployment (see [LINK](#dcloud-session-overview)) they may be accessed from the Linux Host VM as follows:
+
+1. Use Anyconnect client and your dCloud credentials to establish a VPN session
+2. ssh to the Linux host VM: ssh cisco@198.18.128.101
+3. From the Linux host ssh to each SONiC node per this table:
 
 | Device Name       | Device Type | Access Type |   IP Address    |                                           
 |:------------------|:------------|:------------|:---------------:|                          
@@ -61,15 +64,11 @@ cisco/cisco123
 ## dCloud Session Overview
 When a Cisco dCloud session is launched the scheduler will set a start time at the next quarter-hour mark (top of the hour, 15 after, etc.). Upon reaching the start time dCloud builds out the virtual machine environment, which usually becomes available in just a few minutes.  
 
-In the case of the SONiC 8000 Emulator lab the SONiC routers are not immediately available as they need to go through a VXR build process inside the Linux host VMs. This step is taken care of automatically by an Ansible 'deploy' playbook which is triggered at lab startup. This playbook will launch the four router VMs and trigger the SONiC build process. The build process takes 10-15 minutes to run and your lab won't truly be ready until it completes. You may monitor the deploy/build process as the playbook outputs log entries to two logfiles in /home/cisco on the Jumpbox:
+In the case of the SONiC 8000 Emulator lab the SONiC routers are not immediately available as they need to go through a VXR build process inside the Linux host VMs. This step is taken care of automatically by an Ansible 'deploy' playbook which is triggered at lab startup. This playbook will launch the four router VMs and trigger the SONiC build process. The build process takes 10-15 minutes to run and your lab won't truly be ready until it completes. You may monitor the deploy/build process as the playbook outputs log entries to the deploy.log file /home/cisco on the Linux host VM.
 
-deploy.log - summary deployment info
-deploy.log.detail - more detailed Ansible output
-
-* Monitor the status of the SONiC router deployments by running 'tail -f' or 'cat' on the logfiles:
+* Monitor the status of the SONiC router deployments by running 'tail -f' or 'cat' on the logfile:
 ```
 tail -f deploy.log
-tail -f deploy.log.detail
 ```
 
 Proceed to [lab_exercise_1](lab_exercise_1.md)
