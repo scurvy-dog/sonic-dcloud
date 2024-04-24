@@ -28,7 +28,7 @@ Each of the labs is designed to be completed in the order presented. Within each
 
 ## Lab Topology
 
-This lab is based on a simulated DC fabric design of four dockerized SONiC routers each running inside a Linux host VM. In addition there is the jumpbox VM, from which we'll trigger Ansible playbooks. Finally there are two client VMs named Endpoint-1 and Endpoint-2, from which we'll source test traffic. All VMs are running Ubuntu 22.04.
+This lab is based on a simulated DC fabric design of four dockerized Cisco 8000 emulators running the SONiC network operating system. The topology itself resides inside a Linux host VM. In addition there is the jumpbox VM, from which we'll trigger Ansible playbooks. Finally there are two client VMs named Endpoint-1 and Endpoint-2, from which we'll source test traffic. All VMs are running Ubuntu 22.04.
 
 ![Lab Topology](topo-drawings/sonic-101-topology.png)
 
