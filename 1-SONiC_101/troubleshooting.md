@@ -83,7 +83,7 @@ By default the SONiC nodes' mgt interfaces get a DHCP address to begin with. We'
 
 1. Each node's console port can be found in its "Portvector.txt" file which can be found in the vxr-out/*node-name*/ directory. In this example we'll 'cat' leaf-1's Portvector.txt file:
 ```
-cat sonic-dcloud/1-SONiC_101/vxr/vxr.out/leaf-1/PortVector.txt 
+cat ~/sonic-dcloud/1-SONiC_101/vxr/vxr.out/leaf-1/PortVector.txt 
 ```
 Output:
 ```
