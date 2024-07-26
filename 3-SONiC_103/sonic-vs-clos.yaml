@@ -1,0 +1,88 @@
+# Topology - 2-stage CLOS with four leaf and 2 spine nodes
+#
+
+
+name: sonic-vs
+
+mgmt:
+  network: mgt_vs
+  ipv4_subnet: 172.20.6.0/24
+
+topology:
+  nodes:
+    r01:
+      kind: linux
+      image: docker-sonic-vs:latest
+      # binds:
+      #   - ansible/files/r01/daemons:/etc/frr/daemons
+      #   - ansible/files/r01/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.6.101
+
+    r02:
+      kind: linux
+      image: docker-sonic-vs:latest
+      # binds:
+      #   - ansible/files/r02/daemons:/etc/frr/daemons
+      #   - ansible/files/r02/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.6.102
+
+    r03:
+      kind: linux
+      image: docker-sonic-vs:latest
+      # binds:
+      #   - ansible/files/r03/daemons:/etc/frr/daemons
+      #   - ansible/files/r03/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.6.103
+
+    r04:
+      kind: linux
+      image: docker-sonic-vs:latest
+      # binds:
+      #   - ansible/files/r04/daemons:/etc/frr/daemons
+      #   - ansible/files/r04/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.6.104
+
+    r05:
+      kind: linux
+      image: docker-sonic-vs:latest
+      # binds:
+      #   - ansible/files/r05/daemons:/etc/frr/daemons
+      #   - ansible/files/r05/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.6.105
+
+    r06:
+      kind: linux
+      image: docker-sonic-vs:latest
+      # binds:
+      #   - ansible/files/r06/daemons:/etc/frr/daemons
+      #   - ansible/files/r06/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.6.106
+
+    r01-host:
+      kind: bridge
+
+    r02-host:
+      kind: bridge
+
+    r03-host:
+      kind: bridge
+
+    r04-host:
+      kind: bridge
+
+  links:
+    - endpoints: ["r01:eth1", "r05:eth1"]
+    - endpoints: ["r01:eth2", "r06:eth1"]
+    - endpoints: ["r01:eth3", "r01-host:r01-eth3"]
+
+    - endpoints: ["r02:eth1", "r05:eth2"]
+    - endpoints: ["r02:eth2", "r06:eth2"]
+    - endpoints: ["r02:eth3", "r02-host:r02-eth3"]
+
+    - endpoints: ["r03:eth1", "r05:eth3"]
+    - endpoints: ["r03:eth2", "r06:eth3"]
+    - endpoints: ["r03:eth3", "r03-host:r03-eth3"]
+
+    - endpoints: ["r04:eth1", "r05:eth4"]
+    - endpoints: ["r04:eth2", "r06:eth4"]
+    - endpoints: ["r04:eth3", "r04-host:r04-eth3"]
