@@ -14,8 +14,7 @@ This page is to help those new to SONiC have a quick reference guide for CLI com
   - [Reload Commands](#reload-commands)
     - [Warm Reboot](#warm-reboot)
     - [Fast Reboot](#fast-reboot)
-  - [Interface Commands](#interface-commands)
-    - [Show Interface status](#show-interface-status)
+  - [Interface 'show' Commands](#interface-show-commands)
   - [Routing Protocols](#routing-protocols)
     - [BGP Commands](#bgp-commands)
   
@@ -109,14 +108,14 @@ Fast-reboot feature enables a switch to reboot up quickly, with minimum disrupti
 sudo fast-reboot
 ```
 
-## Interface Commands
+## Interface 'show' Commands
 
-### Show Interface status
-Shows interface status in an abbreviated format
+Show interface status in an abbreviated format
 ```
 show interfaces description
 ```
-Shoe interface status in more detail
+
+Show interface status in more detail
 ```
 show interfaces status
 ```
@@ -125,6 +124,12 @@ Show lldp neighbor adjacency
 ```
 show lldp table
 ```
+
+Show portchannel
+```
+sudo config portchannel add PortChannel1
+```
+
 
 ## Routing Protocols
 
