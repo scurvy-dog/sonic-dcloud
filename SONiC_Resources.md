@@ -22,3 +22,7 @@ https://sonic.software/
 https://software.cisco.com/download/home/286324878
 
 Note: select one of the "-O" router PIDs on the right hand side of the frame. Example: `*8101-32FH-O Router*`
+
+### SONiC Workgroups/Communities
+https://sonic-net.github.io/SONiC/workgroups.html
+
