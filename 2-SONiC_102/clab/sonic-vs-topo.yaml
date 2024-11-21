@@ -57,6 +57,29 @@ topology:
       image: vrnetlab/sonic_sonic-vs:202311.1
       mgmt-ipv4: 172.20.8.110
 
+    LF07-host1:
+      kind: bridge
+
+    LF07-host2:
+      kind: bridge
+
+    LF08-host1:
+      kind: bridge
+
+    LF08-host2:
+      kind: bridge
+
+    LF09-host1:
+      kind: bridge
+
+    LF09-host2:
+      kind: bridge
+
+    LF10-host1:
+      kind: bridge
+
+    LF10-host2:
+      kind: bridge
 
   links:
     - endpoints: ["sonic-SS01:eth1", "sonic-SP03:eth1"]
