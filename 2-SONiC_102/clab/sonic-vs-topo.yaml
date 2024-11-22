@@ -9,33 +9,38 @@ topology:
 
     sonic-SS01:
       kind: sonic-vs
-      #image: vrnetlab/sonic_sonic-vs:202311
-      image: docker-sonic-vs:latest
+      image: vrnetlab/sonic_sonic-vs:c8101-h-202311
+      #image: docker-sonic-vs:latest
       mgmt-ipv4: 172.20.8.101
 
     sonic-SS02:
       kind: sonic-vs
-      image: docker-sonic-vs:latest
+      image: vrnetlab/sonic_sonic-vs:c8101-h-202311
+      #image: docker-sonic-vs:latest
       mgmt-ipv4: 172.20.8.102
 
     sonic-SP03:
       kind: sonic-vs
-      image: docker-sonic-vs:latest
+      image: vrnetlab/sonic_sonic-vs:c8101-h-202311
+      #image: docker-sonic-vs:latest
       mgmt-ipv4: 172.20.8.103
 
     sonic-SP04:
       kind: sonic-vs
-      image: docker-sonic-vs:latest
+      image: vrnetlab/sonic_sonic-vs:c8101-h-202311
+      #image: docker-sonic-vs:latest
       mgmt-ipv4: 172.20.8.104
 
     sonic-SP05:
       kind: sonic-vs
-      image: docker-sonic-vs:latest
+      image: vrnetlab/sonic_sonic-vs:c8101-h-202311
+      #image: docker-sonic-vs:latest
       mgmt-ipv4: 172.20.8.105
 
     sonic-SP06:
       kind: sonic-vs
-      image: docker-sonic-vs:latest
+      image: vrnetlab/sonic_sonic-vs:c8101-h-202311
+      #image: docker-sonic-vs:latest
       mgmt-ipv4: 172.20.8.106
 
     # sonic-LF07:
