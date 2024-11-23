@@ -1,8 +1,8 @@
 {
     "DEVICE_METADATA": {
         "localhost": {
-            "hwsku": "32x100Gb",
-            "platform": "x86_64-8201_32fh_o-r0",
+            "hwsku": "cisco-8101-p4-32x100-vs",
+            "platform": "x86_64-kvm_x86_64-r0",
             "mac": "52:54:00:74:c1:04",
             "hostname": "sonic-rtr-spine-2",
             "type": "LeafRouter",
