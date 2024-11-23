@@ -9,59 +9,59 @@ topology:
 
     sonic-SS01:
       kind: sonic-vm
-      image: vrnetlab/sonic_sonic-vs:sonic-ngdp-vs-gb-202311-1.66.11.126-sai-1.13.0
+      image: vrnetlab/sonic_sonic-vs:clab
       #image: docker-sonic-vs:latest
       mgmt-ipv4: 172.20.8.101
 
     sonic-SS02:
       kind: sonic-vm
-      image: vrnetlab/sonic_sonic-vs:sonic-ngdp-vs-gb-202311-1.66.11.126-sai-1.13.0
+      image: vrnetlab/sonic_sonic-vs:clab
       #image: docker-sonic-vs:latest
       mgmt-ipv4: 172.20.8.102
 
     sonic-SP03:
       kind: sonic-vm
-      image: vrnetlab/sonic_sonic-vs:sonic-ngdp-vs-gb-202311-1.66.11.126-sai-1.13.0
+      image: vrnetlab/sonic_sonic-vs:clab
       #image: docker-sonic-vs:latest
       mgmt-ipv4: 172.20.8.103
 
     sonic-SP04:
       kind: sonic-vm
-      image: vrnetlab/sonic_sonic-vs:sonic-ngdp-vs-gb-202311-1.66.11.126-sai-1.13.0
+      image: vrnetlab/sonic_sonic-vs:clab
       #image: docker-sonic-vs:latest
       mgmt-ipv4: 172.20.8.104
 
     sonic-SP05:
       kind: sonic-vm
-      image: vrnetlab/sonic_sonic-vs:sonic-ngdp-vs-gb-202311-1.66.11.126-sai-1.13.0
+      image: vrnetlab/sonic_sonic-vs:clab
       #image: docker-sonic-vs:latest
       mgmt-ipv4: 172.20.8.105
 
     sonic-SP06:
       kind: sonic-vm
-      image: vrnetlab/sonic_sonic-vs:sonic-ngdp-vs-gb-202311-1.66.11.126-sai-1.13.0
+      image: vrnetlab/sonic_sonic-vs:clab
       #image: docker-sonic-vs:latest
       mgmt-ipv4: 172.20.8.106
 
-    # sonic-LF07:
-    #   kind: sonic-vm
-    #   image: vrnetlab/sonic_sonic-vs:202311
-    #   mgmt-ipv4: 172.20.8.107
+    sonic-LF07:
+      kind: sonic-vm
+      image: vrnetlab/sonic_sonic-vs:clab
+      mgmt-ipv4: 172.20.8.107
 
-    # sonic-LF08:
-    #   kind: sonic-vm
-    #   image: vrnetlab/sonic_sonic-vs:202311
-    #   mgmt-ipv4: 172.20.8.108
+    sonic-LF08:
+      kind: sonic-vm
+      image: vrnetlab/sonic_sonic-vs:clab
+      mgmt-ipv4: 172.20.8.108
     
-    # sonic-LF09:
-    #   kind: sonic-vm
-    #   image: vrnetlab/sonic_sonic-vs:202311
-    #   mgmt-ipv4: 172.20.8.109
+    sonic-LF09:
+      kind: sonic-vm
+      image: vrnetlab/sonic_sonic-vs:clab
+      mgmt-ipv4: 172.20.8.109
 
-    # sonic-LF10:
-    #   kind: sonic-vm
-    #   image: vrnetlab/sonic_sonic-vs:202311
-    #   mgmt-ipv4: 172.20.8.110
+    sonic-LF10:
+      kind: sonic-vm
+      image: vrnetlab/sonic_sonic-vs:clab
+      mgmt-ipv4: 172.20.8.110
 
     # LF07-host1:
     #   kind: bridge
@@ -98,17 +98,17 @@ topology:
     - endpoints: ["sonic-SS02:eth3", "sonic-SP05:eth2"]
     - endpoints: ["sonic-SS02:eth4", "sonic-SP06:eth2"]
 
-    # - endpoints: ["sonic-SP03:eth3", "sonic-LF07:eth1"]
-    # - endpoints: ["sonic-SP03:eth4", "sonic-LF08:eth1"]
+    - endpoints: ["sonic-SP03:eth3", "sonic-LF07:eth1"]
+    - endpoints: ["sonic-SP03:eth4", "sonic-LF08:eth1"]
 
-    # - endpoints: ["sonic-SP04:eth3", "sonic-LF07:eth2"]
-    # - endpoints: ["sonic-SP04:eth4", "sonic-LF08:eth2"]
+    - endpoints: ["sonic-SP04:eth3", "sonic-LF07:eth2"]
+    - endpoints: ["sonic-SP04:eth4", "sonic-LF08:eth2"]
 
-    # - endpoints: ["sonic-SP05:eth3", "sonic-LF09:eth1"]
-    # - endpoints: ["sonic-SP05:eth4", "sonic-LF10:eth1"]
+    - endpoints: ["sonic-SP05:eth3", "sonic-LF09:eth1"]
+    - endpoints: ["sonic-SP05:eth4", "sonic-LF10:eth1"]
 
-    # - endpoints: ["sonic-SP06:eth3", "sonic-LF09:eth2"]
-    # - endpoints: ["sonic-SP06:eth4", "sonic-LF10:eth2"]
+    - endpoints: ["sonic-SP06:eth3", "sonic-LF09:eth2"]
+    - endpoints: ["sonic-SP06:eth4", "sonic-LF10:eth2"]
 
     # - endpoints: ["sonic-LF07:eth3", "LF07-host1:sonic-LF07-eth3"]
     # - endpoints: ["sonic-LF08:eth3", "LF08-host1:sonic-LF08-eth3"]
