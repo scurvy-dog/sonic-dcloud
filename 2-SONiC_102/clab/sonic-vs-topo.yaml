@@ -10,37 +10,31 @@ topology:
     sonic-SS01:
       kind: sonic-vm
       image: vrnetlab/sonic_sonic-vs:clab
-      #image: docker-sonic-vs:latest
       mgmt-ipv4: 172.20.8.101
 
     sonic-SS02:
       kind: sonic-vm
       image: vrnetlab/sonic_sonic-vs:clab
-      #image: docker-sonic-vs:latest
       mgmt-ipv4: 172.20.8.102
 
     sonic-SP03:
       kind: sonic-vm
       image: vrnetlab/sonic_sonic-vs:clab
-      #image: docker-sonic-vs:latest
       mgmt-ipv4: 172.20.8.103
 
     sonic-SP04:
       kind: sonic-vm
       image: vrnetlab/sonic_sonic-vs:clab
-      #image: docker-sonic-vs:latest
       mgmt-ipv4: 172.20.8.104
 
     sonic-SP05:
       kind: sonic-vm
       image: vrnetlab/sonic_sonic-vs:clab
-      #image: docker-sonic-vs:latest
       mgmt-ipv4: 172.20.8.105
 
     sonic-SP06:
       kind: sonic-vm
       image: vrnetlab/sonic_sonic-vs:clab
-      #image: docker-sonic-vs:latest
       mgmt-ipv4: 172.20.8.106
 
     sonic-LF07:
@@ -63,29 +57,17 @@ topology:
       image: vrnetlab/sonic_sonic-vs:clab
       mgmt-ipv4: 172.20.8.110
 
-    # LF07-host1:
-    #   kind: bridge
+# add some linux hosts here:
 
-    # LF07-host2:
-    #   kind: bridge
+    # host01:
+    #   kind: linux
+    #   image: ubuntu-trex:1.1
+    #   mgmt-ipv4: 172.20.7.61
+      ## binds: 
+      ##   - trex/trex01/trex_cfg.yaml:/etc/trex_cfg.yaml
 
-    # LF08-host1:
-    #   kind: bridge
 
-    # LF08-host2:
-    #   kind: bridge
-
-    # LF09-host1:
-    #   kind: bridge
-
-    # LF09-host2:
-    #   kind: bridge
-
-    # LF10-host1:
-    #   kind: bridge
-
-    # LF10-host2:
-    #   kind: bridge
+# links
 
   links:
     - endpoints: ["sonic-SS01:eth1", "sonic-SP03:eth1"]
