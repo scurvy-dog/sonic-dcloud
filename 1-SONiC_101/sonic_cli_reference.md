@@ -8,15 +8,22 @@ This page is to help those new to SONiC have a quick reference guide for CLI com
   - [Contents](#contents)
   - [Global Commands](#global-commands)
     - [Show Version](#show-version)
+    - [Show Boot Information](#show-boot-information)
     - [Other global commands](#other-global-commands)
+    - [System Logs](#system-logs)
   - [Configuration Commands](#configuration-commands)
   - [Container Commands](#container-commands)
   - [Reload Commands](#reload-commands)
     - [Warm Reboot](#warm-reboot)
     - [Fast Reboot](#fast-reboot)
   - [Interface 'show' Commands](#interface-show-commands)
-  - [Routing Protocols](#routing-protocols)
+  - [Vlans and Layer 2](#vlans-and-layer-2)
+    - [VLAN](#vlan)
+  - [Routing Protocols and Layer 3](#routing-protocols-and-layer-3)
+    - [IPv4 Routing](#ipv4-routing)
+    - [VRF Commands](#vrf-commands)
     - [BGP Commands](#bgp-commands)
+    - [FRR](#frr)
   
 ## Global Commands
 
@@ -27,6 +34,7 @@ Displays the current installed SONiC version as well as Hardware information on 
 show version
 ```
 
+Example output:
 ```
 SONiC Software Version: SONiC.azure_cisco_202205.5324-dirty-20230707.044127
 SONiC OS Version: 11
@@ -46,6 +54,14 @@ Hardware Revision: 0.33
 Uptime: 17:47:47 up 50 min,  1 user,  load average: 0.96, 1.01, 1.03
 Date: Fri 18 Aug 2023 17:47:47
 ```
+
+### Show Boot Information
+Display current and next boot partition information:
+
+```
+show boot
+```
+
 ### Other global commands
 ```
 show processes [cpu | memory | summary]
@@ -55,6 +71,13 @@ show platform summary
 show platform pcieinfo
 show runningconfiguration
 crm show resources all
+```
+
+### System Logs
+View system logs:
+
+```
+sudo tail /var/log/syslog
 ```
 
 ## Configuration Commands
@@ -76,6 +99,15 @@ Clear current configuration and import new configurationn from the input file or
 ```
 config reload [-y|--yes] [-l|--load-sysinfo] [<filename>] [-n|--no-service-restart] [-f|--force]
 ```
+
+####View Configuration
+Display current configuration:
+
+```
+show runningconfiguration all
+cat /etc/sonic/config_db.json
+```
+
 
 
 ## Container Commands
@@ -130,12 +162,112 @@ Show portchannel
 sudo config portchannel add PortChannel1
 ```
 
+Show interfaces status
 
-## Routing Protocols
+```
+show interfaces status
+show interfaces status Ethernet8
+```
+
+Show ip interfaces: Interfaces, Assigned VRF, IPv4 Address, Administrative and operational state, BGP neighbor, Neighbor IP
+
+```
+show ip interfaces
+```
+
+Check traffic and counters for an interface
+
+```
+show interfaces counters -i Ethernet0
+show interfaces counters detailed  Ethernet0
+```
+
+Display the running configuration for an interface:
+
+```
+show runningconfiguration interfaces
+```
+
+Show transceiver for an interface.
+
+```
+show interfaces transceiver  status Ethernet0
+show interfaces transceiver  eeprom  Ethernet0
+show interfaces transceiver info Ethernet0
+```
+
+## Vlans and Layer 2
+
+### VLAN
+
+Adding a VLAN 
+
+```
+sudo config vlan add 20
+```
+
+Assign an interface to a VLAN
+
+```
+sudo config vlan member add -u 20 Ethernet0
+```
+
+## Routing Protocols and Layer 3
+
+### IPv4 Routing
+
+Assign an IPv4 address to an interface:
+
+```
+sudo config interface ip add Ethernet8 100.0.14.22/24
+```
+
+Assign an IPv4 address to a VLAN Interface:
+
+```
+sudo config interface ip add Vlan20 21.21.21.1/24
+```
+
+
+Remove an IPv4 address from an interface
+
+```
+sudo config interface ip remove Ethernet8 100.0.14.22/24
+```
+
+
+Show the ipv4 routing table:
+
+```
+show ip route or ip route show
+```
+
+### VRF Commands
+
+```
+show vrf
+```
+
 
 ### BGP Commands
 
 Show BGP configuration
 ```
 show runningconfiguration bgp
+```
+
+### FRR
+
+FRR integrates into SONiC as the core routing protocol stack, offering dynamic routing capabilities such as BGP, OSPF, and IS-IS. This integration allows SONiC to handle complex routing scenarios and enables seamless communication between network devices. By leveraging FRR, SONiC combines the agility of a modern NOS with the reliability and scalability of proven routing protocols, making it a powerful solution for building scalable and efficient network infrastructures.
+
+Accessing the FRR Stack
+
+```
+vtysh
+'''
+
+Show configuration 
+
+```
+show run
 ```
