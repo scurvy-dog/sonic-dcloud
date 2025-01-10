@@ -11,6 +11,7 @@ devices:
     linecard_types: [8101-32H]
     linux_username: cisco
     linux_password: cisco123
+    xr_port_redir: [22]
     #custom_mgmt_inf: True
     #mgmt_gateway_ip: 172.10.10.201
     vxr_sim_config:
@@ -29,6 +30,7 @@ devices:
     linecard_types: [8101-32H]
     linux_username: cisco
     linux_password: cisco123
+    xr_port_redir: [22]
     #custom_mgmt_inf: True
     #mgmt_gateway_ip: 172.10.10.201
     vxr_sim_config:
@@ -46,6 +48,7 @@ devices:
     linecard_types: [8101-32H]
     linux_username: cisco
     linux_password: cisco123
+    xr_port_redir: [22]
     #custom_mgmt_inf: True
     #mgmt_gateway_ip: 172.10.10.201
     vxr_sim_config:
@@ -63,6 +66,7 @@ devices:
     linecard_types: [8101-32H]
     linux_username: cisco
     linux_password: cisco123
+    xr_port_redir: [22]
     #custom_mgmt_inf: True
     #mgmt_gateway_ip: 172.10.10.201
     vxr_sim_config:
@@ -99,3 +103,4 @@ connections:
     endpoint_2:
       ports: [leaf-2.Ethernet4]
       linux_bridge: leaf2_e16
+
